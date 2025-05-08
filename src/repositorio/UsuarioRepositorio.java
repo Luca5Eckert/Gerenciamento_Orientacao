@@ -68,10 +68,11 @@ public class UsuarioRepositorio {
 
 	public Usuario pegarUsuarioEmail(String email) {
 		try {
-			return usuarioDAO.buscarPorEmail(email);
+			return usuarioDAO.pegarPeloEmail(email);
 		} catch (SQLException se) {
-			System.out.println("Erro ao pegar usuário pelo email: " + e.getMessage());
+			System.out.println("Erro ao pegar usuário pelo email: " + se.getMessage());
 		}
+		return null;
 	}
 
 	public Usuario pegarUsuario(String nome) {

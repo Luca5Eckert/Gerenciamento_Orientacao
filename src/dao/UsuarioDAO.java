@@ -33,8 +33,19 @@ public class UsuarioDAO {
 		try (Connection conexao = ConexaoFactory.getConnection();
 				PreparedStatement stmt = conexao.prepareStatement(sql)) {
 			{
+				stmt.setString(1, email);
 
+				try(ResultSet result = stmt.executeQuery()) {
+					usuario = new Usuario();
+					
+					usuario.setIdUsuario(result.getInt("id"));
+					usuario.setEmail(result.getString("email"));
+					usuario.setNome(result.getString("nome"));
+					usuario.setSenha(result.getString("senha"));
+				}
 			}
+			
+			return usuario;
 
 		}
 	}

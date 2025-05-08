@@ -1,5 +1,5 @@
 package dtos;
 
-public record UsuarioDto(int id,String nome, String senha) {
+public record UsuarioDto(String email, String nome, String senha) {
 
 }
