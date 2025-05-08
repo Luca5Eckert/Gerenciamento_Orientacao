@@ -126,7 +126,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 			System.out.println("------------------------------------------------------------");
 
 			listaOrientacaoDto
-					.add(new OrientacaoDto(null, tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao));
+					.add(new OrientacaoDto( tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao));
 		}
 
 		return listaOrientacaoDto;
@@ -189,7 +189,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 
 		} while (edicaoMenu);
 
-		return new OrientacaoDto(null, titulo, tipoOrientacao, conteudo, obterIdiomaOrientacao());
+		return new OrientacaoDto(titulo, tipoOrientacao, conteudo, obterIdiomaOrientacao());
 	}
 
 	@Override

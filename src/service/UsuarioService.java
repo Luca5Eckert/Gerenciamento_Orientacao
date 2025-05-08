@@ -52,7 +52,7 @@ public class UsuarioService {
 	}
 
 	public boolean realizarCadastro(UsuarioDto usuarioDto) throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
-		cadastroService.validarUsuario(usuarioDto, usuarioRepositorio, idiomaImplementacao);
+		cadastroService.validarUsuarioEmail(usuarioDto, usuarioRepositorio, idiomaImplementacao);
 
 		Usuario usuario = converterDtoParaUsuario(usuarioDto);
 		this.usuarioRepositorio.adicionarUsuario(usuario);
@@ -61,6 +61,6 @@ public class UsuarioService {
 	}
 
 	private Usuario converterDtoParaUsuario(UsuarioDto dto) {
-		return new Usuario(dto.id(), dto.nome(), dto.senha());
+		return new Usuario(0, dto.email(), dto.nome(), dto.senha());
 	}
 }
