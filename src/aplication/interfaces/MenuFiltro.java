@@ -10,14 +10,16 @@ import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class MenuFiltro implements Menu {
 
+	private final IdiomaImplementacao idiomaImplementacao;
     private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
-    public MenuFiltro(GerenciadorFiltrosOrientacao gerenciadorFiltro) {
-        this.gerenciadorFiltro = gerenciadorFiltro;
+    public MenuFiltro(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
+        this.idiomaImplementacao = idiomaImplementacao;
+    	this.gerenciadorFiltro = gerenciadorFiltro;
     }
 
     @Override
-    public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+    public Menu chamarMenu(Scanner input) {
         boolean menuFiltroAtivo = true;
 
         while (menuFiltroAtivo) {

@@ -1,6 +1,5 @@
 package aplication.interfaces;
 
-import Dominio.Usuario;
 import aplication.MenuFactory;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
@@ -10,14 +9,16 @@ import service.UsuarioService;
 import service.exceptions.usuario.CadastroException;
 
 public class MenuCadastro implements Menu {
+	private IdiomaImplementacao idiomaImplementacao;
 	private UsuarioService usuarioService;
 
-	public MenuCadastro(UsuarioService usuarioService) {
+	public MenuCadastro(IdiomaImplementacao idiomaImplementacao, UsuarioService usuarioService) {
+		this.idiomaImplementacao = idiomaImplementacao;
 		this.usuarioService = usuarioService;
 	}
 
 	@Override
-	public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+	public Menu chamarMenu(Scanner input) {
 		UsuarioDto usuarioCadastrar = idiomaImplementacao.mostrarMenuCadastro(input);
 		Menu menu;
 
@@ -26,11 +27,11 @@ public class MenuCadastro implements Menu {
 			menu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, MenuFactory.criarMenu(TipoMenu.INICIO),
 					idiomaImplementacao.pegarMensagemCadastroConcluido());
 		} catch (CadastroException ce) {
-			return menu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO), ce.getMessage());
+			return menu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO),
+					ce.getMessage());
 		}
 		return menu;
 
 	}
 
-	
 }

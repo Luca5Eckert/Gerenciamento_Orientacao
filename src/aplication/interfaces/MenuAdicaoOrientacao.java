@@ -7,14 +7,16 @@ import aplication.implementacoes.IdiomaImplementacao;
 import service.OrientacaoService;
 
 public class MenuAdicaoOrientacao implements Menu {
+	private IdiomaImplementacao idiomaImplementacao;
 	private OrientacaoService orientacaoService;
 
-	public MenuAdicaoOrientacao(OrientacaoService orientacaoService) {
+	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService) {
+		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoService = orientacaoService;
 	}
 	
 	@Override
-	public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+	public Menu chamarMenu( Scanner input) {
 		var listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
 		
 		orientacaoService.criarOrientacoes(listaOrientacaoCriada);

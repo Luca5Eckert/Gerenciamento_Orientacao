@@ -126,18 +126,26 @@ public class OrientacaoDAO {
         }
     }
 
-    public int obterProximoIdOrientacao() throws SQLException {
-        String sql = "SELECT MAX(id) FROM orientacao";
+    public String obterIdOrientacao(Orientacao orientacao) throws SQLException {
+        String sql = "SELECT id FROM orientacao WHERE titulo = ? AND conteudo = ? AND idioma_orientacao = ? AND  tipo_orientacao = ?";
 
         try (Connection conn = ConexaoFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql)){
 
-            if (rs.next()) {
-                int maxId = rs.getInt(1);
-                return maxId + 1;
-            }
-            return 1;
+        	stmt.setString(1, orientacao.getTitulo());
+        	stmt.setString(2, orientacao.getConteudo());
+        	stmt.setString(3, orientacao.getIdOrientacao().getIdiomaOrientacao().name());
+        	stmt.setString(4, orientacao.getTipoOrientacao().name());
+        	
+        	try( ResultSet resultSet = stmt.executeQuery()){
+        		
+        		if(resultSet.next()) {
+        			String idOrientacao = resultSet.getString(1);
+        			return idOrientacao;
+        		}
+        	}
         }
+        
+        return null;
     }
 }

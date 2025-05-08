@@ -70,13 +70,13 @@ public class OrientacaoRepositorio {
         }
     }
 
-    public int pegarIndexOrientacao() {
+    public String pegarIndexOrientacao(Orientacao orientacao) {
         try {
-            return orientacaoDAO.obterProximoIdOrientacao();
+            return orientacaoDAO.obterIdOrientacao(orientacao);
         } catch (SQLException e) {
             System.out.println("Erro ao pegar índice da orientação: " + e.getMessage());
         }
-        return -1;
+        return null;
     }
 
     public int pegarIndexOrientacaoIdioma(IdiomaOrientacao idiomaOrientacao) {

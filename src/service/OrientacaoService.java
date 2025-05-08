@@ -113,7 +113,7 @@ public class OrientacaoService {
 	}
 
 	public OrientacaoDto transformarModeloDto(Orientacao orientacao) {
-		return new OrientacaoDto(orientacao.getIdOrientacao().getIdOrientacao(), orientacao.getTitulo(), orientacao.getTipoOrientacao(), orientacao.getConteudo(),
+		return new OrientacaoDto( orientacao.getTitulo(), orientacao.getTipoOrientacao(), orientacao.getConteudo(),
 				orientacao.getIdOrientacao().getIdiomaOrientacao());
 	}
 
@@ -123,5 +123,10 @@ public class OrientacaoService {
 			orientacaoRepositorioDto.add(transformarModeloDto(orientacao));
 		}
 		return orientacaoRepositorioDto;
+	}
+	
+	public String pegarIdOrientacao(OrientacaoDto orientacaoDto) {
+		var orientacaoModelo = transformarDtoModelo(orientacaoDto);
+		return repositorioOrientacao.pegarIndexOrientacao(orientacaoModelo);
 	}
 }

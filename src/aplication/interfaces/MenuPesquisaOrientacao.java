@@ -8,14 +8,16 @@ import dtos.OrientacaoDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class MenuPesquisaOrientacao implements Menu {
+	private final IdiomaImplementacao idiomaImplementacao;
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
-	public MenuPesquisaOrientacao(GerenciadorFiltrosOrientacao gerenciadorFiltro) {
+	public MenuPesquisaOrientacao(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
+		this.idiomaImplementacao = idiomaImplementacao;
 		this.gerenciadorFiltro = gerenciadorFiltro;
 	}
 
 	@Override
-	public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+	public Menu chamarMenu(Scanner input) {
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuPesquisaOrientacao(input);
 
 		return devolverOpcaoEscolhida(opcaoEscolhida);

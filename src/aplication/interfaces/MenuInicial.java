@@ -6,23 +6,24 @@ import aplication.MenuFactory;
 import aplication.implementacoes.IdiomaImplementacao;
 
 public class MenuInicial implements Menu {
+	private IdiomaImplementacao idiomaImplementacao;
 
-	public MenuInicial() {
+	public MenuInicial(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
-	@Override
-	public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+	public Menu chamarMenu(Scanner input) {
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuInicial(input);
 
-		return devolverOpcaoEscolhida(opcaoEscolhida, idiomaImplementacao);
+		return devolverOpcaoEscolhida(opcaoEscolhida );
 	
 	}
 
 
-	public Menu devolverOpcaoEscolhida(String opcao, IdiomaImplementacao idiomaImplementacao) {
+	public Menu devolverOpcaoEscolhida(String opcao) {
 		return switch (opcao) {
-		case "1" -> MenuFactory.criarMenuComIdioma(TipoMenu.LOGIN, idiomaImplementacao);
-		case "2" -> MenuFactory.criarMenuComIdioma(TipoMenu.CADASTRO, idiomaImplementacao);
+		case "1" -> MenuFactory.criarMenuComIdioma(TipoMenu.LOGIN);
+		case "2" -> MenuFactory.criarMenuComIdioma(TipoMenu.CADASTRO);
 		case "3" -> MenuFactory.criarMenu(TipoMenu.FIM);
 		default -> MenuFactory.criarMenu(TipoMenu.INICIO);
 		};

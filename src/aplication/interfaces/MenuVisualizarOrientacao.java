@@ -14,22 +14,26 @@ import service.OrientacaoService;
 import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuVisualizarOrientacao implements Menu {
-	private OrientacaoDto orientacaoDto;
-	private Menu menuAnterior;
-	private OrientacaoService orientacaoService;
-	private FormatacaoListaOrientacao formatador;
 
-	public MenuVisualizarOrientacao(OrientacaoDto orientacaoDto, Menu menuAnterior,
-			FormatacaoListaOrientacao formatador) {
+	private final IdiomaImplementacao idiomaImplementacao;
+	private final OrientacaoDto orientacaoDto;
+	private final Menu menuAnterior;
+	private final OrientacaoService orientacaoService;
+	private final FormatacaoListaOrientacao formatador;
+
+	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
+			Menu menuAnterior, OrientacaoService orientacaoService, FormatacaoListaOrientacao formatador) {
+		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoDto = orientacaoDto;
 		this.menuAnterior = menuAnterior;
+		this.orientacaoService = orientacaoService;
 		this.formatador = formatador;
 	}
 
 	@Override
-	public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+	public Menu chamarMenu(Scanner input) {
 		Map<IdiomaOrientacao, OrientacaoDto> listaOrientacoesIdiomas = orientacaoService
-				.pegarOrientacoesIdiomas(orientacaoDto.id());
+				.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
 
 		var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
 
@@ -95,5 +99,7 @@ public class MenuVisualizarOrientacao implements Menu {
 
 		return listaNaoDisponivel;
 	}
+	
+
 
 }

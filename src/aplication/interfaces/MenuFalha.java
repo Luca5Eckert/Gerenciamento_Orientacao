@@ -4,17 +4,20 @@ import aplication.implementacoes.IdiomaImplementacao;
 import java.util.Scanner;
 
 public class MenuFalha implements Menu {
-	private Menu proximoMenu;
-	private String mensagemErro = " Não foi possivel realizar tal ação";
 	
-	public MenuFalha(Menu proximoMenu, String mensagemErro) {
+	private final IdiomaImplementacao idiomaImplementacao;
+	private final Menu proximoMenu;
+	private final String mensagemErro;
+	
+	public MenuFalha(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemErro) {
+		this.idiomaImplementacao = idiomaImplementacao;
 		this.proximoMenu = proximoMenu;
 		this.mensagemErro = mensagemErro;
 	}
 	
 	
 	@Override
-	public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+	public Menu chamarMenu(Scanner input) {
 		String opcao;
 		opcao = idiomaImplementacao.mostrarMenuErro(input, mensagemErro);
 		
