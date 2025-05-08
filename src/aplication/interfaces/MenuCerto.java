@@ -4,16 +4,17 @@ import aplication.implementacoes.IdiomaImplementacao;
 import java.util.Scanner;
 
 public class MenuCerto implements Menu {
+	private IdiomaImplementacao idiomaImplementacao;
 	private Menu proximoMenu;
 	private String mensagemAcerto;
 
-	public MenuCerto(Menu proximoMenu, String mensagemAcerto) {
+	public MenuCerto(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemAcerto) {
 		this.proximoMenu = proximoMenu;
 		this.mensagemAcerto = mensagemAcerto;
 	}
 
 	@Override
-	public Menu chamarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
+	public Menu chamarMenu( Scanner input) {
 		String opcao = idiomaImplementacao.mostrarMenuAcerto(input, mensagemAcerto);
 
 		return devolverOpcaoEscolhida(opcao);

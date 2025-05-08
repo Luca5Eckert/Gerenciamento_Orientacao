@@ -1,10 +1,10 @@
-package dao;
+package infrastructure.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import Dominio.Usuario;
-import conexao.ConexaoFactory;
+import infrastructure.ConexaoFactory;
 
 public class UsuarioDAO {
 

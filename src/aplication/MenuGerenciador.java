@@ -1,6 +1,5 @@
 package aplication;
 
-import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.Menu;
 import aplication.interfaces.MenuFinal;
 
@@ -13,8 +12,11 @@ public class MenuGerenciador {
 		this.menu = menu;
 	}
 	
-	public boolean iniciarFluxoMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
-		Menu novoMenu = this.iniciarMenu(idiomaImplementacao, input);
+	public MenuGerenciador() {
+	}
+
+	public boolean iniciarFluxoMenu(Scanner input) {
+		Menu novoMenu = this.iniciarMenu(input);
 		
 		this.definirNovoMenu(novoMenu);
 		
@@ -22,8 +24,8 @@ public class MenuGerenciador {
 		
 	}
 	
-	public Menu iniciarMenu(IdiomaImplementacao idiomaImplementacao, Scanner input) {
-		return menu.chamarMenu(idiomaImplementacao, input);
+	public Menu iniciarMenu(Scanner input) {
+		return menu.chamarMenu(input);
 	}
 	
 	

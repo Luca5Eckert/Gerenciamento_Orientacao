@@ -1,9 +1,9 @@
 package repositorio;
 
-import dao.UsuarioDAO;
 import java.sql.SQLException;
 import java.util.List;
 import Dominio.Usuario;
+import infrastructure.dao.UsuarioDAO;
 
 public class UsuarioRepositorio {
 

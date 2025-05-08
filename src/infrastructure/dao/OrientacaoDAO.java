@@ -1,4 +1,4 @@
-package dao;
+package infrastructure.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
 import Dominio.TipoOrientacao;
-import conexao.ConexaoFactory;
+import infrastructure.ConexaoFactory;
 
 public class OrientacaoDAO {
 
