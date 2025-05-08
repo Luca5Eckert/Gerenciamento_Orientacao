@@ -3,7 +3,7 @@ package aplication.interfaces;
 import aplication.implementacoes.IdiomaImplementacao;
 import java.util.Scanner;
 
-public class MenuCerto implements Menu {
+public class MenuCerto  {
 	private IdiomaImplementacao idiomaImplementacao;
 	private Menu proximoMenu;
 	private String mensagemAcerto;

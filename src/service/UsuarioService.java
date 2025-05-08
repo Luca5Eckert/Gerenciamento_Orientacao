@@ -14,16 +14,24 @@ public class UsuarioService {
 	private final UsuarioRepositorio usuarioRepositorio;
 	private final IdiomaImplementacao idiomaImplementacao;
 	private final CadastroService cadastroService;
+	private final LoginService loginService;
 
 	public UsuarioService(UsuarioRepositorio usuarioRepositorio, IdiomaImplementacao idiomaImplementacao) {
 		this.usuarioRepositorio = usuarioRepositorio;
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.cadastroService = new CadastroService();
+		this.loginService = new LoginService();
 	}
 
 	public boolean realizarLogin(UsuarioDto usuarioDto) throws LoginException {
-		validarUsuarioExistente(usuarioDto);
-		validarSenha(usuarioDto);
+		if (!loginService.validarUsuarioExistente(usuarioDto, usuarioRepositorio)) {
+			throw new LoginUsuarioException(idiomaImplementacao.pegarMensagemErroLoginUsuario());
+
+		}
+		if (!loginService.validarSenha(usuarioDto, usuarioRepositorio)) {
+			throw new LoginSenhaException(idiomaImplementacao.pegarMensagemErroLoginSenha());
+		}
+
 		return true;
 	}
 
@@ -31,27 +39,8 @@ public class UsuarioService {
 		return cadastroService;
 	}
 
-	private void validarUsuarioExistente(UsuarioDto usuarioDto) throws LoginUsuarioException {
-		boolean existe = usuarioRepositorio.verificaSeUsuarioExisteNome(usuarioDto.nome());
-
-		if (!existe) {
-			throw new LoginUsuarioException(idiomaImplementacao.pegarMensagemErroLoginUsuario());
-		}
-	}
-
-	private void validarSenha(UsuarioDto usuarioDto) throws LoginSenhaException {
-		Usuario usuario = usuarioRepositorio.pegarUsuario(usuarioDto.nome());
-
-		if (!senhaEhValida(usuarioDto.senha(), usuario.getSenha())) {
-			throw new LoginSenhaException(idiomaImplementacao.pegarMensagemErroLoginSenha());
-		}
-	}
-
-	private boolean senhaEhValida(String senhaInformada, String senhaCadastrada) {
-		return senhaInformada.equals(senhaCadastrada);
-	}
-
-	public boolean realizarCadastro(UsuarioDto usuarioDto) throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
+	public boolean realizarCadastro(UsuarioDto usuarioDto)
+			throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
 		cadastroService.validarUsuarioEmail(usuarioDto, usuarioRepositorio, idiomaImplementacao);
 
 		Usuario usuario = converterDtoParaUsuario(usuarioDto);
@@ -63,4 +52,9 @@ public class UsuarioService {
 	private Usuario converterDtoParaUsuario(UsuarioDto dto) {
 		return new Usuario(0, dto.email(), dto.nome(), dto.senha());
 	}
+	
+	private Usuario converterDtoParaUsuario(UsuarioDto dto, int idUsuario) {
+		return new Usuario(idUsuario, dto.email(), dto.nome(), dto.senha());
+	}
+
 }

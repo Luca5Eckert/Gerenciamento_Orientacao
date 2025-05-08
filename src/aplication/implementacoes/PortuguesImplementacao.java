@@ -39,6 +39,23 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		System.out.println(" Insira seus dados:\n");
 
+		System.out.print(" Email:");
+		String email = input.nextLine();
+
+		System.out.print(" Senha:");
+		String senha = input.nextLine();
+
+		System.out.println("------------------------------------------------------------");
+		return new UsuarioDto(email, null, senha);
+	}
+
+	@Override
+	public UsuarioDto mostrarMenuCadastro(Scanner input) {
+		System.out.println("============================================================");
+		System.out.println("                      CADASTRO                              ");
+		System.out.println("============================================================");
+		System.out.println(" Insira seus dados:\n");
+
 		System.out.print(" Nome:");
 		String nome = input.nextLine();
 
@@ -49,24 +66,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		String senha = input.nextLine();
 
 		System.out.println("------------------------------------------------------------");
-		return new UsuarioDto(email, nome, senha);
-	}
-
-	@Override
-	public UsuarioDto mostrarMenuCadastro(Scanner input) {
-		System.out.println("============================================================");
-		System.out.println("                      CADASTRO                              ");
-		System.out.println("============================================================");
-		System.out.println(" Insira seus dados:\n");
-
-		System.out.print(" Email:");
-		String email = input.nextLine();
-
-		System.out.print(" Senha:");
-		String senha = input.nextLine();
-
-		System.out.println("------------------------------------------------------------");
-		return new UsuarioDto(email, null, senha);
+		return new UsuarioDto(nome, email, senha);
 	}
 
 	@Override
