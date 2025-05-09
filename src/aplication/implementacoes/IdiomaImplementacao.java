@@ -66,4 +66,8 @@ public interface IdiomaImplementacao {
 
 	String mostrarOrientacao(Scanner input, OrientacaoDto orientacao, String idiomasOrientacoes);
 
+	String pegarFiltroIdioma();
+	
+	String pegarFiltroTipo();
+	
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Dominio.IdiomaOrientacao;
+import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
+import service.SessaoUsuario;
 
 public class FiltroOrientacaoIdioma implements FiltroOrientacao {
     private List<IdiomaOrientacao> idiomasOrientacoes = new ArrayList<>();
@@ -32,10 +34,17 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao {
         return idiomasOrientacoes.contains(orientacao.idiomaOrientacao());
     }
 
-    @Override
-    public String toString() {
-        return "Filtro de Idioma: " + idiomasOrientacoes;
+    public String pegarIdiomas() {
+    	var idioma = SessaoUsuario.pegarIdioma();
+        return idioma.pegarFiltroIdioma() + mostrarIdiomas(idioma.obterIdiomaOrientacao());
     }
+    
+    public String mostrarIdiomas(IdiomaOrientacao idiomaOrientacao) {
+    	StringBuilder formatadoMostrarIdiomas = new StringBuilder();
+    	idiomasOrientacoes.stream().forEach(i -> formatadoMostrarIdiomas.append(i.getNomePorIdioma(idiomaOrientacao) + ", "));
+    	return formatadoMostrarIdiomas.toString();
+    }
+    
 
     public List<IdiomaOrientacao> getIdiomasOrientacoes() {
         return idiomasOrientacoes;

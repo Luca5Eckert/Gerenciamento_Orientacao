@@ -338,14 +338,8 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 			System.out.println("------------------------------------------------------------");
 			System.out.println(gerenciador.formatarFiltrosAtivados());
 			System.out.println("------------------------------------------------------------");
-			System.out.println(" 1- Voltar");
+			System.out.println(" V- Voltar");
 			String opcao = input.nextLine();
-
-			switch (opcao) {
-			case "2":
-				System.out.println("Digite o número do filtro: ");
-				return input.nextLine();
-			}
 
 		}
 
@@ -397,6 +391,16 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String pegarFiltroIdioma() {
+		return "Filtros de idiomas: ";
+	}
+
+	@Override
+	public String pegarFiltroTipo() {
+		return "Filtros de tipos: ";
 	}
 
 }

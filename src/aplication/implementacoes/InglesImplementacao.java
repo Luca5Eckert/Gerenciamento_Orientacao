@@ -12,365 +12,379 @@ import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class InglesImplementacao implements IdiomaImplementacao {
 
+    @Override
+    public IdiomaOrientacao obterIdiomaOrientacao() {
+        return IdiomaOrientacao.INGLES;
+    }
+
+    @Override
+    public String mostrarMenuInicial(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                          START                             ");
+        System.out.println("============================================================");
+        System.out.println(" Welcome to the Guidance Management System:                 ");
+        System.out.println(" 1- Login");
+        System.out.println(" 2- Register");
+        System.out.println(" 3- Exit system");
+        System.out.println("------------------------------------------------------------");
+
+        return input.nextLine();
+    }
+
+    @Override
+    public UsuarioDto mostrarMenuLogin(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                          LOGIN                             ");
+        System.out.println("============================================================");
+        System.out.println(" Enter your credentials:\n");
+
+        System.out.print(" Email:");
+        String email = input.nextLine();
+
+        System.out.print(" Password:");
+        String senha = input.nextLine();
+
+        System.out.println("------------------------------------------------------------");
+        return new UsuarioDto(email, null, senha);
+    }
+
+    @Override
+    public UsuarioDto mostrarMenuCadastro(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                         REGISTER                           ");
+        System.out.println("============================================================");
+        System.out.println(" Enter your details:\n");
+
+        System.out.print(" Name:");
+        String nome = input.nextLine();
+
+        System.out.print(" Email:");
+        String email = input.nextLine();
+
+        System.out.print(" Password:");
+        String senha = input.nextLine();
+
+        System.out.println("------------------------------------------------------------");
+        return new UsuarioDto(nome, email, senha);
+    }
+
+    @Override
+    public String mostrarMenuGeral(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                         MANAGER                            ");
+        System.out.println("============================================================");
+
+        System.out.println(" 0- Create Guidance");
+        System.out.println(" 1- View Guidances");
+        System.out.println(" 2- Logout");
+        System.out.println(" 3- Exit system");
+
+        System.out.println("------------------------------------------------------------");
+
+        return input.nextLine();
+    }
+
+    @Override
+    public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) {
+        int repeatCount = 1;
+        List<OrientacaoDto> list = new ArrayList<>();
+
+        System.out.println("============================================================");
+        System.out.println("                       CREATION                             ");
+        System.out.println("============================================================");
+
+        System.out.println(" Do you want to create guidance for only your language or all?");
+        System.out.println(" 1- Only English");
+        System.out.println(" 2- For all languages");
+        String option = input.nextLine();
+
+        switch (option) {
+            case "1" -> repeatCount = 1;
+            case "2" -> repeatCount = IdiomaOrientacao.values().length;
+        }
+
+        System.out.println(" Guidance Type:");
+        System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
+        TipoOrientacao tipo = TipoOrientacao.pegarOrientacao(input.nextInt());
+        input.nextLine();
+
+        for (int i = 0; i < repeatCount; i++) {
+            IdiomaOrientacao idioma = IdiomaOrientacao.pegarIdioma(i);
+            String languageName = pegarNomeIdioma(idioma);
+
+            System.out.println(" Guidance title in " + languageName + ":");
+            String title = input.nextLine();
+
+            System.out.println(" Content in " + languageName + ":");
+            String content = input.nextLine();
+
+            System.out.println("------------------------------------------------------------");
+
+            list.add(new OrientacaoDto(title, tipo, content, idioma));
+        }
+
+        return list;
+    }
+
+    @Override
+    public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto dto, Scanner input) {
+        boolean editing = true;
+        String title = dto.titulo();
+        String content = dto.conteudo();
+        TipoOrientacao tipo = dto.tipoOrientacao();
+
+        do {
+            System.out.println("============================================================");
+            System.out.println("                         EDITING                            ");
+            System.out.println("============================================================");
+            System.out.println(" Select what you want to edit:\n");
+
+            System.out.println(" 1- Guidance Title");
+            System.out.println(" 2- Guidance Type");
+            System.out.println(" 3- Guidance Content");
+            System.out.println(" 0- Exit editing");
+            System.out.println("------------------------------------------------------------");
+
+            String inputOption = input.nextLine();
+
+            switch (inputOption) {
+                case "1" -> {
+                    System.out.println("------------------------------------------------------------");
+                    System.out.print(" New title: ");
+                    title = input.nextLine();
+                    System.out.println("------------------------------------------------------------");
+                }
+                case "2" -> {
+                    System.out.println("------------------------------------------------------------");
+                    System.out.println(" New guidance type:");
+                    System.out.println(TipoOrientacao.mostrarTodasTipos(obterIdiomaOrientacao()));
+                    System.out.print(" Enter corresponding number: ");
+                    try {
+                        int option = Integer.parseInt(input.nextLine());
+                        tipo = TipoOrientacao.pegarOrientacao(option);
+                    } catch (NumberFormatException e) {
+                        System.out.println(" Invalid input! Use a number.");
+                    }
+                    System.out.println("------------------------------------------------------------");
+                }
+                case "3" -> {
+                    System.out.println("------------------------------------------------------------");
+                    System.out.print(" New content: ");
+                    content = input.nextLine();
+                    System.out.println("------------------------------------------------------------");
+                }
+                case "0" -> editing = false;
+                default -> System.out.println(" Invalid option.");
+            }
+
+        } while (editing);
+
+        return new OrientacaoDto(title, tipo, content, obterIdiomaOrientacao());
+    }
+
+    @Override
+    public String mostrarMenuOrientacaoDisponiveis(Scanner input, String formattedList, String searchTerm) {
+        System.out.println("============================================================");
+        System.out.println("                       GUIDANCES                            ");
+        System.out.println("============================================================");
+        System.out.println(" S - Back to main menu");
+        System.out.println(" F - Filters                                P - Search");
+        System.out.println(" A - Clear search");
+        System.out.println(" R - Remove filters\n ");
+        System.out.println("\n Result: " + searchTerm);
+        System.out.println(formattedList);
+        System.out.println("============================================================");
+
+        return input.nextLine();
+    }
+
+    @Override
+    public String mostrarMenuOpcoesOrientacao(Scanner input) {
+        return null;
+    }
+
+    @Override
+    public String mostrarMenuAcerto(Scanner input, String successMessage) {
+        System.out.println("------------------------------------------------------------");
+        System.out.println(successMessage);
+        System.out.println(" 1 - Continue");
+        System.out.println("------------------------------------------------------------");
+        return input.nextLine();
+    }
+
+    @Override
+    public String mostrarMenuErro(Scanner input, String errorMessage) {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("                            ERROR                           ");
+        System.out.println(errorMessage);
+        System.out.println(" 1 - Continue");
+        System.out.println("------------------------------------------------------------");
+        return input.nextLine();
+    }
+
+    @Override
+    public String pegarMensagemErroLogin() {
+        return "Login failed.";
+    }
+
+    @Override
+    public String pegarMensagemErroLoginUsuario() {
+        return "User does not exist.";
+    }
+
+    @Override
+    public String pegarMensagemErroLoginSenha() {
+        return "Incorrect password.";
+    }
+
+    @Override
+    public String pegarMensagemLoginConcluido() {
+        return "Login successful.";
+    }
+
+    @Override
+    public String pegarMensagemErroCadastroUsuarioExistente() {
+        return "User already registered.";
+    }
+
+    @Override
+    public String pegarMensagemErroCadastroSenhaPequena() {
+        return "Password must be at least 8 characters long.";
+    }
+
+    @Override
+    public String pegarMensagemErroCadastroSenhaSemMaiscula() {
+        return "Password must contain at least one uppercase letter.";
+    }
+
+    @Override
+    public String pegarMensagemErroCadastroSenhaSemCaracterEspecial() {
+        return "Password must contain at least one special character.";
+    }
+
+    @Override
+    public String pegarMensagemCadastroConcluido() {
+        return "Registration successful!";
+    }
+
+    @Override
+    public String mostrarOrientacao(Scanner input, OrientacaoDto dto, String otherLanguages) {
+        System.out.println("============================================================");
+        System.out.println("                       GUIDANCE                             ");
+        System.out.println("============================================================");
+        System.out.println(" Title: " + dto.titulo());
+        System.out.println(" Type: " + dto.tipoOrientacao());
+        System.out.println("\n Content:");
+        System.out.println(" " + dto.conteudo());
+        System.out.println("\n  S - Exit      E - Edit      D - Delete");
+        System.out.println(" In other languages: ");
+        System.out.println(otherLanguages);
+        System.out.println("============================================================");
+
+        return input.nextLine();
+    }
+
+    @Override
+    public String mostrarMenuFiltro(Scanner input, GerenciadorFiltrosOrientacao manager) {
+        String choice;
+
+        System.out.println("============================================================");
+        System.out.println("                          FILTERS                           ");
+        System.out.println("============================================================");
+        System.out.println(" 1 - Filter by Language");
+        System.out.println(" 2 - Filter by Guidance Type\n");
+        System.out.println(" 3 - View current filters");
+        System.out.println(" 4 - Apply selected filters");
+        System.out.println("============================================================");
+
+        choice = input.nextLine();
+
+        switch (choice) {
+            case "1" -> {
+                System.out.println("\nChoose languages to filter:");
+                System.out.println("P - Portuguese");
+                System.out.println("I - English");
+                System.out.println("E - Spanish");
+                System.out.println("A - German");
+                choice = input.nextLine();
+            }
+            case "2" -> {
+                System.out.println("\nChoose guidance types to filter:");
+                System.out.println("M - Operation Manual");
+                System.out.println("S - Safety Procedures");
+                System.out.println("R - Maintenance and Repairs");
+                System.out.println("D - Testing and Diagnostics");
+                System.out.println("C - Conduct and Sector Operations Manual");
+                choice = input.nextLine();
+            }
+            case "3" -> {
+                System.out.println("------------------------------------------------------------");
+                System.out.println(manager.formatarFiltrosAtivados());
+                System.out.println("------------------------------------------------------------");
+                System.out.println(" 1- Back");
+                String opt = input.nextLine();
+                if (opt.equals("2")) {
+                    System.out.println("Enter the filter number: ");
+                    return input.nextLine();
+                }
+            }
+        }
+
+        return choice;
+    }
+
+    @Override
+    public String mostrarMenuPesquisaOrientacao(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                         SEARCH                             ");
+        System.out.println("============================================================");
+        System.out.println(" 1- Exit ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" Enter your search: ");
+        String search = input.nextLine();
+        System.out.println("============================================================");
+
+        return search;
+    }
+
+    @Override
+    public String pegarMensagemEdicaoConcluida() {
+        return "Edit successful.";
+    }
+
+    @Override
+    public String pegarNomeIdioma(IdiomaOrientacao idioma) {
+        return switch (idioma) {
+            case PORTUGUES -> "Portuguese";
+            case INGLES -> "English";
+            case ESPANHOL -> "Spanish";
+            case ALEMAO -> "German";
+            default -> "Other";
+        };
+    }
+
+    @Override
+    public String pegarMensangemAdicaoConcluida() {
+        return "Addition successful.";
+    }
+
+    @Override
+    public String pegarMensangemAdicaoFalhada() {
+        return "Failed to add guidance.";
+    }
+
+    @Override
+    public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
+        return null; // To be implemented if necessary
+    }
+
 	@Override
-	public IdiomaOrientacao obterIdiomaOrientacao() {
-		return IdiomaOrientacao.PORTUGUES;
+	public String pegarFiltroIdioma() {
+		return "Language filter: ";
 	}
 
 	@Override
-	public String mostrarMenuInicial(Scanner input) {
-		System.out.println("============================================================");
-		System.out.println("                          START                             ");
-		System.out.println("============================================================");
-		System.out.println(" Welcome to the Orientation Management System:              ");
-		System.out.println(" 1- Login");
-		System.out.println(" 2- Register");
-		System.out.println(" 3- Exit system");
-		System.out.println("------------------------------------------------------------");
-		return input.nextLine();
+	public String pegarFiltroTipo() {
+		return "Type filter: ";
 	}
-
-	@Override
-	public UsuarioDto mostrarMenuLogin(Scanner input) {
-		System.out.println("============================================================");
-		System.out.println("                          LOGIN                             ");
-		System.out.println("============================================================");
-		System.out.println(" Enter your details:\n");
-		System.out.println(" 1- Name:");
-		String nome = input.nextLine();
-
-		System.out.println(" 2- Password:");
-		String senha = input.nextLine();
-
-		System.out.println("------------------------------------------------------------");
-		return new UsuarioDto(nome, senha);
-	}
-
-	@Override
-	public UsuarioDto mostrarMenuCadastro(Scanner input) {
-		System.out.println("============================================================");
-		System.out.println("                        REGISTER                            ");
-		System.out.println("============================================================");
-		System.out.println(" Enter your details:\n");
-
-		System.out.println(" 1- Name:");
-		String nome = input.nextLine();
-
-		System.out.println(" 2- Password:");
-		String senha = input.nextLine();
-
-		System.out.println("------------------------------------------------------------");
-		return new UsuarioDto(nome, senha);
-	}
-
-	@Override
-	public String mostrarMenuGeral(Scanner input) {
-		System.out.println("============================================================");
-		System.out.println("                      MANAGER                               ");
-		System.out.println("============================================================");
-		System.out.println(" 1- Access Orientations");
-		System.out.println(" 2- Logout");
-		System.out.println(" 3- Exit system");
-		System.out.println("------------------------------------------------------------");
-		return input.nextLine();
-	}
-
-	@Override
-	public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) {
-		int numeroRepetirVezes = 1;
-		List<OrientacaoDto> listaOrientacaoDto = new ArrayList<>();
-
-		System.out.println("============================================================");
-		System.out.println("                       CREATION                             ");
-		System.out.println("============================================================");
-
-		System.out.println(" Do you want to create for only your language or for all?");
-		System.out.println(" 1- Only for Portuguese");
-		System.out.println(" 2- For all");
-		String opcao = input.nextLine();
-
-		switch(opcao) {
-		case "1":
-			numeroRepetirVezes = 1;
-		case "2":
-			numeroRepetirVezes = IdiomaOrientacao.values().length;
-		}
-
-		for(int i = 0; i < numeroRepetirVezes; i++) {
-			IdiomaOrientacao idiomaOrientacao = IdiomaOrientacao.pegarIdioma(i);
-			String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
-
-			System.out.println(" Orientation title in " + idiomaNome + " :" );
-			String tituloOrientacao = input.nextLine();
-
-			System.out.println(" Orientation type in " + idiomaNome + " :");
-			System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
-			TipoOrientacao tipoOrientacao = TipoOrientacao.pegarOrientacao(input.nextInt());
-			input.nextLine(); // consume leftover newline
-
-			System.out.println(" Content in " + idiomaNome + " :");
-			String conteudo = input.nextLine();
-
-			System.out.println("------------------------------------------------------------");
-
-			listaOrientacaoDto.add(new OrientacaoDto(tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao));
-		}
-
-		return listaOrientacaoDto;
-	}
-
-	@Override
-	public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto orientacaoDto, Scanner input) {
-		boolean edicaoMenu = true;
-		String titulo = orientacaoDto.titulo();
-		String conteudo = orientacaoDto.conteudo();
-		TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
-
-		do {
-			System.out.println("============================================================");
-			System.out.println("                         EDITING                            ");
-			System.out.println("============================================================");
-			System.out.println(" Select what you want to change:\n");
-
-			System.out.println(" 1- Orientation title");
-			System.out.println(" 2- Orientation type");
-			System.out.println(" 3- Orientation content");
-			System.out.println(" 0- Exit editing");
-			System.out.println("------------------------------------------------------------");
-
-			String numeroRetorno = input.nextLine();
-
-			switch (numeroRetorno) {
-				case "1":
-					System.out.println("------------------------------------------------------------");
-					System.out.print(" New title: ");
-					titulo = input.nextLine();
-					System.out.println("------------------------------------------------------------");
-					break;
-				case "2":
-					System.out.println("------------------------------------------------------------");
-					System.out.println(" New orientation type:");
-					System.out.println(TipoOrientacao.mostrarTodasTipos(obterIdiomaOrientacao()));
-					System.out.print(" Enter the corresponding number: ");
-					String tipoStr = input.nextLine();
-					try {
-						int tipoOrientacaoOpcao = Integer.parseInt(tipoStr);
-						tipoOrientacao = TipoOrientacao.pegarOrientacao(tipoOrientacaoOpcao);
-					} catch (NumberFormatException e) {
-						System.out.println(" Invalid input! Use a number.");
-					}
-					System.out.println("------------------------------------------------------------");
-					break;
-				case "3":
-					System.out.println("------------------------------------------------------------");
-					System.out.print(" New content: ");
-					conteudo = input.nextLine();
-					System.out.println("------------------------------------------------------------");
-					break;
-				case "0":
-					edicaoMenu = false;
-					break;
-				default:
-					System.out.println(" Invalid option.");
-			}
-		} while (edicaoMenu);
-
-		return new OrientacaoDto(titulo, tipoOrientacao, conteudo, obterIdiomaOrientacao());
-	}
-
-	@Override
-	public String mostrarMenuOrientacaoDisponiveis(Scanner input, String listaFormatada, String palavraPesquisada) {
-		System.out.println("============================================================");
-		System.out.println("                    ORIENTATIONS                            ");
-		System.out.println("============================================================");
-		System.out.println(" S- Return to general menu");
-		System.out.println(" F- Filters                                    P- Search");
-
-		System.out.println(" A- Clear search");
-		System.out.println(" R- Remove filters \n ");
-		System.out.println("\n Result: " + palavraPesquisada);
-
-		System.out.println(listaFormatada);
-
-		System.out.println("============================================================");
-		return input.nextLine();
-	}
-
-	@Override
-	public String mostrarMenuOpcoesOrientacao(Scanner input) {
-		return null;
-	}
-
-	@Override
-	public String mostrarMenuAcerto(Scanner input, String mensagemAcerto) {
-		System.out.println("------------------------------------------------------------");
-		System.out.println(mensagemAcerto);
-		System.out.println(" 1 - Continue ");
-		System.out.println("------------------------------------------------------------");
-		return input.nextLine();
-	}
-
-	@Override
-	public String mostrarMenuErro(Scanner input, String mensagemErro) {
-		System.out.println("------------------------------------------------------------");
-		System.out.println("                           ERROR                            ");
-		System.out.println(mensagemErro);
-		System.out.println(" 1 - Continue ");
-		System.out.println("------------------------------------------------------------");
-		return input.nextLine();
-	}
-
-	// Mensagens de erro e sucesso podem ser mantidas em português se forem retornadas,
-	// mas se desejar também posso traduzi-las.
-
-	@Override
-	public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
-		System.out.println("============================================================");
-		System.out.println("                    ORIENTATION                             ");
-		System.out.println("============================================================");
-		System.out.println(" " + orientacao.titulo());
-		System.out.println(" " + orientacao.tipoOrientacao());
-		System.out.println("\n Content:");
-		System.out.println(" " + orientacao.conteudo());
-		System.out.println("\n  1 - Exit                               2- Edit       ");
-		System.out.println("============================================================");
-
-		return input.nextLine();
-	}
-
-	@Override
-	public String mostrarMenuFiltro(Scanner input, GerenciadorFiltrosOrientacao gerenciador) {
-		String opcaoEscolhida;
-
-		System.out.println("============================================================");
-		System.out.println("                         FILTERS                            ");
-		System.out.println("============================================================");
-		System.out.println(" 1 - Filter by Language");
-		System.out.println(" 2 - Filter by Orientation Type\n");
-		System.out.println(" 3 - View filters");
-		System.out.println(" 4 - Apply Selected Filters");
-		System.out.println("============================================================");
-
-		opcaoEscolhida = input.nextLine();
-
-		switch (opcaoEscolhida) {
-			case "1":
-				System.out.println("\nChoose languages to filter:");
-				System.out.println("P - Portuguese");
-				System.out.println("I - English");
-				System.out.println("E - Spanish");
-				System.out.println("A - German");
-				opcaoEscolhida = input.nextLine();
-				break;
-
-			case "2":
-				System.out.println("\nChoose orientation types to filter:");
-				System.out.println("M - Operation Manual");
-				System.out.println("S - Safety Procedures");
-				System.out.println("R - Maintenance and Repairs");
-				System.out.println("D - Tests and Diagnostics");
-				System.out.println("C - Code of Conduct and Sectorial Operations");
-				opcaoEscolhida = input.nextLine();
-				break;
-			case "3":
-				System.out.println("------------------------------------------------------------");
-				System.out.println(gerenciador.formatarFiltrosAtivados());
-				System.out.println("------------------------------------------------------------");
-				System.out.println(" 1- Back");
-				String opcao = input.nextLine();
-
-				switch (opcao) {
-					case "2":
-						System.out.println("Enter filter number: ");
-						return input.nextLine();
-				}
-		}
-
-		return opcaoEscolhida;
-	}
-
-	@Override
-	public String mostrarMenuPesquisaOrientacao(Scanner input) {
-		System.out.println("============================================================");
-		System.out.println("                       SEARCH                               ");
-		System.out.println("============================================================");
-		System.out.println(" 1- Exit ");
-		System.out.println("------------------------------------------------------------");
-		System.out.println(" Enter your search: ");
-		String pesquisa = input.nextLine();
-		System.out.println("============================================================");
-
-		return pesquisa;
-	}
-
-	@Override
-	public String pegarMensagemEdicaoConcluida() {
-		return "Edition completed successfully";
-	}
-
-	@Override
-	public String pegarNomeIdioma(IdiomaOrientacao idiomaOrientacao){
-		return switch(idiomaOrientacao) {
-			case PORTUGUES -> "Portuguese";
-			case INGLES -> "English";
-			case ESPANHOL -> "Spanish";
-			case ALEMAO -> "German";
-			default -> "Other";
-		};
-	}
-
-	@Override
-	public String pegarMensagemErroLogin() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemErroLoginUsuario() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemErroLoginSenha() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemLoginConcluido() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemErroCadastroUsuarioExistente() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemErroCadastroSenhaPequena() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemErroCadastroSenhaSemMaiscula() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemErroCadastroSenhaSemCaracterEspecial() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemCadastroConcluido() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

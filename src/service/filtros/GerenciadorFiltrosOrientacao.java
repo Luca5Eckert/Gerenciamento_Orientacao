@@ -89,12 +89,12 @@ public class GerenciadorFiltrosOrientacao {
         int numero = 1;
 
         if (filtroOrientacaoIdioma != null && !filtroOrientacaoIdioma.getIdiomasOrientacoes().isEmpty()) {
-            formatado.append(numero).append("- ").append(filtroOrientacaoIdioma.toString()).append("\n");
+            formatado.append(numero).append("- ").append(filtroOrientacaoIdioma.pegarIdiomas()).append("\n");
             numero++;
         }
 
         if (filtroOrientacaoTipo != null && !filtroOrientacaoTipo.getTiposOrientacao().isEmpty()) {
-            formatado.append(numero).append("- ").append(filtroOrientacaoTipo.toString()).append("\n");
+            formatado.append(numero).append("- ").append(filtroOrientacaoTipo.pegarTipos()).append("\n");
             numero++;
         }
 

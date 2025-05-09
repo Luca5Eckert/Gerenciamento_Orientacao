@@ -15,7 +15,7 @@ public class Sistema {
 	private Scanner input = new Scanner(System.in);
 
 	public Sistema() {
-		this.gerenciadorMenu = new MenuGerenciador();
+		this.gerenciadorMenu = new MenuGerenciador(MenuFactory.criarMenu(TipoMenu.FIM));
 	}
 
 	public boolean iniciarSistema() {

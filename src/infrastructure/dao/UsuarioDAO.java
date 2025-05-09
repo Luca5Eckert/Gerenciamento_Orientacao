@@ -72,14 +72,14 @@ public class UsuarioDAO {
     }
 
     public void salvar(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuarios (id, nome, email, senha) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nome, email, senha) VALUES ( ?, ?, ?)";
 
         try (Connection conn = ConexaoFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(2, usuario.getNome());
-            stmt.setString(3, usuario.getEmail());  
-            stmt.setString(4, usuario.getSenha());
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getEmail());  
+            stmt.setString(3, usuario.getSenha());
             stmt.executeUpdate();
         }
     }

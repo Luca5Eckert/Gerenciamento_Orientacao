@@ -35,10 +35,6 @@ public class UsuarioService {
 		return true;
 	}
 
-	public CadastroService getCadastroService() {
-		return cadastroService;
-	}
-
 	public boolean realizarCadastro(UsuarioDto usuarioDto)
 			throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
 		cadastroService.validarUsuarioEmail(usuarioDto, usuarioRepositorio, idiomaImplementacao);

@@ -2,6 +2,7 @@ package aplication;
 
 import aplication.interfaces.Menu;
 import aplication.interfaces.MenuFinal;
+import service.SessaoUsuario;
 
 import java.util.Scanner;
 
@@ -11,13 +12,10 @@ public class MenuGerenciador {
 	public MenuGerenciador(Menu menu) {
 		this.menu = menu;
 	}
-	
-	public MenuGerenciador() {
-	}
 
 	public boolean iniciarFluxoMenu(Scanner input) {
 		Menu novoMenu = this.iniciarMenu(input);
-		
+				
 		this.definirNovoMenu(novoMenu);
 		
 		return definirRetorno(novoMenu);

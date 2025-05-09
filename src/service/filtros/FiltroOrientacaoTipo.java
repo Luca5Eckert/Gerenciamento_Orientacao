@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
 import dtos.OrientacaoDto;
+import service.SessaoUsuario;
 
 public class FiltroOrientacaoTipo implements FiltroOrientacao {
     private List<TipoOrientacao> tiposOrientacao = new ArrayList<>();
@@ -32,9 +34,15 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao {
         return tiposOrientacao.contains(orientacao.tipoOrientacao());
     }
 
-    @Override
-    public String toString() {
-        return "Filtro de Tipo: " + tiposOrientacao;
+    public String pegarTipos() {
+    	var idioma = SessaoUsuario.pegarIdioma();
+        return idioma.pegarFiltroTipo() + mostrarTipos(idioma.obterIdiomaOrientacao());
+    }
+    
+    public String mostrarTipos(IdiomaOrientacao idiomaOrientacao) {
+    	StringBuilder formatadoMostrarIdiomas = new StringBuilder();
+    	tiposOrientacao.stream().forEach(i -> formatadoMostrarIdiomas.append(i.getNome(idiomaOrientacao) + ", "));
+    	return formatadoMostrarIdiomas.toString();
     }
 
     public List<TipoOrientacao> getTiposOrientacao() {
@@ -45,14 +53,12 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao {
         this.tiposOrientacao = tiposOrientacao;
     }
 
-    // Adiciona um tipo ao filtro
     public void adicionarTipo(TipoOrientacao tipo) {
         if (!tiposOrientacao.contains(tipo)) {
             tiposOrientacao.add(tipo);
         }
     }
 
-    // Limpa todos os filtros de tipos
     public void limparFiltros() {
         tiposOrientacao.clear();
     }
