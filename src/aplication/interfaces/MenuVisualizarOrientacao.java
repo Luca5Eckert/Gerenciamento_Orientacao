@@ -15,7 +15,7 @@ import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuVisualizarOrientacao implements Menu {
 
-	private final IdiomaImplementacao idiomaImplementacao;
+	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoDto orientacaoDto;
 	private final Menu menuAnterior;
 	private final OrientacaoService orientacaoService;
@@ -100,6 +100,10 @@ public class MenuVisualizarOrientacao implements Menu {
 		return listaNaoDisponivel;
 	}
 	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+	}
 
 
 }

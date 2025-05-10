@@ -1,6 +1,8 @@
 package aplication;
 
 import java.util.Scanner;
+
+import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.implementacoes.InglesImplementacao;
 import aplication.interfaces.TipoMenu;
@@ -20,11 +22,13 @@ public class Sistema {
 
 	public boolean iniciarSistema() {
 		System.out.println("Starting the system....");
-		System.out.println("Select a language: \n 1- Portuguese\n 2- English\n 3- German\n 4- Spanish");
+		System.out.println("Select a language:");
+		System.out.println(IdiomaOrientacao.listaIdiomasFormatado(new InglesImplementacao()));
+		
 		int opcaoIdioma = input.nextInt();
 		boolean sistema = true;
 
-		IdiomaImplementacao idiomaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(opcaoIdioma);
+		IdiomaImplementacao idiomaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(IdiomaOrientacao.pegarIdioma(opcaoIdioma-1));
 		iniciarGerenciador(idiomaImplementacao);
 		
 		input.nextLine();

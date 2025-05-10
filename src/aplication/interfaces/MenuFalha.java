@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class MenuFalha implements Menu {
 	
-	private final IdiomaImplementacao idiomaImplementacao;
+	private  IdiomaImplementacao idiomaImplementacao;
 	private final Menu proximoMenu;
 	private final String mensagemErro;
 	
@@ -31,6 +31,12 @@ public class MenuFalha implements Menu {
 		default -> this.proximoMenu;
 		};
 	}
+	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+	}
+
 	
 
 }

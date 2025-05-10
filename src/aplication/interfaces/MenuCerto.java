@@ -27,5 +27,10 @@ public class MenuCerto implements Menu {
 		default -> this.proximoMenu;
 		};
 	}
+	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+	}
 
 }

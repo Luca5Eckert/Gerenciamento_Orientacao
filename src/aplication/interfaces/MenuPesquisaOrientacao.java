@@ -8,7 +8,7 @@ import dtos.OrientacaoDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class MenuPesquisaOrientacao implements Menu {
-	private final IdiomaImplementacao idiomaImplementacao;
+	private IdiomaImplementacao idiomaImplementacao;
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
 	public MenuPesquisaOrientacao(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
@@ -36,6 +36,11 @@ public class MenuPesquisaOrientacao implements Menu {
 			return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro);
 		}
 
+	}
+	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
 }

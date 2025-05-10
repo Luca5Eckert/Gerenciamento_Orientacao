@@ -14,7 +14,7 @@ import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuExibirOrientacoes implements Menu {
 
-	private final IdiomaImplementacao idiomaImplementacao;
+	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 	private final GerenciadorFiltrosOrientacao gerenciadorFiltro;
 	private final FormatacaoListaOrientacao formatacaoLista;
@@ -88,4 +88,11 @@ public class MenuExibirOrientacoes implements Menu {
 		gerenciadorFiltro.definirFitroPadrao(idiomaImplementacao.obterIdiomaOrientacao());
 		return this;
 	}
+	
+	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+	}
+
 }

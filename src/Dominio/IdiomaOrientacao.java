@@ -6,37 +6,38 @@ import java.util.List;
 import aplication.implementacoes.IdiomaImplementacao;
 
 
+
 public enum IdiomaOrientacao {
-	PORTUGUES("Português", "Portuguese", "Portugiesisch", "Portugués"),
+    PORTUGUES("Português", "Portuguese", "Portugiesisch", "Portugués"),
     INGLES("Inglês", "English", "Englisch", "Inglés"),
     ALEMAO("Alemão", "German", "Deutsch", "Alemán"),
     ESPANHOL("Espanhol", "Spanish", "Spanisch", "Español");
-	
-	private String idiomaPortugues;
-	private String idiomaIngles;
-	private String idiomaAlemao;
-	private String idiomaEspanhol;
-	
-	IdiomaOrientacao(String idiomaPortugues, String idiomaIngles, String idiomaAlemao, String idiomaEspanhol) {
-		this.idiomaPortugues = idiomaPortugues;
-		this.idiomaIngles = idiomaIngles;
-		this.idiomaAlemao = idiomaAlemao;
-		this.idiomaEspanhol = idiomaEspanhol;
-	}
-	
-	public static List<IdiomaOrientacao> listarIdiomas() {
-        return Arrays.asList(IdiomaOrientacao.values());
+
+    private final String idiomaPortugues;
+    private final String idiomaIngles;
+    private final String idiomaAlemao;
+    private final String idiomaEspanhol;
+
+    IdiomaOrientacao(String idiomaPortugues, String idiomaIngles, String idiomaAlemao, String idiomaEspanhol) {
+        this.idiomaPortugues = idiomaPortugues;
+        this.idiomaIngles = idiomaIngles;
+        this.idiomaAlemao = idiomaAlemao;
+        this.idiomaEspanhol = idiomaEspanhol;
     }
-	
-	public static IdiomaOrientacao pegarIdioma(int numeroIdioma) {
-		IdiomaOrientacao[] valores = IdiomaOrientacao.values();
+
+    public static List<IdiomaOrientacao> listarIdiomas() {
+        return Arrays.asList(values());
+    }
+
+    public static IdiomaOrientacao pegarIdioma(int numeroIdioma) {
+        IdiomaOrientacao[] valores = values();
         if (numeroIdioma >= 0 && numeroIdioma < valores.length) {
             return valores[numeroIdioma];
         }
         return PORTUGUES;
-	}
-	
-	public String getNomeEmPortugues() {
+    }
+
+    public String getNomeEmPortugues() {
         return idiomaPortugues;
     }
 
@@ -54,10 +55,10 @@ public enum IdiomaOrientacao {
 
     public String getNomePorIdioma(IdiomaOrientacao idioma) {
         return switch (idioma) {
-            case PORTUGUES -> idiomaPortugues;
-            case INGLES -> idiomaIngles;
-            case ALEMAO -> idiomaAlemao;
-            case ESPANHOL -> idiomaEspanhol;
+            case PORTUGUES -> getNomeEmPortugues();
+            case INGLES -> getNomeEmIngles();
+            case ALEMAO -> getNomeEmAlemao();
+            case ESPANHOL -> getNomeEmEspanhol();
         };
     }
 
@@ -73,8 +74,22 @@ public enum IdiomaOrientacao {
         throw new IllegalArgumentException("Idioma não reconhecido: " + nome);
     }
 
-    
+		public static String listaIdiomasFormatado(IdiomaImplementacao idiomaImplementacao) {
+		    StringBuilder idiomasFormatados = new StringBuilder();
+
+		    int numeroIdioma = 1;
+		    for (IdiomaOrientacao idioma : values()) {
+		        idiomasFormatados.append(" ")
+		                         .append(numeroIdioma)
+		                         .append("- ")
+		                         .append(idioma.getNomePorIdioma(idiomaImplementacao.obterIdiomaOrientacao()))
+		                         .append("\n");
+		        numeroIdioma++;
+		    }
+
+		    return idiomasFormatados.toString();
+		}
+
 }
 
-	
 

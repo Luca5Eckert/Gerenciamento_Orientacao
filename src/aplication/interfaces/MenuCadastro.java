@@ -33,5 +33,10 @@ public class MenuCadastro implements Menu {
 		return menu;
 
 	}
+	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+	}
 
 }

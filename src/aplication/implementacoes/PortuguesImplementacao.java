@@ -26,7 +26,8 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(" Bem vindo ao sistema de gerenciador de Orientações:        ");
 		System.out.println(" 1- Login");
 		System.out.println(" 2- Cadastro");
-		System.out.println(" 3- Sair sistema");
+		System.out.println(" 3- Mudar Idioma");
+		System.out.println(" 4- Sair sistema");
 		System.out.println("------------------------------------------------------------");
 
 		return input.nextLine();
@@ -79,6 +80,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(" 1- Acessar Orientações");
 		System.out.println(" 2- Sair da conta");
 		System.out.println(" 3- Sair sistema");
+		System.out.println(" 4- Mudar de idioma");
 
 		System.out.println("------------------------------------------------------------");
 
@@ -401,6 +403,24 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarFiltroTipo() {
 		return "Filtros de tipos: ";
+	}
+
+	@Override
+	public String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados) {
+		System.out.println("============================================================");
+		System.out.println("                    TROCAR IDIOMA                           ");
+		System.out.println("============================================================");
+		System.out.println(" S- Sair\n");
+		System.out.println(" Idiomas disponíveis: ");
+		System.out.println(idiomaFormatados);
+		System.out.println("============================================================");
+		
+		return input.nextLine();
+	}
+	
+	@Override
+	public String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado) {
+		return " Idioma Alterado para " + idiomaAlterado;
 	}
 
 }

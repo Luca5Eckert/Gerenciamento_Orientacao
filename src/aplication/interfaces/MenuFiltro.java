@@ -10,7 +10,7 @@ import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class MenuFiltro implements Menu {
 
-	private final IdiomaImplementacao idiomaImplementacao;
+	private IdiomaImplementacao idiomaImplementacao;
     private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
     public MenuFiltro(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
@@ -57,6 +57,12 @@ public class MenuFiltro implements Menu {
         gerenciadorFiltro.definirFiltroTipo(tipo);
         return true;
     }
+    
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+	}
+
 
 
 }

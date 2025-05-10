@@ -10,5 +10,9 @@ public class MenuFinal implements Menu{
 	public Menu chamarMenu( Scanner input) {
 		return this;
 	}
-
+	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+	}
+	
 }

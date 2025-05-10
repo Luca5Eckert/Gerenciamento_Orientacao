@@ -11,8 +11,8 @@ import service.exceptions.usuario.LoginSenhaException;
 import service.exceptions.usuario.LoginUsuarioException;
 
 public class MenuLogin implements Menu {
-	private final IdiomaImplementacao idiomaImplementacao;
-	private UsuarioService service;
+	private IdiomaImplementacao idiomaImplementacao;
+	private final UsuarioService service;
 
 	public MenuLogin(IdiomaImplementacao idiomaImplementacao, UsuarioService usuarioService) {
 		this.idiomaImplementacao = idiomaImplementacao;
@@ -33,6 +33,12 @@ public class MenuLogin implements Menu {
 		}
 
 		return menu;
+	}
+
+	
+	@Override
+	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
 

@@ -76,4 +76,11 @@ public class MenuFactory {
 		default -> new MenuInicial(pegarIdioma());
 		};
 	}
+	
+	public static Menu criarMenuAlterarSistema(TipoMenu tipoMenu, Menu menuAnterior) {
+		return switch(tipoMenu) {
+		case ALTERAR_IDIOMA -> new MenuTrocaIdioma(pegarIdioma(), menuAnterior);
+		default -> new MenuInicial(pegarIdioma());
+		};
+	}
 }

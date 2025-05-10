@@ -69,5 +69,9 @@ public interface IdiomaImplementacao {
 	String pegarFiltroIdioma();
 	
 	String pegarFiltroTipo();
+
+	String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados);
+	
+	String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado);
 	
 }

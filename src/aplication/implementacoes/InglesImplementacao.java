@@ -19,14 +19,16 @@ public class InglesImplementacao implements IdiomaImplementacao {
 
     @Override
     public String mostrarMenuInicial(Scanner input) {
-        System.out.println("============================================================");
-        System.out.println("                          START                             ");
-        System.out.println("============================================================");
-        System.out.println(" Welcome to the Guidance Management System:                 ");
-        System.out.println(" 1- Login");
-        System.out.println(" 2- Register");
-        System.out.println(" 3- Exit system");
-        System.out.println("------------------------------------------------------------");
+    	System.out.println("============================================================");
+    	System.out.println("                          START                              ");
+    	System.out.println("============================================================");
+    	System.out.println(" Welcome to the Orientation Management System:              ");
+    	System.out.println(" 1- Login");
+    	System.out.println(" 2- Register");
+    	System.out.println(" 3- Change Language");
+    	System.out.println(" 4- Exit System");
+    	System.out.println("------------------------------------------------------------");
+
 
         return input.nextLine();
     }
@@ -70,16 +72,18 @@ public class InglesImplementacao implements IdiomaImplementacao {
 
     @Override
     public String mostrarMenuGeral(Scanner input) {
-        System.out.println("============================================================");
-        System.out.println("                         MANAGER                            ");
-        System.out.println("============================================================");
+    	System.out.println("============================================================");
+    	System.out.println("                        MANAGER                              ");
+    	System.out.println("============================================================");
 
-        System.out.println(" 0- Create Guidance");
-        System.out.println(" 1- View Guidances");
-        System.out.println(" 2- Logout");
-        System.out.println(" 3- Exit system");
+    	System.out.println(" 0- Create Orientation");
+    	System.out.println(" 1- Access Orientations");
+    	System.out.println(" 2- Log Out");
+    	System.out.println(" 3- Exit System");
+    	System.out.println(" 4- Change Language");
 
-        System.out.println("------------------------------------------------------------");
+    	System.out.println("------------------------------------------------------------");
+
 
         return input.nextLine();
     }
@@ -375,7 +379,7 @@ public class InglesImplementacao implements IdiomaImplementacao {
 
     @Override
     public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
-        return null; // To be implemented if necessary
+        return null; 
     }
 
 	@Override
@@ -386,5 +390,23 @@ public class InglesImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarFiltroTipo() {
 		return "Type filter: ";
+	}
+
+	@Override
+	public String mostrarMenuTrocarIdioma(Scanner input, String formattedLanguages) {
+	    System.out.println("============================================================");
+	    System.out.println("                      CHANGE LANGUAGE                       ");
+	    System.out.println("============================================================");
+	    System.out.println(" S- Exit\n");
+	    System.out.println(" Available languages: ");
+	    System.out.println(formattedLanguages);
+	    System.out.println("============================================================");
+	    
+	    return input.nextLine();
+	}
+
+	@Override
+	public String pegarMensagemTrocaDeIdiomaBemSucedida(String changedLanguage) {
+	    return " Language changed to " + changedLanguage;
 	}
 }

@@ -1,5 +1,6 @@
 package aplication;
 
+import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.AlemaoImplementacao;
 import aplication.implementacoes.EspanholImplementacao;
 import aplication.implementacoes.IdiomaImplementacao;
@@ -8,12 +9,12 @@ import aplication.implementacoes.PortuguesImplementacao;
 
 public class IdiomaFactory {
 
-	public static IdiomaImplementacao pegarIdiomaImplementacao(int tipoMenu) {
-		return switch (tipoMenu) {
-		case 1 -> new PortuguesImplementacao();
-		case 2 -> new InglesImplementacao();
-		case 3 -> new AlemaoImplementacao();
-		case 4 -> new EspanholImplementacao();
+	public static IdiomaImplementacao pegarIdiomaImplementacao(IdiomaOrientacao idiomaOrientacao) {
+		return switch (idiomaOrientacao) {
+		case PORTUGUES -> new PortuguesImplementacao();
+		case INGLES -> new InglesImplementacao();
+		case ALEMAO -> new AlemaoImplementacao();
+		case ESPANHOL -> new EspanholImplementacao();
 		default -> new PortuguesImplementacao();
 		};
 	}
