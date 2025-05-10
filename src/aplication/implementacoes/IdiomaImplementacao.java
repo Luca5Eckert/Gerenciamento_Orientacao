@@ -24,7 +24,7 @@ public interface IdiomaImplementacao {
 
 	String mostrarMenuOpcoesOrientacao(Scanner input);
 
-	List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input);
+	List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception;
 
 	OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto orientacaoDto, Scanner input);
 

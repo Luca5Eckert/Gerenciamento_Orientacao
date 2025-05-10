@@ -87,7 +87,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
     }
 
     @Override
-    public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) {
+    public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception {
         int repeatCount = 1;
         List<OrientacaoDto> list = new ArrayList<>();
 
@@ -95,14 +95,21 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
         System.out.println("                       ERSTELLUNG                           ");
         System.out.println("============================================================");
 
-        System.out.println(" Möchten Sie eine Orientierung nur in Ihrer Sprache oder in allen erstellen?");
-        System.out.println(" 1- Nur Englisch");
-        System.out.println(" 2- Für alle Sprachen");
-        String option = input.nextLine();
+        System.out.println(" S- Beenden ");
+        System.out.println(" Möchten Sie nur für Ihre Sprache oder für alle erstellen? ");
+        System.out.println(" 1- Nur für Portugiesisch ");
+        System.out.println(" 2- Für alle ");
+        String opcao = input.nextLine();
 
-        switch (option) {
-            case "1" -> repeatCount = 1;
-            case "2" -> repeatCount = IdiomaOrientacao.values().length;
+        switch (opcao.toUpperCase()) {
+        case "1":
+        	repeatCount = 1;
+            break;
+        case "2":
+        	repeatCount = IdiomaOrientacao.values().length;
+            break;
+        case "S":
+            throw new Exception();
         }
 
         System.out.println(" Orientierungstyp:");

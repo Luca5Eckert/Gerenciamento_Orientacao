@@ -89,22 +89,23 @@ public class InglesImplementacao implements IdiomaImplementacao {
     }
 
     @Override
-    public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) {
+    public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception {
         int repeatCount = 1;
         List<OrientacaoDto> list = new ArrayList<>();
-
         System.out.println("============================================================");
         System.out.println("                       CREATION                             ");
         System.out.println("============================================================");
 
+        System.out.println(" S- Exit ");
         System.out.println(" Do you want to create guidance for only your language or all?");
         System.out.println(" 1- Only English");
         System.out.println(" 2- For all languages");
         String option = input.nextLine();
 
-        switch (option) {
+        switch (option.toUpperCase()) {
             case "1" -> repeatCount = 1;
             case "2" -> repeatCount = IdiomaOrientacao.values().length;
+            case "S" -> throw new Exception();
         }
 
         System.out.println(" Guidance Type:");

@@ -88,7 +88,7 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) {
+	public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception {
 		int numeroRepetirVezes = 1;
 		List<OrientacaoDto> listaOrientacaoDto = new ArrayList<>();
 
@@ -96,18 +96,21 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 		System.out.println("                       CREACIÓN                             ");
 		System.out.println("============================================================");
 
+		System.out.println(" S- Salir ");
 		System.out.println(" ¿Desea crear solo para su idioma o para todos? ");
 		System.out.println(" 1- Solo para Portugués ");
 		System.out.println(" 2- Para todos ");
 		String opcao = input.nextLine();
 
-		switch (opcao) {
+		switch (opcao.toUpperCase()) {
 		case "1":
-			numeroRepetirVezes = 1;
-			break;
+		    numeroRepetirVezes = 1;
+		    break;
 		case "2":
-			numeroRepetirVezes = IdiomaOrientacao.values().length;
-			break;
+		    numeroRepetirVezes = IdiomaOrientacao.values().length;
+		    break;
+		case "S":
+		    throw new Exception();
 		}
 
 		System.out.println(" Tipo de Orientación:");

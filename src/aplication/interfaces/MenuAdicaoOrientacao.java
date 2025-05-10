@@ -1,9 +1,11 @@
 package aplication.interfaces;
 
+import java.util.List;
 import java.util.Scanner;
 
 import aplication.MenuFactory;
 import aplication.implementacoes.IdiomaImplementacao;
+import dtos.OrientacaoDto;
 import service.OrientacaoService;
 
 public class MenuAdicaoOrientacao implements Menu {
@@ -17,7 +19,12 @@ public class MenuAdicaoOrientacao implements Menu {
 	
 	@Override
 	public Menu chamarMenu( Scanner input) {
-		var listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
+		List<OrientacaoDto> listaOrientacaoCriada;
+		try {
+			listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
+		} catch (Exception e) {
+			return MenuFactory.criarMenu(TipoMenu.GERAL);
+		}
 		
 		orientacaoService.criarOrientacoes(listaOrientacaoCriada);
 		return devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao);
