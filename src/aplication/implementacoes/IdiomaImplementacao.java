@@ -74,4 +74,6 @@ public interface IdiomaImplementacao {
 	
 	String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado);
 	
+	String pegarMensagemOrientacoesNaoEncontrada();
+	
 }

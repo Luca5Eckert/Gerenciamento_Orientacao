@@ -410,4 +410,9 @@ public class InglesImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemTrocaDeIdiomaBemSucedida(String changedLanguage) {
 	    return " Language changed to " + changedLanguage;
 	}
+	
+	@Override
+	public String pegarMensagemOrientacoesNaoEncontrada() {
+		return " No guidance found";
+	}
 }

@@ -426,4 +426,9 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return " Idioma Alterado para " + idiomaAlterado;
 	}
 
+	@Override
+	public String pegarMensagemOrientacoesNaoEncontrada() {
+		return " Nenhuma orientação encontrada";
+	}
+
 }

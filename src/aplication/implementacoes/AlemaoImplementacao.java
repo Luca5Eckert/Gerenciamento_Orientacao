@@ -411,4 +411,9 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
         return "Sprache erfolgreich geändert zu: " + idiomaAlterado;
     }
 
+	@Override
+	public String pegarMensagemOrientacoesNaoEncontrada() {
+		return " Keine Anleitung gefunden";
+	}
+
 }

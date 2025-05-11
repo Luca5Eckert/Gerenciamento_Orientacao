@@ -424,4 +424,9 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado) {
 		return " Idioma cambiado a " + idiomaAlterado;
 	}
+
+	@Override
+	public String pegarMensagemOrientacoesNaoEncontrada() {
+		return " No se encontró ninguna guía";
+	}
 }
