@@ -62,18 +62,6 @@ public enum IdiomaOrientacao {
         };
     }
 
-    public static IdiomaOrientacao valueOfNome(String nome) {
-        for (IdiomaOrientacao idioma : values()) {
-            if (idioma.idiomaPortugues.equalsIgnoreCase(nome) ||
-                idioma.idiomaIngles.equalsIgnoreCase(nome) ||
-                idioma.idiomaAlemao.equalsIgnoreCase(nome) ||
-                idioma.idiomaEspanhol.equalsIgnoreCase(nome)) {
-                return idioma;
-            }
-        }
-        throw new IllegalArgumentException("Idioma não reconhecido: " + nome);
-    }
-
 		public static String listaIdiomasFormatado(IdiomaImplementacao idiomaImplementacao) {
 		    StringBuilder idiomasFormatados = new StringBuilder();
 
@@ -88,7 +76,21 @@ public enum IdiomaOrientacao {
 		    }
 
 		    return idiomasFormatados.toString();
+		    
 		}
+		
+		
+	    public static IdiomaOrientacao valueOfNome(String nome) {
+	        for (IdiomaOrientacao idioma : values()) {
+	            if (idioma.idiomaPortugues.equalsIgnoreCase(nome) ||
+	                idioma.idiomaIngles.equalsIgnoreCase(nome) ||
+	                idioma.idiomaAlemao.equalsIgnoreCase(nome) ||
+	                idioma.idiomaEspanhol.equalsIgnoreCase(nome)) {
+	                return idioma;
+	            }
+	        }
+	        throw new IllegalArgumentException("Idioma não reconhecido: " + nome);
+	    }
 
 }
 

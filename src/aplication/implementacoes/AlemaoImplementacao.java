@@ -363,10 +363,6 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
         return "Hinzufügung fehlgeschlagen.";
     }
 
-    @Override
-    public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
-    	return null;
-    }
 
     @Override
     public String pegarMensagemEdicaoConcluida() {

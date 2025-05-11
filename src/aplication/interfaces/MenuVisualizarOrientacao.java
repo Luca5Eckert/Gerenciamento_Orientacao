@@ -32,16 +32,23 @@ public class MenuVisualizarOrientacao implements Menu {
 
 	@Override
 	public Menu chamarMenu(Scanner input) {
-		Map<IdiomaOrientacao, OrientacaoDto> listaOrientacoesIdiomas = orientacaoService
-				.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
+		try {
+			Map<IdiomaOrientacao, OrientacaoDto> listaOrientacoesIdiomas = orientacaoService
+					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
+			var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
+			
+			String orientacoesFormatada = formatador.formatarOrientacoesIdiomas(listaOrdenada, listaOrientacoesIdiomas.size());
+			
+			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada );
+			
+			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas);
+			
+		} catch ( Exception npe) {
+			System.out.println("DEU MERDA, pq: " );
+			npe.printStackTrace();
+		}
+		return menuAnterior;
 
-		var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
-
-		formatador.formatarOrientacoesIdiomas(null, listaOrientacoesIdiomas.size());
-
-		String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto);
-
-		return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas);
 	}
 
 	public Menu devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
@@ -91,10 +98,10 @@ public class MenuVisualizarOrientacao implements Menu {
 	}
 
 	private List<IdiomaOrientacao> pegarOrientacoeNaoDisponiveis(List<IdiomaOrientacao> listaDisponivel) {
-		var listaNaoDisponivel = IdiomaOrientacao.listarIdiomas();
+		var listaNaoDisponivel = new ArrayList<>(IdiomaOrientacao.listarIdiomas());
 
 		for (IdiomaOrientacao idioma : listaDisponivel) {
-			listaNaoDisponivel.remove(idioma);
+			listaNaoDisponivel.remove(idioma);  
 		}
 
 		return listaNaoDisponivel;
@@ -104,6 +111,4 @@ public class MenuVisualizarOrientacao implements Menu {
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
-
-
 }

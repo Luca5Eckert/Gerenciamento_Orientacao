@@ -296,7 +296,8 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("\n Conteúdo:");
 		System.out.println(" " + orientacao.conteudo());
 		System.out.println("\n  S - Sair         E- Editar             A-Apagar         ");
-		System.out.println(" Em outros idiomas: ");
+		System.out.println("------------------------------------------------------------");
+		System.out.println("Visualização em outros idiomas:\n");
 		System.out.println(idiomasOrientacoes);
 		System.out.println("============================================================");
 
@@ -390,12 +391,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarMensangemAdicaoFalhada() {
 		return " Falha ao adicionar orientação";
-	}
-
-	@Override
-	public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

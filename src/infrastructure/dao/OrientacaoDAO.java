@@ -52,8 +52,13 @@ public class OrientacaoDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     orientacao = new Orientacao();
-                    orientacao.getIdOrientacao().setIdOrientacao(rs.getString("id"));
-                    orientacao.getIdOrientacao().setIdiomaOrientacao(IdiomaOrientacao.valueOf(rs.getString("idioma_orientacao")));
+                    OrientacaoId orientacaoId = new OrientacaoId();
+                    
+                    orientacaoId.setIdOrientacao(rs.getString("id"));
+                    orientacaoId.setIdiomaOrientacao(IdiomaOrientacao.valueOf(rs.getString("idioma_orientacao")));
+                    
+                    orientacao.setIdOrientacao(orientacaoId);  
+
                     orientacao.setTitulo(rs.getString("titulo"));
                     orientacao.setConteudo(rs.getString("conteudo"));
                     orientacao.setTipoOrientacao(TipoOrientacao.valueOf(rs.getString("tipo_orientacao")));
@@ -62,6 +67,7 @@ public class OrientacaoDAO {
         }
         return orientacao;
     }
+
 
     public void salvar(Orientacao orientacao) throws SQLException {
         String sql = "INSERT INTO orientacao (id, titulo, tipo_orientacao, conteudo, idioma_orientacao) VALUES (?, ?, ?, ?, ?)";

@@ -393,11 +393,6 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
-		return null;
-	}
-
-	@Override
 	public String pegarFiltroIdioma() {
 		return "Filtros de idiomas: ";
 	}

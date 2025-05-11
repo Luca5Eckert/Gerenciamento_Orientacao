@@ -54,18 +54,22 @@ public class OrientacaoService {
 	}
 	
 	public Map<IdiomaOrientacao, OrientacaoDto> pegarOrientacoesIdiomas(String idOrientacoes) {
-		var listaOrientacoesIdiomas = new HashMap<IdiomaOrientacao, OrientacaoDto>();
-		for (IdiomaOrientacao idioma : IdiomaOrientacao.values()) {
+	    var listaOrientacoesIdiomas = new HashMap<IdiomaOrientacao, OrientacaoDto>();
+	    for (IdiomaOrientacao idioma : IdiomaOrientacao.values()) {
+	        Orientacao orientacao = repositorioOrientacao.pegarOrientacaoPorIdeIdioma( idOrientacoes, idioma.name());
 
-			Orientacao orientacao = repositorioOrientacao.pegarOrientacaoPorIdeIdioma(idioma.name(), idOrientacoes);
+	        if (orientacao != null) {
+	            var orientacaoDto = transformarModeloDto(orientacao);
+	            listaOrientacoesIdiomas.put(idioma, orientacaoDto); 
+	        }
+	        System.out.println("Verificando idioma: " + idioma.name() + " e id: " + idOrientacoes);
+	        System.out.println("Resultado: " + orientacao);
 
-			if (orientacao != null) {
-				var orientacaoDto = transformarModeloDto(orientacao);
-				listaOrientacoesIdiomas.replace(idioma, orientacaoDto);
-			}
-		}
-		return listaOrientacoesIdiomas;
+	    }
+	    
+	    return listaOrientacoesIdiomas;
 	}
+
 
 	public List<OrientacaoDto> aplicarFiltro(GerenciadorFiltrosOrientacao gerenciadorFiltro)
 			throws OrientacaoException {

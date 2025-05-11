@@ -378,11 +378,6 @@ public class InglesImplementacao implements IdiomaImplementacao {
         return "Failed to add guidance.";
     }
 
-    @Override
-    public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao) {
-        return null; 
-    }
-
 	@Override
 	public String pegarFiltroIdioma() {
 		return "Language filter: ";

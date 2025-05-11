@@ -71,14 +71,14 @@ public class MenuFactory {
 
 	public static Menu criarMenuPesquisa(TipoMenu tipoMenu, OrientacaoDto orientacaoDto, Menu menu) {
 		return switch (tipoMenu) {
-		case MOSTRAR_ORIENTACAO ->
-			new MenuVisualizarOrientacao(pegarIdioma(), orientacaoDto, menu, null, new FormatacaoListaOrientacao());
+		case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(pegarIdioma(), orientacaoDto, menu,
+				criarOrientacaoService(), new FormatacaoListaOrientacao());
 		default -> new MenuInicial(pegarIdioma());
 		};
 	}
-	
+
 	public static Menu criarMenuAlterarSistema(TipoMenu tipoMenu, Menu menuAnterior) {
-		return switch(tipoMenu) {
+		return switch (tipoMenu) {
 		case ALTERAR_IDIOMA -> new MenuTrocaIdioma(pegarIdioma(), menuAnterior);
 		default -> new MenuInicial(pegarIdioma());
 		};

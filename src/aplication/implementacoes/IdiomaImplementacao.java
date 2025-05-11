@@ -58,8 +58,6 @@ public interface IdiomaImplementacao {
 
 	String pegarMensangemAdicaoFalhada();
 
-	String mostrarOrientacao(Scanner input, OrientacaoDto orientacao);
-
 	String pegarMensagemEdicaoConcluida();
 
 	String pegarNomeIdioma(IdiomaOrientacao idiomaOrientacao);
