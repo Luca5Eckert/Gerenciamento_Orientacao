@@ -74,4 +74,8 @@ public interface IdiomaImplementacao {
 	
 	String pegarMensagemOrientacoesNaoEncontrada();
 	
+	String pegarIdiomaDisponivel();
+	
+	String pegarIdiomaIndisponivel();
+	
 }

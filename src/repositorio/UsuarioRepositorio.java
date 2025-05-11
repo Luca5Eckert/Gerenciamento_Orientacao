@@ -75,7 +75,7 @@ public class UsuarioRepositorio {
 		return null;
 	}
 
-	public Usuario pegarUsuario(String nome) {
+	public Usuario pegarUsuarioNome(String nome) {
 		try {
 			return usuarioDAO.buscarPorNome(nome);
 		} catch (SQLException e) {
@@ -83,9 +83,14 @@ public class UsuarioRepositorio {
 		}
 		return null;
 	}
+	
 
 	public boolean verificaSeUsuarioExisteNome(String nome) {
-		return pegarUsuario(nome) != null;
+		return pegarUsuarioNome(nome) != null;
+	}
+	
+	public boolean verificaSeUsuarioExisteEmail(String email) {
+		return pegarUsuarioEmail(email) != null;
 	}
 
 	public boolean verificarSeUsuarioExiste(Usuario usuario) {

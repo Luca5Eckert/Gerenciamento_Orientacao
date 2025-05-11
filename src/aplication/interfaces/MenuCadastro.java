@@ -20,17 +20,15 @@ public class MenuCadastro implements Menu {
 	@Override
 	public Menu chamarMenu(Scanner input) {
 		UsuarioDto usuarioCadastrar = idiomaImplementacao.mostrarMenuCadastro(input);
-		Menu menu;
 
 		try {
 			usuarioService.realizarCadastro(usuarioCadastrar);
-			menu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, MenuFactory.criarMenu(TipoMenu.INICIO),
+			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, MenuFactory.criarMenu(TipoMenu.INICIO),
 					idiomaImplementacao.pegarMensagemCadastroConcluido());
 		} catch (CadastroException ce) {
-			return menu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO),
+			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO),
 					ce.getMessage());
 		}
-		return menu;
 
 	}
 	

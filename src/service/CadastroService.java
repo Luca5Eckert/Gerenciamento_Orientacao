@@ -24,7 +24,7 @@ public class CadastroService {
 
 	public boolean validarSeEhNovo(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
 			IdiomaImplementacao idiomaImplementacao) throws CadastroUsuarioJaExistenteException {
-		if (usuarioRepositorio.verificaSeUsuarioExisteNome(usuarioDto.nome())) {
+		if (usuarioRepositorio.verificaSeUsuarioExisteEmail(usuarioDto.email())) {
 			throw new CadastroUsuarioJaExistenteException(idiomaImplementacao.pegarMensagemErroCadastroUsuarioExistente());
 		}
 		return true;

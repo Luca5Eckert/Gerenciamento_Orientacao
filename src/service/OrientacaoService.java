@@ -62,8 +62,6 @@ public class OrientacaoService {
 	            var orientacaoDto = transformarModeloDto(orientacao);
 	            listaOrientacoesIdiomas.put(idioma, orientacaoDto); 
 	        }
-	        System.out.println("Verificando idioma: " + idioma.name() + " e id: " + idOrientacoes);
-	        System.out.println("Resultado: " + orientacao);
 
 	    }
 	    
