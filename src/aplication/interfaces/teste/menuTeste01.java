@@ -15,7 +15,7 @@ public class menuTeste01 {
 		
 		var menuService = new OrientacaoService();
 		
-		OrientacaoDto orientacaoDto = new OrientacaoDto("al", TipoOrientacao.MANUTENCAO_REPAROS, "ala", IdiomaOrientacao.ALEMAO);
+		OrientacaoDto orientacaoDto = new OrientacaoDto("lsa", TipoOrientacao.MANUAL_OPERACAO, "sllsa", IdiomaOrientacao.PORTUGUES);
 		
 		String id = menuService.pegarIdOrientacao(orientacaoDto);
 		
@@ -24,6 +24,8 @@ public class menuTeste01 {
 		var lista = menuService.pegarOrientacoesIdiomas(id);
 		
 		System.out.println(lista);
+		
+		menuService.removerOrientacao(orientacaoDto);
 	}
 	
 	

@@ -40,6 +40,14 @@ public class OrientacaoRepositorio {
             System.out.println("Erro ao remover orientação: " + e.getMessage());
         }
     }
+    
+    public void removerOrientacao(OrientacaoId idOrientacao) {
+    	try {
+    		orientacaoDAO.remover(idOrientacao);
+    	} catch (SQLException e) {
+    		System.out.println("Erro ao remover orientação: " + e.getMessage());
+    	}
+    }
 
     public boolean atualizarOrientacao(String indexOrientacao, IdiomaOrientacao idiomaOrientacao, OrientacaoDto orientacaoDto) {
         try {

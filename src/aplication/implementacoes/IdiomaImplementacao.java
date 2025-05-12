@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
+import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
@@ -91,4 +92,6 @@ public interface IdiomaImplementacao {
 	
 	OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao, TipoOrientacao tipoOrientacao) throws Exception;
 
+	String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException;
+	
 }

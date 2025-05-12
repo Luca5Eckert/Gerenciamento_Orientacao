@@ -9,6 +9,7 @@ import Dominio.IdiomaOrientacao;
 import aplication.MenuFactory;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
+import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.formatacao.FormatacaoListaOrientacao;
@@ -63,9 +64,12 @@ public class MenuVisualizarOrientacao implements Menu {
 
 	public Menu removerOrientacao(Scanner input) {
 		try {
+			idiomaImplementacao.mostrarMenuConfirmarApagarOrientacao(input);
 			orientacaoService.removerOrientacao(orientacaoDto);
 			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuAnterior,
 					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao());
+		} catch (SairMenuException sme) {
+			return this;
 		} catch (Exception le) {
 			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this,
 					idiomaImplementacao.pegarMensagemErroAoRemoverOrientacao());
@@ -92,8 +96,8 @@ public class MenuVisualizarOrientacao implements Menu {
 			return this;
 		} catch (OrientacaoNaoDisponivelIdiomaException ondie) {
 			IdiomaOrientacao idiomaOrientacao = listaOrdenada.get(opcaoEscolhida);
-			return MenuFactory.criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu.ADICAO_ORIENTACAO, this,
-					orientacaoDto, idiomaOrientacao);
+			return MenuFactory.criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu.ADICAO_ORIENTACAO, this, orientacaoDto,
+					idiomaOrientacao);
 		} catch (NumberFormatException nfe) {
 			return this;
 		}
@@ -105,7 +109,7 @@ public class MenuVisualizarOrientacao implements Menu {
 		IdiomaOrientacao idiomaOrientacao = listaOrdenada.get(opcaoEscolhida);
 
 		if (listaOrdenada.size() > opcaoEscolhida && opcaoEscolhida >= listaComOrientacoes.size()) {
-			IdiomaOrientacao idioma = listaOrdenada.get(opcaoEscolhida );
+			IdiomaOrientacao idioma = listaOrdenada.get(opcaoEscolhida);
 			throw new OrientacaoNaoDisponivelIdiomaException();
 		} else if (opcaoEscolhida >= listaOrdenada.size()) {
 			throw new NullPointerException();

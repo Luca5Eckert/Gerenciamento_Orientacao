@@ -36,8 +36,11 @@ public class OrientacaoService {
 	}
 	
 	public void removerOrientacao(OrientacaoDto orientacaoDto) {
-		var orientacaoModelo = transformarDtoModelo(orientacaoDto);
-		repositorioOrientacao.removerOrientacao(orientacaoModelo);
+		String stringIdOrientacao = pegarIdOrientacao(orientacaoDto);
+		
+		var orientacaoId = new OrientacaoId(stringIdOrientacao, orientacaoDto.idiomaOrientacao());
+		
+		repositorioOrientacao.removerOrientacao(orientacaoId);
 	}
 
 	public boolean criarOrientacoes(List<OrientacaoDto> listaOrientacao) {

@@ -102,16 +102,31 @@ public class OrientacaoDAO {
     }
 
     public void remover(Orientacao orientacao) throws SQLException {
-        String sql = "DELETE FROM orientacao WHERE id = ? AND idioma_orientacao = ?";
+        String sql = "DELETE FROM orientacao WHERE titulo = ? AND idioma_orientacao = ? AND tipo_orientacao = ? AND conteudo = ?";
 
         try (Connection conn = ConexaoFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, orientacao.getIdOrientacao().getIdOrientacao());
+            stmt.setString(1, orientacao.getTitulo());
             stmt.setString(2, orientacao.getIdOrientacao().getIdiomaOrientacao().name());
+            stmt.setString(3, orientacao.getTipoOrientacao().name());
+            stmt.setString(4, orientacao.getConteudo());
 
             stmt.executeUpdate();
         }
+        
+    }
+    public void remover(OrientacaoId idOrientacao) throws SQLException {
+    	String sql = "DELETE FROM orientacao WHERE id = ? AND idioma_orientacao = ?";
+    	
+    	try (Connection conn = ConexaoFactory.getConnection();
+    			PreparedStatement stmt = conn.prepareStatement(sql)) {
+    		
+    		stmt.setString(1, idOrientacao.getIdOrientacao());
+    		stmt.setString(2, idOrientacao.getIdiomaOrientacao().name());
+    		
+    		stmt.executeUpdate();
+    	}
     }
 
     public int obterProximoIdOrientacaoIdioma(IdiomaOrientacao idioma) throws SQLException {

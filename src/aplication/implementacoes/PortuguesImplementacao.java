@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
+import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
@@ -126,6 +127,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 
 	@Override
 	public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao) {
+		System.out.println("------------------------------------------------------------");
 		String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
 
 		System.out.println(" Título orientação em " + idiomaNome + " :");
@@ -474,11 +476,29 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		String opcao = input.nextLine();
 		
 		return switch(opcao.trim().toUpperCase()) {
-		case "V" -> throw new Exception();
+		case "V" -> throw new SairMenuException();
 		case "A" -> mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idiomaOrientacao);
 		default -> null;
 		};
 
+	}
+
+	@Override
+	public String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException {
+		System.out.println("============================================================");
+		System.out.println("                      TEM CERTEZA?                          ");
+		System.out.println("============================================================");
+		System.out.println(" Tem certeza que deseja deletar essa orientação ?");
+		
+		System.out.println("\n A- Apagar orientação ");
+		System.out.println(" C- Cancelar");
+		System.out.println("============================================================");
+		String opcao = input.nextLine().trim().toUpperCase();
+		
+		if(opcao.equals("C")) {
+			throw new SairMenuException();
+		}
+		return opcao;
 	}
 
 }

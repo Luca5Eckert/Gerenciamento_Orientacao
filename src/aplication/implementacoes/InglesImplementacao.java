@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
+import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
@@ -125,9 +126,11 @@ public class InglesImplementacao implements IdiomaImplementacao {
 
     @Override
     public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao) {
-        String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
+    	String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
 
-        System.out.println(" Orientation title in " + idiomaNome + " :");
+    	System.out.println("------------------------------------------------------------");
+
+    	System.out.println(" Orientation title in " + idiomaNome + " :");
         String tituloOrientacao = input.nextLine();
 
         System.out.println(" Content in " + idiomaNome + " :");
@@ -465,11 +468,29 @@ public class InglesImplementacao implements IdiomaImplementacao {
         String opcao = input.nextLine();
 
         return switch(opcao.trim().toUpperCase()) {
-            case "V" -> throw new Exception();
+			case "V" -> throw new SairMenuException();
             case "A" -> mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idiomaOrientacao);
             default -> null;
         };
     }
+
+	@Override
+	public String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException {
+		System.out.println("============================================================");
+	    System.out.println("                      ARE YOU SURE?                         ");
+	    System.out.println("============================================================");
+	    System.out.println(" Are you sure you want to delete this guidance?");
+	    
+	    System.out.println("\n A - Delete guidance");
+	    System.out.println(" C - Cancel");
+	    System.out.println("============================================================");
+	    String opcao = input.nextLine().trim().toUpperCase();
+	    
+	    if(opcao.equals("C")) {
+	        throw new SairMenuException();
+	    }
+	    return opcao;
+	}
 
 
 

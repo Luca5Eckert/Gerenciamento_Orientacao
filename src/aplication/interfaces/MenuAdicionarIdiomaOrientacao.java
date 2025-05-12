@@ -6,6 +6,7 @@ import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
 import aplication.MenuFactory;
 import aplication.implementacoes.IdiomaImplementacao;
+import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 
@@ -36,6 +37,9 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 			orientacaoCriada = idiomaImplementacao.mostrarMenuAdicionarNovoIdiomaOrientacao(input, idiomaOrientacao,
 					tipoOrientacao);
 			return tratarOpcao(orientacaoCriada, idOrientacao);
+		} catch (SairMenuException sme) {
+			return menuAnterior;
+			
 		} catch (Exception e) {
 			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuAnterior,
 					idiomaImplementacao.pegarMensangemAdicaoFalhada());
@@ -44,6 +48,9 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 	}
 
 	private Menu tratarOpcao(OrientacaoDto orientacaoCriada, String idOrientacao) {
+		if(orientacaoCriada == null) {
+			return this;
+		}
 		orientacaoService.criarOrientacao(orientacaoCriada, idOrientacao);
 		return menuAnterior;
 	}
