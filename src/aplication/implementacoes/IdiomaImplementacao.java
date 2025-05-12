@@ -88,5 +88,7 @@ public interface IdiomaImplementacao {
 	String pegarMensagemRemoverComSucessoOrientacao();
 	
 	String pegarMensagemErroAoRemoverOrientacao();
-}
+	
+	OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao, TipoOrientacao tipoOrientacao) throws Exception;
 
+}

@@ -459,4 +459,24 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return " Erro ao remover orientação";
 	}
 
+	@Override
+	public OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao, TipoOrientacao tipoOrientacao) throws Exception {
+		System.out.println("============================================================");
+		System.out.println("                 ORIENTAÇÃO INDISPONIVEL                    ");
+		System.out.println("============================================================");
+		System.out.println("  A orientação que você pesquisou não existe nesse idioma   ");
+		
+		System.out.println("\n A- Adicionar em " + idiomaOrientacao.getNomeEmPortugues());
+		System.out.println(" V- Voltar");
+		System.out.println("============================================================");
+		String opcao = input.nextLine();
+		
+		return switch(opcao.trim().toUpperCase()) {
+		case "V" -> throw new Exception();
+		case "A" -> mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idiomaOrientacao);
+		default -> null;
+		};
+
+	}
+
 }

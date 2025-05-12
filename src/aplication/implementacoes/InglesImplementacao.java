@@ -449,6 +449,27 @@ public class InglesImplementacao implements IdiomaImplementacao {
     public String pegarMensagemErroAoRemoverOrientacao() {
         return " Failed to remove guidance";
     }
+    
+    @Override
+    public OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao, TipoOrientacao tipoOrientacao) throws Exception {
+        System.out.println("============================================================");
+        System.out.println("                    ORIENTATION UNAVAILABLE                 ");
+        System.out.println("============================================================");
+        System.out.println("  The orientation you searched for does not exist in this"
+        		+ "\n language");
+
+        System.out.println("\n A- Add in " + idiomaOrientacao.getNomeEmPortugues());
+        System.out.println(" V- Go back");
+        System.out.println("============================================================");
+        String opcao = input.nextLine();
+
+        return switch(opcao.trim().toUpperCase()) {
+            case "V" -> throw new Exception();
+            case "A" -> mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idiomaOrientacao);
+            default -> null;
+        };
+    }
+
 
 
 

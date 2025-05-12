@@ -1,5 +1,6 @@
 package aplication;
 
+import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.*;
 import dtos.OrientacaoDto;
@@ -81,6 +82,13 @@ public class MenuFactory {
 	public static Menu criarMenuAlterarSistema(TipoMenu tipoMenu, Menu menuAnterior) {
 		return switch (tipoMenu) {
 		case ALTERAR_IDIOMA -> new MenuTrocaIdioma(pegarIdioma(), menuAnterior);
+		default -> new MenuInicial(pegarIdioma());
+		};
+	}
+
+	public static Menu criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu tipoMenu, Menu menuAnterior, String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
+		return switch (tipoMenu) {
+		case ADICAO_ORIENTACAO -> new MenuAdicionarIdiomaOrientacao(pegarIdioma(), menuAnterior, idOrientacao, idiomaOrientacao);
 		default -> new MenuInicial(pegarIdioma());
 		};
 	}
