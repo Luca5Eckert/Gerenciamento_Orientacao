@@ -43,8 +43,9 @@ public class MenuVisualizarOrientacao implements Menu {
 			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input);
 		
 		} catch ( Exception e) {
-			return this;
+			e.printStackTrace();
 		}
+		return MenuFactory.criarMenu(null);
 		
 	}
 
@@ -79,18 +80,13 @@ public class MenuVisualizarOrientacao implements Menu {
 	@SuppressWarnings("finally")
 	private Menu processarOpcao(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes) {
-		Menu menuResultado = null;
-
 		try {
 			int opcaoEscolhida = Integer.parseInt(opcao);
 			var orientacao = pegarOrientacao(opcaoEscolhida, listaOrdenada, listaComOrientacoes);
-			menuResultado = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, this.menuAnterior);
-		} catch (NumberFormatException e) {
-			menuResultado = this;
-		} finally {
-			return menuResultado;
+			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, this.menuAnterior);
+		} catch (Exception e) {
+			return this;
 		}
-
 	}
 
 	private OrientacaoDto pegarOrientacao(int opcaoEscolhida, List<IdiomaOrientacao> listaOrdenada,

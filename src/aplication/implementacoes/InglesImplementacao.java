@@ -90,53 +90,54 @@ public class InglesImplementacao implements IdiomaImplementacao {
 
     @Override
     public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception {
-        int numeroRepetirVezes = 1;
-        
+        List<OrientacaoDto> listaOrientacaoDto = new ArrayList<>();
+
         System.out.println("============================================================");
         System.out.println("                       CREATION                             ");
         System.out.println("============================================================");
 
         System.out.println(" S- Exit ");
-        System.out.println(" Do you want to create guidance for only your language or all?");
-        System.out.println(" 1- Only English");
-        System.out.println(" 2- For all languages");
-        String option = input.nextLine();
+        System.out.println(" Do you want to create only for your language or for all? ");
+        System.out.println(" 1- Only for English ");
+        System.out.println(" 2- For all ");
+        String opcao = input.nextLine();
 
-        switch (option.toUpperCase()) {
-            case "1" -> numeroRepetirVezes = 1;
-            case "2" -> numeroRepetirVezes = IdiomaOrientacao.values().length;
-            case "S" -> throw new Exception();
-        }
-
-
-        return mostrarMenuAdicionarOrientacao(input, numeroRepetirVezes);
-    }
-    
-	@Override
-	public List<OrientacaoDto> mostrarMenuAdicionarOrientacao(Scanner input, int numeroRepetirVezes) {
-        var listaOrientacao = new ArrayList<OrientacaoDto>();
-		
-		System.out.println(" Guidance Type:");
+        System.out.println(" Orientation Type:");
         System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
-        TipoOrientacao tipo = TipoOrientacao.pegarOrientacao(input.nextInt());
+        TipoOrientacao tipoOrientacao = TipoOrientacao.pegarOrientacao(input.nextInt());
         input.nextLine();
 
-        for (int i = 0; i < numeroRepetirVezes; i++) {
-            IdiomaOrientacao idioma = IdiomaOrientacao.pegarIdioma(i);
-            String nomeEmIdioma = pegarNomeIdioma(idioma);
-
-            System.out.println(" Guidance title in " + nomeEmIdioma + ":");
-            String titulo = input.nextLine();
-
-            System.out.println(" Content in " + nomeEmIdioma + ":");
-            String conteudo = input.nextLine();
-
-            System.out.println("------------------------------------------------------------");
-
-            listaOrientacao.add(new OrientacaoDto(titulo, tipo, conteudo, idioma));
+        switch (opcao.toUpperCase()) {
+            case "1":
+                listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, IdiomaOrientacao.INGLES));
+                break;
+            case "2":
+                for (IdiomaOrientacao idioma : IdiomaOrientacao.listarIdiomas()) {
+                    listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idioma));
+                }
+                break;
+            case "S":
+                throw new Exception();
         }
-		return listaOrientacao;
-	}
+
+        return listaOrientacaoDto;
+    }
+
+    @Override
+    public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao) {
+        String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
+
+        System.out.println(" Orientation title in " + idiomaNome + " :");
+        String tituloOrientacao = input.nextLine();
+
+        System.out.println(" Content in " + idiomaNome + " :");
+        String conteudo = input.nextLine();
+
+        System.out.println("------------------------------------------------------------");
+
+        return new OrientacaoDto(tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao);
+    }
+
 
     @Override
     public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto dto, Scanner input) {

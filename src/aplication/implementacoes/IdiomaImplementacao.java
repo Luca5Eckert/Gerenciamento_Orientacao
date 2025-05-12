@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
+import Dominio.TipoOrientacao;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
@@ -82,7 +83,7 @@ public interface IdiomaImplementacao {
 	
 	String pegarMensagemErro();
 	
-	List<OrientacaoDto> mostrarMenuAdicionarOrientacao(Scanner input, int numeroRepetirVezes);
+	OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao);
 	
 	String pegarMensagemRemoverComSucessoOrientacao();
 	

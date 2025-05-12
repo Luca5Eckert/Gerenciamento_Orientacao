@@ -88,8 +88,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 
     @Override
     public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception {
-        int repeatCount = 1;
-        List<OrientacaoDto> list = new ArrayList<>();
+        List<OrientacaoDto> listaOrientacaoDto = new ArrayList<>();
 
         System.out.println("============================================================");
         System.out.println("                       ERSTELLUNG                           ");
@@ -97,42 +96,44 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 
         System.out.println(" S- Beenden ");
         System.out.println(" Möchten Sie nur für Ihre Sprache oder für alle erstellen? ");
-        System.out.println(" 1- Nur für Portugiesisch ");
+        System.out.println(" 1- Nur für Englisch ");
         System.out.println(" 2- Für alle ");
         String opcao = input.nextLine();
 
-        switch (opcao.toUpperCase()) {
-        case "1":
-        	repeatCount = 1;
-            break;
-        case "2":
-        	repeatCount = IdiomaOrientacao.values().length;
-            break;
-        case "S":
-            throw new Exception();
-        }
-
         System.out.println(" Orientierungstyp:");
         System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
-        TipoOrientacao tipo = TipoOrientacao.pegarOrientacao(input.nextInt());
+        TipoOrientacao tipoOrientacao = TipoOrientacao.pegarOrientacao(input.nextInt());
         input.nextLine();
 
-        for (int i = 0; i < repeatCount; i++) {
-            IdiomaOrientacao idioma = IdiomaOrientacao.pegarIdioma(i);
-            String languageName = pegarNomeIdioma(idioma);
-
-            System.out.println(" Orientierungstitel in " + languageName + ":");
-            String title = input.nextLine();
-
-            System.out.println(" Inhalt in " + languageName + ":");
-            String content = input.nextLine();
-
-            System.out.println("------------------------------------------------------------");
-
-            list.add(new OrientacaoDto(title, tipo, content, idioma));
+        switch (opcao.toUpperCase()) {
+            case "1":
+                listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, IdiomaOrientacao.INGLES));
+                break;
+            case "2":
+                for (IdiomaOrientacao idioma : IdiomaOrientacao.listarIdiomas()) {
+                    listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idioma));
+                }
+                break;
+            case "S":
+                throw new Exception();
         }
 
-        return list;
+        return listaOrientacaoDto;
+    }
+
+    @Override
+    public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao) {
+        String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
+
+        System.out.println(" Orientierungstitel auf " + idiomaNome + " :");
+        String tituloOrientacao = input.nextLine();
+
+        System.out.println(" Inhalt auf " + idiomaNome + " :");
+        String conteudo = input.nextLine();
+
+        System.out.println("------------------------------------------------------------");
+
+        return new OrientacaoDto(tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao);
     }
 
     @Override
@@ -411,6 +412,42 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarMensagemOrientacoesNaoEncontrada() {
 		return " Keine Anleitung gefunden";
+	}
+
+	@Override
+	public String pegarMensagemEdicaoFalha() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarIdiomaDisponivel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarIdiomaIndisponivel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemErro() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemRemoverComSucessoOrientacao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemErroAoRemoverOrientacao() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
