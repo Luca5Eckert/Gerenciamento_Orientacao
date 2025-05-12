@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.lang.NullPointerException;
 
 import Dominio.IdiomaOrientacao;
 import aplication.MenuFactory;
@@ -42,13 +41,13 @@ public class MenuVisualizarOrientacao implements Menu {
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada );
 			
 			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas);
-			
+		
+		} catch ( NullPointerException npe) {
+			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuAnterior, null);
 		} catch ( Exception npe) {
-			System.out.println("DEU MERDA, pq: " );
-			npe.printStackTrace();
+			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, idiomaImplementacao.pegarMensagemErro());
 		}
-		return menuAnterior;
-
+		
 	}
 
 	public Menu devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,

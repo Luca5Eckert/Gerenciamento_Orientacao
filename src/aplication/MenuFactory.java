@@ -73,6 +73,7 @@ public class MenuFactory {
 		return switch (tipoMenu) {
 		case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(pegarIdioma(), orientacaoDto, menu,
 				criarOrientacaoService(), new FormatacaoListaOrientacao());
+		case EDICAO_ORIENTACAO -> new MenuEditarOrientacao(menu, orientacaoDto, pegarIdioma(), criarOrientacaoService());
 		default -> new MenuInicial(pegarIdioma());
 		};
 	}

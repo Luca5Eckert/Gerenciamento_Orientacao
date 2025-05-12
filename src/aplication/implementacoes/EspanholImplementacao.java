@@ -296,6 +296,8 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 		System.out.println("\n Contenido:");
 		System.out.println(" " + orientacao.conteudo());
 		System.out.println("\n  S - Salir         E- Editar             B- Borrar       ");
+        System.out.println("------------------------------------------------------------");
+
 		System.out.println(" En otros idiomas: ");
 		System.out.println(idiomasOrientacoes);
 		System.out.println("============================================================");

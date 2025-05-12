@@ -60,6 +60,8 @@ public interface IdiomaImplementacao {
 
 	String pegarMensagemEdicaoConcluida();
 
+	String pegarMensagemEdicaoFalha();
+
 	String pegarNomeIdioma(IdiomaOrientacao idiomaOrientacao);
 
 	String mostrarOrientacao(Scanner input, OrientacaoDto orientacao, String idiomasOrientacoes);
@@ -78,4 +80,12 @@ public interface IdiomaImplementacao {
 	
 	String pegarIdiomaIndisponivel();
 	
+	String pegarMensagemErro();
+	
+	List<OrientacaoDto> mostrarMenuAdicionarOrientacao(Scanner input, int numeroRepetirVezes);
+	
+	String pegarMensagemRemoverComSucessoOrientacao();
+	
+	String pegarMensagemErroAoRemoverOrientacao();
 }
+

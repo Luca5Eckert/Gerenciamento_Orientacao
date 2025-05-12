@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import Dominio.IdiomaOrientacao;
+import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.SessaoUsuario;
 
@@ -24,18 +25,18 @@ public class FormatacaoListaOrientacao {
 	public String formatarOrientacoesIdiomas(List<IdiomaOrientacao> listaOrientacoes, int numeroSeperador) {
 		StringBuilder listaFormatada = new StringBuilder();
 		int numeroOrientacao = 1;
-		IdiomaOrientacao idiomaUsuario = SessaoUsuario.pegarIdioma().obterIdiomaOrientacao();
+		IdiomaImplementacao idiomaImplementacao = SessaoUsuario.pegarIdioma();
 
 		if( numeroSeperador != 0 ) {
-			listaFormatada.append("Disponíveis:");			
+			listaFormatada.append(idiomaImplementacao.pegarIdiomaDisponivel());			
 		}
 		for(IdiomaOrientacao idioma : listaOrientacoes) {
 
 			if(numeroOrientacao == (numeroSeperador + 1)) {
-				listaFormatada.append("\nIndisponíveis:");
+				listaFormatada.append("\n\n" + idiomaImplementacao.pegarIdiomaIndisponivel());
 				
 			} 
-			listaFormatada.append("\n " + numeroOrientacao + "- " + idioma.getNomePorIdioma(idiomaUsuario));
+			listaFormatada.append("\n" + numeroOrientacao + "- " + idioma.getNomePorIdioma(idiomaImplementacao.obterIdiomaOrientacao()));
 			numeroOrientacao++;
 		}
 

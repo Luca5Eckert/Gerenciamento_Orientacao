@@ -90,8 +90,8 @@ public class InglesImplementacao implements IdiomaImplementacao {
 
     @Override
     public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception {
-        int repeatCount = 1;
-        List<OrientacaoDto> list = new ArrayList<>();
+        int numeroRepetirVezes = 1;
+        
         System.out.println("============================================================");
         System.out.println("                       CREATION                             ");
         System.out.println("============================================================");
@@ -103,33 +103,40 @@ public class InglesImplementacao implements IdiomaImplementacao {
         String option = input.nextLine();
 
         switch (option.toUpperCase()) {
-            case "1" -> repeatCount = 1;
-            case "2" -> repeatCount = IdiomaOrientacao.values().length;
+            case "1" -> numeroRepetirVezes = 1;
+            case "2" -> numeroRepetirVezes = IdiomaOrientacao.values().length;
             case "S" -> throw new Exception();
         }
 
-        System.out.println(" Guidance Type:");
+
+        return mostrarMenuAdicionarOrientacao(input, numeroRepetirVezes);
+    }
+    
+	@Override
+	public List<OrientacaoDto> mostrarMenuAdicionarOrientacao(Scanner input, int numeroRepetirVezes) {
+        var listaOrientacao = new ArrayList<OrientacaoDto>();
+		
+		System.out.println(" Guidance Type:");
         System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
         TipoOrientacao tipo = TipoOrientacao.pegarOrientacao(input.nextInt());
         input.nextLine();
 
-        for (int i = 0; i < repeatCount; i++) {
+        for (int i = 0; i < numeroRepetirVezes; i++) {
             IdiomaOrientacao idioma = IdiomaOrientacao.pegarIdioma(i);
-            String languageName = pegarNomeIdioma(idioma);
+            String nomeEmIdioma = pegarNomeIdioma(idioma);
 
-            System.out.println(" Guidance title in " + languageName + ":");
-            String title = input.nextLine();
+            System.out.println(" Guidance title in " + nomeEmIdioma + ":");
+            String titulo = input.nextLine();
 
-            System.out.println(" Content in " + languageName + ":");
-            String content = input.nextLine();
+            System.out.println(" Content in " + nomeEmIdioma + ":");
+            String conteudo = input.nextLine();
 
             System.out.println("------------------------------------------------------------");
 
-            list.add(new OrientacaoDto(title, tipo, content, idioma));
+            listaOrientacao.add(new OrientacaoDto(titulo, tipo, conteudo, idioma));
         }
-
-        return list;
-    }
+		return listaOrientacao;
+	}
 
     @Override
     public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto dto, Scanner input) {
@@ -282,6 +289,7 @@ public class InglesImplementacao implements IdiomaImplementacao {
         System.out.println("\n Content:");
         System.out.println(" " + dto.conteudo());
         System.out.println("\n  S - Exit      E - Edit      D - Delete");
+        System.out.println("------------------------------------------------------------");
         System.out.println(" In other languages: ");
         System.out.println(otherLanguages);
         System.out.println("============================================================");
@@ -378,36 +386,69 @@ public class InglesImplementacao implements IdiomaImplementacao {
         return "Failed to add guidance.";
     }
 
-	@Override
-	public String pegarFiltroIdioma() {
-		return "Language filter: ";
-	}
+    @Override
+    public String pegarFiltroIdioma() {
+        return "Language filters: ";
+    }
 
-	@Override
-	public String pegarFiltroTipo() {
-		return "Type filter: ";
-	}
+    @Override
+    public String pegarFiltroTipo() {
+        return "Type filters: ";
+    }
 
-	@Override
-	public String mostrarMenuTrocarIdioma(Scanner input, String formattedLanguages) {
-	    System.out.println("============================================================");
-	    System.out.println("                      CHANGE LANGUAGE                       ");
-	    System.out.println("============================================================");
-	    System.out.println(" S- Exit\n");
-	    System.out.println(" Available languages: ");
-	    System.out.println(formattedLanguages);
-	    System.out.println("============================================================");
-	    
-	    return input.nextLine();
-	}
+    @Override
+    public String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados) {
+        System.out.println("============================================================");
+        System.out.println("                      CHANGE LANGUAGE                       ");
+        System.out.println("============================================================");
+        System.out.println(" S- Exit\n");
+        System.out.println(" Available languages: ");
+        System.out.println(idiomaFormatados);
+        System.out.println("============================================================");
+        
+        return input.nextLine();
+    }
 
-	@Override
-	public String pegarMensagemTrocaDeIdiomaBemSucedida(String changedLanguage) {
-	    return " Language changed to " + changedLanguage;
-	}
-	
-	@Override
-	public String pegarMensagemOrientacoesNaoEncontrada() {
-		return " No guidance found";
-	}
+    @Override
+    public String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado) {
+        return " Language changed to " + idiomaAlterado;
+    }
+
+    @Override
+    public String pegarMensagemOrientacoesNaoEncontrada() {
+        return " No guidance found";
+    }
+
+    @Override
+    public String pegarIdiomaDisponivel() {
+        return " Available: ";
+    }
+
+    @Override
+    public String pegarIdiomaIndisponivel() {
+        return " Unavailable: ";
+    }
+
+    @Override
+    public String pegarMensagemErro() {
+        return " Something went wrong, please try again";
+    }
+
+    @Override
+    public String pegarMensagemEdicaoFalha() {
+        return " Failed to edit guidance";
+    }
+
+    @Override
+    public String pegarMensagemRemoverComSucessoOrientacao() {
+        return " Guidance successfully removed";
+    }
+
+    @Override
+    public String pegarMensagemErroAoRemoverOrientacao() {
+        return " Failed to remove guidance";
+    }
+
+
+
 }

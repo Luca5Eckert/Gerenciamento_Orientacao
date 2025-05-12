@@ -286,6 +286,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
         System.out.println("\n Inhalt:");
         System.out.println(" " + dto.conteudo());
         System.out.println("\n  S - Beenden      E - Bearbeiten      D - Löschen");
+        System.out.println("------------------------------------------------------------");
         System.out.println(" In anderen Sprachen: ");
         System.out.println(otherLanguages);
         System.out.println("============================================================");

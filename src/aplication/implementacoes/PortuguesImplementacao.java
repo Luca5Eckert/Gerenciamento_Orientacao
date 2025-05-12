@@ -113,29 +113,38 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 			throw new Exception();
 		}
 
+		return mostrarMenuAdicionarOrientacao(input, numeroRepetirVezes);
+	}
+	
+	@Override
+	public List<OrientacaoDto> mostrarMenuAdicionarOrientacao(Scanner input, int numeroRepetirVezes) {
+		var listaOrientacaoDto = new ArrayList<OrientacaoDto>();
+		
 		System.out.println(" Tipo Orientação:");
 		System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
 		TipoOrientacao tipoOrientacao = TipoOrientacao.pegarOrientacao(input.nextInt());
 		input.nextLine();
-
+		
 		for (int i = 0; i < numeroRepetirVezes; i++) {
 			IdiomaOrientacao idiomaOrientacao = IdiomaOrientacao.pegarIdioma(i);
 			String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
-
+			
 			System.out.println(" Título orientação em " + idiomaNome + " :");
 			String tituloOrientacao = input.nextLine();
-
+			
 			System.out.println(" Conteúdo em " + idiomaNome + " :");
 			String conteudo = input.nextLine();
-
+			
 			System.out.println("------------------------------------------------------------");
-
+			
 			listaOrientacaoDto
-					.add(new OrientacaoDto( tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao));
+			.add(new OrientacaoDto( tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao));
 		}
-
+		
 		return listaOrientacaoDto;
+		
 	}
+
 
 	@Override
 	public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto orientacaoDto, Scanner input) {
@@ -425,5 +434,36 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemOrientacoesNaoEncontrada() {
 		return " Nenhuma orientação encontrada";
 	}
+
+	@Override
+	public String pegarIdiomaDisponivel() {
+		return " Disponível: ";
+	}
+
+	@Override
+	public String pegarIdiomaIndisponivel() {
+		return " Indisponível: ";
+	}
+
+	@Override
+	public String pegarMensagemErro() {
+		return " Algo deu errado, tentar novamente";
+	}
+
+	@Override
+	public String pegarMensagemEdicaoFalha() {
+		return " Erro ao editar orientação";
+	}
+
+	@Override
+	public String pegarMensagemRemoverComSucessoOrientacao() {
+		return " Orientação removida com sucessa";
+	}
+
+	@Override
+	public String pegarMensagemErroAoRemoverOrientacao() {
+		return " Erro ao remover orientação";
+	}
+
 
 }
