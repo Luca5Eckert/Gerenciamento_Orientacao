@@ -44,7 +44,6 @@ public class Sistema {
 
 	}
 
-	@SuppressWarnings("unused")
 	private void iniciarGerenciador(IdiomaImplementacao idionaImplementacao) {
 		SessaoUsuario.definirIdioma(idionaImplementacao);
 		this.gerenciadorMenu.setMenu(MenuFactory.criarMenu(TipoMenu.INICIO));

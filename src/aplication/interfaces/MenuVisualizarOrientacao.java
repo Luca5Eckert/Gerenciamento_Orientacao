@@ -40,25 +40,33 @@ public class MenuVisualizarOrientacao implements Menu {
 			
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada );
 			
-			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas);
+			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input);
 		
-		} catch ( NullPointerException npe) {
-			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuAnterior, null);
-		} catch ( Exception npe) {
-			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, idiomaImplementacao.pegarMensagemErro());
+		} catch ( Exception e) {
+			return this;
 		}
 		
 	}
 
 	public Menu devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
-			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes) {
+			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input) {
 		return switch (opcao.toUpperCase()) {
 		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, menuAnterior);
 		case "S" -> this.menuAnterior;
+		case "R" -> removerOrientacao(input);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes);
 		};
 	}
-
+	
+	public Menu removerOrientacao(Scanner input) {
+		try {
+			orientacaoService.removerOrientacao(orientacaoDto);
+			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuAnterior, idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao());
+		} catch (Exception le ) {
+			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, idiomaImplementacao.pegarMensagemErroAoRemoverOrientacao());
+		}
+	}
+	
 	public List<IdiomaOrientacao> gerarListaOrdenada(Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes) {
 		var listaDisponivel = transformarMapEmList(listaComOrientacoes);
 		var listaIndisponivel = pegarOrientacoeNaoDisponiveis(listaDisponivel);
@@ -86,9 +94,12 @@ public class MenuVisualizarOrientacao implements Menu {
 	}
 
 	private OrientacaoDto pegarOrientacao(int opcaoEscolhida, List<IdiomaOrientacao> listaOrdenada,
-			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes) {
+			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes) throws Exception {
 		IdiomaOrientacao idiomaOrientacao = listaOrdenada.get(opcaoEscolhida - 1);
 
+		if ( listaComOrientacoes.size() <= opcaoEscolhida) {
+			throw new Exception();
+		}
 		return listaComOrientacoes.get(idiomaOrientacao);
 	}
 
