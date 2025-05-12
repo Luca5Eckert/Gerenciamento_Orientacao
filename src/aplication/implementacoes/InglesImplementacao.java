@@ -286,7 +286,8 @@ public class InglesImplementacao implements IdiomaImplementacao {
         System.out.println("                       GUIDANCE                             ");
         System.out.println("============================================================");
         System.out.println(" Title: " + dto.titulo());
-        System.out.println(" Type: " + dto.tipoOrientacao());
+		System.out.println("\n Type: " + dto.tipoOrientacao().getNomeIngles());
+		System.out.println(" Language: " + dto.idiomaOrientacao().getNomeEmIngles());
         System.out.println("\n Content:");
         System.out.println(" " + dto.conteudo());
         System.out.println("\n  S - Exit      E - Edit      D - Delete");
@@ -458,7 +459,7 @@ public class InglesImplementacao implements IdiomaImplementacao {
         System.out.println("  The orientation you searched for does not exist in this"
         		+ "\n language");
 
-        System.out.println("\n A- Add in " + idiomaOrientacao.getNomeEmPortugues());
+        System.out.println("\n A- Add in " + idiomaOrientacao.getNomeEmIngles());
         System.out.println(" V- Go back");
         System.out.println("============================================================");
         String opcao = input.nextLine();

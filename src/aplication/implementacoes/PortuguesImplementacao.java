@@ -292,10 +292,12 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	@Override
 	public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao, String idiomasOrientacoes) {
 		System.out.println("============================================================");
-		System.out.println("                    ORIENTAÇÃO                              ");
+		System.out.println("                       ORIENTAÇÃO                           ");
 		System.out.println("============================================================");
 		System.out.println(" Título: " + orientacao.titulo());
-		System.out.println(" Tipo: " + orientacao.tipoOrientacao());
+		System.out.println("\n Tipo: " + orientacao.tipoOrientacao().getNomePortugues());
+		System.out.println(" Idioma: " + orientacao.idiomaOrientacao().getNomeEmPortugues());
+
 		System.out.println("\n Conteúdo:");
 		System.out.println(" " + orientacao.conteudo());
 		System.out.println("\n  S - Sair         E- Editar             A-Apagar         ");
