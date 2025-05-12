@@ -86,9 +86,9 @@ public class MenuFactory {
 		};
 	}
 
-	public static Menu criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu tipoMenu, Menu menuAnterior, String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
+	public static Menu criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu tipoMenu, Menu menuAnterior, OrientacaoDto orientacao, IdiomaOrientacao idiomaOrientacao) {
 		return switch (tipoMenu) {
-		case ADICAO_ORIENTACAO -> new MenuAdicionarIdiomaOrientacao(pegarIdioma(), menuAnterior, idOrientacao, idiomaOrientacao);
+		case ADICAO_ORIENTACAO -> new MenuAdicionarIdiomaOrientacao(pegarIdioma(), criarOrientacaoService(), menuAnterior, orientacao, idiomaOrientacao);
 		default -> new MenuInicial(pegarIdioma());
 		};
 	}

@@ -3,50 +3,55 @@ package aplication.interfaces;
 import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
+import Dominio.TipoOrientacao;
 import aplication.MenuFactory;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
+import service.OrientacaoService;
 
 public class MenuAdicionarIdiomaOrientacao implements Menu {
-	
+
 	private IdiomaImplementacao idiomaImplementacao;
-	private MenuAnterior menuAnterior;
-	private final OrientacaoDto orientacaDto;
-	private final String idOrientacao;
+	private final OrientacaoService orientacaoService;
+	private Menu menuAnterior;
+	private OrientacaoDto orientacaoDto;
 	private final IdiomaOrientacao idiomaOrientacao;
-	
-	public MenuAdicionarIdiomaOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaDto,
-			String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
-		super();
+
+	public MenuAdicionarIdiomaOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService,
+			Menu menuAnterior, OrientacaoDto orientacaoDto, IdiomaOrientacao idiomaOrientacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
-		this.orientacaDto = orientacaDto;
-		this.idOrientacao = idOrientacao;
+		this.orientacaoService = orientacaoService;
+		this.menuAnterior = menuAnterior;
+		this.orientacaoDto = orientacaoDto;
 		this.idiomaOrientacao = idiomaOrientacao;
 	}
 
 	@Override
 	public Menu chamarMenu(Scanner input) {
-		var tipoOrientacao = orientacaDto.tipoOrientacao();
+		final TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
+		String idOrientacao = orientacaoService.pegarIdOrientacao(orientacaoDto);
+		OrientacaoDto orientacaoCriada = null;
+
 		try {
-			idiomaImplementacao.mostrarMenuAdicionarNovoIdiomaOrientacao(input, idiomaOrientacao, tipoOrientacao);
-			
-		} catch (Exception e ) {
-			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaDto, menuAnterior);
+			orientacaoCriada = idiomaImplementacao.mostrarMenuAdicionarNovoIdiomaOrientacao(input, idiomaOrientacao,
+					tipoOrientacao);
+			return tratarOpcao(orientacaoCriada, idOrientacao);
+		} catch (Exception e) {
+			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuAnterior,
+					idiomaImplementacao.pegarMensangemAdicaoFalhada());
 		}
-		
-		return tratarOpcao(idOrientacao);
+
 	}
-	
-	public Menu tratarOpcao(String opcao){
-		return switch(opcao) {
-		case 
-		}
+
+	private Menu tratarOpcao(OrientacaoDto orientacaoCriada, String idOrientacao) {
+		orientacaoService.criarOrientacao(orientacaoCriada, idOrientacao);
+		return menuAnterior;
 	}
 
 	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		// TODO Auto-generated method stub
-		
+		this.idiomaImplementacao = idiomaImplementacao;
 	}
+	
 
 }
