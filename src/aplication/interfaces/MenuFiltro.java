@@ -22,15 +22,40 @@ public class MenuFiltro implements Menu {
     public Menu chamarMenu(Scanner input) {
         boolean menuFiltroAtivo = true;
 
-        while (menuFiltroAtivo) {
-            String opcao = idiomaImplementacao.mostrarMenuFiltro(input, gerenciadorFiltro);
-            menuFiltroAtivo = processarOpcaoEscolhida(opcao);
-        }
-
+        String opcao = idiomaImplementacao.mostrarMenuFiltro(input, gerenciadorFiltro.formatarFiltrosAtivados());
+        
+        processarOpcao(opcao, input);
+        
         return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro);
     }
+    
+    public Menu processarOpcao(String opcao, Scanner input) {
+    	return switch(opcao.trim().toUpperCase()) {
+    	case "D" -> deletarFiltro(input);
+    	case "1" -> definirFiltro(input, opcao);
+		default -> this;
+    	};
+    }
+    
+    public Menu definirFiltro(Scanner input, String opcaoEscolhida) {
+    	String opcaoFiltro = idiomaImplementacao.mostrarMenuDefinirFiltro(input, opcaoEscolhida);
+    	processarFiltroEscolhido(opcaoFiltro);
+    	return this;
+    }
+    
+    public Menu deletarFiltro(Scanner input) {
+    	String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input);
+    	try {
+    		int numeroFiltroEscolhido = Integer.parseInt(filtroEscolhido);
+    		gerenciadorFiltro.
+    		
+    	} catch(NumberFormatException nfe) {
+    		return this;
+    	}
+		return null;
+    }
 
-    public boolean processarOpcaoEscolhida(String opcao) {
+    public boolean processarFiltroEscolhido(String opcao) {
         switch (opcao.trim().toUpperCase()) {
             case "4": return false; 
             case "P": return adicionarFiltroIdioma(IdiomaOrientacao.PORTUGUES);

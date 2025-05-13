@@ -57,7 +57,7 @@ public class MenuVisualizarOrientacao implements Menu {
 		return switch (opcao.toUpperCase()) {
 		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, menuAnterior);
 		case "S" -> this.menuAnterior;
-		case "R" -> removerOrientacao(input);
+		case "A" -> removerOrientacao(input);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes);
 		};
 	}

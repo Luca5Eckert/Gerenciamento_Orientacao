@@ -22,8 +22,6 @@ public interface IdiomaImplementacao {
 
 	String mostrarMenuGeral(Scanner input);
 
-	String mostrarMenuFiltro(Scanner input, GerenciadorFiltrosOrientacao gerenciador);
-
 	String mostrarMenuOpcoesOrientacao(Scanner input);
 
 	List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception;
@@ -93,5 +91,11 @@ public interface IdiomaImplementacao {
 	OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao, TipoOrientacao tipoOrientacao) throws Exception;
 
 	String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException;
+	
+	String mostrarMenuFiltro(Scanner input, String formatacaoFitrosAntigos);
+	
+	String mostrarMenuDefinirFiltro(Scanner input, String opcaoEscolhida);
+	
+	String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis)
 	
 }

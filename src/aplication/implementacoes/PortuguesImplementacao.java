@@ -9,6 +9,7 @@ import Dominio.TipoOrientacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
+import service.filtros.FiltroOrientacaoIdioma;
 import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class PortuguesImplementacao implements IdiomaImplementacao {
@@ -107,26 +108,27 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
 		TipoOrientacao tipoOrientacao = TipoOrientacao.pegarOrientacao(input.nextInt());
 		input.nextLine();
-		
+
 		switch (opcao.toUpperCase()) {
 		case "1":
 			listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, IdiomaOrientacao.PORTUGUES));
 			break;
 		case "2":
-			for(IdiomaOrientacao idioma : IdiomaOrientacao.listarIdiomas()) {
+			for (IdiomaOrientacao idioma : IdiomaOrientacao.listarIdiomas()) {
 				listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idioma));
 			}
 			break;
 		case "S":
 			throw new Exception();
 		}
-		
+
 		return listaOrientacaoDto;
-			
+
 	}
 
 	@Override
-	public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao) {
+	public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao,
+			IdiomaOrientacao idiomaOrientacao) {
 		System.out.println("------------------------------------------------------------");
 		String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
 
@@ -140,7 +142,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 
 		return new OrientacaoDto(tituloOrientacao, tipoOrientacao, conteudo, idiomaOrientacao);
 	}
-
 
 	@Override
 	public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto orientacaoDto, Scanner input) {
@@ -313,53 +314,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String mostrarMenuFiltro(Scanner input, GerenciadorFiltrosOrientacao gerenciador) {
-		String opcaoEscolhida;
-
-		System.out.println("============================================================");
-		System.out.println("                       FILTROS                              ");
-		System.out.println("============================================================");
-		System.out.println(" 1 - Filtrar por Idioma");
-		System.out.println(" 2 - Filtrar por Tipo de Orientação\n");
-		System.out.println(" 3 - Ver os filtros");
-		System.out.println(" 4 - Aplicar Filtros Selecionados");
-		System.out.println("============================================================");
-
-		opcaoEscolhida = input.nextLine();
-
-		switch (opcaoEscolhida) {
-		case "1":
-			System.out.println("\nEscolha os idiomas para filtrar:");
-			System.out.println("P - Português");
-			System.out.println("I - Inglês");
-			System.out.println("E - Espanhol");
-			System.out.println("A - Alemão");
-			opcaoEscolhida = input.nextLine();
-			break;
-
-		case "2":
-			System.out.println("\nEscolha os tipos de orientação para filtrar:");
-			System.out.println("M - Manual de Operação");
-			System.out.println("S - Procedimentos de Segurança");
-			System.out.println("R - Manutenção e Reparos");
-			System.out.println("D - Testes e Diagnóstico");
-			System.out.println("C - Manual de Conduta e Operações Setoriais");
-			opcaoEscolhida = input.nextLine();
-			break;
-		case "3":
-
-			System.out.println("------------------------------------------------------------");
-			System.out.println(gerenciador.formatarFiltrosAtivados());
-			System.out.println("------------------------------------------------------------");
-			System.out.println(" V- Voltar");
-			String opcao = input.nextLine();
-
-		}
-
-		return opcaoEscolhida;
-	}
-
-	@Override
 	public String mostrarMenuPesquisaOrientacao(Scanner input) {
 		System.out.println("============================================================");
 		System.out.println("                      Pesquisa                              ");
@@ -499,6 +453,75 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 			throw new SairMenuException();
 		}
 		return opcao;
+	}
+
+	@Override
+	public String mostrarMenuFiltro(Scanner input, String formatacaoFitrosAntigos) {
+		String opcaoEscolhida;
+			
+		System.out.println("============================================================");
+		System.out.println("                       FILTROS                              ");
+		System.out.println("============================================================");
+		System.out.println(" 1 - Filtrar por Idioma");
+		System.out.println(" 2 - Filtrar por Tipo de Orientação\n");
+		System.out.println(" 3 - Ver os filtros");
+		System.out.println(" 4 - Aplicar Filtros Selecionados");
+		System.out.println("============================================================");
+
+		opcaoEscolhida = input.nextLine();
+
+		switch(opcaoEscolhida) {
+		case "3":
+			System.out.println("------------------------------------------------------------");
+			System.out.println(formatacaoFitrosAntigos);
+			System.out.println("------------------------------------------------------------");
+			System.out.println(" D- Deletar filtro");
+			System.out.println(" V- Voltar");
+			opcaoEscolhida = input.nextLine();
+			break;
+		}
+			
+		return opcaoEscolhida;
+	}
+
+	@Override
+	public String mostrarMenuDefinirFiltro(Scanner input, String opcaoEscolhida) {
+		switch (opcaoEscolhida) {
+		case "1":
+			System.out.println("\nEscolha os idiomas para filtrar:");
+			System.out.println("P - Português");
+			System.out.println("I - Inglês");
+			System.out.println("E - Espanhol");
+			System.out.println("A - Alemão");
+			opcaoEscolhida = input.nextLine();
+			break;
+
+		case "2":
+			System.out.println("\nEscolha os tipos de orientação para filtrar:");
+			System.out.println("M - Manual de Operação");
+			System.out.println("S - Procedimentos de Segurança");
+			System.out.println("R - Manutenção e Reparos");
+			System.out.println("D - Testes e Diagnóstico");
+			System.out.println("C - Manual de Conduta e Operações Setoriais");
+			opcaoEscolhida = input.nextLine();
+			break;
+
+		}
+
+		return opcaoEscolhida;
+	}
+
+	@Override
+	public String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis) {
+		System.out.println("============================================================");
+		System.out.println("                     DELETAR FILTRO                         ");
+		System.out.println("============================================================");
+		System.out.println(" S- Sair ");
+		System.out.println(" Selecione o filtro que deseja apagar");
+		System.out.println(filtrosDisponiveis);
+		System.out.println("============================================================");
+		
+		return input.nextLine();
 	}
 
 }

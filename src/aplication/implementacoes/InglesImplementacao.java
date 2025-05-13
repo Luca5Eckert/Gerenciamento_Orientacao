@@ -293,7 +293,7 @@ public class InglesImplementacao implements IdiomaImplementacao {
 		System.out.println(" Language: " + dto.idiomaOrientacao().getNomeEmIngles());
         System.out.println("\n Content:");
         System.out.println(" " + dto.conteudo());
-        System.out.println("\n  S - Exit      E - Edit      D - Delete");
+        System.out.println("\n  S - Exit      E - Edit      A - Delete");
         System.out.println("------------------------------------------------------------");
         System.out.println(" In other languages: ");
         System.out.println(otherLanguages);
