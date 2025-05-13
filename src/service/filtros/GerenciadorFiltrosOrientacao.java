@@ -7,8 +7,10 @@ import java.util.Set;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
+import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
+import service.SessaoUsuario;
 import service.exceptions.orientacao.OrientacaoException;
 
 public class GerenciadorFiltrosOrientacao {
@@ -40,6 +42,14 @@ public class GerenciadorFiltrosOrientacao {
         }
 
         return listaFiltrada;
+    }
+    
+    public String formatarFiltrosAtivadosParaApagar() {
+    	IdiomaImplementacao idiomaImplementacao = SessaoUsuario.pegarIdioma();
+    	
+    	if(!filtroOrientacaoIdioma.getIdiomasOrientacoes().isEmpty()) {
+    		System.out.println(idiomaImplementacao.pegar);
+    	}
     }
 
     public boolean verificarPesquisa() {

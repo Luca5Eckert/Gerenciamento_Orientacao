@@ -96,6 +96,11 @@ public interface IdiomaImplementacao {
 	
 	String mostrarMenuDefinirFiltro(Scanner input, String opcaoEscolhida);
 	
-	String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis)
+	String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis);
+	
+	String pegarMensagemTipo();
+	
+	String pegarMensagemIdioma();
+	
 	
 }

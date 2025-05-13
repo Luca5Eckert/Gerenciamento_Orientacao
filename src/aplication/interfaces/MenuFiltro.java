@@ -47,7 +47,7 @@ public class MenuFiltro implements Menu {
     	String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input);
     	try {
     		int numeroFiltroEscolhido = Integer.parseInt(filtroEscolhido);
-    		gerenciadorFiltro.
+    		gerenciadorFiltro.formatarFiltrosAtivadosParaApagar();
     		
     	} catch(NumberFormatException nfe) {
     		return this;
