@@ -524,4 +524,16 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return input.nextLine();
 	}
 
+	@Override
+	public String pegarMensagemTipo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemIdioma() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

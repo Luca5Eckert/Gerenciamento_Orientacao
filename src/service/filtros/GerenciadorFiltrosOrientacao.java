@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
@@ -12,6 +13,8 @@ import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.SessaoUsuario;
 import service.exceptions.orientacao.OrientacaoException;
+import service.formatacao.FormatacaoFiltro;
+import service.formatacao.FormatacaoListaOrientacao;
 
 public class GerenciadorFiltrosOrientacao {
     private FiltroOrientacaoIdioma filtroOrientacaoIdioma = new FiltroOrientacaoIdioma();
@@ -44,13 +47,27 @@ public class GerenciadorFiltrosOrientacao {
         return listaFiltrada;
     }
     
-    public String formatarFiltrosAtivadosParaApagar() {
-    	IdiomaImplementacao idiomaImplementacao = SessaoUsuario.pegarIdioma();
-    	
-    	if(!filtroOrientacaoIdioma.getIdiomasOrientacoes().isEmpty()) {
-    		System.out.println(idiomaImplementacao.pegar);
-    	}
+    public List<List<String>> obterListaDeFiltrosAtivos() {
+        List<List<String>> filtrosAtivos = new ArrayList<>();
+        IdiomaOrientacao idiomaSessao = SessaoUsuario.pegarIdioma().obterIdiomaOrientacao();
+
+        if (filtroOrientacaoIdioma != null && !filtroOrientacaoIdioma.getIdiomasOrientacoes().isEmpty()) {
+            List<String> idiomas = filtroOrientacaoIdioma.getIdiomasOrientacoes().stream()
+                .map(i -> i.getNomePorIdioma(idiomaSessao))
+                .collect(Collectors.toList());
+            filtrosAtivos.add(idiomas);
+        }
+
+        if (filtroOrientacaoTipo != null && !filtroOrientacaoTipo.getTiposOrientacao().isEmpty()) {
+            List<String> tipos = filtroOrientacaoTipo.getTiposOrientacao().stream()
+                .map(t -> t.getNome(idiomaSessao))
+                .collect(Collectors.toList());
+            filtrosAtivos.add(tipos);
+        }
+
+        return filtrosAtivos;
     }
+
 
     public boolean verificarPesquisa() {
         return palavraBuscada != null && !palavraBuscada.trim().isEmpty();

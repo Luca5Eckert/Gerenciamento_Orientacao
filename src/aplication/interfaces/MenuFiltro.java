@@ -44,7 +44,7 @@ public class MenuFiltro implements Menu {
     }
     
     public Menu deletarFiltro(Scanner input) {
-    	String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input);
+    	String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input, gerenciadorFiltro.formatarFiltrosAtivadosParaApagar());
     	try {
     		int numeroFiltroEscolhido = Integer.parseInt(filtroEscolhido);
     		gerenciadorFiltro.formatarFiltrosAtivadosParaApagar();
