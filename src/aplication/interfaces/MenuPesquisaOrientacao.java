@@ -3,6 +3,7 @@ package aplication.interfaces;
 import java.util.Scanner;
 
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
@@ -17,7 +18,7 @@ public class MenuPesquisaOrientacao implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuPesquisaOrientacao(input);
 
 		return devolverOpcaoEscolhida(opcaoEscolhida);

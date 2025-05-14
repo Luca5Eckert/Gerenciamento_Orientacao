@@ -1,6 +1,7 @@
 package aplication.interfaces;
 
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
 
@@ -18,7 +19,7 @@ public class MenuCadastro implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
 		UsuarioDto usuarioCadastrar = idiomaImplementacao.mostrarMenuCadastro(input);
 
 		try {

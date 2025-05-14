@@ -1,5 +1,6 @@
 package aplication.interfaces;
 
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class MenuFalha implements Menu {
 	
 	
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
 		String opcao;
 		opcao = idiomaImplementacao.mostrarMenuErro(input, mensagemErro);
 		

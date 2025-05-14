@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
@@ -28,7 +29,7 @@ public class MenuExibirOrientacoes implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
 		List<OrientacaoDto> orientacoesFiltradas = new ArrayList<>();
 		try {
 			orientacoesFiltradas = orientacaoService.aplicarFiltro(gerenciadorFiltro);

@@ -3,13 +3,11 @@ package service.filtros;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import Dominio.IdiomaOrientacao;
-import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.SessaoUsuario;
 
-public class FiltroOrientacaoIdioma implements FiltroOrientacao {
+public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao> {
     private List<IdiomaOrientacao> idiomasOrientacoes = new ArrayList<>();
 
     public FiltroOrientacaoIdioma(List<IdiomaOrientacao> idiomasOrientacoes) {
@@ -22,13 +20,16 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao {
 
 	public FiltroOrientacaoIdioma() {
 	}
-
+	
 	@Override
-    public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> orientacoes) {
-        return orientacoes.stream()
-                .filter(this::filtrarPorIdioma)
-                .collect(Collectors.toList());
-    }
+	public List<IdiomaOrientacao> pegarFiltro() {
+		return idiomasOrientacoes;
+	}
+	@Override
+	public void adicionarFiltro(IdiomaOrientacao filtro) {
+		idiomasOrientacoes.add(filtro);
+	}
+
 
     private boolean filtrarPorIdioma(OrientacaoDto orientacao) {
         return idiomasOrientacoes.contains(orientacao.idiomaOrientacao());
@@ -64,4 +65,12 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao {
     public void limparFiltros() {
         idiomasOrientacoes.clear();
     }
+
+	@Override
+	public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> orientacoes) {
+        return orientacoes.stream()
+                .filter(this::filtrarPorIdioma)
+                .collect(Collectors.toList());
+	}
+
 }

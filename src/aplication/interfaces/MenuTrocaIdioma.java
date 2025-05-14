@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Dominio.IdiomaOrientacao;
 import aplication.IdiomaFactory;
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.SessaoUsuario;
 
@@ -18,7 +19,7 @@ public class MenuTrocaIdioma implements Menu {
 	}
 	
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String idiomaFormatado = IdiomaOrientacao.listaIdiomasFormatado(idiomaImplementacao);
 		
 		String opcaoSelecionado = idiomaImplementacao.mostrarMenuTrocarIdioma(input, idiomaFormatado);

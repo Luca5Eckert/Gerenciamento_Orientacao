@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import aplication.interfaces.exceptions.SairMenuException;
@@ -32,7 +33,7 @@ public class MenuVisualizarOrientacao implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		try {
 			Map<IdiomaOrientacao, OrientacaoDto> listaOrientacoesIdiomas = orientacaoService
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));

@@ -1,8 +1,10 @@
 package service.filtros;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,23 +19,21 @@ import service.formatacao.FormatacaoFiltro;
 import service.formatacao.FormatacaoListaOrientacao;
 
 public class GerenciadorFiltrosOrientacao {
-    private FiltroOrientacaoIdioma filtroOrientacaoIdioma = new FiltroOrientacaoIdioma();
-    private FiltroOrientacaoTipo filtroOrientacaoTipo = new FiltroOrientacaoTipo();
+	private Map<TipoFiltro,FiltroOrientacao> filtrosAtivados = new HashMap<>();
     private String palavraBuscada;
 
-    public GerenciadorFiltrosOrientacao(IdiomaOrientacao idiomasOrientacao) {
-    	this.filtroOrientacaoIdioma.adicionarIdioma(idiomasOrientacao);
+    public GerenciadorFiltrosOrientacao() {
+    	this.filtrosAtivados = new HashMap<>();
     }
     
-    public GerenciadorFiltrosOrientacao(List<IdiomaOrientacao> idiomasOrientacao, List<TipoOrientacao> tiposOrientacao) {
-        this.filtroOrientacaoIdioma = new FiltroOrientacaoIdioma(idiomasOrientacao);  
-        this.filtroOrientacaoTipo = new FiltroOrientacaoTipo(tiposOrientacao);  
+    public void adicionarFiltro(TipoFiltro tipoFiltro, IdiomaOrientacao idiomasOrientacao) {
+    	var filtroOrientacao = filtrosAtivados.get(tipoFiltro);
+    	filtroOrientacao.adicionarFiltro(tipoFiltro);
     }
     
-    public void definirFitroPadrao(IdiomaOrientacao idiomaOrientacao) {
-    	filtroOrientacaoIdioma.getIdiomasOrientacoes().clear();
-    	filtroOrientacaoTipo.getTiposOrientacao().clear();
-    	filtroOrientacaoIdioma.adicionarIdioma(idiomaOrientacao);
+    public void limparFiltros(IdiomaOrientacao idiomaOrientacao) {
+    	filtrosAtivados.clear();
+    	filtrosAtivados.
     }
 
     public List<OrientacaoDto> aplicarFiltros(List<OrientacaoDto> listaOriginal, OrientacaoService service)

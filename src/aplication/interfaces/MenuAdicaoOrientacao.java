@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
@@ -18,7 +19,7 @@ public class MenuAdicaoOrientacao implements Menu {
 	}
 	
 	@Override
-	public Menu chamarMenu( Scanner input) {
+	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		List<OrientacaoDto> listaOrientacaoCriada;
 		try {
 			listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);

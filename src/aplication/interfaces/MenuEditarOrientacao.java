@@ -3,6 +3,7 @@ package aplication.interfaces;
 import java.util.Scanner;
 
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
@@ -22,7 +23,7 @@ public class MenuEditarOrientacao implements Menu{
 	 }
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
 		var OrientacaoAlterada = idiomaImplementacao.mostrarMenuEditarOrientacao(orientacaoDto, input);
 		
 		try {

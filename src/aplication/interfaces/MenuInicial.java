@@ -3,6 +3,7 @@ package aplication.interfaces;
 import java.util.Scanner;
 
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 
 public class MenuInicial implements Menu {
@@ -12,7 +13,8 @@ public class MenuInicial implements Menu {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
-	public Menu chamarMenu(Scanner input) {
+	@Override
+	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuInicial(input);
 
 		return devolverOpcaoEscolhida(opcaoEscolhida );

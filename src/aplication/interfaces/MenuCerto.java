@@ -1,5 +1,6 @@
 package aplication.interfaces;
 
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public class MenuCerto implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
 		String opcao = idiomaImplementacao.mostrarMenuAcerto(input, mensagemAcerto);
 
 		return devolverOpcaoEscolhida(opcao);

@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
@@ -28,7 +29,7 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		final TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
 		String idOrientacao = orientacaoService.pegarIdOrientacao(orientacaoDto);
 		OrientacaoDto orientacaoCriada = null;

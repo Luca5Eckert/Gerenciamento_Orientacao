@@ -5,12 +5,15 @@ import java.util.Scanner;
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.filtros.GerenciadorFiltrosOrientacao;
+import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuFiltro implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
+	private FormatacaoListaOrientacao formatacaoLista;
     private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
     public MenuFiltro(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
@@ -19,7 +22,7 @@ public class MenuFiltro implements Menu {
     }
 
     @Override
-    public Menu chamarMenu(Scanner input) {
+    public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
         boolean menuFiltroAtivo = true;
 
         String opcao = idiomaImplementacao.mostrarMenuFiltro(input, gerenciadorFiltro.formatarFiltrosAtivados());

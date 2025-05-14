@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class MenuGerenciador {
 	private Menu menu;
+	private MenuHistorico menuHistorico;
 	
 	public MenuGerenciador(Menu menu) {
 		this.menu = menu;
@@ -23,7 +24,7 @@ public class MenuGerenciador {
 	}
 	
 	public Menu iniciarMenu(Scanner input) {
-		return menu.chamarMenu(input);
+		return menu.chamarMenu(input, menuHistorico);
 	}
 	
 	

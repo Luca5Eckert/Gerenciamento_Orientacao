@@ -9,7 +9,7 @@ import Dominio.TipoOrientacao;
 import dtos.OrientacaoDto;
 import service.SessaoUsuario;
 
-public class FiltroOrientacaoTipo implements FiltroOrientacao {
+public class FiltroOrientacaoTipo implements FiltroOrientacao<OrientacaoDto> {
     private List<TipoOrientacao> tiposOrientacao = new ArrayList<>();
 
     public FiltroOrientacaoTipo(List<TipoOrientacao> tiposOrientacao) {
@@ -62,4 +62,16 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao {
     public void limparFiltros() {
         tiposOrientacao.clear();
     }
+
+	@Override
+	public void adicionarFiltro(OrientacaoDto filtro) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<OrientacaoDto> pegarFiltro() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -3,6 +3,7 @@ package aplication.interfaces;
 import java.util.Scanner;
 import Dominio.Usuario;
 import aplication.MenuFactory;
+import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
 import service.UsuarioService;
@@ -20,7 +21,7 @@ public class MenuLogin implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input) {
+	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		UsuarioDto usuarioParaLogar = idiomaImplementacao.mostrarMenuLogin(input);
 		Menu menu;
 
