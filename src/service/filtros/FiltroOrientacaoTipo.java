@@ -9,7 +9,7 @@ import Dominio.TipoOrientacao;
 import dtos.OrientacaoDto;
 import service.SessaoUsuario;
 
-public class FiltroOrientacaoTipo implements FiltroOrientacao<OrientacaoDto> {
+public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
     private List<TipoOrientacao> tiposOrientacao = new ArrayList<>();
 
     public FiltroOrientacaoTipo(List<TipoOrientacao> tiposOrientacao) {
@@ -17,17 +17,10 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<OrientacaoDto> {
     }
 
     public FiltroOrientacaoTipo(TipoOrientacao tipoOrientacao) {
-		this.tiposOrientacao.add(tipoOrientacao);
-	}
+        this.tiposOrientacao.add(tipoOrientacao);
+    }
 
-	public FiltroOrientacaoTipo() {
-	}
-
-	@Override
-    public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> orientacoes) {
-        return orientacoes.stream()
-                .filter(this::filtrarPorTipo)
-                .collect(Collectors.toList());
+    public FiltroOrientacaoTipo() {
     }
 
     private boolean filtrarPorTipo(OrientacaoDto orientacao) {
@@ -35,14 +28,14 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<OrientacaoDto> {
     }
 
     public String pegarTipos() {
-    	var idioma = SessaoUsuario.pegarIdioma();
+        var idioma = SessaoUsuario.pegarIdioma();
         return idioma.pegarFiltroTipo() + mostrarTipos(idioma.obterIdiomaOrientacao());
     }
-    
+
     public String mostrarTipos(IdiomaOrientacao idiomaOrientacao) {
-    	StringBuilder formatadoMostrarIdiomas = new StringBuilder();
-    	tiposOrientacao.stream().forEach(i -> formatadoMostrarIdiomas.append(i.getNome(idiomaOrientacao) + ", "));
-    	return formatadoMostrarIdiomas.toString();
+        StringBuilder formatadoMostrarTipos = new StringBuilder();
+        tiposOrientacao.forEach(i -> formatadoMostrarTipos.append(i.getNome(idiomaOrientacao)).append(", "));
+        return formatadoMostrarTipos.toString();
     }
 
     public List<TipoOrientacao> getTiposOrientacao() {
@@ -63,15 +56,22 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<OrientacaoDto> {
         tiposOrientacao.clear();
     }
 
-	@Override
-	public void adicionarFiltro(OrientacaoDto filtro) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void adicionarFiltro(TipoOrientacao filtro) {
+        if (filtro != null && !tiposOrientacao.contains(filtro)) {
+            tiposOrientacao.add(filtro);
+        }
+    }
 
-	@Override
-	public List<OrientacaoDto> pegarFiltro() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto) {
+        return listaObjeto.stream()
+                .filter(this::filtrarPorTipo)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TipoOrientacao> pegarFiltro() {
+        return new ArrayList<>(tiposOrientacao);
+    }
 }

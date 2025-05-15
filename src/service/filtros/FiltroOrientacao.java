@@ -11,4 +11,6 @@ public interface FiltroOrientacao<T extends Object> {
 	List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto);
 	
 	List<T> pegarFiltro();
+
+	void limparFiltros();
 }
