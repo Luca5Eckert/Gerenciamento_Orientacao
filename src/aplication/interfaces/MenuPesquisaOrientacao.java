@@ -31,10 +31,10 @@ public class MenuPesquisaOrientacao implements Menu {
 	public Menu devolverOpcaoEscolhida(String opcaoEscolhida) {
 		switch (opcaoEscolhida.toUpperCase()) {
 		case "S":
-			return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro);
+			return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao);
 		default:
 			definirPalavraPesquisa(opcaoEscolhida);
-			return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro);
+			return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao);
 		}
 
 	}

@@ -27,10 +27,10 @@ public class MenuLogin implements Menu {
 
 		try {
 			service.realizarLogin(usuarioParaLogar);
-			menu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, MenuFactory.criarMenu(TipoMenu.GERAL),
+			menu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
 					idiomaImplementacao.pegarMensagemLoginConcluido());
 		} catch (LoginException e) {
-			menu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO), e.getMessage());
+			menu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao), e.getMessage());
 		}
 
 		return menu;

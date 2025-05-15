@@ -6,5 +6,5 @@ import aplication.implementacoes.IdiomaImplementacao;
 
 public interface Formatacao<T> {
 
-    public String formatar(List<T> listaParaFormatar, IdiomaImplementacao idiomaImplementacao);
+    public String formatar(List<T> listaOrdenada, IdiomaImplementacao idiomaImplementacao);
 }

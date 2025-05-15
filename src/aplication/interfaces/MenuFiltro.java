@@ -7,6 +7,7 @@ import Dominio.TipoOrientacao;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.filtros.FiltroOrientacao;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.Formatacao;
@@ -15,11 +16,12 @@ import service.formatacao.FormatacaoListaOrientacao;
 public class MenuFiltro implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
-	private Formatacao formatacaoLista;
+	private Formatacao<FiltroOrientacao> formatacaoLista;
     private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
-    public MenuFiltro(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
+    public MenuFiltro(IdiomaImplementacao idiomaImplementacao, Formatacao<FiltroOrientacao> formatacaoLista, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
         this.idiomaImplementacao = idiomaImplementacao;
+        this.formatacaoLista = formatacaoLista;
     	this.gerenciadorFiltro = gerenciadorFiltro;
     }
 
@@ -31,7 +33,7 @@ public class MenuFiltro implements Menu {
         
         processarOpcao(opcao, input);
         
-        return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro);
+        return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao);
     }
     
     public Menu processarOpcao(String opcao, Scanner input) {
@@ -49,7 +51,9 @@ public class MenuFiltro implements Menu {
     }
     
     public Menu deletarFiltro(Scanner input) {
-    	String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input, gerenciadorFiltro.formatarFiltrosAtivadosParaApagar());
+        String filtrosFormatados = "";
+
+    	String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input, filtrosFormatados);
     	try {
     		int numeroFiltroEscolhido = Integer.parseInt(filtroEscolhido);
     		
@@ -77,17 +81,17 @@ public class MenuFiltro implements Menu {
     
 
     private boolean adicionarFiltroIdioma(IdiomaOrientacao idioma) {
-        return gerenciadorFiltro.adicionarTipoFiltro(TipoFiltro.IDIOMA, idioma);
+        gerenciadorFiltro.adicionarFiltro(TipoFiltro.IDIOMA, idioma);
+        return true;
     }
 
 
 
     private boolean definirFiltroTipo(TipoOrientacao tipo) {
-        gerenciadorFiltro.definirFiltroTipo(tipo);
+        gerenciadorFiltro.adicionarFiltro(TipoFiltro.TIPO, tipo);
         return true;
     }
     
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

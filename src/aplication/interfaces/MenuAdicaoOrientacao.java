@@ -24,7 +24,7 @@ public class MenuAdicaoOrientacao implements Menu {
 		try {
 			listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
 		} catch (Exception e) {
-			return MenuFactory.criarMenu(TipoMenu.GERAL);
+			return MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao);
 		}
 		
 		orientacaoService.criarOrientacoes(listaOrientacaoCriada);
@@ -33,8 +33,8 @@ public class MenuAdicaoOrientacao implements Menu {
 
 	public Menu devolverOpcaoEscolhida(TipoMenu opcao, IdiomaImplementacao idiomaImplementacao) {
 		return switch(opcao) {
-		case CERTO -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoConcluida());
-		case FALHA -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoFalhada());
+		case CERTO -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoConcluida(), idiomaImplementacao);
+		case FALHA -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoFalhada(), idiomaImplementacao);
 		default -> this;
 		};
 	}

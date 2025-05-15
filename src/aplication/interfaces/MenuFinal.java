@@ -12,7 +12,6 @@ public class MenuFinal implements Menu{
 		return this;
 	}
 	
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 	}
 	

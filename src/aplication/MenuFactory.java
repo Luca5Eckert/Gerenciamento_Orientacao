@@ -14,6 +14,7 @@ import service.filtros.FiltroOrientacaoIdioma;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.FormatacaoListaOrientacao;
+import utilitarios.Formatacao;
 
 public class MenuFactory {
 
@@ -67,20 +68,20 @@ public class MenuFactory {
         };
     }
 
-    public static Menu criarMenuResultado(TipoMenu tipoMenu, Menu proximo, String mensagem, IdiomaImplementacao idioma) {
+    public static Menu criarMenuResultado(TipoMenu tipoMenu, Menu proximo, String mensagem, IdiomaImplementacao idiomaImplementacao) {
         return switch (tipoMenu) {
-            case CERTO -> new MenuCerto(idioma, proximo, mensagem);
-            case FALHA -> new MenuFalha(idioma, proximo, mensagem);
-            default -> new MenuInicial(idioma);
+            case CERTO -> new MenuCerto(idiomaImplementacao, proximo, mensagem);
+            case FALHA -> new MenuFalha(idiomaImplementacao, proximo, mensagem);
+            default -> new MenuInicial(idiomaImplementacao);
         };
     }
 
-    public static Menu criarMenuPesquisa(TipoMenu tipoMenu, OrientacaoDto orientacaoDto, Menu menu, IdiomaImplementacao idioma) {
+    public static Menu criarMenuPesquisa(TipoMenu tipoMenu, OrientacaoDto orientacaoDto, IdiomaImplementacao idiomaImplementacao, Formatacao formatacao) {
         return switch (tipoMenu) {
-            case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(idioma, orientacaoDto, menu,
-                    criarOrientacaoService(), new FormatacaoListaOrientacao());
-            case EDICAO_ORIENTACAO -> new MenuEditarOrientacao(menu, orientacaoDto, idioma, criarOrientacaoService());
-            default -> new MenuInicial(idioma);
+            case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(idiomaImplementacao, orientacaoDto,
+                    criarOrientacaoService(), formatacao);
+            case EDICAO_ORIENTACAO -> new MenuEditarOrientacao(orientacaoDto, menuExibirOrientacoes, criarOrientacaoService());
+            default -> new MenuInicial(idiomaImplementacao);
         };
     }
 
@@ -97,4 +98,11 @@ public class MenuFactory {
             default -> new MenuInicial(idioma);
         };
     }
+
+    public static Object criarMenuPesquisa(TipoMenu edicaoOrientacao, OrientacaoDto orientacaoDto,
+            IdiomaImplementacao idiomaImplementacao) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'criarMenuPesquisa'");
+    }
+
 }

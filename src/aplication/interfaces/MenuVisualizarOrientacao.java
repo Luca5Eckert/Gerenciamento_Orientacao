@@ -20,31 +20,29 @@ public class MenuVisualizarOrientacao implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoDto orientacaoDto;
-	private final Menu menuAnterior;
 	private final OrientacaoService orientacaoService;
-	private final Formatacao formatador;
+	private final Formatacao<IdiomaOrientacao> formatador;
 
-	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
-			Menu menuAnterior, OrientacaoService orientacaoService, Formatacao formatador) {
+	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto, OrientacaoService orientacaoService, Formatacao<IdiomaOrientacao> formatador) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoDto = orientacaoDto;
-		this.menuAnterior = menuAnterior;
 		this.orientacaoService = orientacaoService;
 		this.formatador = formatador;
 	}
 
-	@Override
+
+    @Override
 	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		try {
 			Map<IdiomaOrientacao, OrientacaoDto> listaOrientacoesIdiomas = orientacaoService
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
 			var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
 
-			String orientacoesFormatada = formatador.formatar(listaOrdenada,idiomaImplementacao);
+			String orientacoesFormatada = formatador.formatar(listaOrdenada, idiomaImplementacao);
 
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada);
 
-			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input);
+			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input, menuHistorico);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,26 +52,26 @@ public class MenuVisualizarOrientacao implements Menu {
 	}
 
 	public Menu devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
-			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input) {
+			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input, MenuHistorico menuHistorico) {
 		return switch (opcao.toUpperCase()) {
-		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, menuAnterior);
-		case "S" -> this.menuAnterior;
-		case "A" -> removerOrientacao(input);
-		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes);
+		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao);
+		case "S" -> menuHistorico.voltarMenu();
+		case "A" -> removerOrientacao(input, menuHistorico);
+		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes, menuHistorico);
 		};
 	}
 
-	public Menu removerOrientacao(Scanner input) {
+	public Menu removerOrientacao(Scanner input, MenuHistorico menuHistorico) {
 		try {
 			idiomaImplementacao.mostrarMenuConfirmarApagarOrientacao(input);
 			orientacaoService.removerOrientacao(orientacaoDto);
-			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuAnterior,
-					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao());
+			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
+					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao(), idiomaImplementacao);
 		} catch (SairMenuException sme) {
 			return this;
 		} catch (Exception le) {
 			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this,
-					idiomaImplementacao.pegarMensagemErroAoRemoverOrientacao());
+					idiomaImplementacao.pegarMensagemErroAoRemoverOrientacao(), idiomaImplementacao);
 		}
 	}
 
@@ -87,18 +85,18 @@ public class MenuVisualizarOrientacao implements Menu {
 	}
 
 	private Menu processarOpcao(String opcao, List<IdiomaOrientacao> listaOrdenada,
-			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes) {
+			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, MenuHistorico menuHistorico) {
 		int opcaoEscolhida = 0;
 		try {
 			opcaoEscolhida = Integer.parseInt(opcao) - 1;
 			var orientacao = pegarOrientacao(opcaoEscolhida, listaOrdenada, listaComOrientacoes);
-			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, this.menuAnterior);
+			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao);
 		} catch (NullPointerException npe) {
 			return this;
 		} catch (OrientacaoNaoDisponivelIdiomaException ondie) {
 			IdiomaOrientacao idiomaOrientacao = listaOrdenada.get(opcaoEscolhida);
 			return MenuFactory.criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu.ADICAO_ORIENTACAO, this, orientacaoDto,
-					idiomaOrientacao);
+					idiomaOrientacao, idiomaImplementacao);
 		} catch (NumberFormatException nfe) {
 			return this;
 		}
@@ -133,7 +131,6 @@ public class MenuVisualizarOrientacao implements Menu {
 		return listaNaoDisponivel;
 	}
 
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

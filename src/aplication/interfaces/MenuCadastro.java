@@ -24,11 +24,11 @@ public class MenuCadastro implements Menu {
 
 		try {
 			usuarioService.realizarCadastro(usuarioCadastrar);
-			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, MenuFactory.criarMenu(TipoMenu.INICIO),
-					idiomaImplementacao.pegarMensagemCadastroConcluido());
+			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
+					idiomaImplementacao.pegarMensagemCadastroConcluido(), idiomaImplementacao);
 		} catch (CadastroException ce) {
-			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO),
-					ce.getMessage());
+			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+					ce.getMessage(), idiomaImplementacao);
 		}
 
 	}

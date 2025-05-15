@@ -19,10 +19,10 @@ public class MenuExibirOrientacoes implements Menu {
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 	private final GerenciadorFiltrosOrientacao gerenciadorFiltro;
-	private final Formatacao formatacaoLista;
+	private final Formatacao<OrientacaoDto> formatacaoLista;
 
 	public MenuExibirOrientacoes(OrientacaoService orientacaoService, GerenciadorFiltrosOrientacao gerenciadorFiltro,
-			Formatacao formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
+			Formatacao<OrientacaoDto> formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoService = orientacaoService;
 		this.gerenciadorFiltro = gerenciadorFiltro;
@@ -61,11 +61,11 @@ public class MenuExibirOrientacoes implements Menu {
 	private Menu processarOpcao(String opcao, IdiomaImplementacao idiomaImplementacao,
 			List<OrientacaoDto> orientacoesFiltradas) {
 		return switch (opcao.trim().toUpperCase()) {
-		case "F" -> MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO, gerenciadorFiltro);
-		case "P" -> MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro);
+		case "F" -> MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO, gerenciadorFiltro, idiomaImplementacao);
+		case "P" -> MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao);
 		case "A" -> limparPesquisa();
 		case "R" -> limparFiltros(idiomaImplementacao);
-		case "S" -> MenuFactory.criarMenu(TipoMenu.GERAL);
+		case "S" -> MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao);
 		default -> criarMenuPesquisa(opcao, orientacoesFiltradas);
 		};
 	}
@@ -91,7 +91,6 @@ public class MenuExibirOrientacoes implements Menu {
 	}
 	
 	
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

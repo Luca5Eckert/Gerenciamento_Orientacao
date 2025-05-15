@@ -19,15 +19,15 @@ public class GerenciadorFiltrosOrientacao {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> void adicionarFiltro(TipoFiltro tipoFiltro, T valorFiltro) {
+    public <T> boolean adicionarFiltro(TipoFiltro tipoFiltro, T valorFiltro) {
         FiltroOrientacao<T> filtro = (FiltroOrientacao<T>) filtrosAtivados.get(tipoFiltro);
         if (filtro != null) {
             filtro.adicionarFiltro(valorFiltro);
         }
     }
 
-    public <T> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao<T> filtroOrientacao) {
-        filtrosAtivados.put(tipoFiltro, filtroOrientacao);
+    public <T> void adicionarTipoFiltro(TipoFiltro tipoFiltro, IdiomaOrientacao idioma) {
+        filtrosAtivados.put(tipoFiltro, idioma);
     }
 
     @SuppressWarnings("unchecked")

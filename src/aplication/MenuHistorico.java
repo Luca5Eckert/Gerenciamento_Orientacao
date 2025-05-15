@@ -24,22 +24,22 @@ public class MenuHistorico {
 		return this.linhaDoTempoMenu.get(this.ponteiroDoMenu);
 	}
 	
-	public Menu irProximoMenu() throws Exception{
+	public Menu irProximoMenu() {
 		if(temProximo()){
 			this.ponteiroDoMenu++;
 			return pegarMenuAtual();
 		}
 
-		throw new Exception("Não existe proximo menu");
+		throw new RuntimeException("Não existe proximo menu");
 	}
 
-	public Menu voltarMenu() throws Exception{
+	public Menu voltarMenu(){
 		if(temAnterior()){
 			this.ponteiroDoMenu--;
 			return pegarMenuAtual();
 		}
 
-		throw new Exception("Não existe menu anterior");
+		throw new RuntimeException("Não existe menu anterior");
 	}
 
 	public boolean temProximo(){
