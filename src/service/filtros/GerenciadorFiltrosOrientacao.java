@@ -21,24 +21,17 @@ public class GerenciadorFiltrosOrientacao {
         this.filtrosAtivados = new HashMap<>();
     }
 
-    public void adicionarFiltro(TipoFiltro tipoFiltro, Object filtro) {
-        FiltroOrientacao<?> filtroOrientacao = filtrosAtivados.get(tipoFiltro);
-        if (filtroOrientacao != null) {
-            filtroOrientacao.adicionarFiltro(filtro);
-        } else {
-        	
-            switch (tipoFiltro) {
-                case IDIOMA:
-                    filtroOrientacao = new FiltroOrientacaoIdioma();
-                    ((FiltroOrientacaoIdioma) filtroOrientacao).adicionarFiltro(filtro);
-                    break;
-                case TIPO:
-                    filtroOrientacao = new FiltroOrientacaoTipo();
-                    ((FiltroOrientacaoTipo) filtroOrientacao).adicionarFiltro(filtro);
-                    break;
-            }
-            filtrosAtivados.put(tipoFiltro, filtroOrientacao);
-        }
+    public void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao filtroOrientacao) {
+        this.filtrosAtivados.put(tipoFiltro, filtroOrientacao);
+    }
+
+    public FiltroOrientacao pegarTipoFiltro(TipoFiltro tipoFiltro){
+        return this.filtrosAtivados.get(tipoFiltro);
+    }
+
+    public List<?> pegarFiltrosDoTipo(TipoFiltro tipoFiltro){
+        var filtroOrientacao = filtrosAtivados.get(tipoFiltro);
+        return filtroOrientacao.getFiltros();
     }
 
     public void limparFiltros(IdiomaOrientacao idiomaOrientacao) {
