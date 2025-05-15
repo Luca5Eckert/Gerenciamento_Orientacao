@@ -12,7 +12,6 @@ import service.OrientacaoService;
 import service.exceptions.orientacao.OrientacaoException;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.formatacao.Formatacao;
-import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuExibirOrientacoes implements Menu {
 
@@ -74,7 +73,7 @@ public class MenuExibirOrientacoes implements Menu {
 		try {
 			int numeroOrientacao = Integer.parseInt(opcao);
 			var orientacao = listaOrientacao.get(numeroOrientacao - 1);
-			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, this);
+			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao);
 		} catch (Exception e) {
 			return this;
 		}

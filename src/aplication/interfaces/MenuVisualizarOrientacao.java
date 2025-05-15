@@ -21,7 +21,7 @@ public class MenuVisualizarOrientacao implements Menu {
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
-	private final Formatacao<IdiomaOrientacao> formatador;
+	private final Formatacao formatador;
 
 	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto, OrientacaoService orientacaoService, Formatacao<IdiomaOrientacao> formatador) {
 		this.idiomaImplementacao = idiomaImplementacao;
@@ -54,7 +54,7 @@ public class MenuVisualizarOrientacao implements Menu {
 	public Menu devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input, MenuHistorico menuHistorico) {
 		return switch (opcao.toUpperCase()) {
-		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao);
+		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoDto, idiomaImplementacao);
 		case "S" -> menuHistorico.voltarMenu();
 		case "A" -> removerOrientacao(input, menuHistorico);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes, menuHistorico);
@@ -90,7 +90,7 @@ public class MenuVisualizarOrientacao implements Menu {
 		try {
 			opcaoEscolhida = Integer.parseInt(opcao) - 1;
 			var orientacao = pegarOrientacao(opcaoEscolhida, listaOrdenada, listaComOrientacoes);
-			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao);
+			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoDto, idiomaImplementacao);
 		} catch (NullPointerException npe) {
 			return this;
 		} catch (OrientacaoNaoDisponivelIdiomaException ondie) {

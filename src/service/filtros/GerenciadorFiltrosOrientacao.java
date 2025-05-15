@@ -24,9 +24,10 @@ public class GerenciadorFiltrosOrientacao {
         if (filtro != null) {
             filtro.adicionarFiltro(valorFiltro);
         }
+		return false;
     }
 
-    public <T> void adicionarTipoFiltro(TipoFiltro tipoFiltro, IdiomaOrientacao idioma) {
+    public <T> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao<IdiomaOrientacao> idioma) {
         filtrosAtivados.put(tipoFiltro, idioma);
     }
 

@@ -3,7 +3,7 @@ package utilitarios;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-public class Formatacao {
+public class FormatacaoUtil {
 
 	public static String removerAcento(String str) {
 	    String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 

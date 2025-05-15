@@ -3,7 +3,6 @@ package aplication.interfaces;
 import java.util.Scanner;
 
 import aplication.MenuHistorico;
-import aplication.implementacoes.IdiomaImplementacao;
 
 public interface Menu {
 

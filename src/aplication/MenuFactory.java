@@ -10,11 +10,13 @@ import repositorio.UsuarioRepositorio;
 import service.OrientacaoService;
 import service.UsuarioService;
 import service.filtros.FiltroFactory;
+import service.filtros.FiltroOrientacao;
 import service.filtros.FiltroOrientacaoIdioma;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
+import service.formatacao.Formatacao;
+import service.formatacao.FormatacaoListaFiltro;
 import service.formatacao.FormatacaoListaOrientacao;
-import utilitarios.Formatacao;
 
 public class MenuFactory {
 
@@ -28,13 +30,26 @@ public class MenuFactory {
 
     public static GerenciadorFiltrosOrientacao criarGerenciadorFiltro(IdiomaImplementacao idioma) {
         var gerenciador = new GerenciadorFiltrosOrientacao();
-        var filtroOrientacaoIdioma = FiltroFactory.criarFiltroOrientacaoIdioma(); 
-        
+        var filtroOrientacaoIdioma = FiltroFactory.criarFiltroOrientacaoIdioma();
+
         filtroOrientacaoIdioma.adicionarFiltro(idioma.obterIdiomaOrientacao());
 
-        gerenciador.adicionarTipoFiltro(TipoFiltro.IDIOMA ,filtroOrientacaoIdioma);
-        
+        gerenciador.adicionarTipoFiltro(TipoFiltro.IDIOMA, filtroOrientacaoIdioma);
+
         return gerenciador;
+    }
+
+    public static Formatacao<IdiomaOrientacao> criarFormatacaoIdiomaOrientacao() {
+        return new Formatacao<>() {
+            @Override
+            public String formatar(List<IdiomaOrientacao> listaOrdenada, IdiomaImplementacao idiomaImplementacao) {
+                StringBuilder sb = new StringBuilder();
+                for (IdiomaOrientacao item : listaOrdenada) {
+                    sb.append(item.toString()).append("\n");
+                }
+                return sb.toString();
+            }
+        };
     }
 
     public static Menu criarMenu(TipoMenu tipoMenu, IdiomaImplementacao idioma) {
@@ -51,18 +66,21 @@ public class MenuFactory {
             case CADASTRO -> new MenuCadastro(idioma, criarUsuarioService(idioma));
             case LOGIN -> new MenuLogin(idioma, criarUsuarioService(idioma));
             case ADICAO_ORIENTACAO -> new MenuAdicaoOrientacao(idioma, criarOrientacaoService());
-            case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), criarGerenciadorFiltro(idioma),
-                    new FormatacaoListaOrientacao(), idioma);
-            case FILTRO -> new MenuFiltro(idioma, criarGerenciadorFiltro(idioma));
+            case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(
+                    criarOrientacaoService(),
+                    criarGerenciadorFiltro(idioma),
+                    new FormatacaoListaOrientacao(),
+                    idioma
+            );
+            case FILTRO -> new MenuFiltro(idioma, new FormatacaoListaFiltro(), criarGerenciadorFiltro(idioma));
             default -> new MenuInicial(idioma);
         };
     }
 
     public static Menu criarMenuComFiltros(TipoMenu tipoMenu, GerenciadorFiltrosOrientacao gerenciadorFiltros, IdiomaImplementacao idioma) {
         return switch (tipoMenu) {
-            case FILTRO -> new MenuFiltro(idioma, gerenciadorFiltros);
-            case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), gerenciadorFiltros,
-                    new FormatacaoListaOrientacao(), idioma);
+            case FILTRO -> new MenuFiltro(idioma, new FormatacaoListaFiltro(), gerenciadorFiltros);
+            case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), gerenciadorFiltros, new FormatacaoListaOrientacao(), idioma);
             case PESQUISA_ORIENTACAO -> new MenuPesquisaOrientacao(idioma, gerenciadorFiltros);
             default -> new MenuGeral(idioma);
         };
@@ -76,11 +94,16 @@ public class MenuFactory {
         };
     }
 
-    public static Menu criarMenuPesquisa(TipoMenu tipoMenu, OrientacaoDto orientacaoDto, IdiomaImplementacao idiomaImplementacao, Formatacao formatacao) {
+    public static Menu criarMenuPesquisa(TipoMenu tipoMenu, OrientacaoDto orientacaoDto, IdiomaImplementacao idiomaImplementacao) {
+
         return switch (tipoMenu) {
-            case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(idiomaImplementacao, orientacaoDto,
-                    criarOrientacaoService(), formatacao);
-            case EDICAO_ORIENTACAO -> new MenuEditarOrientacao(orientacaoDto, menuExibirOrientacoes, criarOrientacaoService());
+            case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(
+                    idiomaImplementacao,
+                    orientacaoDto,
+                    criarOrientacaoService(),
+                    new FormatacaoListaComDivisoria()
+            );
+            case EDICAO_ORIENTACAO -> new MenuEditarOrientacao(orientacaoDto, idiomaImplementacao, criarOrientacaoService());
             default -> new MenuInicial(idiomaImplementacao);
         };
     }
@@ -92,17 +115,22 @@ public class MenuFactory {
         };
     }
 
-    public static Menu criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu tipoMenu, Menu menuAnterior, OrientacaoDto orientacao, IdiomaOrientacao idiomaOrientacao, IdiomaImplementacao idioma) {
+    public static Menu criarMenuAdicionarNovoIdiomaOrientacao(
+            TipoMenu tipoMenu,
+            Menu menuAnterior,
+            OrientacaoDto orientacao,
+            IdiomaOrientacao idiomaOrientacao,
+            IdiomaImplementacao idioma
+    ) {
         return switch (tipoMenu) {
-            case ADICAO_ORIENTACAO -> new MenuAdicionarIdiomaOrientacao(idioma, criarOrientacaoService(), menuAnterior, orientacao, idiomaOrientacao);
+            case ADICAO_ORIENTACAO -> new MenuAdicionarIdiomaOrientacao(
+                    idioma,
+                    criarOrientacaoService(),
+                    menuAnterior,
+                    orientacao,
+                    idiomaOrientacao
+            );
             default -> new MenuInicial(idioma);
         };
     }
-
-    public static Object criarMenuPesquisa(TipoMenu edicaoOrientacao, OrientacaoDto orientacaoDto,
-            IdiomaImplementacao idiomaImplementacao) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'criarMenuPesquisa'");
-    }
-
 }

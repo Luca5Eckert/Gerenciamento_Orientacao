@@ -1,12 +1,11 @@
 package service.pesquisas;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import dtos.OrientacaoDto;
 import service.exceptions.orientacao.OrientacaoException;
-import utilitarios.Formatacao;
+import utilitarios.FormatacaoUtil;
 
 public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
 
@@ -14,8 +13,8 @@ public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
 	public List<OrientacaoDto> aplicarPesquisa(List<OrientacaoDto> orientacoes, String palavraPesquisada)
 			throws OrientacaoException {
 
-		palavraPesquisada = Formatacao.removerAcento(palavraPesquisada.toLowerCase());
-		palavraPesquisada = Formatacao.removerEspacos(palavraPesquisada);
+		palavraPesquisada = FormatacaoUtil.removerAcento(palavraPesquisada.toLowerCase());
+		palavraPesquisada = FormatacaoUtil.removerEspacos(palavraPesquisada);
 
 		List<OrientacaoDto> orientacoesEncontradas = retornarOrientacoesPerfeitas(orientacoes, palavraPesquisada);
 
@@ -34,7 +33,7 @@ public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
 
 	private List<OrientacaoDto> retornarOrientacoesPerfeitas(List<OrientacaoDto> orientacoes, String palavraPesquisada) {
 		return orientacoes.stream()
-				.filter(o -> Formatacao.removerAcento(o.titulo().toLowerCase()).equals(palavraPesquisada))
+				.filter(o -> FormatacaoUtil.removerAcento(o.titulo().toLowerCase()).equals(palavraPesquisada))
 				.collect(Collectors.toList());
 	}
 
@@ -43,7 +42,7 @@ public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
 	}
 
 	private List<OrientacaoDto> retornarOrientacoesParecidas(List<OrientacaoDto> orientacoes, String palavraPesquisada) {
-		String[] palavrasChave = Formatacao.removerAcento(palavraPesquisada.toLowerCase()).split("\\W+");
+		String[] palavrasChave = FormatacaoUtil.removerAcento(palavraPesquisada.toLowerCase()).split("\\W+");
 
 		return orientacoes.stream()
 				.filter(o -> verificarSePalavraSeAdequa(o, palavrasChave))
@@ -51,7 +50,7 @@ public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
 	}
 
 	private boolean verificarSePalavraSeAdequa(OrientacaoDto orientacao, String[] palavrasChave) {
-		String[] tituloPalavras = Formatacao.removerAcento(orientacao.titulo().toLowerCase()).split("\\W+");
+		String[] tituloPalavras = FormatacaoUtil.removerAcento(orientacao.titulo().toLowerCase()).split("\\W+");
 		int quantidadePalavraIgual = contarQuantidadeSimilaridade(palavrasChave, tituloPalavras);
 		double quantidadeMinima = palavrasChave.length / 1.3;
 		return quantidadePalavraIgual >= quantidadeMinima;
