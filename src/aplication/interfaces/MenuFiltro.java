@@ -8,12 +8,14 @@ import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.filtros.GerenciadorFiltrosOrientacao;
+import service.filtros.TipoFiltro;
+import service.formatacao.Formatacao;
 import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuFiltro implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
-	private FormatacaoListaOrientacao formatacaoLista;
+	private Formatacao formatacaoLista;
     private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
     public MenuFiltro(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
@@ -25,7 +27,7 @@ public class MenuFiltro implements Menu {
     public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
         boolean menuFiltroAtivo = true;
 
-        String opcao = idiomaImplementacao.mostrarMenuFiltro(input, gerenciadorFiltro.formatarFiltrosAtivados());
+        String opcao = idiomaImplementacao.mostrarMenuFiltro(input, "sada");
         
         processarOpcao(opcao, input);
         
@@ -50,7 +52,6 @@ public class MenuFiltro implements Menu {
     	String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input, gerenciadorFiltro.formatarFiltrosAtivadosParaApagar());
     	try {
     		int numeroFiltroEscolhido = Integer.parseInt(filtroEscolhido);
-    		gerenciadorFiltro.formatarFiltrosAtivadosParaApagar();
     		
     	} catch(NumberFormatException nfe) {
     		return this;
@@ -76,7 +77,7 @@ public class MenuFiltro implements Menu {
     
 
     private boolean adicionarFiltroIdioma(IdiomaOrientacao idioma) {
-        return gerenciadorFiltro.definirFiltroIdioma(idioma);
+        return gerenciadorFiltro.adicionarTipoFiltro(TipoFiltro.IDIOMA, idioma);
     }
 
 

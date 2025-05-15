@@ -13,6 +13,7 @@ import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
+import service.formatacao.Formatacao;
 import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuVisualizarOrientacao implements Menu {
@@ -21,10 +22,10 @@ public class MenuVisualizarOrientacao implements Menu {
 	private final OrientacaoDto orientacaoDto;
 	private final Menu menuAnterior;
 	private final OrientacaoService orientacaoService;
-	private final FormatacaoListaOrientacao formatador;
+	private final Formatacao formatador;
 
 	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
-			Menu menuAnterior, OrientacaoService orientacaoService, FormatacaoListaOrientacao formatador) {
+			Menu menuAnterior, OrientacaoService orientacaoService, Formatacao formatador) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoDto = orientacaoDto;
 		this.menuAnterior = menuAnterior;
@@ -39,8 +40,7 @@ public class MenuVisualizarOrientacao implements Menu {
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
 			var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
 
-			String orientacoesFormatada = formatador.formatarOrientacoesIdiomas(listaOrdenada,
-					listaOrientacoesIdiomas.size());
+			String orientacoesFormatada = formatador.formatar(listaOrdenada,idiomaImplementacao);
 
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada);
 
@@ -48,7 +48,7 @@ public class MenuVisualizarOrientacao implements Menu {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, "FNDJA");
+			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, "FNDJA", idiomaImplementacao);
 		}
 
 	}

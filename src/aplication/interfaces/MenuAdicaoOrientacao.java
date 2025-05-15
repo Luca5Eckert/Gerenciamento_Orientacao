@@ -33,13 +33,12 @@ public class MenuAdicaoOrientacao implements Menu {
 
 	public Menu devolverOpcaoEscolhida(TipoMenu opcao, IdiomaImplementacao idiomaImplementacao) {
 		return switch(opcao) {
-		case CERTO -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL), idiomaImplementacao.pegarMensangemAdicaoConcluida());
-		case FALHA -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL), idiomaImplementacao.pegarMensangemAdicaoFalhada());
+		case CERTO -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoConcluida());
+		case FALHA -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoFalhada());
 		default -> this;
 		};
 	}
 
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

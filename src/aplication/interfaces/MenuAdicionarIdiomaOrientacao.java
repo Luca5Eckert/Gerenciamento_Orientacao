@@ -43,7 +43,7 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 			
 		} catch (Exception e) {
 			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuAnterior,
-					idiomaImplementacao.pegarMensangemAdicaoFalhada());
+					idiomaImplementacao.pegarMensangemAdicaoFalhada(), idiomaImplementacao);
 		}
 
 	}
@@ -56,7 +56,6 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 		return menuAnterior;
 	}
 
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

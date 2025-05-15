@@ -11,6 +11,7 @@ import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.exceptions.orientacao.OrientacaoException;
 import service.filtros.GerenciadorFiltrosOrientacao;
+import service.formatacao.Formatacao;
 import service.formatacao.FormatacaoListaOrientacao;
 
 public class MenuExibirOrientacoes implements Menu {
@@ -18,10 +19,10 @@ public class MenuExibirOrientacoes implements Menu {
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 	private final GerenciadorFiltrosOrientacao gerenciadorFiltro;
-	private final FormatacaoListaOrientacao formatacaoLista;
+	private final Formatacao formatacaoLista;
 
 	public MenuExibirOrientacoes(OrientacaoService orientacaoService, GerenciadorFiltrosOrientacao gerenciadorFiltro,
-			FormatacaoListaOrientacao formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
+			Formatacao formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoService = orientacaoService;
 		this.gerenciadorFiltro = gerenciadorFiltro;
@@ -36,7 +37,7 @@ public class MenuExibirOrientacoes implements Menu {
 		} catch (OrientacaoException e) {
 		}
 
-		String textoFormatado = formatacaoLista.formatarListaOrientacoes(orientacoesFiltradas);
+		String textoFormatado = formatacaoLista.formatar(orientacoesFiltradas, idiomaImplementacao);
 
 		if (resultadoVazio(textoFormatado)) {
 			textoFormatado = idiomaImplementacao.pegarMensagemOrientacoesNaoEncontrada();
@@ -85,8 +86,7 @@ public class MenuExibirOrientacoes implements Menu {
 	}
 
 	private Menu limparFiltros(IdiomaImplementacao idiomaImplementacao) {
-		gerenciadorFiltro.limparTodosOsFiltros();
-		gerenciadorFiltro.definirFitroPadrao(idiomaImplementacao.obterIdiomaOrientacao());
+		gerenciadorFiltro.limparFiltros();
 		return this;
 	}
 	

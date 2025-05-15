@@ -17,7 +17,8 @@ public class Sistema {
 	private Scanner input = new Scanner(System.in);
 
 	public Sistema() {
-		this.gerenciadorMenu = new MenuGerenciador(MenuFactory.criarMenu(TipoMenu.FIM));
+		IdiomaImplementacao idioma = new InglesImplementacao();
+		this.gerenciadorMenu = new MenuGerenciador(MenuFactory.criarMenu(TipoMenu.FIM, idioma));
 	}
 
 	public boolean iniciarSistema() {
@@ -46,7 +47,7 @@ public class Sistema {
 
 	private void iniciarGerenciador(IdiomaImplementacao idionaImplementacao) {
 		SessaoUsuario.definirIdioma(idionaImplementacao);
-		this.gerenciadorMenu.setMenu(MenuFactory.criarMenu(TipoMenu.INICIO));
+		this.gerenciadorMenu.setMenu(MenuFactory.criarMenu(TipoMenu.INICIO, idionaImplementacao));
 	}
 	
 	public MenuGerenciador getMenu() {

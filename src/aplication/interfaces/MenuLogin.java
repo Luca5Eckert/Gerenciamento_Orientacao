@@ -37,7 +37,6 @@ public class MenuLogin implements Menu {
 	}
 
 	
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

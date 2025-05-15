@@ -57,13 +57,6 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
     }
 
     @Override
-    public void adicionarFiltro(TipoOrientacao filtro) {
-        if (filtro != null && !tiposOrientacao.contains(filtro)) {
-            tiposOrientacao.add(filtro);
-        }
-    }
-
-    @Override
     public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto) {
         return listaObjeto.stream()
                 .filter(this::filtrarPorTipo)
@@ -74,4 +67,12 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
     public List<TipoOrientacao> pegarFiltro() {
         return new ArrayList<>(tiposOrientacao);
     }
+
+	@Override
+	public void adicionarFiltro(TipoOrientacao filtro) {
+        if (filtro != null && !tiposOrientacao.contains(filtro)) {
+            tiposOrientacao.add(filtro);
+        }
+		
+	}
 }

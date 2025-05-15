@@ -8,7 +8,9 @@ public class MenuHistorico {
 	private List<Menu> linhaDoTempoMenu;
 	private int ponteiroDoMenu;
 	
-	public List<Menu> getLinhaDoTempoMenu();
+	public List<Menu> getLinhaDoTempoMenu() {
+		return linhaDoTempoMenu;
+	}
 
 	public void setLnhaDoTempoMenu(List<Menu> novaLinhaDoTempo){
 		this.linhaDoTempoMenu = novaLinhaDoTempo;
@@ -22,18 +24,18 @@ public class MenuHistorico {
 		return this.linhaDoTempoMenu.get(this.ponteiroDoMenu);
 	}
 	
-	public Menu irProximoMenu(){
+	public Menu irProximoMenu() throws Exception{
 		if(temProximo()){
-			this.ponteiroMenu++;
+			this.ponteiroDoMenu++;
 			return pegarMenuAtual();
 		}
 
 		throw new Exception("Não existe proximo menu");
 	}
 
-	public Menu voltarMenu(){
+	public Menu voltarMenu() throws Exception{
 		if(temAnterior()){
-			this.ponteiroDoMenu--:
+			this.ponteiroDoMenu--;
 			return pegarMenuAtual();
 		}
 
@@ -41,11 +43,11 @@ public class MenuHistorico {
 	}
 
 	public boolean temProximo(){
-		return ponteiroAtual < linhaDoTempoMenu.lenght();
+		return ponteiroDoMenu < linhaDoTempoMenu.size();
 	}
 
 	public boolean temAnterior(){
-		return ponteiroAtual > linhaDoTempoMenu.lenght();
+		return ponteiroDoMenu > linhaDoTempoMenu.size();
 	}
 	
 }

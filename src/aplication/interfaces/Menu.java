@@ -9,7 +9,4 @@ public interface Menu {
 
 	Menu chamarMenu(Scanner input, MenuHistorico menuHistorico);
 	
-	void mudarIdioma(IdiomaImplementacao idiomaImplementacao);
-
-
 }

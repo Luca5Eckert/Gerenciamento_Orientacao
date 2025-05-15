@@ -24,15 +24,14 @@ public class MenuInicial implements Menu {
 
 	public Menu devolverOpcaoEscolhida(String opcao) {
 		return switch (opcao) {
-		case "1" -> MenuFactory.criarMenuComIdioma(TipoMenu.LOGIN);
-		case "2" -> MenuFactory.criarMenuComIdioma(TipoMenu.CADASTRO);
-		case "3" -> MenuFactory.criarMenuAlterarSistema(TipoMenu.ALTERAR_IDIOMA, this);
-		case "4" -> MenuFactory.criarMenu(TipoMenu.FIM);
-		default -> MenuFactory.criarMenu(TipoMenu.INICIO);
+		case "1" -> MenuFactory.criarMenuComIdioma(TipoMenu.LOGIN, idiomaImplementacao);
+		case "2" -> MenuFactory.criarMenuComIdioma(TipoMenu.CADASTRO, idiomaImplementacao);
+		case "3" -> MenuFactory.criarMenuAlterarSistema(TipoMenu.ALTERAR_IDIOMA, this, idiomaImplementacao);
+		case "4" -> MenuFactory.criarMenu(TipoMenu.FIM, idiomaImplementacao);
+		default -> MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao);
 		};
 	}
 	
-	@Override
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

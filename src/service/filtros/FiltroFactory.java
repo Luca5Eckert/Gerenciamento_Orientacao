@@ -5,12 +5,13 @@ import Dominio.TipoOrientacao;
 
 public class FiltroFactory {
 
-	public static FiltroOrientacao pegarFiltroIdioma(IdiomaOrientacao idiomaOrientacao) {
-		return new FiltroOrientacaoIdioma(idiomaOrientacao);
+	public static FiltroOrientacao<IdiomaOrientacao> criarFiltroOrientacaoIdioma() {
+	    return new FiltroOrientacaoIdioma();
 	}
 	
-	public static FiltroOrientacao pegarFiltroTipo(TipoOrientacao tipoOrientacao) {
-		return new FiltroOrientacaoTipo(tipoOrientacao);
+	public static FiltroOrientacao<TipoOrientacao> criarFiltroOrientacaoTipo(){
+		return new FiltroOrientacaoTipo();
 	}
+
 	
 }
