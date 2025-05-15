@@ -6,8 +6,12 @@ import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.SessaoUsuario;
 
-public class FormatacaoListaComDivisoria {
+public class FormatacaoListaComDivisoria implements Formatacao {
 	private int numeroDivisoria;
+
+	public FormatacaoListaComDivisoria(int numeroDivisoria){
+		this.numeroDivisoria = numeroDivisoria;
+	}
 	
 	public String formatar(IdiomaImplementacao idiomaImplementacao, List<OrientacaoDto> listaOrientacoes) {
 		StringBuilder listaFormatada = new StringBuilder();
