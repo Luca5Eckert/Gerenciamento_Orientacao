@@ -6,19 +6,19 @@ import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.SessaoUsuario;
 
-public class FormatacaoIdioma {
+public class FormatacaoListaComDivisoria {
+	private int numeroDivisoria;
 	
-	public String formatarOrientacoesIdiomas(List<IdiomaOrientacao> listaOrientacoes, int numeroSeperador) {
+	public String formatar(IdiomaImplementacao idiomaImplementacao, List<OrientacaoDto> listaOrientacoes) {
 		StringBuilder listaFormatada = new StringBuilder();
 		int numeroOrientacao = 1;
-		IdiomaImplementacao idiomaImplementacao = SessaoUsuario.pegarIdioma();
 
-		if( numeroSeperador != 0 ) {
+		if( numeroDivisoria != 0 ) {
 			listaFormatada.append(idiomaImplementacao.pegarIdiomaDisponivel());			
 		}
 		for(IdiomaOrientacao idioma : listaOrientacoes) {
 
-			if(numeroOrientacao == (numeroSeperador + 1)) {
+			if(numeroOrientacao == (numeroDivisoria + 1)) {
 				listaFormatada.append("\n\n" + idiomaImplementacao.pegarIdiomaIndisponivel());
 				
 			} 
