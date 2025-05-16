@@ -26,4 +26,8 @@ public class MenuIniciarSistema implements Menu{
 	}
 
 
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
+	}
+	
 }

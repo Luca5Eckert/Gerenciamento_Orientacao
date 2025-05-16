@@ -92,4 +92,9 @@ public class MenuExibirOrientacoes implements Menu {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+		
+	}
 }

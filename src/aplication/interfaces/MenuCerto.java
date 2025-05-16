@@ -28,8 +28,11 @@ public class MenuCerto implements Menu {
 		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 	
-	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
+		
 	}
 
 }

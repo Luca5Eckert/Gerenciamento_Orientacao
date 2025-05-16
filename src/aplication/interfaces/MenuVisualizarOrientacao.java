@@ -39,7 +39,7 @@ public class MenuVisualizarOrientacao implements Menu {
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
 			var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
 
-			String orientacoesFormatada = formatador.formatar(listaOrdenada, 0, idiomaImplementacao);
+			String orientacoesFormatada = formatador.formatar(listaOrdenada, listaOrientacoesIdiomas.size(), idiomaImplementacao);
 
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada);
 
@@ -93,7 +93,7 @@ public class MenuVisualizarOrientacao implements Menu {
 		try {
 			opcaoEscolhida = Integer.parseInt(opcao) - 1;
 			var orientacao = pegarOrientacao(opcaoEscolhida, listaOrdenada, listaComOrientacoes);
-			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoDto, idiomaImplementacao);
+			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao);
 		} catch (NullPointerException npe) {
 			return this;
 		} catch (OrientacaoNaoDisponivelIdiomaException ondie) {
@@ -134,7 +134,9 @@ public class MenuVisualizarOrientacao implements Menu {
 		return listaNaoDisponivel;
 	}
 
-	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
+		
 	}
 }

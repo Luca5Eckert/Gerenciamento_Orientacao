@@ -49,9 +49,9 @@ public class MenuEditarOrientacao implements Menu{
 
 	}
 
-
-	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
+		
 	}
-	
 }

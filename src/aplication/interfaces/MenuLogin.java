@@ -37,6 +37,13 @@ public class MenuLogin implements Menu {
 
 		menuHistorico.definirProximoMenu(proximoMenu);
 	}
+	
+
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+		
+	}
 
 
 

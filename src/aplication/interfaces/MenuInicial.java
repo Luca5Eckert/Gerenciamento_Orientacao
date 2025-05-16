@@ -37,4 +37,9 @@ public class MenuInicial implements Menu {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
+		this.idiomaImplementacao = idiomaImplementacao;
+		
+	}
 }

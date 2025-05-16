@@ -73,10 +73,7 @@ public class MenuHistorico {
 	}
 
 	public void mostrarHistorico() {
-		for (int i = 0; i < linhaDoTempoMenu.size(); i++) {
-			String marcador = (i == ponteiroDoMenu) ? " <-- atual" : "";
-			System.out.println(i + ": " + linhaDoTempoMenu.get(i).getClass().getSimpleName() + marcador);
-		}
+		this.linhaDoTempoMenu.forEach(menu -> System.out.println(menu.getClass().getSimpleName()) );
 	}
 	
 }

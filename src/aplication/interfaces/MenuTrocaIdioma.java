@@ -38,13 +38,13 @@ public class MenuTrocaIdioma implements Menu {
 	public Menu processarMudanca(String entradaUsuario) {
         try {
             int indiceIdioma = parseEntradaUsuario(entradaUsuario);
-            IdiomaOrientacao idiomaEscolhido = IdiomaOrientacao.pegarIdioma(indiceIdioma);
+            IdiomaOrientacao idiomaEscolhido = IdiomaOrientacao.pegarIdioma(indiceIdioma-1);
             IdiomaImplementacao novaImplementacao = pegarNovaImplementacao(idiomaEscolhido);
 
             atualizarIdiomaMenuAnterior(novaImplementacao);
 
             String mensagem = construirMensagemSucesso(idiomaEscolhido, novaImplementacao);
-            return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuAnterior, mensagem, novaImplementacao);
+			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuAnterior, mensagem, novaImplementacao);
 
         } catch (NumberFormatException e) {
             System.err.println("Erro: entrada inválida.");
@@ -70,6 +70,7 @@ public class MenuTrocaIdioma implements Menu {
     }
 
     private void atualizarIdiomaMenuAnterior(IdiomaImplementacao novaImplementacao) {
+    	menuAnterior.trocarIdioma(novaImplementacao);
         this.idiomaImplementacao = novaImplementacao;
     }
 
@@ -79,8 +80,11 @@ public class MenuTrocaIdioma implements Menu {
         return implementacao.pegarMensagemTrocaDeIdiomaBemSucedida(nomeIdioma);
     }
 	
-	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
+		
 	}
 
 }

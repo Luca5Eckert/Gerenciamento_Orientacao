@@ -102,8 +102,9 @@ public class MenuFiltro implements Menu {
 		return true;
 	}
 
-	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
+	@Override
+	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
+		
 	}
-
 }
