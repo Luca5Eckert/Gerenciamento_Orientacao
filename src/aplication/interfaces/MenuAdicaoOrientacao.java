@@ -17,24 +17,28 @@ public class MenuAdicaoOrientacao implements Menu {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoService = orientacaoService;
 	}
-	
+
 	@Override
-	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
-		List<OrientacaoDto> listaOrientacaoCriada;
+	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
+		Menu proximoMenu = null;
+		List<OrientacaoDto> listaOrientacaoCriada = null;
 		try {
 			listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
+			orientacaoService.criarOrientacoes(listaOrientacaoCriada);
+			proximoMenu = devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao);
+			menuHistorico.definirProximoMenu(proximoMenu);
 		} catch (Exception e) {
-			return MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao);
+			menuHistorico.voltarMenu();
 		}
-		
-		orientacaoService.criarOrientacoes(listaOrientacaoCriada);
-		return devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao);
+
 	}
 
 	public Menu devolverOpcaoEscolhida(TipoMenu opcao, IdiomaImplementacao idiomaImplementacao) {
-		return switch(opcao) {
-		case CERTO -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoConcluida(), idiomaImplementacao);
-		case FALHA -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao), idiomaImplementacao.pegarMensangemAdicaoFalhada(), idiomaImplementacao);
+		return switch (opcao) {
+		case CERTO -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
+				idiomaImplementacao.pegarMensangemAdicaoConcluida(), idiomaImplementacao);
+		case FALHA -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
+				idiomaImplementacao.pegarMensangemAdicaoFalhada(), idiomaImplementacao);
 		default -> this;
 		};
 	}

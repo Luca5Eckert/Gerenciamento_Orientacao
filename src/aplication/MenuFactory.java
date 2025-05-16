@@ -1,7 +1,5 @@
 package aplication;
 
-import java.util.List;
-
 import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.*;
@@ -10,8 +8,6 @@ import repositorio.UsuarioRepositorio;
 import service.OrientacaoService;
 import service.UsuarioService;
 import service.filtros.FiltroFactory;
-import service.filtros.FiltroOrientacao;
-import service.filtros.FiltroOrientacaoIdioma;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.FormatacaoListaComDivisoria;
@@ -42,7 +38,6 @@ public class MenuFactory {
     public static Menu criarMenu(TipoMenu tipoMenu, IdiomaImplementacao idioma) {
         return switch (tipoMenu) {
             case INICIO -> new MenuInicial(idioma);
-            case FIM -> new MenuFinal();
             case GERAL -> new MenuGeral(idioma);
             default -> new MenuInicial(idioma);
         };

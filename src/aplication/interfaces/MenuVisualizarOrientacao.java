@@ -22,16 +22,18 @@ public class MenuVisualizarOrientacao implements Menu {
 	private final OrientacaoService orientacaoService;
 	private final FormatacaoListaComDivisoria formatador;
 
-	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto, OrientacaoService orientacaoService, FormatacaoListaComDivisoria formatador) {
+	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
+			OrientacaoService orientacaoService, FormatacaoListaComDivisoria formatador) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoDto = orientacaoDto;
 		this.orientacaoService = orientacaoService;
 		this.formatador = formatador;
 	}
 
+	@Override
+	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
+		Menu proximoMenu = null;
 
-    @Override
-	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		try {
 			Map<IdiomaOrientacao, OrientacaoDto> listaOrientacoesIdiomas = orientacaoService
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
@@ -41,12 +43,14 @@ public class MenuVisualizarOrientacao implements Menu {
 
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada);
 
-			return devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input, menuHistorico);
+			proximoMenu = devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input, menuHistorico);
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, "FNDJA", idiomaImplementacao);
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, idiomaImplementacao.pegarMensagemErro(),
+					idiomaImplementacao);
 		}
+		
+		menuHistorico.definirProximoMenu(proximoMenu);
 
 	}
 

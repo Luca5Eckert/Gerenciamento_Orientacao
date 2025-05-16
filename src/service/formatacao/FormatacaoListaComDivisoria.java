@@ -5,7 +5,6 @@ import java.util.List;
 import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
-import service.SessaoUsuario;
 
 public class FormatacaoListaComDivisoria {
 

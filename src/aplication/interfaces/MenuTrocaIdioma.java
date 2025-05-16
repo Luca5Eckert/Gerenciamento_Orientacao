@@ -7,7 +7,6 @@ import aplication.IdiomaFactory;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
-import service.SessaoUsuario;
 
 public class MenuTrocaIdioma implements Menu {
 	private IdiomaImplementacao idiomaImplementacao;
@@ -19,17 +18,19 @@ public class MenuTrocaIdioma implements Menu {
 	}
 	
 	@Override
-	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
+	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String idiomaFormatado = IdiomaOrientacao.listaIdiomasFormatado(idiomaImplementacao);
 		
 		String opcaoSelecionado = idiomaImplementacao.mostrarMenuTrocarIdioma(input, idiomaFormatado);
 		
-		return processarOpcao(opcaoSelecionado);
+		var proximoMenu = processarOpcao(opcaoSelecionado, menuHistorico);
+		
+		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 	
-	public Menu processarOpcao(String opcaoSelecionado) {
+	public Menu processarOpcao(String opcaoSelecionado, MenuHistorico menuHistorico) {
 		return switch(opcaoSelecionado.toUpperCase().trim()) {
-		case "S" -> MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao);
+		case "S" -> menuHistorico.voltarMenu();
 		default -> processarMudanca(opcaoSelecionado);
 		};
 	}
@@ -38,7 +39,7 @@ public class MenuTrocaIdioma implements Menu {
         try {
             int indiceIdioma = parseEntradaUsuario(entradaUsuario);
             IdiomaOrientacao idiomaEscolhido = IdiomaOrientacao.pegarIdioma(indiceIdioma);
-            IdiomaImplementacao novaImplementacao = atualizarSessaoIdioma(idiomaEscolhido);
+            IdiomaImplementacao novaImplementacao = pegarNovaImplementacao(idiomaEscolhido);
 
             atualizarIdiomaMenuAnterior(novaImplementacao);
 
@@ -64,10 +65,8 @@ public class MenuTrocaIdioma implements Menu {
    
     }
 
-    private IdiomaImplementacao atualizarSessaoIdioma(IdiomaOrientacao idiomaEscolhido) {
-        IdiomaImplementacao novaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(idiomaEscolhido);
-        SessaoUsuario.definirIdioma(novaImplementacao);
-        return novaImplementacao;
+    private IdiomaImplementacao pegarNovaImplementacao(IdiomaOrientacao idiomaEscolhido) {
+    	return IdiomaFactory.pegarIdiomaImplementacao(idiomaEscolhido);
     }
 
     private void atualizarIdiomaMenuAnterior(IdiomaImplementacao novaImplementacao) {

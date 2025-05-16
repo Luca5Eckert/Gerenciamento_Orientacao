@@ -6,6 +6,6 @@ import aplication.MenuHistorico;
 
 public interface Menu {
 
-	Menu chamarMenu(Scanner input, MenuHistorico menuHistorico);
+	void chamarMenu(Scanner input, MenuHistorico menuHistorico);
 	
 }

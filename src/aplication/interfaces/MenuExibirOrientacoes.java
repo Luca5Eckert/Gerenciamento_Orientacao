@@ -29,27 +29,25 @@ public class MenuExibirOrientacoes implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
+	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		List<OrientacaoDto> orientacoesFiltradas = new ArrayList<>();
+		String textoFormatado;
+
 		try {
 			orientacoesFiltradas = orientacaoService.aplicarFiltro(gerenciadorFiltro);
 		} catch (OrientacaoException e) {
-		}
-
-		String textoFormatado = formatacaoLista.formatar(orientacoesFiltradas, idiomaImplementacao);
-
-		if (resultadoVazio(textoFormatado)) {
 			textoFormatado = idiomaImplementacao.pegarMensagemOrientacoesNaoEncontrada();
 		}
+
+		textoFormatado = formatacaoLista.formatar(orientacoesFiltradas, idiomaImplementacao);
 
 		String palavra = obterPalavraPesquisada();
 		String opcao = idiomaImplementacao.mostrarMenuOrientacaoDisponiveis(input, textoFormatado, palavra);
 
-		return processarOpcao(opcao, idiomaImplementacao, orientacoesFiltradas);
-	}
+		var proximoMenu = processarOpcao(opcao, idiomaImplementacao, orientacoesFiltradas);
 
-	private boolean resultadoVazio(String textoFormatado) {
-		return textoFormatado == null || textoFormatado.isBlank();
+		menuHistorico.definirProximoMenu(proximoMenu);
+
 	}
 
 	private String obterPalavraPesquisada() {
@@ -61,7 +59,8 @@ public class MenuExibirOrientacoes implements Menu {
 			List<OrientacaoDto> orientacoesFiltradas) {
 		return switch (opcao.trim().toUpperCase()) {
 		case "F" -> MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO, gerenciadorFiltro, idiomaImplementacao);
-		case "P" -> MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao);
+		case "P" ->
+			MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao);
 		case "A" -> limparPesquisa();
 		case "R" -> limparFiltros(idiomaImplementacao);
 		case "S" -> MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao);
@@ -88,8 +87,7 @@ public class MenuExibirOrientacoes implements Menu {
 		gerenciadorFiltro.limparFiltros();
 		return this;
 	}
-	
-	
+
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

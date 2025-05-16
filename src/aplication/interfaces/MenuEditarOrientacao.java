@@ -21,19 +21,22 @@ public class MenuEditarOrientacao implements Menu{
 	 }
 
 	@Override
-	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
+	public void chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
 		var orientacaoAlterada = idiomaImplementacao.mostrarMenuEditarOrientacao(orientacaoDto, input);
+		Menu proximoMenu = null;
 		
 		try {
 			String idOrientacao = orientacaoService.pegarIdOrientacao(orientacaoDto);
 			
 			orientacaoService.atualizarOrientacao(orientacaoAlterada, idOrientacao);
 		
-			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, pegarMenuAnterior(menuHistorico, orientacaoAlterada), idiomaImplementacao.pegarMensagemEdicaoConcluida(), idiomaImplementacao);
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, pegarMenuAnterior(menuHistorico, orientacaoAlterada), idiomaImplementacao.pegarMensagemEdicaoConcluida(), idiomaImplementacao);
 		} catch (Exception e) {
-			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, pegarMenuAnterior(menuHistorico, orientacaoAlterada), idiomaImplementacao.pegarMensagemEdicaoFalha(), idiomaImplementacao);
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, pegarMenuAnterior(menuHistorico, orientacaoAlterada), idiomaImplementacao.pegarMensagemEdicaoFalha(), idiomaImplementacao);
+		} finally {
+			menuHistorico.definirProximoMenu(proximoMenu);
 		}
-		
+				
 	}
 
 	public Menu pegarMenuAnterior(MenuHistorico menuHistorico, OrientacaoDto orientacaoAlterada){

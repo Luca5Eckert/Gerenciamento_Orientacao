@@ -1,51 +1,38 @@
 package aplication;
 
 import aplication.interfaces.Menu;
-import aplication.interfaces.MenuFinal;
-import service.SessaoUsuario;
 
 import java.util.Scanner;
 
 public class MenuGerenciador {
 	private Menu menu;
 	private MenuHistorico menuHistorico;
-	
+
 	public MenuGerenciador(Menu menu) {
 		this.menu = menu;
+		menuHistorico = new MenuHistorico(menu);
 	}
 
 	public boolean iniciarFluxoMenu(Scanner input) {
-		Menu novoMenu = this.iniciarMenu(input);
-				
-		this.definirNovoMenu(novoMenu);
-		
-		return definirRetorno(novoMenu);
-		
+		this.menu.chamarMenu(input, menuHistorico);
+		this.definirNovoMenu();
+		return definirRetorno(input);
 	}
-	
-	public Menu iniciarMenu(Scanner input) {
-		return menu.chamarMenu(input, menuHistorico);
+
+	public boolean definirRetorno(Scanner input) {
+		return menuHistorico.pegarMenuAtual() != null;
 	}
-	
-	
-	public boolean definirRetorno (Menu menu) {
-		if ( menu instanceof MenuFinal) {
-			return false;
-		} else  {
-			return true;
-		}
+
+	public void definirNovoMenu() {
+		this.menu = menuHistorico.pegarMenuAtual();
 	}
-	
-	public void definirNovoMenu(Menu menu) {
-		this.menu = menu;
-	}
-	
+
 	public Menu getMenu() {
 		return menu;
 	}
-	
+
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-	
+
 }

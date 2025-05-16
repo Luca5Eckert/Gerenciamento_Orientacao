@@ -18,19 +18,15 @@ public class MenuFalha implements Menu {
 	
 	
 	@Override
-	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
-		String opcao;
-		opcao = idiomaImplementacao.mostrarMenuErro(input, mensagemErro);
-		
-		return devolverOpcaoEscolhida(opcao);
+	public void chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
+		idiomaImplementacao.mostrarMenuErro(input, mensagemErro);
+		irParaProximoMenu(menuHistorico);
 	}
 
 
-	public Menu devolverOpcaoEscolhida(String opcao) {
-		return switch(opcao) {
-		case "1" -> this.proximoMenu;
-		default -> this.proximoMenu;
-		};
+	public void irParaProximoMenu(MenuHistorico menuHistorico) {
+		menuHistorico.voltarMenu();
+		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 	
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {

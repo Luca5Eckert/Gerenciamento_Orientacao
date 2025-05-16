@@ -16,17 +16,16 @@ public class MenuCerto implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
-		String opcao = idiomaImplementacao.mostrarMenuAcerto(input, mensagemAcerto);
+	public void chamarMenu(Scanner input,  MenuHistorico menuHistorico) {
+		idiomaImplementacao.mostrarMenuAcerto(input, mensagemAcerto);
 
-		return devolverOpcaoEscolhida(opcao);
+		irParaProximoMenu(menuHistorico); 
+			
 	}
 
-	public Menu devolverOpcaoEscolhida(String opcao) {
-		return switch (opcao) {
-		case "1" -> this.proximoMenu;
-		default -> this.proximoMenu;
-		};
+	public void irParaProximoMenu(MenuHistorico menuHistorico) {
+		menuHistorico.voltarMenu();
+		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 	
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {

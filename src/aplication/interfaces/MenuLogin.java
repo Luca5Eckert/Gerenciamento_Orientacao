@@ -21,25 +21,23 @@ public class MenuLogin implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
+	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		UsuarioDto usuarioParaLogar = idiomaImplementacao.mostrarMenuLogin(input);
-		Menu menu;
+		Menu proximoMenu = null;
 
 		try {
 			service.realizarLogin(usuarioParaLogar);
-			menu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO,
+					MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
 					idiomaImplementacao.pegarMensagemLoginConcluido(), idiomaImplementacao);
 		} catch (LoginException e) {
-			menu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao), e.getMessage(), idiomaImplementacao);
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA,
+					MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao), e.getMessage(), idiomaImplementacao);
 		}
 
-		return menu;
+		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
-	
-	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-	}
 
 
 }

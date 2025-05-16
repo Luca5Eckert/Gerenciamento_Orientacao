@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
+import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
-import service.SessaoUsuario;
 
 public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
     private List<TipoOrientacao> tiposOrientacao = new ArrayList<>();
@@ -27,9 +27,8 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
         return tiposOrientacao.contains(orientacao.tipoOrientacao());
     }
 
-    public String pegarTipos() {
-        var idioma = SessaoUsuario.pegarIdioma();
-        return idioma.pegarFiltroTipo() + mostrarTipos(idioma.obterIdiomaOrientacao());
+    public String pegarTipos(IdiomaImplementacao idiomaImplementacao) {
+        return idiomaImplementacao.pegarFiltroTipo() + mostrarTipos(idiomaImplementacao.obterIdiomaOrientacao());
     }
 
     public String mostrarTipos(IdiomaOrientacao idiomaOrientacao) {

@@ -12,16 +12,20 @@ public class MenuPesquisaOrientacao implements Menu {
 	private IdiomaImplementacao idiomaImplementacao;
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
-	public MenuPesquisaOrientacao(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
+	public MenuPesquisaOrientacao(IdiomaImplementacao idiomaImplementacao,
+			GerenciadorFiltrosOrientacao gerenciadorFiltro) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.gerenciadorFiltro = gerenciadorFiltro;
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
+	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuPesquisaOrientacao(input);
 
-		return devolverOpcaoEscolhida(opcaoEscolhida);
+		var proximoMenu = devolverOpcaoEscolhida(opcaoEscolhida);
+
+		menuHistorico.definirProximoMenu(proximoMenu);
+
 	}
 
 	public void definirPalavraPesquisa(String palavraPesquisada) {
@@ -38,7 +42,7 @@ public class MenuPesquisaOrientacao implements Menu {
 		}
 
 	}
-	
+
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}

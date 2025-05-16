@@ -1,31 +1,53 @@
 package aplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import aplication.interfaces.Menu;
 
 public class MenuHistorico {
-	private List<Menu> linhaDoTempoMenu;
-	private int ponteiroDoMenu;
-	
+	private List<Menu> linhaDoTempoMenu = new ArrayList<>();
+	private int ponteiroDoMenu = -1;
+
+	public MenuHistorico(Menu menu) {
+		this.definirProximoMenu(menu);
+		
+	}
+
 	public List<Menu> getLinhaDoTempoMenu() {
 		return linhaDoTempoMenu;
 	}
 
-	public void setLnhaDoTempoMenu(List<Menu> novaLinhaDoTempo){
-		this.linhaDoTempoMenu = novaLinhaDoTempo;
+	public void setLinhaDoTempoMenu(List<Menu> novaLinhaDoTempo) {
+	    this.linhaDoTempoMenu = novaLinhaDoTempo;
 	}
 
-	public Menu pegarUltimoMenu(){
+
+	public Menu pegarUltimoMenu() {
 		return linhaDoTempoMenu.getLast();
 	}
 
-	public Menu pegarMenuAtual(){
+	public Menu pegarMenuAtual() {
 		return this.linhaDoTempoMenu.get(this.ponteiroDoMenu);
 	}
-	
+
+	public boolean apontarPonteiroParaFrente() {
+		this.ponteiroDoMenu++;
+		return true;
+	}
+
+	public void definirProximoMenu(Menu menu) {
+		if (ponteiroDoMenu < linhaDoTempoMenu.size() - 1) {
+			linhaDoTempoMenu = linhaDoTempoMenu.subList(0, ponteiroDoMenu + 1);
+		}
+
+		linhaDoTempoMenu.add(menu);
+		apontarPonteiroParaFrente();
+	}
+
+
 	public Menu irProximoMenu() {
-		if(temProximo()){
+		if (temProximo()) {
 			this.ponteiroDoMenu++;
 			return pegarMenuAtual();
 		}
@@ -33,8 +55,8 @@ public class MenuHistorico {
 		throw new RuntimeException("Não existe proximo menu");
 	}
 
-	public Menu voltarMenu(){
-		if(temAnterior()){
+	public Menu voltarMenu() {
+		if (temAnterior()) {
 			this.ponteiroDoMenu--;
 			return pegarMenuAtual();
 		}
@@ -42,12 +64,19 @@ public class MenuHistorico {
 		throw new RuntimeException("Não existe menu anterior");
 	}
 
-	public boolean temProximo(){
+	public boolean temProximo() {
 		return ponteiroDoMenu < linhaDoTempoMenu.size();
 	}
 
-	public boolean temAnterior(){
-		return ponteiroDoMenu > linhaDoTempoMenu.size();
+	public boolean temAnterior() {
+		return ponteiroDoMenu > -1;
+	}
+
+	public void mostrarHistorico() {
+		for (int i = 0; i < linhaDoTempoMenu.size(); i++) {
+			String marcador = (i == ponteiroDoMenu) ? " <-- atual" : "";
+			System.out.println(i + ": " + linhaDoTempoMenu.get(i).getClass().getSimpleName() + marcador);
+		}
 	}
 	
 }

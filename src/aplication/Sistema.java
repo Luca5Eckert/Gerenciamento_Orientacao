@@ -5,8 +5,8 @@ import java.util.Scanner;
 import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.implementacoes.InglesImplementacao;
+import aplication.interfaces.MenuIniciarSistema;
 import aplication.interfaces.TipoMenu;
-import service.SessaoUsuario;
 
 public class Sistema {
 	private static final int CONTINUAR_SISTEMA = 0;
@@ -21,35 +21,23 @@ public class Sistema {
 		this.gerenciadorMenu = new MenuGerenciador(MenuFactory.criarMenu(TipoMenu.FIM, idioma));
 	}
 
-	public boolean iniciarSistema() {
+	public void iniciarSistema() {
 		System.out.println("Starting the system....");
-		System.out.println("Select a language:");
-		System.out.println(IdiomaOrientacao.listaIdiomasFormatado(new InglesImplementacao()));
+		iniciarSistemaMenu();
 		
-		int opcaoIdioma = input.nextInt();
-		boolean sistema = true;
-
-		IdiomaImplementacao idiomaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(IdiomaOrientacao.pegarIdioma(opcaoIdioma-1));
-		iniciarGerenciador(idiomaImplementacao);
-		
-		input.nextLine();
+		boolean estaFuncionando = true;
 
 		do {
-			boolean retorno = this.gerenciadorMenu.iniciarFluxoMenu(input);
+			estaFuncionando = this.gerenciadorMenu.iniciarFluxoMenu(input);
 
-			sistema = retorno;
-
-		} while (sistema);
- 
-		return false;
+		} while (estaFuncionando);
 
 	}
 
-	private void iniciarGerenciador(IdiomaImplementacao idionaImplementacao) {
-		SessaoUsuario.definirIdioma(idionaImplementacao);
-		this.gerenciadorMenu.setMenu(MenuFactory.criarMenu(TipoMenu.INICIO, idionaImplementacao));
+	private void iniciarSistemaMenu() {
+		this.gerenciadorMenu.setMenu(new MenuIniciarSistema());
 	}
-	
+
 	public MenuGerenciador getMenu() {
 		return gerenciadorMenu;
 	}

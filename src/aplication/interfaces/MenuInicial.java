@@ -14,11 +14,12 @@ public class MenuInicial implements Menu {
 	}
 
 	@Override
-	public Menu chamarMenu(Scanner input, MenuHistorico menuHistorico) {
+	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuInicial(input);
 
-		return devolverOpcaoEscolhida(opcaoEscolhida );
+		var proximoMenu = devolverOpcaoEscolhida(opcaoEscolhida );
 	
+		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
 
@@ -27,7 +28,7 @@ public class MenuInicial implements Menu {
 		case "1" -> MenuFactory.criarMenuComIdioma(TipoMenu.LOGIN, idiomaImplementacao);
 		case "2" -> MenuFactory.criarMenuComIdioma(TipoMenu.CADASTRO, idiomaImplementacao);
 		case "3" -> MenuFactory.criarMenuAlterarSistema(TipoMenu.ALTERAR_IDIOMA, this, idiomaImplementacao);
-		case "4" -> MenuFactory.criarMenu(TipoMenu.FIM, idiomaImplementacao);
+		case "4" -> null;
 		default -> MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao);
 		};
 	}
