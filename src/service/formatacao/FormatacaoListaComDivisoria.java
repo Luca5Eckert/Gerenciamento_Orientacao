@@ -7,15 +7,12 @@ import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.SessaoUsuario;
 
-public class FormatacaoListaComDivisoria implements Formatacao<IdiomaOrientacao> {
-	private int numeroDivisoria;
+public class FormatacaoListaComDivisoria {
 
-	public FormatacaoListaComDivisoria(int numeroDivisoria){
-		this.numeroDivisoria = numeroDivisoria;
+	public FormatacaoListaComDivisoria() {
 	}
 
-	@Override
-	public String formatar(List<IdiomaOrientacao> listaParaFormatar, IdiomaImplementacao idiomaImplementacao) {
+	public String formatar(List<IdiomaOrientacao> listaParaFormatar,int numeroDivisoria, IdiomaImplementacao idiomaImplementacao) {
 		StringBuilder listaFormatada = new StringBuilder();
 		int numeroOrientacao = 1;
 

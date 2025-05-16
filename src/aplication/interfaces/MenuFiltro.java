@@ -10,16 +10,15 @@ import aplication.implementacoes.IdiomaImplementacao;
 import service.filtros.FiltroOrientacao;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
-import service.formatacao.Formatacao;
-import service.formatacao.FormatacaoListaOrientacao;
+import service.formatacao.FormatacaoNumerarLista;
 
 public class MenuFiltro implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
-	private Formatacao<FiltroOrientacao<?>> formatacaoLista;
+	private FormatacaoNumerarLista formatacaoLista;
     private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
-    public MenuFiltro(IdiomaImplementacao idiomaImplementacao, Formatacao<FiltroOrientacao<?>> formatacaoLista, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
+    public MenuFiltro(IdiomaImplementacao idiomaImplementacao, FormatacaoNumerarLista formatacaoLista, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
         this.idiomaImplementacao = idiomaImplementacao;
         this.formatacaoLista = formatacaoLista;
     	this.gerenciadorFiltro = gerenciadorFiltro;

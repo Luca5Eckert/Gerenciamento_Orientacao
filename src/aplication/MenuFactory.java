@@ -14,9 +14,8 @@ import service.filtros.FiltroOrientacao;
 import service.filtros.FiltroOrientacaoIdioma;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
-import service.formatacao.Formatacao;
-import service.formatacao.FormatacaoListaFiltro;
-import service.formatacao.FormatacaoListaOrientacao;
+import service.formatacao.FormatacaoListaComDivisoria;
+import service.formatacao.FormatacaoNumerarLista;
 
 public class MenuFactory {
 
@@ -38,19 +37,7 @@ public class MenuFactory {
 
         return gerenciador;
     }
-
-    public static Formatacao<IdiomaOrientacao> criarFormatacaoIdiomaOrientacao() {
-        return new Formatacao<>() {
-            @Override
-            public String formatar(List<IdiomaOrientacao> listaOrdenada, IdiomaImplementacao idiomaImplementacao) {
-                StringBuilder sb = new StringBuilder();
-                for (IdiomaOrientacao item : listaOrdenada) {
-                    sb.append(item.toString()).append("\n");
-                }
-                return sb.toString();
-            }
-        };
-    }
+   
 
     public static Menu criarMenu(TipoMenu tipoMenu, IdiomaImplementacao idioma) {
         return switch (tipoMenu) {
@@ -69,18 +56,18 @@ public class MenuFactory {
             case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(
                     criarOrientacaoService(),
                     criarGerenciadorFiltro(idioma),
-                    new FormatacaoListaOrientacao(),
+                    new FormatacaoNumerarLista(),
                     idioma
             );
-            case FILTRO -> new MenuFiltro(idioma, new FormatacaoListaFiltro(), criarGerenciadorFiltro(idioma));
+            case FILTRO -> new MenuFiltro(idioma, new FormatacaoNumerarLista(), criarGerenciadorFiltro(idioma));
             default -> new MenuInicial(idioma);
         };
     }
 
     public static Menu criarMenuComFiltros(TipoMenu tipoMenu, GerenciadorFiltrosOrientacao gerenciadorFiltros, IdiomaImplementacao idioma) {
         return switch (tipoMenu) {
-            case FILTRO -> new MenuFiltro(idioma, new FormatacaoListaFiltro(), gerenciadorFiltros);
-            case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), gerenciadorFiltros, new FormatacaoListaOrientacao(), idioma);
+            case FILTRO -> new MenuFiltro(idioma, new FormatacaoNumerarLista(), gerenciadorFiltros);
+            case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), gerenciadorFiltros, new FormatacaoNumerarLista(), idioma);
             case PESQUISA_ORIENTACAO -> new MenuPesquisaOrientacao(idioma, gerenciadorFiltros);
             default -> new MenuGeral(idioma);
         };
@@ -97,12 +84,7 @@ public class MenuFactory {
     public static Menu criarMenuPesquisa(TipoMenu tipoMenu, OrientacaoDto orientacaoDto, IdiomaImplementacao idiomaImplementacao) {
 
         return switch (tipoMenu) {
-            case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(
-                    idiomaImplementacao,
-                    orientacaoDto,
-                    criarOrientacaoService(),
-                    new FormatacaoListaComDivisoria()
-            );
+            case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(idiomaImplementacao, orientacaoDto, criarOrientacaoService(), new FormatacaoListaComDivisoria());
             case EDICAO_ORIENTACAO -> new MenuEditarOrientacao(orientacaoDto, idiomaImplementacao, criarOrientacaoService());
             default -> new MenuInicial(idiomaImplementacao);
         };

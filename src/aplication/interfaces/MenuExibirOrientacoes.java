@@ -11,17 +11,17 @@ import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.exceptions.orientacao.OrientacaoException;
 import service.filtros.GerenciadorFiltrosOrientacao;
-import service.formatacao.Formatacao;
+import service.formatacao.FormatacaoNumerarLista;
 
 public class MenuExibirOrientacoes implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 	private final GerenciadorFiltrosOrientacao gerenciadorFiltro;
-	private final Formatacao<OrientacaoDto> formatacaoLista;
+	private final FormatacaoNumerarLista formatacaoLista;
 
 	public MenuExibirOrientacoes(OrientacaoService orientacaoService, GerenciadorFiltrosOrientacao gerenciadorFiltro,
-			Formatacao<OrientacaoDto> formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
+			FormatacaoNumerarLista formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoService = orientacaoService;
 		this.gerenciadorFiltro = gerenciadorFiltro;

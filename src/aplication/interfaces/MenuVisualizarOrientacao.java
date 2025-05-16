@@ -13,17 +13,16 @@ import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
-import service.formatacao.Formatacao;
-import service.formatacao.FormatacaoListaOrientacao;
+import service.formatacao.FormatacaoListaComDivisoria;
 
 public class MenuVisualizarOrientacao implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
-	private final Formatacao formatador;
+	private final FormatacaoListaComDivisoria formatador;
 
-	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto, OrientacaoService orientacaoService, Formatacao<IdiomaOrientacao> formatador) {
+	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto, OrientacaoService orientacaoService, FormatacaoListaComDivisoria formatador) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoDto = orientacaoDto;
 		this.orientacaoService = orientacaoService;
@@ -38,7 +37,7 @@ public class MenuVisualizarOrientacao implements Menu {
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
 			var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
 
-			String orientacoesFormatada = formatador.formatar(listaOrdenada, idiomaImplementacao);
+			String orientacoesFormatada = formatador.formatar(listaOrdenada, 0, idiomaImplementacao);
 
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada);
 
