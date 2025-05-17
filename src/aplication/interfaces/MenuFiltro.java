@@ -1,5 +1,6 @@
 package aplication.interfaces;
 
+import java.util.List;
 import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
@@ -27,42 +28,73 @@ public class MenuFiltro implements Menu {
 
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
-		boolean menuFiltroAtivo = true;
+		String opcao = idiomaImplementacao.mostrarMenuFiltro(input);
 
-		String opcao = idiomaImplementacao.mostrarMenuFiltro(input, "sada");
-
-		processarOpcao(opcao, input);
-
-		var proximoMenu = MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro,
-				idiomaImplementacao);
-		menuHistorico.definirProximoMenu(proximoMenu);
+		processarOpcao(opcao, input, menuHistorico);
 	}
 
-	public Menu processarOpcao(String opcao, Scanner input) {
-		return switch (opcao.trim().toUpperCase()) {
-		case "D" -> deletarFiltro(input);
-		case "1" -> definirFiltro(input, opcao);
-		default -> this;
-		};
+	public void processarOpcao(String opcao, Scanner input, MenuHistorico menuHistorico) {
+		switch (opcao.trim().toUpperCase()) {
+		case "V" -> menuHistorico.voltarMenu();
+		case "1" -> visualizarFiltros(input);
+		case "2" -> definirFiltro(input);
+		case "3" -> menuHistorico.definirProximoMenu(MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
+		}
 	}
 
-	public Menu definirFiltro(Scanner input, String opcaoEscolhida) {
-		String opcaoFiltro = idiomaImplementacao.mostrarMenuDefinirFiltro(input, opcaoEscolhida);
-		processarFiltroEscolhido(opcaoFiltro);
-		return this;
+	private void visualizarFiltros(Scanner input) {
+		List<TipoFiltro> tiposExistentes = gerenciadorFiltro.pegarTiposDeFiltros();
+		
+		String tipoOrientacoesDisponiveis = formatacaoLista.formatarTiposDeFiltro(tiposExistentes, idiomaImplementacao);
+		boolean visualizarFiltros = true;
+		
+		do {
+			String opcao = idiomaImplementacao.mostrarMenuVisualizarFiltros(input, tipoOrientacoesDisponiveis);
+			
+			switch(opcao.trim().toUpperCase()) {
+			case "V" -> visualizarFiltros = false;
+			default -> visualizarTipoFiltroAtivados(input, opcao);
+			}
+		} while (visualizarFiltros);
 	}
 
-	public Menu deletarFiltro(Scanner input) {
-		String filtrosFormatados = "";
 
-		String filtroEscolhido = idiomaImplementacao.mostrarMenuApagarFiltro(input, filtrosFormatados);
+	private Object visualizarTipoFiltroAtivados(Scanner input, String opcao) {
 		try {
-			int numeroFiltroEscolhido = Integer.parseInt(filtroEscolhido);
-
-		} catch (NumberFormatException nfe) {
-			return this;
+			int indexTipoFiltro = Integer.parseInt(opcao);
+			
+			FiltroTipo tipoFiltro = TipoFiltro.pegarTipoFiltroPorIndex(tipoFiltro);
+			
+		} catch (NumberFormatException npe ) {
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 		return null;
+	}
+
+	public void definirFiltro(Scanner input) {
+		List<TipoFiltro> tiposExistentes = TipoFiltro.listarTipoFiltros();
+		
+		String tipoOrientacoesDisponiveis = formatacaoLista.formatarTiposDeFiltro(tiposExistentes, idiomaImplementacao);
+		boolean visualizarFiltros = true;
+		
+		do {
+			String opcao = idiomaImplementacao.mostrarMenuVisualizarFiltros(input, tipoOrientacoesDisponiveis);
+			
+			switch(opcao.trim().toUpperCase()) {
+			case "V" -> visualizarFiltros = false;
+			default -> visualizarFiltrosDefinir();
+			}
+		} while (visualizarFiltros);
+	}
+
+	private Object visualizarFiltrosDefinir() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deletarFiltro(Scanner input) {
+
+
 	}
 
 	public boolean processarFiltroEscolhido(String opcao) {

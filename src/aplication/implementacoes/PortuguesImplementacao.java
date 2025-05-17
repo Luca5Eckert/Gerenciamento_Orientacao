@@ -355,16 +355,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String pegarFiltroIdioma() {
-		return "Filtros de idiomas: ";
-	}
-
-	@Override
-	public String pegarFiltroTipo() {
-		return "Filtros de tipos: ";
-	}
-
-	@Override
 	public String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados) {
 		System.out.println("============================================================");
 		System.out.println("                    TROCAR IDIOMA                           ");
@@ -418,18 +408,19 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao, TipoOrientacao tipoOrientacao) throws Exception {
+	public OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao,
+			TipoOrientacao tipoOrientacao) throws Exception {
 		System.out.println("============================================================");
 		System.out.println("                 ORIENTAÇÃO INDISPONIVEL                    ");
 		System.out.println("============================================================");
 		System.out.println("  A orientação que você pesquisou não existe nesse idioma   ");
-		
+
 		System.out.println("\n A- Adicionar em " + idiomaOrientacao.getNomeEmPortugues());
 		System.out.println(" V- Voltar");
 		System.out.println("============================================================");
 		String opcao = input.nextLine();
-		
-		return switch(opcao.trim().toUpperCase()) {
+
+		return switch (opcao.trim().toUpperCase()) {
 		case "V" -> throw new SairMenuException();
 		case "A" -> mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idiomaOrientacao);
 		default -> null;
@@ -443,44 +434,34 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("                      TEM CERTEZA?                          ");
 		System.out.println("============================================================");
 		System.out.println(" Tem certeza que deseja deletar essa orientação ?");
-		
+
 		System.out.println("\n A- Apagar orientação ");
 		System.out.println(" C- Cancelar");
 		System.out.println("============================================================");
 		String opcao = input.nextLine().trim().toUpperCase();
-		
-		if(opcao.equals("C")) {
+
+		if (opcao.equals("C")) {
 			throw new SairMenuException();
 		}
 		return opcao;
 	}
 
 	@Override
-	public String mostrarMenuFiltro(Scanner input, String formatacaoFitrosAntigos) {
+	public String mostrarMenuFiltro(Scanner input) {
 		String opcaoEscolhida;
-			
+
 		System.out.println("============================================================");
 		System.out.println("                       FILTROS                              ");
 		System.out.println("============================================================");
-		System.out.println(" 1 - Filtrar por Idioma");
-		System.out.println(" 2 - Filtrar por Tipo de Orientação\n");
-		System.out.println(" 3 - Ver os filtros");
-		System.out.println(" 4 - Aplicar Filtros Selecionados");
+		System.out.println(" S - Voltar ");
+		System.out.println("------------------------------------------------------------");
+		System.out.println(" 1 - Ver os filtros");
+		System.out.println(" 2 - Definir outro filtro");
+		System.out.println(" 3 - Aplicar Filtros Selecionados");
 		System.out.println("============================================================");
 
 		opcaoEscolhida = input.nextLine();
 
-		switch(opcaoEscolhida) {
-		case "3":
-			System.out.println("------------------------------------------------------------");
-			System.out.println(formatacaoFitrosAntigos);
-			System.out.println("------------------------------------------------------------");
-			System.out.println(" D- Deletar filtro");
-			System.out.println(" V- Voltar");
-			opcaoEscolhida = input.nextLine();
-			break;
-		}
-			
 		return opcaoEscolhida;
 	}
 
@@ -520,20 +501,26 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(" Selecione o filtro que deseja apagar");
 		System.out.println(filtrosDisponiveis);
 		System.out.println("============================================================");
-		
+
 		return input.nextLine();
 	}
 
 	@Override
-	public String pegarMensagemTipo() {
-		// TODO Auto-generated method stub
-		return null;
+	public String mostrarMenuVisualizarFiltros(Scanner input, String tipoOrientacoesDisponiveis) {
+		System.out.println("============================================================");
+		System.out.println("                   Tipos de filtro                          ");
+		System.out.println("============================================================");
+		System.out.println(" V- Voltar ");
+		System.out.println("------------------------------------------------------------");
+		System.out.println(" Selecione o tipo de filtro desejado");
+		System.out.println(tipoOrientacoesDisponiveis);
+		System.out.println("============================================================");
+		return input.nextLine();
 	}
 
 	@Override
-	public String pegarMensagemIdioma() {
-		// TODO Auto-generated method stub
-		return null;
+	public String pegarMensagemEntradaInvalida() {
+		return " Entrada invalida";
 	}
 
 }

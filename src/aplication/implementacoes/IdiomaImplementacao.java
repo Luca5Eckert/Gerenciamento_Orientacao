@@ -66,10 +66,6 @@ public interface IdiomaImplementacao {
 
 	String mostrarOrientacao(Scanner input, OrientacaoDto orientacao, String idiomasOrientacoes);
 
-	String pegarFiltroIdioma();
-	
-	String pegarFiltroTipo();
-
 	String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados);
 	
 	String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado);
@@ -92,15 +88,14 @@ public interface IdiomaImplementacao {
 
 	String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException;
 	
-	String mostrarMenuFiltro(Scanner input, String formatacaoFitrosAntigos);
+	String mostrarMenuFiltro(Scanner input);
 	
 	String mostrarMenuDefinirFiltro(Scanner input, String opcaoEscolhida);
 	
 	String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis);
+
+	String mostrarMenuVisualizarFiltros(Scanner input, String tipoOrientacoesDisponiveis);
 	
-	String pegarMensagemTipo();
-	
-	String pegarMensagemIdioma();
-	
+	String pegarMensagemEntradaInvalida();
 	
 }

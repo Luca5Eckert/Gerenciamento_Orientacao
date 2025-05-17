@@ -39,7 +39,7 @@ public class MenuExibirOrientacoes implements Menu {
 			textoFormatado = idiomaImplementacao.pegarMensagemOrientacoesNaoEncontrada();
 		}
 
-		textoFormatado = formatacaoLista.formatar(orientacoesFiltradas, idiomaImplementacao);
+		textoFormatado = formatacaoLista.formatarOrientacoesPorTitulo(orientacoesFiltradas, idiomaImplementacao);
 
 		String palavra = obterPalavraPesquisada();
 		String opcao = idiomaImplementacao.mostrarMenuOrientacaoDisponiveis(input, textoFormatado, palavra);
