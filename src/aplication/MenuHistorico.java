@@ -30,6 +30,10 @@ public class MenuHistorico {
 	public Menu pegarMenuAtual() {
 		return this.linhaDoTempoMenu.get(this.ponteiroDoMenu);
 	}
+	
+	public Menu sobscreverMenu(Menu menu) {
+		return linhaDoTempoMenu.set(ponteiroDoMenu, menu);
+	}
 
 	public boolean apontarPonteiroParaFrente() {
 		this.ponteiroDoMenu++;
@@ -45,7 +49,14 @@ public class MenuHistorico {
 		apontarPonteiroParaFrente();
 	}
 
-
+	public Menu voltarMenu(Menu menu) {
+		if (temAnterior()) {
+			this.ponteiroDoMenu--;
+			return sobscreverMenu(menu);
+		}
+		throw new RuntimeException("Não existe menu anterior");
+	}
+	
 	public Menu irProximoMenu() {
 		if (temProximo()) {
 			this.ponteiroDoMenu++;

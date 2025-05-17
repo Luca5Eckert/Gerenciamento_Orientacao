@@ -5,7 +5,7 @@ import java.util.List;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 
-public interface FiltroOrientacao<T extends Object> {
+public interface FiltroOrientacao<T extends Enum> {
 	
 	void adicionarFiltro(T tipo);
 	
@@ -19,4 +19,8 @@ public interface FiltroOrientacao<T extends Object> {
 	
 	void apagarFiltro(int index);
 
+	String pegarTodosFiltrosEmTexto(IdiomaImplementacao idiomaImplementacao);
+
+	List<T> pegarFiltroPossiveis();
+	
 }

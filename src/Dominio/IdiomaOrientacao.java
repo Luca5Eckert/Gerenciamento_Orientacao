@@ -92,6 +92,8 @@ public enum IdiomaOrientacao {
 	        throw new IllegalArgumentException("Idioma não reconhecido: " + nome);
 	    }
 
+	    
+	    
 }
 
 

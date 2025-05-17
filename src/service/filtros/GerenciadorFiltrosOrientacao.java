@@ -12,7 +12,7 @@ import service.OrientacaoService;
 import service.exceptions.orientacao.OrientacaoException;
 
 public class GerenciadorFiltrosOrientacao {
-	private Map<TipoFiltro, FiltroOrientacao<?>> filtrosAtivados = new HashMap<>();
+	private Map<TipoFiltro, FiltroOrientacao<? extends Enum>> filtrosAtivados = new HashMap<>();
 	private String palavraBuscada;
 
 	public GerenciadorFiltrosOrientacao() {
@@ -20,7 +20,7 @@ public class GerenciadorFiltrosOrientacao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> boolean adicionarFiltro(TipoFiltro tipoFiltro, T valorFiltro) {
+	public <T extends Enum> boolean adicionarFiltro(TipoFiltro tipoFiltro, T valorFiltro) {
 		FiltroOrientacao<T> filtro = (FiltroOrientacao<T>) filtrosAtivados.get(tipoFiltro);
 		if (filtro != null) {
 			filtro.adicionarFiltro(valorFiltro);
@@ -28,12 +28,12 @@ public class GerenciadorFiltrosOrientacao {
 		return false;
 	}
 
-	public <T> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao<IdiomaOrientacao> idioma) {
+	public <T extends Enum> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao<IdiomaOrientacao> idioma) {
 		filtrosAtivados.put(tipoFiltro, idioma);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> FiltroOrientacao<T> pegarTipoFiltro(TipoFiltro tipoFiltro) {
+	public <T extends Enum> FiltroOrientacao<T> pegarTipoFiltro(TipoFiltro tipoFiltro) {
 		return (FiltroOrientacao<T>) filtrosAtivados.get(tipoFiltro);
 	}
 
@@ -41,7 +41,7 @@ public class GerenciadorFiltrosOrientacao {
 		FiltroOrientacao<?> filtroOrientacao = filtrosAtivados.get(tipoFiltro);
 		return filtroOrientacao != null ? filtroOrientacao.pegarFiltro() : List.of();
 	}
-	
+
 	public String pegarFiltrosTipoEmTexto(TipoFiltro tipo, IdiomaImplementacao idiomaImplementacao) {
 		return filtrosAtivados.get(tipo).pegarFiltrosEmTexto(idiomaImplementacao);
 	}
@@ -106,11 +106,27 @@ public class GerenciadorFiltrosOrientacao {
 
 	public List<TipoFiltro> pegarTiposDeFiltros() {
 		List<TipoFiltro> listaTiposFiltro = new ArrayList<>();
-		
+
 		for (TipoFiltro tipoFiltro : filtrosAtivados.keySet()) {
 			listaTiposFiltro.add(tipoFiltro);
 		}
-		
+
 		return listaTiposFiltro;
+	}
+
+	public String pegarFiltrosPossiveisEmTexto(TipoFiltro tipoFiltro, IdiomaImplementacao idiomaImplementacao) {
+		return filtrosAtivados.get(tipoFiltro).pegarTodosFiltrosEmTexto(idiomaImplementacao);
+	}
+
+	public List<Enum> pegarFiltrosPossiveis(TipoFiltro tipoFiltro) {
+		return (List<Enum>) filtrosAtivados.get(tipoFiltro).pegarFiltroPossiveis();
+	}
+
+	public Enum pegarFiltroPossivel(TipoFiltro tipoFiltro, int index) {
+		return pegarFiltrosPossiveis(tipoFiltro).get(index);
+	}
+	
+	public void apagarOrientacao(TipoFiltro tipoFiltro, int index) {
+		filtrosAtivados.get(tipoFiltro).apagarFiltro(index-1);
 	}
 }

@@ -9,6 +9,7 @@ import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
+import service.filtros.TipoFiltro;
 
 public interface IdiomaImplementacao {
 
@@ -67,37 +68,39 @@ public interface IdiomaImplementacao {
 	String mostrarOrientacao(Scanner input, OrientacaoDto orientacao, String idiomasOrientacoes);
 
 	String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados);
-	
+
 	String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado);
-	
+
 	String pegarMensagemOrientacoesNaoEncontrada();
-	
+
 	String pegarIdiomaDisponivel();
-	
+
 	String pegarIdiomaIndisponivel();
-	
+
 	String pegarMensagemErro();
-	
-	OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao);
-	
+
+	OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao,
+			IdiomaOrientacao idiomaOrientacao);
+
 	String pegarMensagemRemoverComSucessoOrientacao();
-	
+
 	String pegarMensagemErroAoRemoverOrientacao();
-	
-	OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao, TipoOrientacao tipoOrientacao) throws Exception;
+
+	OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao,
+			TipoOrientacao tipoOrientacao) throws Exception;
 
 	String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException;
-	
+
 	String mostrarMenuFiltro(Scanner input);
-	
-	String mostrarMenuDefinirFiltro(Scanner input, String opcaoEscolhida);
-	
-	String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis);
+
+	String mostrarMenuApagarFiltro(Scanner input, String tipoFiltro, String filtrosDisponiveis);
 
 	String mostrarMenuVisualizarTiposFiltros(Scanner input, String tipoOrientacoesDisponiveis);
-	
+
 	String pegarMensagemEntradaInvalida();
-	
+
 	String mostrarMenuVisualizarFiltros(Scanner input, String filtrosDisponiveis, String tipoFiltro);
-	
+
+	String mostrarMenuVisualizarFiltrosDisponiveis(Scanner input, String filtroDisponiveis, String tipoFiltro);
+
 }

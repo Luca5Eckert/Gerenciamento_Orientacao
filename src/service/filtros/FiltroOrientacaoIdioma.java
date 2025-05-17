@@ -53,10 +53,26 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao
     
     @Override
     public void apagarFiltro(int index) {
-    	// TODO Auto-generated method stub
+    	idiomasOrientacoes.remove(index-1);
+    }
+
+    @Override
+    public String pegarTodosFiltrosEmTexto(IdiomaImplementacao idiomaImplementacao) {
+    	StringBuilder filtrosEmTexto = new StringBuilder();
+    	int numeroFiltroIdioma = 1;
     	
+    	for(IdiomaOrientacao idiomaFiltro : IdiomaOrientacao.values()) {
+    		filtrosEmTexto.append(" " + numeroFiltroIdioma + " - " + idiomaFiltro.getNomePorIdioma(idiomaImplementacao.obterIdiomaOrientacao()));
+    		numeroFiltroIdioma++;
+    	}
+    	return filtrosEmTexto.toString();
     }
     
+    @Override
+    public List<IdiomaOrientacao> pegarFiltroPossiveis() {
+    	return IdiomaOrientacao.listarIdiomas();
+    }
+
     public FiltroOrientacaoIdioma() {
     }
 

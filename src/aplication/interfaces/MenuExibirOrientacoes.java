@@ -58,7 +58,7 @@ public class MenuExibirOrientacoes implements Menu {
 	private Menu processarOpcao(String opcao, IdiomaImplementacao idiomaImplementacao,
 			List<OrientacaoDto> orientacoesFiltradas) {
 		return switch (opcao.trim().toUpperCase()) {
-		case "F" -> MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO, gerenciadorFiltro, idiomaImplementacao);
+		case "F" -> MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao);
 		case "P" ->
 			MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao);
 		case "A" -> limparPesquisa();

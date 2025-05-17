@@ -11,6 +11,7 @@ import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
 import service.filtros.FiltroOrientacaoIdioma;
 import service.filtros.GerenciadorFiltrosOrientacao;
+import service.filtros.TipoFiltro;
 
 public class PortuguesImplementacao implements IdiomaImplementacao {
 
@@ -465,39 +466,13 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return opcaoEscolhida;
 	}
 
-	@Override
-	public String mostrarMenuDefinirFiltro(Scanner input, String opcaoEscolhida) {
-		switch (opcaoEscolhida) {
-		case "1":
-			System.out.println("\nEscolha os idiomas para filtrar:");
-			System.out.println("P - Português");
-			System.out.println("I - Inglês");
-			System.out.println("E - Espanhol");
-			System.out.println("A - Alemão");
-			opcaoEscolhida = input.nextLine();
-			break;
-
-		case "2":
-			System.out.println("\nEscolha os tipos de orientação para filtrar:");
-			System.out.println("M - Manual de Operação");
-			System.out.println("S - Procedimentos de Segurança");
-			System.out.println("R - Manutenção e Reparos");
-			System.out.println("D - Testes e Diagnóstico");
-			System.out.println("C - Manual de Conduta e Operações Setoriais");
-			opcaoEscolhida = input.nextLine();
-			break;
-
-		}
-
-		return opcaoEscolhida;
-	}
 
 	@Override
-	public String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis) {
+	public String mostrarMenuApagarFiltro(Scanner input, String tipoFiltro, String filtrosDisponiveis) {
 		System.out.println("============================================================");
-		System.out.println("                     DELETAR FILTRO                         ");
+		System.out.println("                 DELETAR FILTROS " + tipoFiltro.toUpperCase());
 		System.out.println("============================================================");
-		System.out.println(" S- Sair ");
+		System.out.println(" V- Voltar ");
 		System.out.println(" Selecione o filtro que deseja apagar");
 		System.out.println(filtrosDisponiveis);
 		System.out.println("============================================================");
@@ -524,14 +499,28 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String mostrarMenuVisualizarFiltros(Scanner input, String filtrosDisponiveis, String tipoFiltro) {
+	public String mostrarMenuVisualizarFiltros(Scanner input, String filtrosPossiveis, String tipoFiltro) {
 		System.out.println("============================================================");
 		System.out.println("                  FILTROS " + tipoFiltro.toUpperCase());
 		System.out.println("============================================================");
 		System.out.println(" V- Voltar ");
 		System.out.println("------------------------------------------------------------");
 		System.out.println(" Filtros " + tipoFiltro.toLowerCase());
-		System.out.println(filtrosDisponiveis);
+		System.out.println(filtrosPossiveis);
+		System.out.println("============================================================");
+		return input.nextLine();
+	}
+	
+	@Override
+	public String mostrarMenuVisualizarFiltrosDisponiveis(Scanner input, String filtroDisponiveis, String tipoFiltro) {
+		System.out.println("============================================================");
+		System.out.println("                  FILTROS " + tipoFiltro.toUpperCase());
+		System.out.println("============================================================");
+		System.out.println(" V- Voltar ");
+		System.out.println(" D- Deletar filtro");
+		System.out.println("------------------------------------------------------------");
+		System.out.println(" Filtros " + tipoFiltro.toLowerCase());
+		System.out.println(filtroDisponiveis);
 		System.out.println("============================================================");
 		return input.nextLine();
 	}
