@@ -1,6 +1,8 @@
 package service.filtros;
 
 import java.util.List;
+
+import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 
 public interface FiltroOrientacao<T extends Object> {
@@ -12,5 +14,9 @@ public interface FiltroOrientacao<T extends Object> {
 	List<T> pegarFiltro();
 
 	void limparFiltros();
+	
+	String pegarFiltrosEmTexto(IdiomaImplementacao idiomaImplementacao);
+	
+	void apagarFiltro(int index);
 
 }

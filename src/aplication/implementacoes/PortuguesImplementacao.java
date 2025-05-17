@@ -506,7 +506,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String mostrarMenuVisualizarFiltros(Scanner input, String tipoOrientacoesDisponiveis) {
+	public String mostrarMenuVisualizarTiposFiltros(Scanner input, String tipoOrientacoesDisponiveis) {
 		System.out.println("============================================================");
 		System.out.println("                   Tipos de filtro                          ");
 		System.out.println("============================================================");
@@ -521,6 +521,19 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarMensagemEntradaInvalida() {
 		return " Entrada invalida";
+	}
+
+	@Override
+	public String mostrarMenuVisualizarFiltros(Scanner input, String filtrosDisponiveis, String tipoFiltro) {
+		System.out.println("============================================================");
+		System.out.println("                  FILTROS " + tipoFiltro.toUpperCase());
+		System.out.println("============================================================");
+		System.out.println(" V- Voltar ");
+		System.out.println("------------------------------------------------------------");
+		System.out.println(" Filtros " + tipoFiltro.toLowerCase());
+		System.out.println(filtrosDisponiveis);
+		System.out.println("============================================================");
+		return input.nextLine();
 	}
 
 }

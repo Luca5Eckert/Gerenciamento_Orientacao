@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
+import aplication.interfaces.TipoMenu;
 import dtos.OrientacaoDto;
 
 public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao> {
@@ -14,11 +15,48 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao
     public FiltroOrientacaoIdioma(List<IdiomaOrientacao> idiomasOrientacoes) {
         this.idiomasOrientacoes = idiomasOrientacoes;
     }
+    
+    @Override
+    public void adicionarFiltro(IdiomaOrientacao filtro) {
+    	if (filtro != null && !idiomasOrientacoes.contains(filtro)) {
+    		idiomasOrientacoes.add(filtro);
+    	}
+    }
+    
+    @Override
+    public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto) {
+    	return listaObjeto.stream()
+    			.filter(this::filtrarPorIdioma)
+    			.collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<IdiomaOrientacao> pegarFiltro() {
+    	return new ArrayList<>(idiomasOrientacoes);
+    }
 
     public FiltroOrientacaoIdioma(IdiomaOrientacao idiomaOrientacao) {
         this.idiomasOrientacoes.add(idiomaOrientacao);
     }
 
+    @Override
+    public String pegarFiltrosEmTexto(IdiomaImplementacao idiomaImplementacao) {
+    	StringBuilder filtrosEmTexto = new StringBuilder();
+    	int numeroFiltroIdioma = 1;
+    			
+    	for(IdiomaOrientacao idiomaFiltro : idiomasOrientacoes) {
+    		filtrosEmTexto.append(" " + numeroFiltroIdioma + " - " + idiomaFiltro.getNomePorIdioma(idiomaImplementacao.obterIdiomaOrientacao()));
+    		numeroFiltroIdioma++;
+    	}
+    	return filtrosEmTexto.toString();
+    }
+    
+    @Override
+    public void apagarFiltro(int index) {
+    	// TODO Auto-generated method stub
+    	
+    }
+    
     public FiltroOrientacaoIdioma() {
     }
 
@@ -27,7 +65,8 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao
     }
 
     public String pegarIdiomas(IdiomaImplementacao idiomaImplementacao) {
-        return idiomaImplementacao.pegarFiltroIdioma() + mostrarIdiomas(idiomaImplementacao.obterIdiomaOrientacao());
+    	var idioma = idiomaImplementacao.obterIdiomaOrientacao();
+    	return TipoFiltro.IDIOMA.pegarNome(idioma) + mostrarIdiomas(idioma);
     }
 
     public String mostrarIdiomas(IdiomaOrientacao idiomaOrientacao) {
@@ -54,22 +93,5 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao
         idiomasOrientacoes.clear();
     }
 
-    @Override
-    public void adicionarFiltro(IdiomaOrientacao filtro) {
-        if (filtro != null && !idiomasOrientacoes.contains(filtro)) {
-            idiomasOrientacoes.add(filtro);
-        }
-    }
 
-    @Override
-    public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto) {
-        return listaObjeto.stream()
-                .filter(this::filtrarPorIdioma)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<IdiomaOrientacao> pegarFiltro() {
-        return new ArrayList<>(idiomasOrientacoes);
-    }
 }

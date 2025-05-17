@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import Dominio.IdiomaOrientacao;
+import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.exceptions.orientacao.OrientacaoException;
@@ -39,6 +40,10 @@ public class GerenciadorFiltrosOrientacao {
 	public List<?> pegarFiltrosDoTipo(TipoFiltro tipoFiltro) {
 		FiltroOrientacao<?> filtroOrientacao = filtrosAtivados.get(tipoFiltro);
 		return filtroOrientacao != null ? filtroOrientacao.pegarFiltro() : List.of();
+	}
+	
+	public String pegarFiltrosTipoEmTexto(TipoFiltro tipo, IdiomaImplementacao idiomaImplementacao) {
+		return filtrosAtivados.get(tipo).pegarFiltrosEmTexto(idiomaImplementacao);
 	}
 
 	public void limparFiltros() {

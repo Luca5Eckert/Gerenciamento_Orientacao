@@ -38,34 +38,39 @@ public class MenuFiltro implements Menu {
 		case "V" -> menuHistorico.voltarMenu();
 		case "1" -> visualizarFiltros(input);
 		case "2" -> definirFiltro(input);
-		case "3" -> menuHistorico.definirProximoMenu(MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
+		case "3" -> menuHistorico.definirProximoMenu(
+				MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
 		}
 	}
 
 	private void visualizarFiltros(Scanner input) {
 		List<TipoFiltro> tiposExistentes = gerenciadorFiltro.pegarTiposDeFiltros();
-		
+
 		String tipoOrientacoesDisponiveis = formatacaoLista.formatarTiposDeFiltro(tiposExistentes, idiomaImplementacao);
 		boolean visualizarFiltros = true;
-		
+
 		do {
-			String opcao = idiomaImplementacao.mostrarMenuVisualizarFiltros(input, tipoOrientacoesDisponiveis);
-			
-			switch(opcao.trim().toUpperCase()) {
+			String opcao = idiomaImplementacao.mostrarMenuVisualizarTiposFiltros(input, tipoOrientacoesDisponiveis);
+
+			switch (opcao.trim().toUpperCase()) {
 			case "V" -> visualizarFiltros = false;
 			default -> visualizarTipoFiltroAtivados(input, opcao);
 			}
 		} while (visualizarFiltros);
 	}
 
-
 	private Object visualizarTipoFiltroAtivados(Scanner input, String opcao) {
 		try {
 			int indexTipoFiltro = Integer.parseInt(opcao);
-			
-			FiltroTipo tipoFiltro = TipoFiltro.pegarTipoFiltroPorIndex(tipoFiltro);
-			
-		} catch (NumberFormatException npe ) {
+
+			TipoFiltro tipoFiltro = TipoFiltro.pegarTipoFiltroPorIndex(indexTipoFiltro);
+
+			String filtrosDisponiveis = gerenciadorFiltro.pegarFiltrosTipoEmTexto(tipoFiltro, idiomaImplementacao);
+
+			idiomaImplementacao.mostrarMenuVisualizarFiltros(input, filtrosDisponiveis,
+					tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()));
+
+		} catch (NumberFormatException npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 		return null;
@@ -73,14 +78,14 @@ public class MenuFiltro implements Menu {
 
 	public void definirFiltro(Scanner input) {
 		List<TipoFiltro> tiposExistentes = TipoFiltro.listarTipoFiltros();
-		
+
 		String tipoOrientacoesDisponiveis = formatacaoLista.formatarTiposDeFiltro(tiposExistentes, idiomaImplementacao);
 		boolean visualizarFiltros = true;
-		
+
 		do {
-			String opcao = idiomaImplementacao.mostrarMenuVisualizarFiltros(input, tipoOrientacoesDisponiveis);
-			
-			switch(opcao.trim().toUpperCase()) {
+			String opcao = idiomaImplementacao.mostrarMenuVisualizarTiposFiltros(input, tipoOrientacoesDisponiveis);
+
+			switch (opcao.trim().toUpperCase()) {
 			case "V" -> visualizarFiltros = false;
 			default -> visualizarFiltrosDefinir();
 			}
@@ -93,7 +98,6 @@ public class MenuFiltro implements Menu {
 	}
 
 	public void deletarFiltro(Scanner input) {
-
 
 	}
 
@@ -137,6 +141,6 @@ public class MenuFiltro implements Menu {
 	@Override
 	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
-		
+
 	}
 }

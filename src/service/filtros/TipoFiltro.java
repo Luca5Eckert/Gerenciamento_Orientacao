@@ -44,7 +44,7 @@ public enum TipoFiltro {
 	public static TipoFiltro pegarTipoFiltroPorIndex(int index) {
 		var listaFiltros = listarTipoFiltros();
 		
-		return listaFiltros.get(index+1);
+		return listaFiltros.get(index-1);
 	}
 	
 	public String getNomePortugues() {

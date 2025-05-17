@@ -94,8 +94,10 @@ public interface IdiomaImplementacao {
 	
 	String mostrarMenuApagarFiltro(Scanner input, String filtrosDisponiveis);
 
-	String mostrarMenuVisualizarFiltros(Scanner input, String tipoOrientacoesDisponiveis);
+	String mostrarMenuVisualizarTiposFiltros(Scanner input, String tipoOrientacoesDisponiveis);
 	
 	String pegarMensagemEntradaInvalida();
+	
+	String mostrarMenuVisualizarFiltros(Scanner input, String filtrosDisponiveis, String tipoFiltro);
 	
 }

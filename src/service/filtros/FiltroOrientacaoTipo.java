@@ -22,13 +22,32 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
 
     public FiltroOrientacaoTipo() {
     }
+    
+    @Override
+    public String pegarFiltrosEmTexto(IdiomaImplementacao idiomaImplementacao) {
+    	StringBuilder filtrosEmTexto = new StringBuilder();
+    	int numeroFiltroTipo = 1;
+    			
+    	for(TipoOrientacao tipoFiltro : tiposOrientacao) {
+    		filtrosEmTexto.append(" " + numeroFiltroTipo + " - " + tipoFiltro.getNome(idiomaImplementacao.obterIdiomaOrientacao()));
+    		numeroFiltroTipo++;
+    	}
+    	return filtrosEmTexto.toString();
+    }
+    
+    @Override
+    public void apagarFiltro(int index) {
+    	tiposOrientacao.remove(index);
+    }
+
 
     private boolean filtrarPorTipo(OrientacaoDto orientacao) {
         return tiposOrientacao.contains(orientacao.tipoOrientacao());
     }
 
     public String pegarTipos(IdiomaImplementacao idiomaImplementacao) {
-        return idiomaImplementacao.pegarFiltroTipo() + mostrarTipos(idiomaImplementacao.obterIdiomaOrientacao());
+    	var idioma = idiomaImplementacao.obterIdiomaOrientacao();
+        return TipoFiltro.TIPO.pegarNome(idioma) + mostrarTipos(idioma);
     }
 
     public String mostrarTipos(IdiomaOrientacao idiomaOrientacao) {
@@ -74,4 +93,5 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
         }
 		
 	}
+
 }
