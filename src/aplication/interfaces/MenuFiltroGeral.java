@@ -1,17 +1,11 @@
 package aplication.interfaces;
 
-import java.util.List;
 import java.util.Scanner;
 
-import Dominio.IdiomaOrientacao;
-import Dominio.TipoOrientacao;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
-import service.filtros.FiltroOrientacao;
 import service.filtros.GerenciadorFiltrosOrientacao;
-import service.filtros.TipoFiltro;
-import service.formatacao.FormatacaoNumerarLista;
 
 public class MenuFiltroGeral implements Menu {
 
@@ -38,8 +32,8 @@ public class MenuFiltroGeral implements Menu {
 				MenuFactory.criarMenuComFiltros(TipoMenu.VISUALIZAR_FILTRO, gerenciadorFiltro, idiomaImplementacao));
 		case "2" -> menuHistorico.definirProximoMenu(
 				MenuFactory.criarMenuComFiltros(TipoMenu.DEFINIR_FILTRO, gerenciadorFiltro, idiomaImplementacao));
-		case "3" -> menuHistorico.definirProximoMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.VISUALIZAR_FILTRO, gerenciadorFiltro, idiomaImplementacao));
+		case "3" -> menuHistorico.voltarMenu(
+				MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
 		}
 	}
 

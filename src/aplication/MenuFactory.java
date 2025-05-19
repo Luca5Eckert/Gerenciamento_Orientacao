@@ -26,19 +26,18 @@ public class MenuFactory {
 
 	@SuppressWarnings("unchecked")
 	public static GerenciadorFiltrosOrientacao criarGerenciadorFiltro(IdiomaImplementacao idioma) {
-	    var gerenciador = new GerenciadorFiltrosOrientacao();
-	    
-	    var filtroGenerico = FiltroFactory.criarFiltro(TipoFiltro.IDIOMA);
-	    var filtroOrientacaoIdioma = (FiltroOrientacao<IdiomaOrientacao>) filtroGenerico;
+		var gerenciador = new GerenciadorFiltrosOrientacao();
 
-	    var idiomaOrientacao = idioma.obterIdiomaOrientacao();
-	    filtroOrientacaoIdioma.adicionarFiltro(idiomaOrientacao);
+		var filtroGenerico = FiltroFactory.criarFiltro(TipoFiltro.IDIOMA);
+		var filtroOrientacaoIdioma = (FiltroOrientacao<IdiomaOrientacao>) filtroGenerico;
 
-	    gerenciador.adicionarTipoFiltro(TipoFiltro.IDIOMA, filtroOrientacaoIdioma);
+		var idiomaOrientacao = idioma.obterIdiomaOrientacao();
+		filtroOrientacaoIdioma.adicionarFiltro(idiomaOrientacao.name());
 
-	    return gerenciador;
+		gerenciador.adicionarTipoFiltro(TipoFiltro.IDIOMA, filtroOrientacaoIdioma);
+
+		return gerenciador;
 	}
-
 
 	public static Menu criarMenu(TipoMenu tipoMenu, IdiomaImplementacao idioma) {
 		return switch (tipoMenu) {

@@ -46,7 +46,7 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
 		StringBuilder filtrosEmTexto = new StringBuilder();
 		int numeroFiltroTipo = 1;
 
-		for (TipoOrientacao idiomaFiltro : TipoOrientacao.values()) {
+		for (TipoOrientacao idiomaFiltro : tiposOrientacao) {
 			filtrosEmTexto.append(
 					" " + numeroFiltroTipo + " - " + idiomaFiltro.getNome(idiomaImplementacao.obterIdiomaOrientacao()));
 			numeroFiltroTipo++;

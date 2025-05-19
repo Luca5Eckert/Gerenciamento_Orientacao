@@ -117,17 +117,10 @@ public class GerenciadorFiltrosOrientacao {
 		return listaTiposFiltro;
 	}
 
-	public String pegarFiltrosPossiveisEmTexto(TipoFiltro tipoFiltro, IdiomaImplementacao idiomaImplementacao) {
+	public String pegarFiltrosAtivadosEmTexto(TipoFiltro tipoFiltro, IdiomaImplementacao idiomaImplementacao) {
 		return filtrosAtivados.get(tipoFiltro).pegarTodosFiltrosEmTexto(idiomaImplementacao);
 	}
 
-	public List<Enum> pegarFiltrosPossiveis(TipoFiltro tipoFiltro) {
-		return (List<Enum>) filtrosAtivados.get(tipoFiltro).pegarFiltroPossiveis();
-	}
-
-	public Enum pegarFiltroPossivel(TipoFiltro tipoFiltro, int index) {
-		return pegarFiltrosPossiveis(tipoFiltro).get(index);
-	}
 
 	public void apagarOrientacao(TipoFiltro tipoFiltro, int index) {
 		filtrosAtivados.get(tipoFiltro).apagarFiltro(index - 1);

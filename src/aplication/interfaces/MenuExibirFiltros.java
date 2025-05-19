@@ -46,34 +46,37 @@ public class MenuExibirFiltros implements Menu {
 
 			TipoFiltro tipoFiltro = TipoFiltro.pegarTipoFiltroPorIndex(indexTipoFiltro);
 
-			var listaFiltrosDisponiveis = gerenciadorFiltro.pegarFiltrosPossiveis(tipoFiltro);
-			
-			String filtrosDisponiveis = formatacaoLista.formatarTiposDeFiltro(,
+			var listaFiltrosDisponiveis = gerenciadorFiltro.pegarFiltrosAtivadosEmTexto(tipoFiltro,
 					idiomaImplementacao);
 
 			String opcaoEscolhida = idiomaImplementacao.mostrarMenuVisualizarFiltrosDisponiveis(input,
-					filtrosDisponiveis, tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()));
+					listaFiltrosDisponiveis, tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()));
 
 			switch (opcaoEscolhida) {
-			case "D" -> apagarFiltro(input, tipoFiltro, filtrosDisponiveis);
+			case "D" -> apagarFiltro(input, tipoFiltro, listaFiltrosDisponiveis);
 			}
 
 		} catch (NumberFormatException npe) {
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
+		} catch (NullPointerException npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 	}
 
 	public void apagarFiltro(Scanner input, TipoFiltro tipoFiltro, String filtrosFormatados) {
 		try {
-			String opcao = idiomaImplementacao.mostrarMenuApagarFiltro(input, tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()), filtrosFormatados);
-			
-			if(!opcao.trim().toUpperCase().equals("V")) {
+			String opcao = idiomaImplementacao.mostrarMenuApagarFiltro(input,
+					tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()), filtrosFormatados);
+
+			if (!opcao.trim().toUpperCase().equals("V")) {
 				int indexFiltroApagar = Integer.parseInt(opcao);
-				
+
 				gerenciadorFiltro.apagarOrientacao(tipoFiltro, indexFiltroApagar);
 			}
-			
+
 		} catch (NumberFormatException npe) {
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
+		} catch (NullPointerException npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 	}

@@ -63,7 +63,7 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao
     	StringBuilder filtrosEmTexto = new StringBuilder();
     	int numeroFiltroIdioma = 1;
     	
-    	for(IdiomaOrientacao idiomaFiltro : IdiomaOrientacao.values()) {
+    	for(IdiomaOrientacao idiomaFiltro : idiomasOrientacoes) {
     		filtrosEmTexto.append(" " + numeroFiltroIdioma + " - " + idiomaFiltro.getNomePorIdioma(idiomaImplementacao.obterIdiomaOrientacao()));
     		numeroFiltroIdioma++;
     	}

@@ -84,7 +84,19 @@ public class MenuHistorico {
 	}
 
 	public void mostrarHistorico() {
-		this.linhaDoTempoMenu.forEach(menu -> System.out.println(menu.getClass().getSimpleName()) );
+	    if (linhaDoTempoMenu.isEmpty()) {
+	        System.out.println("Nenhum histórico disponível.");
+	        return;
+	    }
+
+	    System.out.println("Histórico de Navegação de Menus:");
+
+	    for (int i = 0; i < linhaDoTempoMenu.size(); i++) {
+	        Menu menu = linhaDoTempoMenu.get(i);
+	        String marcador = (i == ponteiroDoMenu) ? " <-- Menu Atual" : "";
+	        System.out.printf("[%d] %s%s%n", i, menu.getClass().getSimpleName(), marcador);
+	    }
 	}
+
 	
 }

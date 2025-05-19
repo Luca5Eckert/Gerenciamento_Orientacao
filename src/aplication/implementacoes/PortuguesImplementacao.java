@@ -454,7 +454,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		System.out.println("                       FILTROS                              ");
 		System.out.println("============================================================");
-		System.out.println(" S - Voltar ");
+		System.out.println(" V - Voltar ");
 		System.out.println("------------------------------------------------------------");
 		System.out.println(" 1 - Ver os filtros");
 		System.out.println(" 2 - Definir outro filtro");
