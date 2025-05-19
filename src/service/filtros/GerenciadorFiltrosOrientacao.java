@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import Dominio.Filtro;
 import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
@@ -20,16 +22,20 @@ public class GerenciadorFiltrosOrientacao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Enum> boolean adicionarFiltro(TipoFiltro tipoFiltro, T valorFiltro) {
+	public <T extends Enum<?>> boolean adicionarFiltro(TipoFiltro tipoFiltro, T enumConvertido) {
 		FiltroOrientacao<T> filtro = (FiltroOrientacao<T>) filtrosAtivados.get(tipoFiltro);
-		if (filtro != null) {
-			filtro.adicionarFiltro(valorFiltro);
+
+		if (filtro == null) {
+			filtro = (FiltroOrientacao<T>) FiltroFactory.criarFiltro(tipoFiltro);
+			filtrosAtivados.put(tipoFiltro, filtro);
 		}
-		return false;
+
+		filtro.adicionarFiltro(enumConvertido);
+		return true;
 	}
 
-	public <T extends Enum> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao<IdiomaOrientacao> idioma) {
-		filtrosAtivados.put(tipoFiltro, idioma);
+	public <T extends Enum<T>> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao filtro) {
+	    filtrosAtivados.put(tipoFiltro, filtro);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -64,7 +70,7 @@ public class GerenciadorFiltrosOrientacao {
 	public List<String> obterListaDeFiltrosAtivos(IdiomaOrientacao idioma) {
 		List<String> filtrosAtivos = new ArrayList<>();
 
-		for (Map.Entry<TipoFiltro, FiltroOrientacao<?>> entry : filtrosAtivados.entrySet()) {
+		for (Entry<TipoFiltro, FiltroOrientacao<? extends Enum>> entry : filtrosAtivados.entrySet()) {
 			TipoFiltro tipo = entry.getKey();
 			FiltroOrientacao<?> filtro = entry.getValue();
 

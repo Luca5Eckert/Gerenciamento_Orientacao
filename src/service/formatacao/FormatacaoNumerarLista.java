@@ -3,7 +3,6 @@ package service.formatacao;
 import java.util.List;
 
 import aplication.implementacoes.IdiomaImplementacao;
-import aplication.interfaces.TipoMenu;
 import dtos.OrientacaoDto;
 import service.filtros.TipoFiltro;
 

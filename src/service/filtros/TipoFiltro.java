@@ -7,21 +7,22 @@ import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
 
 public enum TipoFiltro {
-    IDIOMA("Idioma", "Language", "Sprache", "Idioma", IdiomaOrientacao.class),
-    TIPO("Tipo", "Type", "Typ", "Tipo", TipoOrientacao.class);
+	IDIOMA("Idioma", "Language", "Sprache", "Idioma", IdiomaOrientacao.pegarValores()),
+    TIPO("Tipo", "Type", "Typ", "Tipo", TipoOrientacao.pegarValores() );
 
+	
     private String nomePortugues;
     private String nomeIngles;
     private String nomeAlemao;
     private String nomeEspanhol;
-    private Class<?> enumUsado;
+    private List<String> listaValores;
 
-    TipoFiltro(String nomePortugues, String nomeIngles, String nomeAlemao, String nomeEspanhol, Class<?> enumUsado) {
+    TipoFiltro(String nomePortugues, String nomeIngles, String nomeAlemao, String nomeEspanhol, List<String> listaValores) {
         this.nomePortugues = nomePortugues;
         this.nomeIngles = nomeIngles;
         this.nomeAlemao = nomeAlemao;
         this.nomeEspanhol = nomeEspanhol;
-        this.enumUsado = enumUsado;
+        this.setListaValores(listaValores);
     }
 
     public String pegarNome(IdiomaOrientacao idiomaOrientacao) {
@@ -59,19 +60,11 @@ public enum TipoFiltro {
         return nomeEspanhol;
     }
 
-    public Class<?> getEnumUsado() {
-        return enumUsado;
-    }
+	public List<String> getListaValores() {
+		return listaValores;
+	}
 
-    public void setEnumUsado(Class<?> enumUsado) {
-        this.enumUsado = enumUsado;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <E extends Enum<E>> List<E> listarValoresEnum() {
-        if (enumUsado.isEnum()) {
-            return List.of((E[]) enumUsado.getEnumConstants());
-        }
-        throw new IllegalStateException("Tipo associado não é um enum: " + enumUsado);
-    }
+	public void setListaValores(List<String> listaValores) {
+		this.listaValores = listaValores;
+	}
 }

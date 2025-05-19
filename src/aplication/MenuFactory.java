@@ -8,6 +8,7 @@ import repositorio.UsuarioRepositorio;
 import service.OrientacaoService;
 import service.UsuarioService;
 import service.filtros.FiltroFactory;
+import service.filtros.FiltroOrientacao;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.FormatacaoListaComDivisoria;
@@ -23,16 +24,21 @@ public class MenuFactory {
 		return new OrientacaoService();
 	}
 
+	@SuppressWarnings("unchecked")
 	public static GerenciadorFiltrosOrientacao criarGerenciadorFiltro(IdiomaImplementacao idioma) {
-		var gerenciador = new GerenciadorFiltrosOrientacao();
-		var filtroOrientacaoIdioma = FiltroFactory.criarFiltroOrientacaoIdioma();
+	    var gerenciador = new GerenciadorFiltrosOrientacao();
+	    
+	    var filtroGenerico = FiltroFactory.criarFiltro(TipoFiltro.IDIOMA);
+	    var filtroOrientacaoIdioma = (FiltroOrientacao<IdiomaOrientacao>) filtroGenerico;
 
-		filtroOrientacaoIdioma.adicionarFiltro(idioma.obterIdiomaOrientacao());
+	    var idiomaOrientacao = idioma.obterIdiomaOrientacao();
+	    filtroOrientacaoIdioma.adicionarFiltro(idiomaOrientacao);
 
-		gerenciador.adicionarTipoFiltro(TipoFiltro.IDIOMA, filtroOrientacaoIdioma);
+	    gerenciador.adicionarTipoFiltro(TipoFiltro.IDIOMA, filtroOrientacaoIdioma);
 
-		return gerenciador;
+	    return gerenciador;
 	}
+
 
 	public static Menu criarMenu(TipoMenu tipoMenu, IdiomaImplementacao idioma) {
 		return switch (tipoMenu) {

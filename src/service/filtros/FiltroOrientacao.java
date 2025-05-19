@@ -5,9 +5,9 @@ import java.util.List;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 
-public interface FiltroOrientacao<T extends Enum> {
+public interface FiltroOrientacao<T extends Enum<?>> {
 	
-	void adicionarFiltro(T tipo);
+	void adicionarFiltro(T enumConvertido);
 	
 	List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto);
 	

@@ -6,6 +6,7 @@ import java.util.Scanner;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.filtros.FiltroFactory;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.FormatacaoNumerarLista;
@@ -61,8 +62,12 @@ public class MenuDefinirFiltro implements Menu {
 	private void definirFiltro(Scanner input, TipoFiltro tipoFiltro, String opcaoEscolhida,
 			MenuHistorico menuHistorico) {
 		int indexFiltro = Integer.parseInt(opcaoEscolhida);
-		var filtro = gerenciadorFiltrosOrientacao.pegarFiltroPossivel(tipoFiltro, indexFiltro);
-		gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, filtro);
+		String nomeFiltro = tipoFiltro.getListaValores().get(indexFiltro-1);
+
+		var enumEscolhido = FiltroFactory.obterEnumFiltroPorTipo(tipoFiltro);
+		var enumConvertido = enumEscolhido.converterStringParaEnum(nomeFiltro);  
+		
+		gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, enumConvertido);
 
 	}
 

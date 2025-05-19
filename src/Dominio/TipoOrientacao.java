@@ -3,7 +3,7 @@ package Dominio;
 import java.util.Arrays;
 import java.util.List;
 
-public enum TipoOrientacao {
+public enum TipoOrientacao implements Filtro<TipoOrientacao> {
 	MANUAL_OPERACAO("Manual de Operação", "Operation Manual", "Betriebsanleitung", "Manual de Operación", 1),
 	PROCEDIMENTO_SEGURANCA("Procedimento de Segurança", "Safety Procedure", "Sicherheitsverfahren",
 			"Procedimiento de Seguridad", 2),
@@ -85,4 +85,15 @@ public enum TipoOrientacao {
 		}
 		return TipoOrientacao.MANUAL_OPERACAO;
 	}
+
+
+	public static List<String> pegarValores() {
+		return Arrays.stream(values()).map(Enum::name).toList();
+	}
+
+	@Override
+	public TipoOrientacao converterStringParaEnum(String palavra) {
+		return valueOf(palavra);
+	}
+	
 }
