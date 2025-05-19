@@ -30,8 +30,7 @@ public class GerenciadorFiltrosOrientacao {
 			filtrosAtivados.put(tipoFiltro, filtro);
 		}
 
-		filtro.adicionarFiltro(enumConvertido);
-		return true;
+		return filtro.adicionarFiltro(enumConvertido);
 	}
 
 	public <T extends Enum<T>> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao filtro) {

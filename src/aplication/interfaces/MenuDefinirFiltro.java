@@ -50,13 +50,16 @@ public class MenuDefinirFiltro implements Menu {
 			
 			IdiomaOrientacao idioma = idiomaImplementacao.obterIdiomaOrientacao();
 
-			List<String> listaFiltros = TipoFiltro.IDIOMA.getEnumFiltro().pegarValoresSegundoIdioma(idioma);
+			List<String> listaFiltros = tipoFiltro.getEnumFiltro().pegarValoresSegundoIdioma(idioma);
 			
 			String filtrosFormatados = formatacaoLista.formatarString(listaFiltros);
 
-			String opcaoEscolhida = idiomaImplementacao.mostrarMenuVisualizarFiltrosDisponiveis(input, filtrosFormatados, tipoFiltro.pegarNome(idioma));
+			String opcaoEscolhida = idiomaImplementacao.mostrarMenuVisualizarFiltros(input, filtrosFormatados, tipoFiltro.pegarNome(idioma));
 
-			definirFiltro(input, tipoFiltro, opcaoEscolhida, menuHistorico);
+			switch(opcaoEscolhida.trim().toUpperCase()) {
+			case "V" -> opcaoEscolhida = "Voltando";
+			default -> definirFiltro(input, tipoFiltro, opcaoEscolhida, menuHistorico);
+			}
 
 		} catch (NumberFormatException npf) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
@@ -68,7 +71,16 @@ public class MenuDefinirFiltro implements Menu {
 		int indexFiltro = Integer.parseInt(opcaoEscolhida);
 		var filtroEscolhido = tipoFiltro.getEnumFiltro().pegarValor(indexFiltro);
 
-		gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, filtroEscolhido);
+		boolean adicionou = gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, filtroEscolhido);
+		
+		menuHistorico.voltarMenu(MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltrosOrientacao, idiomaImplementacao));
+		
+		if(adicionou) {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.pegarMenuAtual(), idiomaImplementacao.pegarMensagemAdicionadoNovoFiltro(input), idiomaImplementacao));
+		} else {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(), idiomaImplementacao.pegarMensagemFalhaAdicionarFiltro(input), idiomaImplementacao));
+		}
+		
 
 	}
 

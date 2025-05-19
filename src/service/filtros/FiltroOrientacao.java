@@ -7,7 +7,7 @@ import dtos.OrientacaoDto;
 
 public interface FiltroOrientacao<T extends Enum<?>> {
 	
-	void adicionarFiltro(T enumConvertido);
+	boolean adicionarFiltro(T enumConvertido);
 	
 	List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto);
 	

@@ -99,11 +99,11 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
     }
 
 	@Override
-	public void adicionarFiltro(TipoOrientacao filtro) {
+	public boolean adicionarFiltro(TipoOrientacao filtro) {
         if (filtro != null && !tiposOrientacao.contains(filtro)) {
-            tiposOrientacao.add(filtro);
+            return tiposOrientacao.add(filtro);
         }
-		
+		return false;
 	}
 	
 	@Override

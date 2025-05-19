@@ -103,4 +103,8 @@ public interface IdiomaImplementacao {
 
 	String mostrarMenuVisualizarFiltrosDisponiveis(Scanner input, String filtroDisponiveis, String tipoFiltro);
 
+	String pegarMensagemAdicionadoNovoFiltro(Scanner input);
+	
+	String pegarMensagemFalhaAdicionarFiltro(Scanner input);
+
 }

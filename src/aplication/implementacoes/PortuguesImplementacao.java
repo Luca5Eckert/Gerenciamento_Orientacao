@@ -525,4 +525,14 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return input.nextLine();
 	}
 
+	@Override
+	public String pegarMensagemAdicionadoNovoFiltro(Scanner input) {
+		return " Filtro adicionado ";
+	}
+
+	@Override
+	public String pegarMensagemFalhaAdicionarFiltro(Scanner input) {
+		return " Falha ao adicionar filtro";
+	}
+
 }
