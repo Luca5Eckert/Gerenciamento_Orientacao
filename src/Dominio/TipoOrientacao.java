@@ -86,14 +86,30 @@ public enum TipoOrientacao implements Filtro<TipoOrientacao> {
 		return TipoOrientacao.MANUAL_OPERACAO;
 	}
 
-
-	public static List<String> pegarValores() {
-		return Arrays.stream(values()).map(Enum::name).toList();
-	}
-
 	@Override
 	public TipoOrientacao converterStringParaEnum(String palavra) {
 		return valueOf(palavra);
+	}
+
+	@Override
+	public List<TipoOrientacao> pegarValores() {
+		return listarTipos();
+	}
+
+	@Override
+	public TipoOrientacao pegarValor(int index) {
+		return pegarOrientacao(index);
+	}
+
+	@Override
+	public String pegarValorSegundoIdioma(IdiomaOrientacao idioma, int index) {
+		TipoOrientacao tipoFiltro = pegarOrientacao(index);
+		return tipoFiltro.getNome(idioma);
+	}
+	
+	@Override
+	public String pegarValorSegundoIdioma(IdiomaOrientacao idioma) {
+		return getNome(idioma);
 	}
 	
 }

@@ -3,26 +3,27 @@ package service.filtros;
 import java.util.Arrays;
 import java.util.List;
 
+import Dominio.Filtro;
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
 
 public enum TipoFiltro {
-	IDIOMA("Idioma", "Language", "Sprache", "Idioma", IdiomaOrientacao.pegarValores()),
-    TIPO("Tipo", "Type", "Typ", "Tipo", TipoOrientacao.pegarValores() );
+	IDIOMA("Idioma", "Language", "Sprache", "Idioma", IdiomaOrientacao.PORTUGUES),
+    TIPO("Tipo", "Type", "Typ", "Tipo", TipoOrientacao.MANUAL_CONDUTA_OPERACOES);
 
 	
     private String nomePortugues;
     private String nomeIngles;
     private String nomeAlemao;
     private String nomeEspanhol;
-    private List<String> listaValores;
+    private Filtro<?> enumFiltro;
 
-    TipoFiltro(String nomePortugues, String nomeIngles, String nomeAlemao, String nomeEspanhol, List<String> listaValores) {
+    TipoFiltro(String nomePortugues, String nomeIngles, String nomeAlemao, String nomeEspanhol, Filtro<?> enumFiltro) {
         this.nomePortugues = nomePortugues;
         this.nomeIngles = nomeIngles;
         this.nomeAlemao = nomeAlemao;
         this.nomeEspanhol = nomeEspanhol;
-        this.setListaValores(listaValores);
+        this.enumFiltro = enumFiltro;
     }
 
     public String pegarNome(IdiomaOrientacao idiomaOrientacao) {
@@ -60,11 +61,15 @@ public enum TipoFiltro {
         return nomeEspanhol;
     }
 
-	public List<String> getListaValores() {
-		return listaValores;
+	public Filtro<?> getEnumFiltro() {
+		return enumFiltro;
 	}
 
-	public void setListaValores(List<String> listaValores) {
-		this.listaValores = listaValores;
+	public void setEnumFiltro(Filtro<?> enumFiltro) {
+		this.enumFiltro = enumFiltro;
 	}
+
+
+
+    
 }

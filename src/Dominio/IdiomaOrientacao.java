@@ -83,15 +83,31 @@ public enum IdiomaOrientacao implements Filtro<IdiomaOrientacao> {
 		throw new IllegalArgumentException("Idioma não reconhecido: " + nome);
 	}
 	
-
-	public static List<String> pegarValores() {
-		return Arrays.stream(values()).map(Enum::name).toList();
-	}
-
 	@Override
 	public IdiomaOrientacao converterStringParaEnum(String palavra) {
 		return valueOf(palavra);
 	}
+
+	@Override
+	public List<IdiomaOrientacao> pegarValores() {
+		return listarIdiomas();
+	}
+
+	@Override
+	public IdiomaOrientacao pegarValor(int index) {
+		return pegarIdioma(index);
+	}
+
+	@Override
+	public String pegarValorSegundoIdioma(IdiomaOrientacao idioma, int index) {
+		IdiomaOrientacao idiomaFiltro = pegarValor(index);
+		return idiomaFiltro.getNomePorIdioma(idioma);
+	}
+
+	@Override
+	public String pegarValorSegundoIdioma(IdiomaOrientacao idioma) {
+		return getNomePorIdioma(idioma);	
+		}
 
  
 
