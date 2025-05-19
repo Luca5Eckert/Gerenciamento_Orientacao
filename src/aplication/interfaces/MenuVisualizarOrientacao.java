@@ -39,7 +39,8 @@ public class MenuVisualizarOrientacao implements Menu {
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
 			var listaOrdenada = gerarListaOrdenada(listaOrientacoesIdiomas);
 
-			String orientacoesFormatada = formatador.formatar(listaOrdenada, listaOrientacoesIdiomas.size(), idiomaImplementacao);
+			String orientacoesFormatada = formatador.formatar(listaOrdenada, listaOrientacoesIdiomas.size(),
+					idiomaImplementacao);
 
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada);
 
@@ -49,7 +50,7 @@ public class MenuVisualizarOrientacao implements Menu {
 			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, idiomaImplementacao.pegarMensagemErro(),
 					idiomaImplementacao);
 		}
-		
+
 		menuHistorico.definirProximoMenu(proximoMenu);
 
 	}
@@ -66,10 +67,13 @@ public class MenuVisualizarOrientacao implements Menu {
 
 	public Menu removerOrientacao(Scanner input, MenuHistorico menuHistorico) {
 		try {
+			menuHistorico.sobscreverMenu(menuHistorico.pegarMenuAnterior());
 			idiomaImplementacao.mostrarMenuConfirmarApagarOrientacao(input);
+
 			orientacaoService.removerOrientacao(orientacaoDto);
 			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao(), idiomaImplementacao);
+
 		} catch (SairMenuException sme) {
 			return this;
 		} catch (Exception le) {
@@ -137,6 +141,6 @@ public class MenuVisualizarOrientacao implements Menu {
 	@Override
 	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
-		
+
 	}
 }

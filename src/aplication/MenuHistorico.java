@@ -39,6 +39,10 @@ public class MenuHistorico {
 		this.ponteiroDoMenu++;
 		return true;
 	}
+	
+	public Menu pegarMenuAnterior() {
+		return linhaDoTempoMenu.get(ponteiroDoMenu-1);
+	}
 
 	public void definirProximoMenu(Menu menu) {
 		if (ponteiroDoMenu < linhaDoTempoMenu.size() - 1) {
