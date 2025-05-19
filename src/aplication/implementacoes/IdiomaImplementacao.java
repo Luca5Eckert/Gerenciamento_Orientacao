@@ -27,8 +27,6 @@ public interface IdiomaImplementacao {
 
 	List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception;
 
-	OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto orientacaoDto, Scanner input);
-
 	String mostrarMenuOrientacaoDisponiveis(Scanner input, String listaFormatada, String palavraPesquisada);
 
 	String mostrarMenuErro(Scanner input, String mensagemErro);
@@ -106,5 +104,17 @@ public interface IdiomaImplementacao {
 	String pegarMensagemAdicionadoNovoFiltro(Scanner input);
 	
 	String pegarMensagemFalhaAdicionarFiltro(Scanner input);
+	
+	String mostrarMenuEditarOrientacao(Scanner input);
+	
+	String mostrarMenuMudarTituloOrientacao(Scanner input, String tituloAntigo);
+	
+	String mostrarMenuMudarConteudoOrientacao(Scanner input, String conteudoAntigo);
+	
+	String mostrarMenuMudarTipoOrientacao(Scanner input, String tipoAntigo, String tiposFormatados);
+	
+	String mostrarMenuMudarIdiomaOrientacao(Scanner input, String idiomaAntigo, String idiomasFormatados);
+	
+
 
 }

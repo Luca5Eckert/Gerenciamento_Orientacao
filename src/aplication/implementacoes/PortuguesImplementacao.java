@@ -148,66 +148,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto orientacaoDto, Scanner input) {
-		boolean edicaoMenu = true;
-		String titulo = orientacaoDto.titulo();
-		String conteudo = orientacaoDto.conteudo();
-		TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
-
-		do {
-			System.out.println("============================================================");
-			System.out.println("                        EDIÇÃO                              ");
-			System.out.println("============================================================");
-			System.out.println(" Selecione o que deseja alterar: \n");
-
-			System.out.println(" 1- Título da orientação");
-			System.out.println(" 2- Tipo de Orientação");
-			System.out.println(" 3- Conteúdo de Orientação");
-			System.out.println(" 0- Sair edição");
-			System.out.println("------------------------------------------------------------");
-
-			String numeroRetorno = input.nextLine();
-
-			switch (numeroRetorno) {
-			case "1":
-				System.out.println("------------------------------------------------------------");
-				System.out.print(" Novo título: ");
-				titulo = input.nextLine();
-				System.out.println("------------------------------------------------------------");
-				break;
-			case "2":
-				System.out.println("------------------------------------------------------------");
-				System.out.println(" Novo tipo de orientação:");
-				System.out.println(TipoOrientacao.mostrarTodasTipos(obterIdiomaOrientacao()));
-				System.out.print(" Digite o número correspondente: ");
-				String tipoStr = input.nextLine();
-				try {
-					int tipoOrientacaoOpcao = Integer.parseInt(tipoStr);
-					tipoOrientacao = TipoOrientacao.pegarOrientacao(tipoOrientacaoOpcao);
-				} catch (NumberFormatException e) {
-					System.out.println(" Entrada inválida! Use um número.");
-				}
-				System.out.println("------------------------------------------------------------");
-				break;
-			case "3":
-				System.out.println("------------------------------------------------------------");
-				System.out.print(" Novo conteúdo: ");
-				conteudo = input.nextLine();
-				System.out.println("------------------------------------------------------------");
-				break;
-			case "0":
-				edicaoMenu = false;
-				break;
-			default:
-				System.out.println(" Opção inválida.");
-			}
-
-		} while (edicaoMenu);
-
-		return new OrientacaoDto(titulo, tipoOrientacao, conteudo, obterIdiomaOrientacao());
-	}
-
-	@Override
 	public String mostrarMenuOrientacaoDisponiveis(Scanner input, String listaFormatada, String palavraPesquisada) {
 		System.out.println("============================================================");
 		System.out.println("                   ORIENTAÇÕES                              ");
@@ -537,5 +477,109 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemFalhaAdicionarFiltro(Scanner input) {
 		return " Falha ao adicionar filtro";
 	}
+	
+	@Override
+	public OrientacaoDto mostrarMenuEditarOrientacao( Scanner input) {
+			System.out.println("============================================================");
+			System.out.println("                        EDIÇÃO                              ");
+			System.out.println("============================================================");
+			System.out.println(" Selecione o que deseja alterar: \n");
+
+			System.out.println(" 1- Título da orientação");
+			System.out.println(" 2- Tipo de Orientação");
+			System.out.println(" 3- Conteúdo de Orientação");
+			System.out.println(" 4- Idioma ");
+			System.out.println(" V- Sair edição");
+			System.out.println("------------------------------------------------------------");
+
+			String numeroRetorno = input.nextLine();
+
+			switch (numeroRetorno) {
+			case "1":
+				System.out.println("------------------------------------------------------------");
+				System.out.print(" Novo título: ");
+				titulo = input.nextLine();
+				System.out.println("------------------------------------------------------------");
+				break;
+			case "2":
+				System.out.println("------------------------------------------------------------");
+				System.out.println(" Novo tipo de orientação:");
+				System.out.println(TipoOrientacao.mostrarTodasTipos(obterIdiomaOrientacao()));
+				System.out.print(" Digite o número correspondente: ");
+				String tipoStr = input.nextLine();
+				try {
+					int tipoOrientacaoOpcao = Integer.parseInt(tipoStr);
+					tipoOrientacao = TipoOrientacao.pegarOrientacao(tipoOrientacaoOpcao);
+				} catch (NumberFormatException e) {
+					System.out.println(" Entrada inválida! Use um número.");
+				}
+				System.out.println("------------------------------------------------------------");
+				break;
+			case "3":
+				System.out.println("------------------------------------------------------------");
+				System.out.print(" Novo conteúdo: ");
+				conteudo = input.nextLine();
+				System.out.println("------------------------------------------------------------");
+				break;
+			case "0":
+				edicaoMenu = false;
+				break;
+			default:
+				System.out.println(" Opção inválida.");
+			}
+
+		}
+
+	@Override
+	public String mostrarMenuMudarTituloOrientacao(Scanner input, String tituloAntigo) {
+		System.out.println("============================================================");
+		System.out.println("                    EDIÇÃO TÍTULO                           ");
+		System.out.println("============================================================");
+		System.out.println(" V - Voltar");
+		System.out.println(" Título antigo: " + tituloAntigo);
+		System.out.println("------------------------------------------------------------");
+		System.out.print(" Novo título: ");
+		return input.nextLine();
+	}
+
+	@Override
+	public String mostrarMenuMudarConteudoOrientacao(Scanner input, String conteudoAntigo) {
+		System.out.println("============================================================");
+		System.out.println("                    EDIÇÃO CONTEÚDO                           ");
+		System.out.println("============================================================");
+		System.out.println(" V - Voltar");
+		System.out.println(" Conteúdo antigo: " + conteudoAntigo);
+		System.out.println("------------------------------------------------------------");
+		System.out.print(" Novo Conteúdo: ");
+		return input.nextLine();
+	}
+
+	@Override
+	public String mostrarMenuMudarTipoOrientacao(Scanner input, String tipoAntigo, String idiomaFormatados) {
+		System.out.println("============================================================");
+		System.out.println("                    EDIÇÃO TIPO                           ");
+		System.out.println("============================================================");
+		System.out.println(" V - Voltar");
+		System.out.println(" Tipo antigo: " + tipoAntigo);
+		System.out.println("------------------------------------------------------------");
+		System.out.print(" Novo Tipo: ");
+		System.out.println(idiomaFormatados);
+		return input.nextLine();
+	}
+
+	@Override
+	public String mostrarMenuMudarIdiomaOrientacao(Scanner input, String idiomaAntigo, String idiomaFormatados) {
+		System.out.println("============================================================");
+		System.out.println("                    EDIÇÃO IDIOMA                           ");
+		System.out.println("============================================================");
+		System.out.println(" V - Voltar");
+		System.out.println(" Idioma antigo: " + idiomaAntigo);
+		System.out.println("------------------------------------------------------------");
+		System.out.print(" Novo idioma: ");
+		System.out.println(idiomaFormatados);
+		return input.nextLine();
+	}
+
+
 
 }
