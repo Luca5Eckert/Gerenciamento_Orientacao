@@ -44,9 +44,12 @@ public class MenuExibirOrientacoes implements Menu {
 		String palavra = obterPalavraPesquisada();
 		String opcao = idiomaImplementacao.mostrarMenuOrientacaoDisponiveis(input, textoFormatado, palavra);
 
-		var proximoMenu = processarOpcao(opcao, idiomaImplementacao, orientacoesFiltradas);
-
-		menuHistorico.definirProximoMenu(proximoMenu);
+		if (opcao.trim().toUpperCase().equals("V")) {
+			menuHistorico.voltarMenu(MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao));
+		} else {
+			var proximoMenu = processarOpcao(opcao, idiomaImplementacao, orientacoesFiltradas);
+			menuHistorico.definirProximoMenu(proximoMenu);
+		}
 
 	}
 
@@ -63,7 +66,6 @@ public class MenuExibirOrientacoes implements Menu {
 			MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao);
 		case "A" -> limparPesquisa();
 		case "R" -> limparFiltros(idiomaImplementacao);
-		case "S" -> MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao);
 		default -> criarMenuPesquisa(opcao, orientacoesFiltradas);
 		};
 	}
@@ -95,6 +97,6 @@ public class MenuExibirOrientacoes implements Menu {
 	@Override
 	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
-		
+
 	}
 }

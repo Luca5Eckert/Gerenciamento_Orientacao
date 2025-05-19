@@ -99,17 +99,22 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("                       CRIAÇÃO                              ");
 		System.out.println("============================================================");
 
-		System.out.println(" S- Sair ");
+		System.out.println(" V- Sair ");
 		System.out.println(" Deseja criar para só seu idioma ou para todos? ");
 		System.out.println(" 1- Apenas para Português ");
 		System.out.println(" 2- Para todos ");
 		String opcao = input.nextLine();
 
+		if(opcao.trim().toUpperCase().equals("V")) {
+			throw new SairMenuException();
+		}
+		
+		
 		System.out.println(" Tipo Orientação:");
 		System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
 		TipoOrientacao tipoOrientacao = TipoOrientacao.pegarOrientacao(input.nextInt());
 		input.nextLine();
-
+		
 		switch (opcao.toUpperCase()) {
 		case "1":
 			listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, IdiomaOrientacao.PORTUGUES));
@@ -119,8 +124,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 				listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idioma));
 			}
 			break;
-		case "S":
-			throw new Exception();
 		}
 
 		return listaOrientacaoDto;
@@ -209,7 +212,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		System.out.println("                   ORIENTAÇÕES                              ");
 		System.out.println("============================================================");
-		System.out.println(" S- Sair para o menu geral");
+		System.out.println(" V- Voltar para o menu geral");
 		System.out.println(" F- Filtros                                   P- Pesquisar  ");
 
 		System.out.println(" A- Apagar pesquisa");
