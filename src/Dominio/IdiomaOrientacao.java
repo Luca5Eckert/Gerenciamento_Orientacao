@@ -109,6 +109,11 @@ public enum IdiomaOrientacao implements Filtro<IdiomaOrientacao> {
 		return getNomePorIdioma(idioma);	
 		}
 
+	@Override
+	public List<String> pegarValoresSegundoIdioma(IdiomaOrientacao idiomaOrientacao) {
+		return Arrays.stream(values()).map(Enum::name).toList();
+	}
+
  
 
 }

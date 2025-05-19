@@ -2,6 +2,8 @@ package service.formatacao;
 
 import java.util.List;
 
+import Dominio.Filtro;
+import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.filtros.TipoFiltro;
@@ -31,4 +33,14 @@ public class FormatacaoNumerarLista{
 		return formatado.toString();
 	}
 	
+	public String formatarString(List<String> listaFiltros) {
+		StringBuilder formatado = new StringBuilder();
+		int numeroFiltro = 1;
+
+		for (String filtro : listaFiltros) {
+			formatado.append(" " + numeroFiltro + "- " + filtro + "\n");
+			numeroFiltro++;
+		}
+		return formatado.toString();
+	}
 }

@@ -13,4 +13,6 @@ public interface Filtro<T extends Enum<?>> {
 	public String pegarValorSegundoIdioma(IdiomaOrientacao idioma, int index);
 	
 	public String pegarValorSegundoIdioma(IdiomaOrientacao idioma);
+	
+	public List<String> pegarValoresSegundoIdioma(IdiomaOrientacao idiomaOrientacao);
 }

@@ -3,6 +3,8 @@ package aplication.interfaces;
 import java.util.List;
 import java.util.Scanner;
 
+import Dominio.Filtro;
+import Dominio.IdiomaOrientacao;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
@@ -45,12 +47,14 @@ public class MenuDefinirFiltro implements Menu {
 		try {
 			int indexTipoFiltro = Integer.parseInt(opcao);
 			var tipoFiltro = TipoFiltro.pegarTipoFiltroPorIndex(indexTipoFiltro);
+			
+			IdiomaOrientacao idioma = idiomaImplementacao.obterIdiomaOrientacao();
 
-			var listaFiltros = gerenciadorFiltrosOrientacao.pegarFiltrosPossiveisEmTexto(tipoFiltro,
-					idiomaImplementacao);
+			List<String> listaFiltros = TipoFiltro.IDIOMA.getEnumFiltro().pegarValoresSegundoIdioma(idioma);
+			
+			String filtrosFormatados = formatacaoLista.formatarString(listaFiltros);
 
-			String opcaoEscolhida = idiomaImplementacao.mostrarMenuVisualizarFiltros(input, listaFiltros,
-					tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()));
+			String opcaoEscolhida = idiomaImplementacao.mostrarMenuVisualizarFiltrosDisponiveis(input, filtrosFormatados, tipoFiltro.pegarNome(idioma));
 
 			definirFiltro(input, tipoFiltro, opcaoEscolhida, menuHistorico);
 
@@ -62,12 +66,9 @@ public class MenuDefinirFiltro implements Menu {
 	private void definirFiltro(Scanner input, TipoFiltro tipoFiltro, String opcaoEscolhida,
 			MenuHistorico menuHistorico) {
 		int indexFiltro = Integer.parseInt(opcaoEscolhida);
-		String nomeFiltro = tipoFiltro.getListaValores().get(indexFiltro-1);
+		var filtroEscolhido = tipoFiltro.getEnumFiltro().pegarValor(indexFiltro);
 
-		var enumEscolhido = FiltroFactory.obterEnumFiltroPorTipo(tipoFiltro);
-		var enumConvertido = enumEscolhido.converterStringParaEnum(nomeFiltro);  
-		
-		gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, enumConvertido);
+		gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, filtroEscolhido);
 
 	}
 
