@@ -14,32 +14,30 @@ import service.OrientacaoService;
 import service.exceptions.orientacao.OrientacaoException;
 
 public class GerenciadorFiltrosOrientacao {
-	private Map<TipoFiltro, FiltroOrientacao<? extends Enum>> filtrosAtivados = new HashMap<>();
+	private Map<TipoFiltro, FiltroOrientacao<? extends Filtro<?>>> filtrosAtivados = new HashMap<>();
 	private String palavraBuscada;
 
 	public GerenciadorFiltrosOrientacao() {
 		this.filtrosAtivados = new HashMap<>();
 	}
 
-	@SuppressWarnings("unchecked")
-	public <T extends Enum<?>> boolean adicionarFiltro(TipoFiltro tipoFiltro, T enumConvertido) {
-		FiltroOrientacao<T> filtro = (FiltroOrientacao<T>) filtrosAtivados.get(tipoFiltro);
+	public boolean adicionarFiltro(TipoFiltro tipoFiltro, String enumConvertido) {
+		var filtro = filtrosAtivados.get(tipoFiltro);
 
 		if (filtro == null) {
-			filtro = (FiltroOrientacao<T>) FiltroFactory.criarFiltro(tipoFiltro);
+			filtro = FiltroFactory.criarFiltro(tipoFiltro);
 			filtrosAtivados.put(tipoFiltro, filtro);
 		}
 
 		return filtro.adicionarFiltro(enumConvertido);
 	}
 
-	public <T extends Enum<T>> void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao filtro) {
-	    filtrosAtivados.put(tipoFiltro, filtro);
+	public void adicionarTipoFiltro(TipoFiltro tipoFiltro, FiltroOrientacao<? extends Filtro<?>> filtro) {
+		filtrosAtivados.put(tipoFiltro, filtro);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <T extends Enum> FiltroOrientacao<T> pegarTipoFiltro(TipoFiltro tipoFiltro) {
-		return (FiltroOrientacao<T>) filtrosAtivados.get(tipoFiltro);
+	public FiltroOrientacao<?> pegarTipoFiltro(TipoFiltro tipoFiltro) {
+		return filtrosAtivados.get(tipoFiltro);
 	}
 
 	public List<?> pegarFiltrosDoTipo(TipoFiltro tipoFiltro) {
@@ -69,7 +67,7 @@ public class GerenciadorFiltrosOrientacao {
 	public List<String> obterListaDeFiltrosAtivos(IdiomaOrientacao idioma) {
 		List<String> filtrosAtivos = new ArrayList<>();
 
-		for (Entry<TipoFiltro, FiltroOrientacao<? extends Enum>> entry : filtrosAtivados.entrySet()) {
+		for (Entry<TipoFiltro, FiltroOrientacao<?>> entry : filtrosAtivados.entrySet()) {
 			TipoFiltro tipo = entry.getKey();
 			FiltroOrientacao<?> filtro = entry.getValue();
 
@@ -130,8 +128,8 @@ public class GerenciadorFiltrosOrientacao {
 	public Enum pegarFiltroPossivel(TipoFiltro tipoFiltro, int index) {
 		return pegarFiltrosPossiveis(tipoFiltro).get(index);
 	}
-	
+
 	public void apagarOrientacao(TipoFiltro tipoFiltro, int index) {
-		filtrosAtivados.get(tipoFiltro).apagarFiltro(index-1);
+		filtrosAtivados.get(tipoFiltro).apagarFiltro(index - 1);
 	}
 }

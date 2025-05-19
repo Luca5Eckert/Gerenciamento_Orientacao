@@ -2,12 +2,13 @@ package service.filtros;
 
 import java.util.List;
 
+import Dominio.Filtro;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 
-public interface FiltroOrientacao<T extends Enum<?>> {
+public interface FiltroOrientacao<T extends Filtro<?>> {
 	
-	boolean adicionarFiltro(T enumConvertido);
+	boolean adicionarFiltro(String enumConvertido);
 	
 	List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto);
 	

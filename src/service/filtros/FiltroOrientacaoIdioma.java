@@ -17,9 +17,10 @@ public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao
     }
     
     @Override
-    public boolean adicionarFiltro(IdiomaOrientacao filtro) {
-    	if (filtro != null && !idiomasOrientacoes.contains(filtro)) {
-    		return idiomasOrientacoes.add(filtro);
+    public boolean adicionarFiltro(String filtro) {
+    	var filtroConvertido = IdiomaOrientacao.valueOf(filtro);
+    	if (filtro != null && !idiomasOrientacoes.contains(filtroConvertido)) {
+    		return idiomasOrientacoes.add(filtroConvertido);
     	}
     	return false;
     }

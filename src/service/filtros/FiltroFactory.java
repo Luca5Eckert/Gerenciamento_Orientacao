@@ -13,13 +13,12 @@ public class FiltroFactory {
 		};
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <T extends Enum<T>> FiltroOrientacao<T> criarFiltro(TipoFiltro tipoFiltro) {
+	public static FiltroOrientacao<?> criarFiltro(TipoFiltro tipoFiltro) {
 		switch (tipoFiltro) {
 			case IDIOMA:
-				return (FiltroOrientacao<T>) new FiltroOrientacaoIdioma(); 
+				return  new FiltroOrientacaoIdioma(); 
 			case TIPO:
-				return (FiltroOrientacao<T>) new FiltroOrientacaoTipo();
+				return new FiltroOrientacaoTipo();
 			default:
 				throw new IllegalArgumentException("Filtro não suportado: " + tipoFiltro);
 			}

@@ -46,7 +46,9 @@ public class MenuExibirFiltros implements Menu {
 
 			TipoFiltro tipoFiltro = TipoFiltro.pegarTipoFiltroPorIndex(indexTipoFiltro);
 
-			String filtrosDisponiveis = formatacaoLista.formatarTiposDeFiltro(tipoFiltro.listarTipoFiltros(),
+			var listaFiltrosDisponiveis = gerenciadorFiltro.pegarFiltrosPossiveis(tipoFiltro);
+			
+			String filtrosDisponiveis = formatacaoLista.formatarTiposDeFiltro(,
 					idiomaImplementacao);
 
 			String opcaoEscolhida = idiomaImplementacao.mostrarMenuVisualizarFiltrosDisponiveis(input,
