@@ -52,13 +52,13 @@ public class MenuExibirFiltros implements Menu {
 			String opcaoEscolhida = idiomaImplementacao.mostrarMenuVisualizarFiltrosDisponiveis(input,
 					listaFiltrosDisponiveis, tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()));
 
-			switch (opcaoEscolhida) {
+			switch (opcaoEscolhida.trim().toUpperCase()) {
 			case "D" -> apagarFiltro(input, tipoFiltro, listaFiltrosDisponiveis);
 			}
 
 		} catch (NumberFormatException npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
-		} catch (NullPointerException npe) {
+		} catch (Exception npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 	}
@@ -76,15 +76,14 @@ public class MenuExibirFiltros implements Menu {
 
 		} catch (NumberFormatException npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
-		} catch (NullPointerException npe) {
+		} catch (Exception npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 	}
 
 	@Override
 	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		// TODO Auto-generated method stub
-
+		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
 }

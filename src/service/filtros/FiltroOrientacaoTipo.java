@@ -38,7 +38,7 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
 
 	@Override
 	public void apagarFiltro(int index) {
-		tiposOrientacao.remove(index - 1);
+		tiposOrientacao.remove(index);
 	}
 
 	@Override
@@ -89,6 +89,9 @@ public class FiltroOrientacaoTipo implements FiltroOrientacao<TipoOrientacao> {
 
 	@Override
 	public List<OrientacaoDto> aplicarFiltro(List<OrientacaoDto> listaObjeto) {
+		if ( tiposOrientacao.isEmpty()) {
+			return listaObjeto;
+		}
 		return listaObjeto.stream().filter(this::filtrarPorTipo).collect(Collectors.toList());
 	}
 
