@@ -18,26 +18,29 @@ public class MenuGeral implements Menu {
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String opcao = idiomaImplementacao.mostrarMenuGeral(input);
 
-		var proximoMenu = devolverOpcaoEscolhida(opcao);
+		processarOpcao(opcao, menuHistorico);
 
-		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
-	public Menu devolverOpcaoEscolhida(String opcao) {
-		return switch (opcao) {
-		case "0" -> MenuFactory.criarMenuComIdioma(TipoMenu.ADICAO_ORIENTACAO, idiomaImplementacao);
-		case "1" -> MenuFactory.criarMenuComIdioma(TipoMenu.EXIBIR_ORIENTACOES, idiomaImplementacao);
-		case "2" -> MenuFactory.criarMenuComIdioma(TipoMenu.INICIO, idiomaImplementacao);
-		case "3" -> null;
-		case "4" -> MenuFactory.criarMenuAlterarSistema(TipoMenu.ALTERAR_IDIOMA, this, idiomaImplementacao);
-		default -> this;
-		};
+	public void processarOpcao(String opcao, MenuHistorico menuHistorico) {
+		switch (opcao) {
+		case "0" -> menuHistorico
+				.definirProximoMenu(MenuFactory.criarMenuComIdioma(TipoMenu.ADICAO_ORIENTACAO, idiomaImplementacao));
+		case "1" -> menuHistorico
+				.definirProximoMenu(MenuFactory.criarMenuComIdioma(TipoMenu.EXIBIR_ORIENTACOES, idiomaImplementacao));
+		case "2" ->
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuComIdioma(TipoMenu.INICIO, idiomaImplementacao));
+		case "3" -> menuHistorico.definirProximoMenu(null);
+		case "4" -> menuHistorico.definirProximoMenu(
+				MenuFactory.criarMenuAlterarSistema(TipoMenu.ALTERAR_IDIOMA, this, idiomaImplementacao));
+		}
+		;
 	}
 
 	@Override
 	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
-		
+
 	}
 
 }
