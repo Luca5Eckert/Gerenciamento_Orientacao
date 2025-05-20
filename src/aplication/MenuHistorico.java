@@ -11,7 +11,9 @@ public class MenuHistorico {
 
 	public MenuHistorico(Menu menu) {
 		this.definirProximoMenu(menu);
-		
+	}
+
+	public MenuHistorico() {
 	}
 
 	public List<Menu> getLinhaDoTempoMenu() {

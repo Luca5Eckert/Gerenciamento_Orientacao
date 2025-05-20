@@ -47,8 +47,8 @@ public class MenuExibirOrientacoes implements Menu {
 		if (opcao.trim().toUpperCase().equals("V")) {
 			menuHistorico.voltarMenu(MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao));
 		} else {
-			var proximoMenu = processarOpcao(opcao, idiomaImplementacao, orientacoesFiltradas);
-			menuHistorico.definirProximoMenu(proximoMenu);
+			processarOpcao(opcao, idiomaImplementacao, orientacoesFiltradas, menuHistorico);
+
 		}
 
 	}
@@ -58,25 +58,37 @@ public class MenuExibirOrientacoes implements Menu {
 		return palavra != null ? palavra : "";
 	}
 
-	private Menu processarOpcao(String opcao, IdiomaImplementacao idiomaImplementacao,
-			List<OrientacaoDto> orientacoesFiltradas) {
-		return switch (opcao.trim().toUpperCase()) {
-		case "F" -> MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao);
-		case "P" ->
-			MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao);
+	private void processarOpcao(String opcao, IdiomaImplementacao idiomaImplementacao,
+			List<OrientacaoDto> orientacoesFiltradas, MenuHistorico menuHistorico) {
+		switch (opcao.trim().toUpperCase()) {
+		case "F" -> irMenuFiltro(menuHistorico);
+		case "P" -> irMenuPesquisa(menuHistorico);
 		case "A" -> limparPesquisa();
 		case "R" -> limparFiltros(idiomaImplementacao);
-		default -> criarMenuPesquisa(opcao, orientacoesFiltradas);
-		};
+		default -> criarMenuPesquisa(opcao, orientacoesFiltradas, menuHistorico);
+		}
+		;
 	}
 
-	private Menu criarMenuPesquisa(String opcao, List<OrientacaoDto> listaOrientacao) {
+	private void irMenuFiltro(MenuHistorico menuHistorico) {
+		menuHistorico.definirProximoMenu(MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao));
+		
+	}
+
+	private void irMenuPesquisa(MenuHistorico menuHistorico) {
+		menuHistorico.definirProximoMenu(
+				MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao));
+	}
+
+	private void criarMenuPesquisa(String opcao, List<OrientacaoDto> listaOrientacao, MenuHistorico menuHistorico) {
 		try {
 			int numeroOrientacao = Integer.parseInt(opcao);
 			var orientacao = listaOrientacao.get(numeroOrientacao - 1);
-			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao);
+			menuHistorico.definirProximoMenu(
+					MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao));
 		} catch (Exception e) {
-			return this;
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
+			;
 		}
 	}
 

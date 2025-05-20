@@ -18,7 +18,7 @@ public class Sistema {
 
 	public Sistema() {
 		IdiomaImplementacao idioma = new InglesImplementacao();
-		this.gerenciadorMenu = new MenuGerenciador(MenuFactory.criarMenu(TipoMenu.FIM, idioma));
+		this.gerenciadorMenu = new MenuGerenciador();
 	}
 
 	public void iniciarSistema() {
