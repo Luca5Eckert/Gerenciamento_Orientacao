@@ -115,6 +115,7 @@ public interface IdiomaImplementacao {
 	
 	String mostrarMenuMudarIdiomaOrientacao(Scanner input, String idiomaAntigo, String idiomasFormatados);
 	
-
+	String mostrarMenuConfirmarEdicao(Scanner input);
+	
 
 }
