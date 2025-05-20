@@ -11,6 +11,7 @@ import service.OrientacaoService;
 public class MenuEditarOrientacao implements Menu {
 
 	private final OrientacaoDto orientacaoDto;
+	private OrientacaoDto orientacaoAlterada;
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 
@@ -23,14 +24,24 @@ public class MenuEditarOrientacao implements Menu {
 
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
-		var orientacaoAlterada = orientacaoDto;
+		this.orientacaoAlterada = orientacaoDto;
 
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuEditarOrientacao(input);
 
 		switch (opcaoEscolhida.trim().toUpperCase()) {
 		case "V" -> confirmarSaida(input, menuHistorico, orientacaoAlterada);
+		case "1" -> editarTitulo(input);
 		}
 
+	}
+
+	private Object editarTitulo(Scanner input) {
+		String novoTitulo = idiomaImplementacao.mostrarMenuMudarTituloOrientacao(input, orientacaoDto.titulo());
+		
+		if(!novoTitulo.equals("V")) {
+		}
+		
+		return null;
 	}
 
 	public void confirmarSaida(Scanner input, MenuHistorico menuHistorico, OrientacaoDto orientacaoAlterada) {
@@ -42,7 +53,7 @@ public class MenuEditarOrientacao implements Menu {
 				salvarAlteracaoOrientacao(orientacaoAlterada, menuHistorico);
 				break;
 			}
-		
+
 		} else {
 			menuHistorico.voltarMenu();
 		}
@@ -51,23 +62,19 @@ public class MenuEditarOrientacao implements Menu {
 	public void salvarAlteracaoOrientacao(OrientacaoDto orientacaoAlterada, MenuHistorico menuHistorico) {
 		boolean atualizacaoOrientacao = orientacaoService.atualizarOrientacao(orientacaoAlterada,
 				orientacaoService.pegarIdOrientacao(orientacaoDto));
-		
+
 		if (atualizacaoOrientacao) {
 			menuHistorico.voltarMenu();
-			var proximoMenu = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada, idiomaImplementacao);
-			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.CERTO, proximoMenu, idiomaImplementacao.pegarMensagemEdicaoConcluida(), idiomaImplementacao));
+			var proximoMenu = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada,
+					idiomaImplementacao);
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.CERTO, proximoMenu,
+					idiomaImplementacao.pegarMensagemEdicaoConcluida(), idiomaImplementacao));
 		} else {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, this,
+					idiomaImplementacao.pegarMensagemEdicaoFalha(), idiomaImplementacao));
 		}
 	}
 
-	public Menu pegarMenuAnterior(MenuHistorico menuHistorico, OrientacaoDto orientacaoAlterada) {
-		try {
-			return menuHistorico.voltarMenu();
-		} catch (Exception e) {
-			return MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao);
-		}
-
-	}
 
 	@Override
 	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
