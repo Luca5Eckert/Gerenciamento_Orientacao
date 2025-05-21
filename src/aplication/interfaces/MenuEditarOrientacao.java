@@ -92,17 +92,24 @@ public class MenuEditarOrientacao implements Menu {
 		String novoTipo = idiomaImplementacao.mostrarMenuMudarTipoOrientacao(input,
 				orientacaoDto.tipoOrientacao().getNome(idiomaUsuario), tiposOrientacoes);
 
-		if (!novoTipo.toUpperCase().trim().equals("V")) {
-			String confirmacao = idiomaImplementacao.mostrarMenuConfirmarMudancaTipo(input);
+		try{
+			if (!novoTipo.toUpperCase().trim().equals("V")) {
+				String confirmacao = idiomaImplementacao.mostrarMenuConfirmarMudancaTipo(input);
 
-			switch (confirmacao.trim().toUpperCase()) {
-			case "A":
-				tipoOrientacao = TipoOrientacao.pegarOrientacao(Integer.parseInt(novoTipo));
-				idiomaImplementacao.mostrarMenuAlteradoAtributoComSucesso();
-				break;
+				switch (confirmacao.trim().toUpperCase()) {
+				case "A":
+					tipoOrientacao = TipoOrientacao.pegarOrientacao(Integer.parseInt(novoTipo));
+					idiomaImplementacao.mostrarMenuAlteradoAtributoComSucesso();
+					break;
+				}
+
 			}
-
+			
+		} catch ( NumberFormatException nfe ){
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
+		
+
 
 	}
 
@@ -114,11 +121,15 @@ public class MenuEditarOrientacao implements Menu {
 		String novoIdioma = idiomaImplementacao.mostrarMenuMudarIdiomaOrientacao(input,
 				orientacaoDto.idiomaOrientacao().getNomePorIdioma(idiomaUsuario), idiomaOrientacoes);
 
-		if (novoIdioma.toUpperCase().trim().equals("V")) {
-			idiomaOrientacao = IdiomaOrientacao.pegarIdioma(Integer.parseInt(novoIdioma) );
-			idiomaImplementacao.mostrarMenuAlteradoAtributoComSucesso();
+		try{
+			if (!novoIdioma.toUpperCase().trim().equals("V")) {
+				idiomaOrientacao = IdiomaOrientacao.pegarIdioma(Integer.parseInt(novoIdioma) );
+				idiomaImplementacao.mostrarMenuAlteradoAtributoComSucesso();
+			}
+		} catch ( NumberFormatException nfe ){
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
-
+			
 	}
 
 	public void confirmarSaida(Scanner input, MenuHistorico menuHistorico, OrientacaoDto orientacaoAlterada) {
