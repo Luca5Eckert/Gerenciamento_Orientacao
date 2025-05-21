@@ -9,6 +9,9 @@ import java.util.UUID;
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
+import Dominio.TipoOrientacao;
+import aplication.implementacoes.IdiomaImplementacao;
+import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;
 import repositorio.OrientacaoRepositorio;
 import service.exceptions.orientacao.OrientacaoException;
@@ -34,12 +37,12 @@ public class OrientacaoService {
 		Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao);
 		repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
 	}
-	
+
 	public void removerOrientacao(OrientacaoDto orientacaoDto) {
 		String stringIdOrientacao = pegarIdOrientacao(orientacaoDto);
-		
+
 		var orientacaoId = new OrientacaoId(stringIdOrientacao, orientacaoDto.idiomaOrientacao());
-		
+
 		repositorioOrientacao.removerOrientacao(orientacaoId);
 	}
 
@@ -60,32 +63,50 @@ public class OrientacaoService {
 		listaOrientacao = pesquisaOrientacao.aplicarPesquisa(listaOrientacao, palavra);
 		return listaOrientacao;
 	}
-	
+
 	public Map<IdiomaOrientacao, OrientacaoDto> pegarOrientacoesIdiomas(String idOrientacoes) {
-	    var listaOrientacoesIdiomas = new HashMap<IdiomaOrientacao, OrientacaoDto>();
-	    for (IdiomaOrientacao idioma : IdiomaOrientacao.values()) {
-	        Orientacao orientacao = repositorioOrientacao.pegarOrientacaoPorIdeIdioma( idOrientacoes, idioma.name());
+		var listaOrientacoesIdiomas = new HashMap<IdiomaOrientacao, OrientacaoDto>();
+		for (IdiomaOrientacao idioma : IdiomaOrientacao.values()) {
+			Orientacao orientacao = repositorioOrientacao.pegarOrientacaoPorIdeIdioma(idOrientacoes, idioma.name());
 
-	        if (orientacao != null) {
-	            var orientacaoDto = transformarModeloDto(orientacao);
-	            listaOrientacoesIdiomas.put(idioma, orientacaoDto); 
-	        }
+			if (orientacao != null) {
+				var orientacaoDto = transformarModeloDto(orientacao);
+				listaOrientacoesIdiomas.put(idioma, orientacaoDto);
+			}
 
-	    }
-	    
-	    return listaOrientacoesIdiomas;
+		}
+
+		return listaOrientacoesIdiomas;
 	}
-
 
 	public List<OrientacaoDto> aplicarFiltro(GerenciadorFiltrosOrientacao gerenciadorFiltro)
 			throws OrientacaoException {
 		var listaOriginal = pegarTodasOrientacoes();
 		return gerenciadorFiltro.aplicarFiltros(listaOriginal, this);
 	}
-	
-	public boolean atualizarOrientacao(OrientacaoDto orientacaoDto, String idOrientacao) {
-		return this.repositorioOrientacao.atualizarOrientacao(idOrientacao, orientacaoDto.idiomaOrientacao(),
-				orientacaoDto);
+
+	public boolean atualizarOrientacao(OrientacaoDto orientacaoAlterada, OrientacaoDto orientacaoAntiga,
+			IdiomaImplementacao idiomaImplementacao) throws OrientacaoNaoDisponivelIdiomaException {
+		String idOrientacao = pegarIdOrientacao(orientacaoAntiga);
+
+		if (!orientacaoAlterada.idiomaOrientacao().equals(orientacaoAntiga)) {
+
+			boolean idiomaDisponivel = repositorioOrientacao.verificarIdiomaOrientacao(idOrientacao,
+					orientacaoAlterada.idiomaOrientacao());
+
+			if (!idiomaDisponivel) {
+				throw new OrientacaoNaoDisponivelIdiomaException(
+						idiomaImplementacao.pegarMensagemIdiomaNaoDisponivel());
+			}
+		}
+
+		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao);
+
+		if (orientacaoModelo.getTipoOrientacao().equals(orientacaoAntiga.tipoOrientacao())) {
+			repositorioOrientacao.atualizarTiposOrientacoes(idOrientacao, orientacaoModelo.getTipoOrientacao());
+		}
+
+		return this.repositorioOrientacao.atualizarOrientacao(orientacaoModelo);
 	}
 
 	public List<OrientacaoDto> pegarTodasOrientacoes() {
@@ -102,28 +123,30 @@ public class OrientacaoService {
 	}
 
 	public Orientacao transformarDtoModelo(OrientacaoDto orientacaoDto) {
-
 		Orientacao orientacaoModelo = new Orientacao();
+
 		orientacaoModelo.setIdOrientacao(new OrientacaoId(orientacaoDto.idiomaOrientacao()));
 		orientacaoModelo.setTitulo(orientacaoDto.titulo());
 		orientacaoModelo.setTipoOrientacao(orientacaoDto.tipoOrientacao());
 		orientacaoModelo.setConteudo(orientacaoDto.conteudo());
+
 		return orientacaoModelo;
 	}
 
 	public Orientacao transformarDtoModelo(OrientacaoDto orientacaoDto, String idOrientacao) {
-
 		Orientacao orientacaoModelo = new Orientacao();
+
 		OrientacaoId orientacaoId = new OrientacaoId(idOrientacao, orientacaoDto.idiomaOrientacao());
 		orientacaoModelo.setIdOrientacao(orientacaoId);
 		orientacaoModelo.setTitulo(orientacaoDto.titulo());
 		orientacaoModelo.setTipoOrientacao(orientacaoDto.tipoOrientacao());
 		orientacaoModelo.setConteudo(orientacaoDto.conteudo());
+
 		return orientacaoModelo;
 	}
 
 	public OrientacaoDto transformarModeloDto(Orientacao orientacao) {
-		return new OrientacaoDto( orientacao.getTitulo(), orientacao.getTipoOrientacao(), orientacao.getConteudo(),
+		return new OrientacaoDto(orientacao.getTitulo(), orientacao.getTipoOrientacao(), orientacao.getConteudo(),
 				orientacao.getIdOrientacao().getIdiomaOrientacao());
 	}
 
@@ -134,7 +157,7 @@ public class OrientacaoService {
 		}
 		return orientacaoRepositorioDto;
 	}
-	
+
 	public String pegarIdOrientacao(OrientacaoDto orientacaoDto) {
 		var orientacaoModelo = transformarDtoModelo(orientacaoDto);
 		return repositorioOrientacao.pegarIndexOrientacao(orientacaoModelo);

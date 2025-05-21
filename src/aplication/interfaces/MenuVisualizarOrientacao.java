@@ -57,8 +57,8 @@ public class MenuVisualizarOrientacao implements Menu {
 
 	public Menu devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input, MenuHistorico menuHistorico) {
-		return switch (opcao.toUpperCase()) {
-		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoDto, idiomaImplementacao);
+		return switch (opcao.trim().toUpperCase()) {
+		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao);
 		case "S" -> menuHistorico.voltarMenu();
 		case "A" -> removerOrientacao(input, menuHistorico);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes, menuHistorico);
@@ -94,6 +94,7 @@ public class MenuVisualizarOrientacao implements Menu {
 	private Menu processarOpcao(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, MenuHistorico menuHistorico) {
 		int opcaoEscolhida = 0;
+
 		try {
 			opcaoEscolhida = Integer.parseInt(opcao) - 1;
 			var orientacao = pegarOrientacao(opcaoEscolhida, listaOrdenada, listaComOrientacoes);

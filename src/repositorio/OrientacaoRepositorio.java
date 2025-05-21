@@ -6,93 +6,103 @@ import java.util.List;
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
+import Dominio.TipoOrientacao;
 import dtos.OrientacaoDto;
 import infrastructure.dao.OrientacaoDAO;
 
 public class OrientacaoRepositorio {
-    private final OrientacaoDAO orientacaoDAO;
+	private final OrientacaoDAO orientacaoDAO;
 
-    public OrientacaoRepositorio() {
-        this.orientacaoDAO = new OrientacaoDAO();
-    }
+	public OrientacaoRepositorio() {
+		this.orientacaoDAO = new OrientacaoDAO();
+	}
 
-    public List<Orientacao> getOrientacaoRepositorio() {
-        try {
-            return orientacaoDAO.buscarTodas();
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar orientações: " + e.getMessage());
-        }
-        return null;
-    }
+	public List<Orientacao> getOrientacaoRepositorio() {
+		try {
+			return orientacaoDAO.buscarTodas();
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar orientações: " + e.getMessage());
+		}
+		return null;
+	}
 
-    public void adicionarOrientacao(Orientacao orientacaoModelo) {
-        try {
-            orientacaoDAO.salvar(orientacaoModelo);
-        } catch (SQLException e) {
-            System.out.println("Erro ao adicionar orientação: " + e.getMessage());
-        }
-    }
+	public void adicionarOrientacao(Orientacao orientacaoModelo) {
+		try {
+			orientacaoDAO.salvar(orientacaoModelo);
+		} catch (SQLException e) {
+			System.out.println("Erro ao adicionar orientação: " + e.getMessage());
+		}
+	}
 
-    public void removerOrientacao(Orientacao orientacaoModelo) {
-        try {
-            orientacaoDAO.remover(orientacaoModelo);
-        } catch (SQLException e) {
-            System.out.println("Erro ao remover orientação: " + e.getMessage());
-        }
-    }
-    
-    public void removerOrientacao(OrientacaoId idOrientacao) {
-    	try {
-    		orientacaoDAO.remover(idOrientacao);
-    	} catch (SQLException e) {
-    		System.out.println("Erro ao remover orientação: " + e.getMessage());
-    	}
-    }
+	public void removerOrientacao(Orientacao orientacaoModelo) {
+		try {
+			orientacaoDAO.remover(orientacaoModelo);
+		} catch (SQLException e) {
+			System.out.println("Erro ao remover orientação: " + e.getMessage());
+		}
+	}
 
-    public boolean atualizarOrientacao(String indexOrientacao, IdiomaOrientacao idiomaOrientacao, OrientacaoDto orientacaoDto) {
-        try {
-            Orientacao nova = new Orientacao();
-            OrientacaoId orientacaoId = new OrientacaoId(indexOrientacao, idiomaOrientacao);
-            
-            nova.setIdOrientacao(orientacaoId);
-            nova.setTitulo(orientacaoDto.titulo());
-            nova.setConteudo(orientacaoDto.conteudo()); 
-            nova.setTipoOrientacao(orientacaoDto.tipoOrientacao());
+	public void removerOrientacao(OrientacaoId idOrientacao) {
+		try {
+			orientacaoDAO.remover(idOrientacao);
+		} catch (SQLException e) {
+			System.out.println("Erro ao remover orientação: " + e.getMessage());
+		}
+	}
 
-            orientacaoDAO.atualizar(nova);
-            
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Erro ao atualizar orientação: " + e.getMessage());
-            return false;
-        }
-    }
+	public boolean atualizarOrientacao(Orientacao orientacao) {
+		try {
+			orientacaoDAO.atualizar(orientacao);
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Erro ao atualizar orientação: " + e.getMessage());
+			return false;
+		}
+	}
 
+	public Orientacao pegarOrientacaoPorIdeIdioma(String indexOrientacao, String idiomaOrientacao) {
+		try {
+			return orientacaoDAO.buscarPorId(indexOrientacao, idiomaOrientacao);
+		} catch (SQLException e) {
+			System.out.println("Erro ao pegar orientação pelo ID: " + e.getMessage());
+			return null;
+		}
+	}
 
-    public Orientacao pegarOrientacaoPorIdeIdioma(String indexOrientacao, String idiomaOrientacao) {
-        try {
-            return orientacaoDAO.buscarPorId(indexOrientacao, idiomaOrientacao);
-        } catch (SQLException e) {
-            System.out.println("Erro ao pegar orientação pelo ID: " + e.getMessage());
-            return null;
-        }
-    }
+	public String pegarIndexOrientacao(Orientacao orientacao) {
+		try {
+			return orientacaoDAO.obterIdOrientacao(orientacao);
+		} catch (SQLException e) {
+			System.out.println("Erro ao pegar índice da orientação: " + e.getMessage());
+		}
+		return null;
+	}
 
-    public String pegarIndexOrientacao(Orientacao orientacao) {
-        try {
-            return orientacaoDAO.obterIdOrientacao(orientacao);
-        } catch (SQLException e) {
-            System.out.println("Erro ao pegar índice da orientação: " + e.getMessage());
-        }
-        return null;
-    }
+	public int pegarIndexOrientacaoIdioma(IdiomaOrientacao idiomaOrientacao) {
+		try {
+			return orientacaoDAO.obterProximoIdOrientacaoIdioma(idiomaOrientacao);
+		} catch (SQLException e) {
+			System.out.println("Erro ao pegar índice da orientação por idioma: " + e.getMessage());
+		}
+		return -1;
+	}
 
-    public int pegarIndexOrientacaoIdioma(IdiomaOrientacao idiomaOrientacao) {
-        try {
-            return orientacaoDAO.obterProximoIdOrientacaoIdioma(idiomaOrientacao);
-        } catch (SQLException e) {
-            System.out.println("Erro ao pegar índice da orientação por idioma: " + e.getMessage());
-        }
-        return -1;
-    }
+	public boolean verificarIdiomaOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
+		try {
+			return orientacaoDAO.buscarPorId(idOrientacao, idiomaOrientacao.name()) != null;
+		} catch (SQLException se) {
+			System.out.println("Erro ao pegar orientacao por id e idioma: " + se.getMessage());
+		}
+		return false;
+
+	}
+
+	public void atualizarTiposOrientacoes(String idOrientacao, TipoOrientacao tipoOrientacao) {
+		try {
+			orientacaoDAO.definirTipoPorId(idOrientacao, tipoOrientacao.name());
+		} catch (SQLException se) {
+			System.out.println("Erro ao definir tipos para orientações: " + se.getMessage());
+		}
+		
+	}
 }

@@ -9,9 +9,6 @@ import Dominio.TipoOrientacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
-import service.filtros.FiltroOrientacaoIdioma;
-import service.filtros.GerenciadorFiltrosOrientacao;
-import service.filtros.TipoFiltro;
 
 public class PortuguesImplementacao implements IdiomaImplementacao {
 
@@ -92,7 +89,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 
 	@Override
 	public List<OrientacaoDto> mostrarMenuCriarOrientacao(Scanner input) throws Exception {
-		int numeroRepetirVezes = 1;
 		List<OrientacaoDto> listaOrientacaoDto = new ArrayList<>();
 
 		System.out.println("============================================================");
@@ -518,7 +514,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(" V - Voltar");
 		System.out.println(" Tipo antigo: " + tipoAntigo);
 		System.out.println("------------------------------------------------------------");
-		System.out.print(" Novo Tipo: ");
+		System.out.println(" Novo Tipo: ");
 		System.out.println(idiomaFormatados);
 		return input.nextLine();
 	}
@@ -531,7 +527,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(" V - Voltar");
 		System.out.println(" Idioma antigo: " + idiomaAntigo);
 		System.out.println("------------------------------------------------------------");
-		System.out.print(" Novo idioma: ");
+		System.out.println(" Novo idioma: ");
 		System.out.println(idiomaFormatados);
 		return input.nextLine();
 	}
@@ -562,9 +558,33 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		};
 	}
 
+	@Override
+	public String pegarMensagemIdiomaNaoDisponivel() {
+		return " Impossível de editar: idioma não disponível";
+	}
 
-	
+	@Override
+	public String mostrarMenuConfirmarMudancaTipo(Scanner input) {
+		System.out.println("============================================================");
+		System.out.println("                      TEM CERTEZA?                          ");
+		System.out.println("============================================================");
+		System.out.println(" O tipo será alterado em todas as outras orientações\n");
+		
+		System.out.println(" Tem certeza que deseja editar o tipo da orientação ?");
+		System.out.println("\n A- Confirmar");
+		System.out.println(" C- Cancelar");
+		System.out.println("============================================================");
+		String opcao = input.nextLine().trim().toUpperCase();
 
+		return opcao;
+	}
+
+	@Override
+	public void mostrarMenuAlteradoAtributoComSucesso() {
+		System.out.println("============================================================");
+		System.out.println("                 ALTERADO COM SUCESSO                       ");
+		System.out.println("============================================================");
+	}
 
 
 }

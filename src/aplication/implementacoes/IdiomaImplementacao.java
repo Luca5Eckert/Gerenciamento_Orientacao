@@ -117,5 +117,10 @@ public interface IdiomaImplementacao {
 	
 	String mostrarMenuConfirmarEdicao(Scanner input);
 	
+	String pegarMensagemIdiomaNaoDisponivel();
+	
+	String mostrarMenuConfirmarMudancaTipo(Scanner input);
+	
+	void mostrarMenuAlteradoAtributoComSucesso();
 
 }
