@@ -37,9 +37,12 @@ public class MenuHistorico {
 		return linhaDoTempoMenu.set(ponteiroDoMenu, menu);
 	}
 
-	public boolean apontarPonteiroParaFrente() {
+	public void apontarPonteiroParaFrente() {
 		this.ponteiroDoMenu++;
-		return true;
+	}
+	
+	public void apontarPonteiroParaTras() {
+		this.ponteiroDoMenu--;
 	}
 	
 	public Menu pegarMenuAnterior() {

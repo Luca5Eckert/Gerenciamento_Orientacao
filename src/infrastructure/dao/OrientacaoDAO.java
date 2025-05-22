@@ -174,4 +174,17 @@ public class OrientacaoDAO {
 		}
 
 	}
+	
+	
+	public void atualizarIdiomaPorId(String idOrientacao, String idiomaAntigo, String novoIdioma) {
+		String sql = "UPDATE orientacao SET idioma_orientacao = ? WHERE id_orientacao = ? AND WHERE idioma_orientacao = ?";
+
+		try (Connection conexao = ConexaoFactory.getConnection();
+				PreparedStatement statement = conexao.prepareStatement(sql)) {
+
+			statement.setString(1, novoIdioma);
+			statement.setString(2, idOrientacao);
+			statement.setString(3,idiomaAntigo);
+		}
+	}
 }

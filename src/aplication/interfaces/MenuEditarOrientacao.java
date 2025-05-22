@@ -123,7 +123,7 @@ public class MenuEditarOrientacao implements Menu {
 
 		try{
 			if (!novoIdioma.toUpperCase().trim().equals("V")) {
-				idiomaOrientacao = IdiomaOrientacao.pegarIdioma(Integer.parseInt(novoIdioma) );
+				idiomaOrientacao = IdiomaOrientacao.pegarIdioma(Integer.parseInt(novoIdioma) -1 );
 				idiomaImplementacao.mostrarMenuAlteradoAtributoComSucesso();
 			}
 		} catch ( NumberFormatException nfe ){
@@ -155,7 +155,9 @@ public class MenuEditarOrientacao implements Menu {
 					idiomaImplementacao);
 
 			if (atualizacaoOrientacao) {
-				menuHistorico.voltarMenu();
+				menuHistorico.apontarPonteiroParaTras();
+				menuHistorico.apontarPonteiroParaTras();
+
 				var menuCorreto = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada,
 						idiomaImplementacao);
 

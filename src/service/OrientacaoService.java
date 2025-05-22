@@ -89,7 +89,7 @@ public class OrientacaoService {
 			IdiomaImplementacao idiomaImplementacao) throws OrientacaoNaoDisponivelIdiomaException {
 		String idOrientacao = pegarIdOrientacao(orientacaoAntiga);
 
-		if (!orientacaoAlterada.idiomaOrientacao().equals(orientacaoAntiga)) {
+		if (!orientacaoAlterada.idiomaOrientacao().equals(orientacaoAntiga.idiomaOrientacao())) {
 
 			boolean idiomaDisponivel = repositorioOrientacao.verificarIdiomaOrientacao(idOrientacao,
 					orientacaoAlterada.idiomaOrientacao());

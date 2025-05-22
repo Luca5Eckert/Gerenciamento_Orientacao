@@ -87,9 +87,17 @@ public class OrientacaoRepositorio {
 		return -1;
 	}
 
+	public void atualizarIdioma(String idOrientacao, IdiomaOrientacao idiomaAntigo, IdiomaOrientacao novoIdiomaOrientacao) {
+		try {
+			orientacaoDAO.atualizarIdiomaPorId(idOrientacao, idiomaAntigo.name(), novoIdiomaOrientacao.name);
+		} catch(SQLException se) {
+			
+		}
+	}
+	
 	public boolean verificarIdiomaOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
 		try {
-			return orientacaoDAO.buscarPorId(idOrientacao, idiomaOrientacao.name()) != null;
+			return orientacaoDAO.buscarPorId(idOrientacao, idiomaOrientacao.name()) == null;
 		} catch (SQLException se) {
 			System.out.println("Erro ao pegar orientacao por id e idioma: " + se.getMessage());
 		}

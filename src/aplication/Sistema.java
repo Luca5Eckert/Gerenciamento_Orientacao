@@ -9,9 +9,6 @@ import aplication.interfaces.MenuIniciarSistema;
 import aplication.interfaces.TipoMenu;
 
 public class Sistema {
-	private static final int CONTINUAR_SISTEMA = 0;
-	private static final int PARAR_SISTEMA = 0;
-	private static final int ERRO_NO_SISTEMA = 0;
 
 	private MenuGerenciador gerenciadorMenu;
 	private Scanner input = new Scanner(System.in);
