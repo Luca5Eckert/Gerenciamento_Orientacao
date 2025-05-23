@@ -6,125 +6,138 @@ import java.util.List;
 import aplication.interfaces.Menu;
 
 public class MenuHistorico {
-	private List<Menu> linhaDoTempoMenu = new ArrayList<>();
-	private int ponteiroDoMenu = -1;
+    private List<Menu> linhaDoTempoMenu = new ArrayList<>();
+    private int ponteiroDoMenu = -1;
 
-	public MenuHistorico(Menu menu) {
-		this.definirProximoMenu(menu);
-	}
+    public MenuHistorico(Menu menu) {
+        definirProximoMenu(menu);
+    }
 
-	public MenuHistorico() {
-	}
+    public MenuHistorico() {
+    }
 
-	public List<Menu> getLinhaDoTempoMenu() {
-		return linhaDoTempoMenu;
-	}
+    public List<Menu> getLinhaDoTempoMenu() {
+        return linhaDoTempoMenu;
+    }
 
-	public void setLinhaDoTempoMenu(List<Menu> novaLinhaDoTempo) {
-	    this.linhaDoTempoMenu = novaLinhaDoTempo;
-	}
+    public void setLinhaDoTempoMenu(List<Menu> novaLinhaDoTempo) {
+        this.linhaDoTempoMenu = new ArrayList<>(novaLinhaDoTempo);
+    }
 
+    public Menu pegarUltimoMenu() {
+        if (linhaDoTempoMenu.isEmpty()) {
+            throw new IllegalStateException("Não há menus na linha do tempo.");
+        }
+        return linhaDoTempoMenu.get(linhaDoTempoMenu.size() - 1);
+    }
 
-	public Menu pegarUltimoMenu() {
-		return linhaDoTempoMenu.getLast();
-	}
+    public Menu pegarMenuAtual() {
+        if (ponteiroDoMenu >= 0 && ponteiroDoMenu < linhaDoTempoMenu.size()) {
+            return linhaDoTempoMenu.get(ponteiroDoMenu);
+        }
+        throw new IllegalStateException("Nenhum menu atual disponível.");
+    }
 
-	public Menu pegarMenuAtual() {
-		return this.linhaDoTempoMenu.get(this.ponteiroDoMenu);
-	}
-	
-	public Menu sobscreverMenu(Menu menu) {
-		return linhaDoTempoMenu.set(ponteiroDoMenu, menu);
-	}
+    public Menu sobscreverMenu(Menu menu) {
+        if (ponteiroDoMenu >= 0 && ponteiroDoMenu < linhaDoTempoMenu.size()) {
+            return linhaDoTempoMenu.set(ponteiroDoMenu, menu);
+        }
+        throw new IllegalStateException("Não é possível sobrescrever: ponteiro inválido.");
+    }
 
-	public void apontarPonteiroParaFrente() {
-		this.ponteiroDoMenu++;
-	}
-	
-	public void apontarPonteiroParaTras() {
-		this.ponteiroDoMenu--;
-	}
-	
-	public Menu pegarMenuAnterior() {
-		return linhaDoTempoMenu.get(ponteiroDoMenu-1);
-	}
+    public void apontarPonteiroParaFrente() {
+        this.ponteiroDoMenu++;
+    }
 
-	public void definirProximoMenu(Menu menu) {
-		if (ponteiroDoMenu < linhaDoTempoMenu.size() - 1) {
-			linhaDoTempoMenu = linhaDoTempoMenu.subList(0, ponteiroDoMenu + 1);
-		}
+    public void apontarPonteiroParaTras() {
+        this.ponteiroDoMenu--;
+    }
 
-		linhaDoTempoMenu.add(menu);
-		apontarPonteiroParaFrente();
-	}
+    public Menu pegarMenuAnterior() {
+        if (ponteiroDoMenu - 1 >= 0) {
+            return linhaDoTempoMenu.get(ponteiroDoMenu - 1);
+        }
+        throw new IllegalStateException("Não há menu anterior.");
+    }
 
-	public Menu voltarMenu(Menu menu) {
-		if (temAnterior()) {
-			this.ponteiroDoMenu--;
-			return sobscreverMenu(menu);
-		}
-		throw new RuntimeException("Não existe menu anterior");
-	}
-	
-	public Menu irProximoMenu() {
-		if (temProximo()) {
-			this.ponteiroDoMenu++;
-			return pegarMenuAtual();
-		}
+    public void definirProximoMenu(Menu menu) {
+        if (ponteiroDoMenu < linhaDoTempoMenu.size() - 1) {
+            linhaDoTempoMenu = new ArrayList<>(linhaDoTempoMenu.subList(0, ponteiroDoMenu + 1));
+        }
 
-		throw new RuntimeException("Não existe proximo menu");
-	}
+        linhaDoTempoMenu.add(menu);
+        apontarPonteiroParaFrente();
+    }
 
-	public Menu voltarMenu() {
-		if (temAnterior()) {
-			this.ponteiroDoMenu--;
-			return pegarMenuAtual();
-		}
+    public Menu voltarMenu(Menu menu) {
+        if (temAnterior()) {
+            ponteiroDoMenu--;
+            return sobscreverMenu(menu);
+        }
+        throw new IllegalStateException("Não existe menu anterior");
+    }
 
-		throw new RuntimeException("Não existe menu anterior");
-	}
+    public Menu irProximoMenu() {
+        if (temProximo()) {
+            ponteiroDoMenu++;
+            return pegarMenuAtual();
+        }
+        throw new IllegalStateException("Não existe próximo menu");
+    }
 
-	public boolean temProximo() {
-		return ponteiroDoMenu < linhaDoTempoMenu.size();
-	}
+    public Menu voltarMenu() {
+        if (temAnterior()) {
+            ponteiroDoMenu--;
+            return pegarMenuAtual();
+        }
+        throw new IllegalStateException("Não existe menu anterior");
+    }
 
-	public boolean temAnterior() {
-		return ponteiroDoMenu > -1;
-	}
-	
-	public void trocarMenuAtual(Menu menu) {
-		this.linhaDoTempoMenu.add(ponteiroDoMenu, menu);
-	}
+    public boolean temProximo() {
+        return ponteiroDoMenu < linhaDoTempoMenu.size() - 1;
+    }
 
-	public void mostrarHistorico() {
-	    if (linhaDoTempoMenu.isEmpty()) {
-	        System.out.println("Nenhum histórico disponível.");
-	        return;
-	    }
+    public boolean temAnterior() {
+        return ponteiroDoMenu > 0;
+    }
 
-	    System.out.println("Histórico de Navegação de Menus:");
+    public void trocarMenuAtual(Menu menu) {
+        if (ponteiroDoMenu >= 0 && ponteiroDoMenu < linhaDoTempoMenu.size()) {
+            linhaDoTempoMenu.set(ponteiroDoMenu, menu);
+        } else {
+            throw new IllegalStateException("Ponteiro inválido para troca.");
+        }
+    }
 
-	    for (int i = 0; i < linhaDoTempoMenu.size(); i++) {
-	        Menu menu = linhaDoTempoMenu.get(i);
-	        String marcador = (i == ponteiroDoMenu) ? " <-- Menu Atual" : "";
-	        System.out.printf("[%d] %s%s%n", i, menu.getClass().getSimpleName(), marcador);
-	    }
-	}
+    public void mostrarHistorico() {
+        if (linhaDoTempoMenu.isEmpty()) {
+            System.out.println("Nenhum histórico disponível.");
+            return;
+        }
 
-	public void voltarPonteiro(int quantidadeVoltar){
-		if ( 0 > (ponteiroDoMenu - quantidadeVoltar) ){
-			this.ponteiroDoMenu =- quantidadeVoltar;		
-		}
-		throw new RuntimeException("Não existe menu anterior");
-	}
+        System.out.println("Histórico de Navegação de Menus:");
+        for (int i = 0; i < linhaDoTempoMenu.size(); i++) {
+            Menu menu = linhaDoTempoMenu.get(i);
+            String marcador = (i == ponteiroDoMenu) ? " <-- Menu Atual" : "";
+            System.out.printf("[%d] %s%s%n", i, menu.getClass().getSimpleName(), marcador);
+        }
+    }
 
-	public void  irParaFrentePonteiro(int quantidadeParaFrente) {
-		if ( this.linhaDoTempoMenu.size() > (ponteiroDoMenu + quantidadeParaFrente) ){
-			this.ponteiroDoMenu =+ quantidadeParaFrente;		
-		}
-		throw new RuntimeException("Não existe proximo menu");
-	}
-	}
+    public void voltarPonteiro(int quantidadeVoltar) {
+        int novoIndice = ponteiroDoMenu - quantidadeVoltar;
+        if (novoIndice >= 0) {
+            ponteiroDoMenu = novoIndice;
+        } else {
+            throw new IllegalArgumentException("Não existe menu anterior");
+        }
+    }
 
-	
+    public void irParaFrentePonteiro(int quantidadeParaFrente) {
+        int novoIndice = ponteiroDoMenu + quantidadeParaFrente;
+        if (novoIndice < linhaDoTempoMenu.size()) {
+            ponteiroDoMenu = novoIndice;
+        } else {
+            throw new IllegalArgumentException("Não existe próximo menu");
+        }
+    }
 }
