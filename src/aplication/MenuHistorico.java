@@ -111,5 +111,20 @@ public class MenuHistorico {
 	    }
 	}
 
+	public void voltarPonteiro(int quantidadeVoltar){
+		if ( 0 > (ponteiroDoMenu - quantidadeVoltar) ){
+			this.ponteiroDoMenu =- quantidadeVoltar;		
+		}
+		throw new RuntimeException("Não existe menu anterior");
+	}
+
+	public void  irParaFrentePonteiro(int quantidadeParaFrente) {
+		if ( this.linhaDoTempoMenu.size() > (ponteiroDoMenu + quantidadeParaFrente) ){
+			this.ponteiroDoMenu =+ quantidadeParaFrente;		
+		}
+		throw new RuntimeException("Não existe proximo menu");
+	}
+	}
+
 	
 }
