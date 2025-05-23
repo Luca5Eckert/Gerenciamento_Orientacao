@@ -89,7 +89,7 @@ public class OrientacaoRepositorio {
 
 	public void atualizarIdioma(String idOrientacao, IdiomaOrientacao idiomaAntigo, IdiomaOrientacao novoIdiomaOrientacao) {
 		try {
-			orientacaoDAO.atualizarIdiomaPorId(idOrientacao, idiomaAntigo.name(), novoIdiomaOrientacao.name);
+			orientacaoDAO.atualizarIdiomaPorId(idOrientacao, idiomaAntigo.name(), novoIdiomaOrientacao.name());
 		} catch(SQLException se) {
 			
 		}

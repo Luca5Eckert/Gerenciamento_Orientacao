@@ -32,8 +32,6 @@ public class MenuVisualizarOrientacao implements Menu {
 
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
-		Menu proximoMenu = null;
-
 		try {
 			Map<IdiomaOrientacao, OrientacaoDto> listaOrientacoesIdiomas = orientacaoService
 					.pegarOrientacoesIdiomas(orientacaoService.pegarIdOrientacao(orientacaoDto));
@@ -44,25 +42,24 @@ public class MenuVisualizarOrientacao implements Menu {
 
 			String opcao = idiomaImplementacao.mostrarOrientacao(input, orientacaoDto, orientacoesFormatada);
 
-			proximoMenu = devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input, menuHistorico);
+			devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input, menuHistorico);
 
 		} catch (Exception e) {
-			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, this, idiomaImplementacao.pegarMensagemErro(),
-					idiomaImplementacao);
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, this,
+					idiomaImplementacao.pegarMensagemErro(), idiomaImplementacao));
 		}
-
-		menuHistorico.definirProximoMenu(proximoMenu);
 
 	}
 
-	public Menu devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
+	public void devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input, MenuHistorico menuHistorico) {
-		return switch (opcao.trim().toUpperCase()) {
+		switch (opcao.trim().toUpperCase()) {
 		case "E" -> MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao);
 		case "S" -> menuHistorico.voltarMenu();
 		case "A" -> removerOrientacao(input, menuHistorico);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes, menuHistorico);
-		};
+		}
+		;
 	}
 
 	public Menu removerOrientacao(Scanner input, MenuHistorico menuHistorico) {
@@ -91,22 +88,27 @@ public class MenuVisualizarOrientacao implements Menu {
 
 	}
 
-	private Menu processarOpcao(String opcao, List<IdiomaOrientacao> listaOrdenada,
+	private void processarOpcao(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, MenuHistorico menuHistorico) {
 		int opcaoEscolhida = 0;
 
 		try {
 			opcaoEscolhida = Integer.parseInt(opcao) - 1;
 			var orientacao = pegarOrientacao(opcaoEscolhida, listaOrdenada, listaComOrientacoes);
-			return MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao);
+			var proximoMenu = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao,
+					idiomaImplementacao);
+			menuHistorico.trocarMenuAtual(proximoMenu);
+
 		} catch (NullPointerException npe) {
-			return this;
+			System.out.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		} catch (OrientacaoNaoDisponivelIdiomaException ondie) {
 			IdiomaOrientacao idiomaOrientacao = listaOrdenada.get(opcaoEscolhida);
-			return MenuFactory.criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu.ADICAO_ORIENTACAO, this, orientacaoDto,
-					idiomaOrientacao, idiomaImplementacao);
+			var proximoMenu = MenuFactory.criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu.ADICAO_ORIENTACAO, this,
+					orientacaoDto, idiomaOrientacao, idiomaImplementacao);
+			menuHistorico.definirProximoMenu(proximoMenu);
+
 		} catch (NumberFormatException nfe) {
-			return this;
+			System.out.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 	}
 

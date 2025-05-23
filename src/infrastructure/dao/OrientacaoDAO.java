@@ -176,7 +176,7 @@ public class OrientacaoDAO {
 	}
 	
 	
-	public void atualizarIdiomaPorId(String idOrientacao, String idiomaAntigo, String novoIdioma) {
+	public void atualizarIdiomaPorId(String idOrientacao, String idiomaAntigo, String novoIdioma) throws SQLException {
 		String sql = "UPDATE orientacao SET idioma_orientacao = ? WHERE id_orientacao = ? AND WHERE idioma_orientacao = ?";
 
 		try (Connection conexao = ConexaoFactory.getConnection();

@@ -91,6 +91,10 @@ public class MenuHistorico {
 	public boolean temAnterior() {
 		return ponteiroDoMenu > -1;
 	}
+	
+	public void trocarMenuAtual(Menu menu) {
+		this.linhaDoTempoMenu.add(ponteiroDoMenu, menu);
+	}
 
 	public void mostrarHistorico() {
 	    if (linhaDoTempoMenu.isEmpty()) {
