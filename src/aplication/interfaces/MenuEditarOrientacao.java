@@ -155,8 +155,7 @@ public class MenuEditarOrientacao implements Menu {
 					idiomaImplementacao);
 
 			if (atualizacaoOrientacao) {
-				menuHistorico.apontarPonteiroParaTras();
-				menuHistorico.apontarPonteiroParaTras();
+				menuHistorico.voltarPonteiro(2);
 
 				var menuCorreto = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada,
 						idiomaImplementacao);

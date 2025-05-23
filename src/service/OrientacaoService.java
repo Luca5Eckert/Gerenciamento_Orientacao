@@ -98,6 +98,8 @@ public class OrientacaoService {
 				throw new OrientacaoNaoDisponivelIdiomaException(
 						idiomaImplementacao.pegarMensagemIdiomaNaoDisponivel());
 			}
+			
+			repositorioOrientacao.atualizarIdioma(idOrientacao, orientacaoAntiga.idiomaOrientacao(), orientacaoAlterada.idiomaOrientacao());
 		}
 
 		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao);
