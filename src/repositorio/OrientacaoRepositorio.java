@@ -91,7 +91,7 @@ public class OrientacaoRepositorio {
 		try {
 			orientacaoDAO.atualizarIdiomaPorId(idOrientacao, idiomaAntigo.name(), novoIdiomaOrientacao.name());
 		} catch(SQLException se) {
-			
+			System.out.println("Erro ao atualizar idioma da orientação: " + se.getMessage());
 		}
 	}
 	

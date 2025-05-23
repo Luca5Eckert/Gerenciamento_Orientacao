@@ -92,7 +92,7 @@ public class MenuEditarOrientacao implements Menu {
 		String novoTipo = idiomaImplementacao.mostrarMenuMudarTipoOrientacao(input,
 				orientacaoDto.tipoOrientacao().getNome(idiomaUsuario), tiposOrientacoes);
 
-		try{
+		try {
 			if (!novoTipo.toUpperCase().trim().equals("V")) {
 				String confirmacao = idiomaImplementacao.mostrarMenuConfirmarMudancaTipo(input);
 
@@ -104,12 +104,10 @@ public class MenuEditarOrientacao implements Menu {
 				}
 
 			}
-			
-		} catch ( NumberFormatException nfe ){
+
+		} catch (NumberFormatException nfe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
-		
-
 
 	}
 
@@ -121,15 +119,15 @@ public class MenuEditarOrientacao implements Menu {
 		String novoIdioma = idiomaImplementacao.mostrarMenuMudarIdiomaOrientacao(input,
 				orientacaoDto.idiomaOrientacao().getNomePorIdioma(idiomaUsuario), idiomaOrientacoes);
 
-		try{
+		try {
 			if (!novoIdioma.toUpperCase().trim().equals("V")) {
-				idiomaOrientacao = IdiomaOrientacao.pegarIdioma(Integer.parseInt(novoIdioma) -1 );
+				idiomaOrientacao = IdiomaOrientacao.pegarIdioma(Integer.parseInt(novoIdioma) - 1);
 				idiomaImplementacao.mostrarMenuAlteradoAtributoComSucesso();
 			}
-		} catch ( NumberFormatException nfe ){
+		} catch (NumberFormatException nfe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
-			
+
 	}
 
 	public void confirmarSaida(Scanner input, MenuHistorico menuHistorico, OrientacaoDto orientacaoAlterada) {
@@ -151,6 +149,7 @@ public class MenuEditarOrientacao implements Menu {
 		Menu proximoMenu;
 
 		try {
+
 			boolean atualizacaoOrientacao = orientacaoService.atualizarOrientacao(orientacaoAlterada, orientacaoDto,
 					idiomaImplementacao);
 
@@ -171,6 +170,7 @@ public class MenuEditarOrientacao implements Menu {
 		} catch (OrientacaoNaoDisponivelIdiomaException ondi) {
 			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),
 					ondi.getMessage(), idiomaImplementacao);
+			menuHistorico.voltarPonteiro(2);
 		}
 
 		menuHistorico.definirProximoMenu(proximoMenu);

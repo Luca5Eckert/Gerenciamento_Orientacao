@@ -164,20 +164,22 @@ public class OrientacaoDAO {
 	}
 
 	public void definirTipoPorId(String idOrientacao, String tipoOrientacao) throws SQLException {
-		String sql = "UPDATE orientacao SET tipo_orientacao = ? WHERE id_orientacao = ?";
+		String sql = "UPDATE orientacao SET tipo_orientacao = ? WHERE id = ?";
 
 		try (Connection conexao = ConexaoFactory.getConnection();
 				PreparedStatement statement = conexao.prepareStatement(sql)) {
 
 			statement.setString(1, tipoOrientacao);
 			statement.setString(2, idOrientacao);
+			
+			statement.executeUpdate();
 		}
 
 	}
 	
 	
 	public void atualizarIdiomaPorId(String idOrientacao, String idiomaAntigo, String novoIdioma) throws SQLException {
-		String sql = "UPDATE orientacao SET idioma_orientacao = ? WHERE id_orientacao = ? AND WHERE idioma_orientacao = ?";
+		String sql = "UPDATE orientacao SET idioma_orientacao = ? WHERE id = ? AND idioma_orientacao = ?";
 
 		try (Connection conexao = ConexaoFactory.getConnection();
 				PreparedStatement statement = conexao.prepareStatement(sql)) {
@@ -185,6 +187,9 @@ public class OrientacaoDAO {
 			statement.setString(1, novoIdioma);
 			statement.setString(2, idOrientacao);
 			statement.setString(3,idiomaAntigo);
+
+			statement.executeUpdate();
+
 		}
 	}
 }

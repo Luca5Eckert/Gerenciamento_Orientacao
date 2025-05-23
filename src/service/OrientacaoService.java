@@ -104,7 +104,7 @@ public class OrientacaoService {
 
 		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao);
 
-		if (orientacaoModelo.getTipoOrientacao().equals(orientacaoAntiga.tipoOrientacao())) {
+		if (orientacaoModelo.getTipoOrientacao().name().equals(orientacaoAntiga.tipoOrientacao().name())) {
 			repositorioOrientacao.atualizarTiposOrientacoes(idOrientacao, orientacaoModelo.getTipoOrientacao());
 		}
 
