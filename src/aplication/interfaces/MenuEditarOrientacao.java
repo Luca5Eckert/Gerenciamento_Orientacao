@@ -10,11 +10,11 @@ import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
+import utilitarios.FormatacaoUtil;
 
 public class MenuEditarOrientacao extends Menu {
 
 	private final OrientacaoDto orientacaoDto;
-	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 
 	private String tituloOrientacao;
@@ -22,7 +22,7 @@ public class MenuEditarOrientacao extends Menu {
 	private TipoOrientacao tipoOrientacao;
 	private IdiomaOrientacao idiomaOrientacao;
 
-	public MenuEditarOrientacao(OrientacaoDto orientacaoDto, IdiomaImplementacao idiomaImplementacao,
+	public MenuEditarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
 			OrientacaoService orientacaoService) {
 		super(idiomaImplementacao);
 		this.orientacaoDto = orientacaoDto;
@@ -66,7 +66,7 @@ public class MenuEditarOrientacao extends Menu {
 	}
 
 	private void editarTitulo(Scanner input) {
-		String novoTitulo = idiomaImplementacao.mostrarMenuMudarTituloOrientacao(input, orientacaoDto.titulo());
+		String novoTitulo = idiomaImplementacao.mostrarMenuMudarTituloOrientacao(input, FormatacaoUtil.enquadrarTextoNoMenu(orientacaoDto.titulo(), 59, 1));
 
 		if (!novoTitulo.toUpperCase().trim().equals("V")) {
 			this.tituloOrientacao = novoTitulo;
@@ -76,7 +76,7 @@ public class MenuEditarOrientacao extends Menu {
 	}
 
 	private void editarConteudo(Scanner input) {
-		String novoConteudo = idiomaImplementacao.mostrarMenuMudarConteudoOrientacao(input, orientacaoDto.conteudo());
+		String novoConteudo = idiomaImplementacao.mostrarMenuMudarConteudoOrientacao(input, FormatacaoUtil.enquadrarTextoNoMenu(orientacaoDto.titulo(), 59, 1));
 
 		if (!novoConteudo.equals("V")) {
 			this.conteudoOrientacao = novoConteudo;

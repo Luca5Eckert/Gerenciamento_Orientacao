@@ -9,6 +9,7 @@ import Dominio.TipoOrientacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
+import utilitarios.FormatacaoUtil;
 
 public class EspanholImplementacao implements IdiomaImplementacao {
 
@@ -234,12 +235,12 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         System.out.println("============================================================");
         System.out.println("                       ORIENTACIÓN                          ");
         System.out.println("============================================================");
-        System.out.println(" Título: " + orientacao.titulo());
+        System.out.println(" Título: " + FormatacaoUtil.enquadrarTextoNoMenu(orientacao.titulo(), 51, 9));
         System.out.println("\n Tipo: " + orientacao.tipoOrientacao().getNomeEspanhol());
         System.out.println(" Idioma: " + orientacao.idiomaOrientacao().getNomeEmEspanhol());
 
         System.out.println("\n Contenido:");
-        System.out.println(" " + orientacao.conteudo());
+		System.out.println(" " + FormatacaoUtil.enquadrarTextoNoMenu(orientacao.titulo(), 59, 1));
         System.out.println("\n  S- Salir         E- Editar             B-Borrar         ");
         System.out.println("------------------------------------------------------------");
         System.out.println("Disponible en otros idiomas:\n");

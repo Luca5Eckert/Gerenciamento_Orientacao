@@ -16,7 +16,6 @@ public class MenuGerenciador {
 	public boolean iniciarFluxoMenu(Scanner input) {
 		this.menu.chamarMenu(input, menuHistorico);
 		this.definirNovoMenu();
-		menuHistorico.mostrarHistorico();
 		return definirRetorno(input);
 	}
 

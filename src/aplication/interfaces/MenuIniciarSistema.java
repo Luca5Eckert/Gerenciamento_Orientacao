@@ -23,13 +23,14 @@ public class MenuIniciarSistema extends Menu{
 			int opcaoIdioma = input.nextInt();
 			input.nextLine();
 			
-			IdiomaImplementacao idiomaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(IdiomaOrientacao.pegarIdioma(opcaoIdioma-1));
+			var idiomaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(IdiomaOrientacao.pegarIdioma(opcaoIdioma-1));
 			
 			var proximoMenu = MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao);
 			
 			menuHistorico.definirProximoMenu(proximoMenu);
 			
 		} catch (Exception e ) {
+			idiomaImplementacao.pegarMensagemEntradaInvalida();
 		}
 		
 	}

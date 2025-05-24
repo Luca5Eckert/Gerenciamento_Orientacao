@@ -88,7 +88,8 @@ public class MenuFactory {
 		case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(idiomaImplementacao, orientacaoDto,
 				criarOrientacaoService(), new FormatacaoListaComDivisoria());
 		case EDICAO_ORIENTACAO ->
-			new MenuEditarOrientacao(orientacaoDto, idiomaImplementacao, criarOrientacaoService());
+			new MenuEditarOrientacao(idiomaImplementacao, orientacaoDto, criarOrientacaoService());
+
 		default -> new MenuInicial(idiomaImplementacao);
 		};
 	}
