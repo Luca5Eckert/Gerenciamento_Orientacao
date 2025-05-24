@@ -11,7 +11,7 @@ import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 
-public class MenuEditarOrientacao implements Menu {
+public class MenuEditarOrientacao extends Menu {
 
 	private final OrientacaoDto orientacaoDto;
 	private IdiomaImplementacao idiomaImplementacao;
@@ -24,8 +24,8 @@ public class MenuEditarOrientacao implements Menu {
 
 	public MenuEditarOrientacao(OrientacaoDto orientacaoDto, IdiomaImplementacao idiomaImplementacao,
 			OrientacaoService orientacaoService) {
+		super(idiomaImplementacao);
 		this.orientacaoDto = orientacaoDto;
-		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoService = orientacaoService;
 
 		this.tituloOrientacao = orientacaoDto.titulo();
@@ -176,9 +176,5 @@ public class MenuEditarOrientacao implements Menu {
 		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
 
-	}
 }

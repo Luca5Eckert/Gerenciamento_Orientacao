@@ -2,11 +2,8 @@ package aplication;
 
 import java.util.Scanner;
 
-import Dominio.IdiomaOrientacao;
-import aplication.implementacoes.IdiomaImplementacao;
 import aplication.implementacoes.InglesImplementacao;
 import aplication.interfaces.MenuIniciarSistema;
-import aplication.interfaces.TipoMenu;
 
 public class Sistema {
 
@@ -14,7 +11,6 @@ public class Sistema {
 	private Scanner input = new Scanner(System.in);
 
 	public Sistema() {
-		IdiomaImplementacao idioma = new InglesImplementacao();
 		this.gerenciadorMenu = new MenuGerenciador();
 	}
 
@@ -32,7 +28,7 @@ public class Sistema {
 	}
 
 	private void iniciarSistemaMenu() {
-		this.gerenciadorMenu.setMenu(new MenuIniciarSistema());
+		this.gerenciadorMenu.setMenu(new MenuIniciarSistema(new InglesImplementacao()));
 	}
 
 	public MenuGerenciador getMenu() {

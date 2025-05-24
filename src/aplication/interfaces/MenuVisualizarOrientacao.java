@@ -15,16 +15,15 @@ import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.formatacao.FormatacaoListaComDivisoria;
 
-public class MenuVisualizarOrientacao implements Menu {
+public class MenuVisualizarOrientacao extends Menu {
 
-	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
 	private final FormatacaoListaComDivisoria formatador;
 
 	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
 			OrientacaoService orientacaoService, FormatacaoListaComDivisoria formatador) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.orientacaoDto = orientacaoDto;
 		this.orientacaoService = orientacaoService;
 		this.formatador = formatador;
@@ -118,7 +117,6 @@ public class MenuVisualizarOrientacao implements Menu {
 		IdiomaOrientacao idiomaOrientacao = listaOrdenada.get(opcaoEscolhida);
 
 		if (listaOrdenada.size() > opcaoEscolhida && opcaoEscolhida >= listaComOrientacoes.size()) {
-			IdiomaOrientacao idioma = listaOrdenada.get(opcaoEscolhida);
 			throw new OrientacaoNaoDisponivelIdiomaException();
 		} else if (opcaoEscolhida >= listaOrdenada.size()) {
 			throw new NullPointerException();
@@ -141,9 +139,5 @@ public class MenuVisualizarOrientacao implements Menu {
 		return listaNaoDisponivel;
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-
-	}
+	
 }

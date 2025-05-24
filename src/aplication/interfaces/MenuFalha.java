@@ -4,14 +4,13 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import java.util.Scanner;
 
-public class MenuFalha implements Menu {
+public class MenuFalha extends Menu {
 	
-	private  IdiomaImplementacao idiomaImplementacao;
 	private final Menu proximoMenu;
 	private final String mensagemErro;
 	
 	public MenuFalha(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemErro) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.proximoMenu = proximoMenu;
 		this.mensagemErro = mensagemErro;
 	}
@@ -28,12 +27,5 @@ public class MenuFalha implements Menu {
 		menuHistorico.voltarMenu();
 		menuHistorico.definirProximoMenu(proximoMenu);
 	}
-	
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
-	}
-	
 
 }

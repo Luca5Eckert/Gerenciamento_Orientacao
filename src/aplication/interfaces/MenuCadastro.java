@@ -9,12 +9,12 @@ import java.util.Scanner;
 import service.UsuarioService;
 import service.exceptions.usuario.CadastroException;
 
-public class MenuCadastro implements Menu {
-	private IdiomaImplementacao idiomaImplementacao;
+public class MenuCadastro extends Menu {
+
 	private UsuarioService usuarioService;
 
 	public MenuCadastro(IdiomaImplementacao idiomaImplementacao, UsuarioService usuarioService) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.usuarioService = usuarioService;
 	}
 
@@ -36,10 +36,6 @@ public class MenuCadastro implements Menu {
 
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
-	}
+
 
 }

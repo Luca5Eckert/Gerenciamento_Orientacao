@@ -9,7 +9,11 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.implementacoes.InglesImplementacao;
 
-public class MenuIniciarSistema implements Menu{
+public class MenuIniciarSistema extends Menu{
+	
+	public MenuIniciarSistema(IdiomaImplementacao idiomaImplementacao) {
+		super(idiomaImplementacao);
+	}
 
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
@@ -26,14 +30,8 @@ public class MenuIniciarSistema implements Menu{
 			menuHistorico.definirProximoMenu(proximoMenu);
 			
 		} catch (Exception e ) {
-			System.out.println(idioma);
 		}
 		
-	}
-
-
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
 	}
 	
 }

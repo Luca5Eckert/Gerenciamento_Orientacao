@@ -11,12 +11,12 @@ import service.exceptions.usuario.LoginException;
 import service.exceptions.usuario.LoginSenhaException;
 import service.exceptions.usuario.LoginUsuarioException;
 
-public class MenuLogin implements Menu {
-	private IdiomaImplementacao idiomaImplementacao;
+public class MenuLogin extends Menu {
+
 	private final UsuarioService service;
 
 	public MenuLogin(IdiomaImplementacao idiomaImplementacao, UsuarioService usuarioService) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.service = usuarioService;
 	}
 
@@ -37,14 +37,5 @@ public class MenuLogin implements Menu {
 
 		menuHistorico.definirProximoMenu(proximoMenu);
 	}
-	
-
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
-	}
-
-
 
 }

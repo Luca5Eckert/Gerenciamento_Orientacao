@@ -3,27 +3,23 @@ package aplication.interfaces;
 import java.util.List;
 import java.util.Scanner;
 
-import Dominio.Filtro;
 import Dominio.IdiomaOrientacao;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.exceptions.FiltroJaAdicionadoException;
-import service.filtros.FiltroFactory;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.FormatacaoNumerarLista;
 
-public class MenuDefinirFiltro implements Menu {
+public class MenuDefinirFiltro extends Menu {
 
-	private IdiomaImplementacao idiomaImplementacao;
 	private GerenciadorFiltrosOrientacao gerenciadorFiltrosOrientacao;
 	private FormatacaoNumerarLista formatacaoLista;
 
 	public MenuDefinirFiltro(IdiomaImplementacao idiomaImplementacao,
 			GerenciadorFiltrosOrientacao gerenciadorFiltrosOrientacao, FormatacaoNumerarLista formatacaoLista) {
-		super();
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.gerenciadorFiltrosOrientacao = gerenciadorFiltrosOrientacao;
 		this.formatacaoLista = formatacaoLista;
 	}
@@ -100,9 +96,5 @@ public class MenuDefinirFiltro implements Menu {
 
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-	}
 
 }

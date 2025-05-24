@@ -13,16 +13,15 @@ import service.exceptions.orientacao.OrientacaoException;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.formatacao.FormatacaoNumerarLista;
 
-public class MenuExibirOrientacoes implements Menu {
+public class MenuExibirOrientacoes extends Menu {
 
-	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 	private final GerenciadorFiltrosOrientacao gerenciadorFiltro;
 	private final FormatacaoNumerarLista formatacaoLista;
 
 	public MenuExibirOrientacoes(OrientacaoService orientacaoService, GerenciadorFiltrosOrientacao gerenciadorFiltro,
 			FormatacaoNumerarLista formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
 		this.gerenciadorFiltro = gerenciadorFiltro;
 		this.formatacaoLista = formatacaoLista;
@@ -106,9 +105,4 @@ public class MenuExibirOrientacoes implements Menu {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-
-	}
 }

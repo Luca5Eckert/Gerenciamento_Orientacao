@@ -9,12 +9,12 @@ import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 
-public class MenuAdicaoOrientacao implements Menu {
+public class MenuAdicaoOrientacao extends Menu {
 	private IdiomaImplementacao idiomaImplementacao;
 	private OrientacaoService orientacaoService;
 
 	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
 	}
 
@@ -45,12 +45,6 @@ public class MenuAdicaoOrientacao implements Menu {
 
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
-	}
-
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
 	}
 
 }

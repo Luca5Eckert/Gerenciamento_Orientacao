@@ -4,13 +4,13 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import java.util.Scanner;
 
-public class MenuCerto implements Menu {
-	private IdiomaImplementacao idiomaImplementacao;
+public class MenuCerto extends Menu {
+
 	private Menu proximoMenu;
 	private String mensagemAcerto;
 
 	public MenuCerto(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemAcerto) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.proximoMenu = proximoMenu;
 		this.mensagemAcerto = mensagemAcerto;
 	}
@@ -29,10 +29,5 @@ public class MenuCerto implements Menu {
 	}
 	
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
-	}
 
 }

@@ -7,13 +7,12 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.filtros.GerenciadorFiltrosOrientacao;
 
-public class MenuFiltroGeral implements Menu {
+public class MenuFiltroGeral extends Menu {
 
-	private IdiomaImplementacao idiomaImplementacao;
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
 	public MenuFiltroGeral(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.gerenciadorFiltro = gerenciadorFiltro;
 	}
 
@@ -37,9 +36,4 @@ public class MenuFiltroGeral implements Menu {
 		}
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-
-	}
 }

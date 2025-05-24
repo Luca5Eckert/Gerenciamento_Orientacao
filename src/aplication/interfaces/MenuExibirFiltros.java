@@ -10,15 +10,14 @@ import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.FormatacaoNumerarLista;
 
-public class MenuExibirFiltros implements Menu {
+public class MenuExibirFiltros extends Menu {
 
-	private IdiomaImplementacao idiomaImplementacao;
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 	private FormatacaoNumerarLista formatacaoLista;
 
 	public MenuExibirFiltros(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro,
 			FormatacaoNumerarLista formatacaoLista) {
-		super();
+		super(idiomaImplementacao);
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.gerenciadorFiltro = gerenciadorFiltro;
 		this.formatacaoLista = formatacaoLista;
@@ -81,9 +80,5 @@ public class MenuExibirFiltros implements Menu {
 		}
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-	}
 
 }

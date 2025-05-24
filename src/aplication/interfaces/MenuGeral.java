@@ -6,12 +6,10 @@ import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 
-public class MenuGeral implements Menu {
-
-	private IdiomaImplementacao idiomaImplementacao;
+public class MenuGeral extends Menu {
 
 	public MenuGeral(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 	}
 
 	@Override
@@ -37,10 +35,5 @@ public class MenuGeral implements Menu {
 		;
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-
-	}
 
 }

@@ -11,16 +11,15 @@ import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 
-public class MenuAdicionarIdiomaOrientacao implements Menu {
+public class MenuAdicionarIdiomaOrientacao extends Menu {
 
-	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
 	private OrientacaoDto orientacaoDto;
 	private final IdiomaOrientacao idiomaOrientacao;
 
 	public MenuAdicionarIdiomaOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService,
 			Menu menuAnterior, OrientacaoDto orientacaoDto, IdiomaOrientacao idiomaOrientacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
 		this.orientacaoDto = orientacaoDto;
 		this.idiomaOrientacao = idiomaOrientacao;
@@ -28,7 +27,6 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
-		Menu proximoMenu = null;
 		final TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
 		String idOrientacao = orientacaoService.pegarIdOrientacao(orientacaoDto);
 		OrientacaoDto orientacaoCriada = null;
@@ -56,9 +54,4 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
-	}
 }

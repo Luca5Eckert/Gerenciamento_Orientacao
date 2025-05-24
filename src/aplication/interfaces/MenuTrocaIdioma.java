@@ -8,12 +8,12 @@ import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 
-public class MenuTrocaIdioma implements Menu {
+public class MenuTrocaIdioma extends Menu {
 	private IdiomaImplementacao idiomaImplementacao;
 	private Menu menuAnterior;
 
 	public MenuTrocaIdioma(IdiomaImplementacao idiomaImplementacao, Menu menuAnterior) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.menuAnterior = menuAnterior;
 	}
 	
@@ -70,7 +70,7 @@ public class MenuTrocaIdioma implements Menu {
     }
 
     private void atualizarIdiomaMenuAnterior(IdiomaImplementacao novaImplementacao) {
-    	menuAnterior.trocarIdioma(novaImplementacao);
+    	menuAnterior.idiomaImplementacao = novaImplementacao;
         this.idiomaImplementacao = novaImplementacao;
     }
 
@@ -79,12 +79,6 @@ public class MenuTrocaIdioma implements Menu {
         String nomeIdioma = idiomaEscolhido.getNomePorIdioma(idiomaUsuarioAtual);
         return implementacao.pegarMensagemTrocaDeIdiomaBemSucedida(nomeIdioma);
     }
-	
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
-	}
 
 }

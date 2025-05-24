@@ -5,16 +5,15 @@ import java.util.Scanner;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
-import dtos.OrientacaoDto;
 import service.filtros.GerenciadorFiltrosOrientacao;
 
-public class MenuPesquisaOrientacao implements Menu {
-	private IdiomaImplementacao idiomaImplementacao;
+public class MenuPesquisaOrientacao extends Menu {
+
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 
 	public MenuPesquisaOrientacao(IdiomaImplementacao idiomaImplementacao,
 			GerenciadorFiltrosOrientacao gerenciadorFiltro) {
-		this.idiomaImplementacao = idiomaImplementacao;
+		super(idiomaImplementacao);
 		this.gerenciadorFiltro = gerenciadorFiltro;
 	}
 
@@ -43,10 +42,5 @@ public class MenuPesquisaOrientacao implements Menu {
 
 	}
 
-	@Override
-	public void trocarIdioma(IdiomaImplementacao idiomaImplementacao) {
-		this.idiomaImplementacao = idiomaImplementacao;
-		
-	}
 
 }
