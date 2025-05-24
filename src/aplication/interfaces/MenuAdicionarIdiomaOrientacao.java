@@ -36,7 +36,7 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 		try {
 			orientacaoCriada = idiomaImplementacao.mostrarMenuAdicionarNovoIdiomaOrientacao(input, idiomaOrientacao,
 					tipoOrientacao);
-			proximoMenu = tratarOpcao(orientacaoCriada, idOrientacao);
+			tratarOpcao(orientacaoCriada, idOrientacao, menuHistorico);
 		} catch (SairMenuException sme) {
 			menuHistorico.voltarPonteiro(1);
 

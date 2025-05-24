@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
+import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
-import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class AlemaoImplementacao implements IdiomaImplementacao {
 
@@ -20,13 +20,13 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
     @Override
     public String mostrarMenuInicial(Scanner input) {
         System.out.println("============================================================");
-        System.out.println("                          START                              ");
+        System.out.println("                       WILLKOMMEN                           ");
         System.out.println("============================================================");
-        System.out.println(" Willkommen im Orientierung-Management-System:              ");
-        System.out.println(" 1- Login");
+        System.out.println(" Willkommen im Orientierungsmanagementsystem:              ");
+        System.out.println(" 1- Anmelden");
         System.out.println(" 2- Registrieren");
         System.out.println(" 3- Sprache ändern");
-        System.out.println(" 4- System verlassen");
+        System.out.println(" 4- System beenden");
         System.out.println("------------------------------------------------------------");
 
         return input.nextLine();
@@ -35,9 +35,9 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
     @Override
     public UsuarioDto mostrarMenuLogin(Scanner input) {
         System.out.println("============================================================");
-        System.out.println("                          LOGIN                             ");
+        System.out.println("                       ANMELDUNG                           ");
         System.out.println("============================================================");
-        System.out.println(" Geben Sie Ihre Anmeldedaten ein:\n");
+        System.out.println(" Geben Sie Ihre Daten ein:\n");
 
         System.out.print(" E-Mail:");
         String email = input.nextLine();
@@ -52,7 +52,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
     @Override
     public UsuarioDto mostrarMenuCadastro(Scanner input) {
         System.out.println("============================================================");
-        System.out.println("                         REGISTRIEREN                       ");
+        System.out.println("                     REGISTRIERUNG                         ");
         System.out.println("============================================================");
         System.out.println(" Geben Sie Ihre Daten ein:\n");
 
@@ -72,13 +72,13 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
     @Override
     public String mostrarMenuGeral(Scanner input) {
         System.out.println("============================================================");
-        System.out.println("                        VERWALTER                           ");
+        System.out.println("                     MANAGEMENT                            ");
         System.out.println("============================================================");
 
         System.out.println(" 0- Orientierung erstellen");
-        System.out.println(" 1- Orientierungen ansehen");
+        System.out.println(" 1- Orientierungen anzeigen");
         System.out.println(" 2- Abmelden");
-        System.out.println(" 3- System verlassen");
+        System.out.println(" 3- System beenden");
         System.out.println(" 4- Sprache ändern");
 
         System.out.println("------------------------------------------------------------");
@@ -94,11 +94,15 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
         System.out.println("                       ERSTELLUNG                           ");
         System.out.println("============================================================");
 
-        System.out.println(" S- Beenden ");
-        System.out.println(" Möchten Sie nur für Ihre Sprache oder für alle erstellen? ");
-        System.out.println(" 1- Nur für Englisch ");
-        System.out.println(" 2- Für alle ");
+        System.out.println(" V- Beenden ");
+        System.out.println(" Möchten Sie für nur Ihre Sprache oder für alle erstellen? ");
+        System.out.println(" 1- Nur für Deutsch ");
+        System.out.println(" 2- Für alle Sprachen ");
         String opcao = input.nextLine();
+
+        if (opcao.trim().toUpperCase().equals("V")) {
+            throw new SairMenuException();
+        }
 
         System.out.println(" Orientierungstyp:");
         System.out.println(TipoOrientacao.mostrarTodasTipos(this.obterIdiomaOrientacao()));
@@ -107,28 +111,28 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 
         switch (opcao.toUpperCase()) {
             case "1":
-                listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, IdiomaOrientacao.INGLES));
+                listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, IdiomaOrientacao.ALEMAO));
                 break;
             case "2":
                 for (IdiomaOrientacao idioma : IdiomaOrientacao.listarIdiomas()) {
                     listaOrientacaoDto.add(mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idioma));
                 }
                 break;
-            case "S":
-                throw new Exception();
         }
 
         return listaOrientacaoDto;
     }
 
     @Override
-    public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao, IdiomaOrientacao idiomaOrientacao) {
+    public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao,
+            IdiomaOrientacao idiomaOrientacao) {
+        System.out.println("------------------------------------------------------------");
         String idiomaNome = pegarNomeIdioma(idiomaOrientacao);
 
-        System.out.println(" Orientierungstitel auf " + idiomaNome + " :");
+        System.out.println(" Titel der Orientierung in " + idiomaNome + " :");
         String tituloOrientacao = input.nextLine();
 
-        System.out.println(" Inhalt auf " + idiomaNome + " :");
+        System.out.println(" Inhalt in " + idiomaNome + " :");
         String conteudo = input.nextLine();
 
         System.out.println("------------------------------------------------------------");
@@ -137,75 +141,23 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
     }
 
     @Override
-    public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto dto, Scanner input) {
-        boolean editing = true;
-        String title = dto.titulo();
-        String content = dto.conteudo();
-        TipoOrientacao tipo = dto.tipoOrientacao();
-
-        do {
-            System.out.println("============================================================");
-            System.out.println("                         BEARBEITUNG                        ");
-            System.out.println("============================================================");
-            System.out.println(" Wählen Sie aus, was Sie bearbeiten möchten:\n");
-
-            System.out.println(" 1- Orientierungstitel");
-            System.out.println(" 2- Orientierungstyp");
-            System.out.println(" 3- Orientierungstext");
-            System.out.println(" 0- Bearbeitung beenden");
-            System.out.println("------------------------------------------------------------");
-
-            String inputOption = input.nextLine();
-
-            switch (inputOption) {
-                case "1" -> {
-                    System.out.println("------------------------------------------------------------");
-                    System.out.print(" Neuer Titel: ");
-                    title = input.nextLine();
-                    System.out.println("------------------------------------------------------------");
-                }
-                case "2" -> {
-                    System.out.println("------------------------------------------------------------");
-                    System.out.println(" Neuer Orientierungstyp:");
-                    System.out.println(TipoOrientacao.mostrarTodasTipos(obterIdiomaOrientacao()));
-                    System.out.print(" Geben Sie die entsprechende Zahl ein: ");
-                    try {
-                        int option = Integer.parseInt(input.nextLine());
-                        tipo = TipoOrientacao.pegarOrientacao(option);
-                    } catch (NumberFormatException e) {
-                        System.out.println(" Ungültige Eingabe! Verwenden Sie eine Zahl.");
-                    }
-                    System.out.println("------------------------------------------------------------");
-                }
-                case "3" -> {
-                    System.out.println("------------------------------------------------------------");
-                    System.out.print(" Neuer Inhalt: ");
-                    content = input.nextLine();
-                    System.out.println("------------------------------------------------------------");
-                }
-                case "0" -> editing = false;
-                default -> System.out.println(" Ungültige Option.");
-            }
-
-        } while (editing);
-
-        return new OrientacaoDto(title, tipo, content, obterIdiomaOrientacao());
-    }
-
-    @Override
-    public String mostrarMenuOrientacaoDisponiveis(Scanner input, String formattedList, String searchTerm) {
+    public String mostrarMenuOrientacaoDisponiveis(Scanner input, String listaFormatada, String palavraPesquisada) {
         System.out.println("============================================================");
-        System.out.println("                       ORIENTIERUNGEN                        ");
+        System.out.println("                   ORIENTIERUNGEN                           ");
         System.out.println("============================================================");
-        System.out.println(" S - Zurück zum Hauptmenü");
-        System.out.println(" F - Filter                                 P - Suche");
-        System.out.println(" A - Suche löschen");
-        System.out.println(" R - Filter entfernen\n ");
-        System.out.println("\n Ergebnis: " + searchTerm);
-        System.out.println(formattedList);
-        System.out.println("============================================================");
+        System.out.println(" V- Zum Hauptmenü zurückkehren");
+        System.out.println(" F- Filter                                   P- Suchen     ");
 
-        return input.nextLine();
+        System.out.println(" A- Suche löschen");
+        System.out.println(" R- Filter entfernen  \n ");
+        System.out.println("\n Ergebnisse: " + palavraPesquisada);
+
+        System.out.println(listaFormatada);
+
+        System.out.println("============================================================");
+        String orientecaoSelecionada = input.nextLine();
+
+        return orientecaoSelecionada;
     }
 
     @Override
@@ -214,42 +166,42 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
     }
 
     @Override
-    public String mostrarMenuAcerto(Scanner input, String successMessage) {
+    public String mostrarMenuAcerto(Scanner input, String mensagemAcerto) {
         System.out.println("------------------------------------------------------------");
-        System.out.println(successMessage);
-        System.out.println(" 1 - Weiter");
+        System.out.println(mensagemAcerto);
+        System.out.println(" 1- Weiter ");
         System.out.println("------------------------------------------------------------");
         return input.nextLine();
     }
 
     @Override
-    public String mostrarMenuErro(Scanner input, String errorMessage) {
+    public String mostrarMenuErro(Scanner input, String mensagemErro) {
         System.out.println("------------------------------------------------------------");
-        System.out.println("                            FEHLER                           ");
-        System.out.println(errorMessage);
-        System.out.println(" 1 - Weiter");
+        System.out.println("                          FEHLER                            ");
+        System.out.println(mensagemErro);
+        System.out.println(" 1- Weiter ");
         System.out.println("------------------------------------------------------------");
         return input.nextLine();
     }
 
     @Override
     public String pegarMensagemErroLogin() {
-        return "Login fehlgeschlagen.";
+        return "Anmeldung fehlgeschlagen";
     }
 
     @Override
     public String pegarMensagemErroLoginUsuario() {
-        return "Benutzer existiert nicht.";
+        return "Benutzer existiert nicht";
     }
 
     @Override
     public String pegarMensagemErroLoginSenha() {
-        return "Falsches Passwort.";
+        return "Falsches Passwort";
     }
 
     @Override
     public String pegarMensagemLoginConcluido() {
-        return "Login erfolgreich.";
+        return "Anmeldung erfolgreich";
     }
 
     @Override
@@ -274,180 +226,359 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 
     @Override
     public String pegarMensagemCadastroConcluido() {
-        return "Registrierung erfolgreich!";
+        return "Registrierung erfolgreich abgeschlossen!";
     }
 
     @Override
-    public String mostrarOrientacao(Scanner input, OrientacaoDto dto, String otherLanguages) {
+    public String mostrarOrientacao(Scanner input, OrientacaoDto orientacao, String idiomasOrientacoes) {
         System.out.println("============================================================");
         System.out.println("                       ORIENTIERUNG                         ");
         System.out.println("============================================================");
-        System.out.println(" Titel: " + dto.titulo());
-        System.out.println(" Typ: " + dto.tipoOrientacao());
+        System.out.println(" Titel: " + orientacao.titulo());
+        System.out.println("\n Typ: " + orientacao.tipoOrientacao().getNomeAlemao());
+        System.out.println(" Sprache: " + orientacao.idiomaOrientacao().getNomeEmAlemao());
+
         System.out.println("\n Inhalt:");
-        System.out.println(" " + dto.conteudo());
-        System.out.println("\n  S - Beenden      E - Bearbeiten      D - Löschen");
+        System.out.println(" " + orientacao.conteudo());
+        System.out.println("\n  S- Beenden         E- Bearbeiten             L-Löschen         ");
         System.out.println("------------------------------------------------------------");
-        System.out.println(" In anderen Sprachen: ");
-        System.out.println(otherLanguages);
+        System.out.println("Verfügbar in anderen Sprachen:\n");
+        System.out.println(idiomasOrientacoes);
         System.out.println("============================================================");
 
         return input.nextLine();
-    }
-
-    @Override
-    public String mostrarMenuFiltro(Scanner input, GerenciadorFiltrosOrientacao manager) {
-        String choice;
-
-        System.out.println("============================================================");
-        System.out.println("                          FILTERS                           ");
-        System.out.println("============================================================");
-        System.out.println(" 1 - Filter nach Sprache");
-        System.out.println(" 2 - Filter nach Orientierungstyp\n");
-        System.out.println(" 3 - Aktuelle Filter anzeigen");
-        System.out.println(" 4 - Ausgewählte Filter anwenden");
-        System.out.println("============================================================");
-
-        choice = input.nextLine();
-
-        switch (choice) {
-            case "1" -> {
-                System.out.println("\nWählen Sie die Sprachen zum Filtern:");
-                System.out.println("P - Portugiesisch");
-                System.out.println("I - Englisch");
-                System.out.println("E - Spanisch");
-                System.out.println("A - Deutsch");
-                choice = input.nextLine();
-            }
-            case "2" -> {
-                System.out.println("\nWählen Sie die Orientierungstypen zum Filtern:");
-                System.out.println("M - Betriebsanleitung");
-                System.out.println("S - Sicherheitsvorschriften");
-                System.out.println("R - Wartung und Reparaturen");
-                System.out.println("D - Tests und Diagnosen");
-                System.out.println("C - Verhaltens- und Betriebsanleitung");
-                choice = input.nextLine();
-            }
-            case "3" -> {
-                System.out.println("------------------------------------------------------------");
-                System.out.println(manager.formatarFiltrosAtivados());
-                System.out.println("------------------------------------------------------------");
-                System.out.println(" 1- Zurück");
-                String opt = input.nextLine();
-                if (opt.equals("2")) {
-                    System.out.println("Geben Sie die Filternummer ein: ");
-                    return input.nextLine();
-                }
-            }
-        }
-
-        return choice;
     }
 
     @Override
     public String mostrarMenuPesquisaOrientacao(Scanner input) {
         System.out.println("============================================================");
-        System.out.println("                          SUCHEN                            ");
+        System.out.println("                        SUCHE                              ");
         System.out.println("============================================================");
-        System.out.println(" Geben Sie ein Schlüsselwort ein, um nach Orientierung zu suchen:");
+        System.out.println(" 1- Beenden ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" Geben Sie Ihre Suche ein: ");
+        String pesquisa = input.nextLine();
+        System.out.println("============================================================");
+
+        return pesquisa;
+    }
+
+    @Override
+    public String pegarMensagemEdicaoConcluida() {
+        return "Bearbeitung erfolgreich abgeschlossen";
+    }
+
+    @Override
+    public String pegarMensangemAdicaoConcluida() {
+        return "Hinzufügen erfolgreich abgeschlossen";
+    }
+
+    @Override
+    public String pegarMensangemAdicaoFalhada() {
+        return "Fehler beim Hinzufügen der Orientierung";
+    }
+
+    @Override
+    public String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados) {
+        System.out.println("============================================================");
+        System.out.println("                    SPRACHE ÄNDERN                         ");
+        System.out.println("============================================================");
+        System.out.println(" S- Beenden\n");
+        System.out.println(" Verfügbare Sprachen: ");
+        System.out.println(idiomaFormatados);
+        System.out.println("============================================================");
+
+        return input.nextLine();
+    }
+
+    @Override
+    public String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado) {
+        return "Sprache geändert zu " + idiomaAlterado;
+    }
+
+    @Override
+    public String pegarMensagemOrientacoesNaoEncontrada() {
+        return "Keine Orientierungen gefunden";
+    }
+
+    @Override
+    public String pegarIdiomaDisponivel() {
+        return " Verfügbar: ";
+    }
+
+    @Override
+    public String pegarIdiomaIndisponivel() {
+        return " Nicht verfügbar: ";
+    }
+
+    @Override
+    public String pegarMensagemErro() {
+        return "Etwas ist schief gelaufen, bitte versuchen Sie es erneut";
+    }
+
+    @Override
+    public String pegarMensagemEdicaoFalha() {
+        return "Fehler beim Bearbeiten der Orientierung";
+    }
+
+    @Override
+    public String pegarMensagemRemoverComSucessoOrientacao() {
+        return "Orientierung erfolgreich entfernt";
+    }
+
+    @Override
+    public String pegarMensagemErroAoRemoverOrientacao() {
+        return "Fehler beim Entfernen der Orientierung";
+    }
+
+    @Override
+    public OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao,
+            TipoOrientacao tipoOrientacao) throws Exception {
+        System.out.println("============================================================");
+        System.out.println("                 ORIENTIERUNG NICHT VERFÜGBAR               ");
+        System.out.println("============================================================");
+        System.out.println(" Die gesuchte Orientierung existiert nicht in dieser Sprache");
+
+        System.out.println("\n H- Hinzufügen in " + idiomaOrientacao.getNomeEmAlemao());
+        System.out.println(" V- Zurück");
+        System.out.println("============================================================");
+        String opcao = input.nextLine();
+
+        return switch (opcao.trim().toUpperCase()) {
+            case "V" -> throw new SairMenuException();
+            case "H" -> mostrarMenuAdicionarOrientacao(input, tipoOrientacao, idiomaOrientacao);
+            default -> null;
+        };
+    }
+
+    @Override
+    public String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException {
+        System.out.println("============================================================");
+        System.out.println("                     SIND SIE SICHER?                       ");
+        System.out.println("============================================================");
+        System.out.println(" Möchten Sie diese Orientierung wirklich löschen?");
+
+        System.out.println("\n L- Orientierung löschen ");
+        System.out.println(" A- Abbrechen");
+        System.out.println("============================================================");
+        String opcao = input.nextLine().trim().toUpperCase();
+
+        if (opcao.equals("A")) {
+            throw new SairMenuException();
+        }
+        return opcao;
+    }
+
+    @Override
+    public String mostrarMenuFiltro(Scanner input) {
+        String opcaoEscolhida;
+
+        System.out.println("============================================================");
+        System.out.println("                        FILTER                             ");
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" 1- Aktive Filter anzeigen");
+        System.out.println(" 2- Filter festlegen");
+        System.out.println(" 3- Ausgewählte Filter anwenden");
+        System.out.println("============================================================");
+
+        opcaoEscolhida = input.nextLine();
+
+        return opcaoEscolhida;
+    }
+
+    @Override
+    public String mostrarMenuApagarFiltro(Scanner input, String tipoFiltro, String filtrosDisponiveis) {
+        System.out.println("============================================================");
+        System.out.println("                 FILTER LÖSCHEN " + tipoFiltro.toUpperCase());
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück ");
+        System.out.println(" Wählen Sie den zu löschenden Filter aus");
+        System.out.println(filtrosDisponiveis);
+        System.out.println("============================================================");
+
+        return input.nextLine();
+    }
+
+    @Override
+    public String mostrarMenuVisualizarTiposFiltros(Scanner input, String tipoOrientacoesDisponiveis) {
+        System.out.println("============================================================");
+        System.out.println("                   FILTERTYPEN                              ");
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" Wählen Sie den gewünschten Filtertyp aus");
+        System.out.println(tipoOrientacoesDisponiveis);
+        System.out.println("============================================================");
+        return input.nextLine();
+    }
+
+    @Override
+    public String pegarMensagemEntradaInvalida() {
+        return "Ungültige Eingabe";
+    }
+
+    @Override
+    public String mostrarMenuVisualizarFiltros(Scanner input, String filtrosPossiveis, String tipoFiltro) {
+        System.out.println("============================================================");
+        System.out.println("                  FILTER " + tipoFiltro.toUpperCase());
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" " + tipoFiltro.toLowerCase() + " Filter");
+        System.out.println(filtrosPossiveis);
+        System.out.println("============================================================");
+        return input.nextLine();
+    }
+    
+    @Override
+    public String mostrarMenuVisualizarFiltrosDisponiveis(Scanner input, String filtroDisponiveis, String tipoFiltro) {
+        System.out.println("============================================================");
+        System.out.println("                  FILTER " + tipoFiltro.toUpperCase());
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück ");
+        System.out.println(" L- Filter löschen");
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" " + tipoFiltro.toLowerCase() + " Filter");
+        System.out.println(filtroDisponiveis);
+        System.out.println("============================================================");
+        return input.nextLine();
+    }
+
+    @Override
+    public String pegarMensagemAdicionadoNovoFiltro(Scanner input) {
+        return "Filter hinzugefügt";
+    }
+
+    @Override
+    public String pegarMensagemFalhaAdicionarFiltro(Scanner input) {
+        return "Fehler beim Hinzufügen des Filters";
+    }
+    
+    @Override
+    public String mostrarMenuEditarOrientacao(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                        BEARBEITEN                          ");
+        System.out.println("============================================================");
+        System.out.println(" Wählen Sie aus, was Sie ändern möchten: \n");
+
+        System.out.println(" 1- Titel der Orientierung");
+        System.out.println(" 2- Typ der Orientierung");
+        System.out.println(" 3- Inhalt der Orientierung");
+        System.out.println(" 4- Sprache ");
+        System.out.println(" V- Bearbeitung beenden");
         System.out.println("------------------------------------------------------------");
 
         return input.nextLine();
     }
 
     @Override
-    public String pegarMensangemAdicaoConcluida() {
-        return "Hinzufügung abgeschlossen!";
+    public String mostrarMenuMudarTituloOrientacao(Scanner input, String tituloAntigo) {
+        System.out.println("============================================================");
+        System.out.println("                    TITEL BEARBEITEN                        ");
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück");
+        System.out.println(" Alter Titel: " + tituloAntigo);
+        System.out.println("------------------------------------------------------------");
+        System.out.print(" Neuer Titel: ");
+        return input.nextLine();
     }
 
     @Override
-    public String pegarMensangemAdicaoFalhada() {
-        return "Hinzufügung fehlgeschlagen.";
-    }
-
-
-    @Override
-    public String pegarMensagemEdicaoConcluida() {
-        return "Bearbeitung abgeschlossen!";
-    }
-
-    @Override
-    public String pegarNomeIdioma(IdiomaOrientacao idiomaOrientacao) {
-        switch(idiomaOrientacao) {
-            case PORTUGUES:
-                return "Portugiesisch";
-            case INGLES:
-                return "Englisch";
-            case ESPANHOL:
-                return "Spanisch";
-            case ALEMAO:
-                return "Deutsch";
-            default:
-                return "Unbekannt";
-        }
+    public String mostrarMenuMudarConteudoOrientacao(Scanner input, String conteudoAntigo) {
+        System.out.println("============================================================");
+        System.out.println("                    INHALT BEARBEITEN                       ");
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück");
+        System.out.println(" Alter Inhalt: " + conteudoAntigo);
+        System.out.println("------------------------------------------------------------");
+        System.out.print(" Neuer Inhalt: ");
+        return input.nextLine();
     }
 
     @Override
-    public String pegarFiltroIdioma() {
-        return "Filter nach Sprache:";
-    }
-
-    @Override
-    public String pegarFiltroTipo() {
-        return "Filter nach Typ:";
-    }
-
-    @Override
-    public String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados) {
-        System.out.println("Wählen Sie die Sprache:");
+    public String mostrarMenuMudarTipoOrientacao(Scanner input, String tipoAntigo, String idiomaFormatados) {
+        System.out.println("============================================================");
+        System.out.println("                    TYP BEARBEITEN                          ");
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück");
+        System.out.println(" Alter Typ: " + tipoAntigo);
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" Neuer Typ: ");
         System.out.println(idiomaFormatados);
         return input.nextLine();
     }
 
     @Override
-    public String pegarMensagemTrocaDeIdiomaBemSucedida(String idiomaAlterado) {
-        return "Sprache erfolgreich geändert zu: " + idiomaAlterado;
+    public String mostrarMenuMudarIdiomaOrientacao(Scanner input, String idiomaAntigo, String idiomaFormatados) {
+        System.out.println("============================================================");
+        System.out.println("                    SPRACHE BEARBEITEN                     ");
+        System.out.println("============================================================");
+        System.out.println(" V- Zurück");
+        System.out.println(" Alte Sprache: " + idiomaAntigo);
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" Neue Sprache: ");
+        System.out.println(idiomaFormatados);
+        return input.nextLine();
     }
 
-	@Override
-	public String pegarMensagemOrientacoesNaoEncontrada() {
-		return " Keine Anleitung gefunden";
-	}
+    @Override
+    public String mostrarMenuConfirmarEdicao(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                     SIND SIE SICHER?                       ");
+        System.out.println("============================================================");
+        System.out.println(" Möchten Sie diese Orientierung wirklich bearbeiten?");
 
-	@Override
-	public String pegarMensagemEdicaoFalha() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        System.out.println("\n B- Orientierung bearbeiten ");
+        System.out.println(" A- Abbrechen");
+        System.out.println("============================================================");
+        String opcao = input.nextLine().trim().toUpperCase();
 
-	@Override
-	public String pegarIdiomaDisponivel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return opcao;
+    }
 
-	@Override
-	public String pegarIdiomaIndisponivel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String pegarNomeIdioma(IdiomaOrientacao idiomaOrientacao) {
+        return switch (idiomaOrientacao) {
+            case PORTUGUES -> "Portugiesisch";
+            case INGLES -> "Englisch";
+            case ESPANHOL -> "Spanisch";
+            case ALEMAO -> "Deutsch";
+            default -> "Andere";
+        };
+    }
 
-	@Override
-	public String pegarMensagemErro() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String pegarMensagemIdiomaNaoDisponivel() {
+        return "Bearbeitung nicht möglich: Sprache nicht verfügbar";
+    }
 
-	@Override
-	public String pegarMensagemRemoverComSucessoOrientacao() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String mostrarMenuConfirmarMudancaTipo(Scanner input) {
+        System.out.println("============================================================");
+        System.out.println("                     SIND SIE SICHER?                       ");
+        System.out.println("============================================================");
+        System.out.println(" Der Typ wird in allen anderen Orientierungen geändert\n");
+        
+        System.out.println(" Möchten Sie den Typ der Orientierung wirklich ändern?");
+        System.out.println("\n B- Bestätigen");
+        System.out.println(" A- Abbrechen");
+        System.out.println("============================================================");
+        String opcao = input.nextLine().trim().toUpperCase();
 
-	@Override
-	public String pegarMensagemErroAoRemoverOrientacao() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return opcao;
+    }
 
+    @Override
+    public void mostrarMenuAlteradoAtributoComSucesso() {
+        System.out.println("============================================================");
+        System.out.println("                 ERFOLGREICH GEÄNDERT                       ");
+        System.out.println("============================================================");
+    }
+
+    @Override
+    public String pegarMensagemFiltroJaCriado() {
+        return "Filter bereits hinzugefügt";
+    }
 }

@@ -10,7 +10,7 @@ import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
 
-public class EspanolImplementacion implements IdiomaImplementacao {
+public class EspanholImplementacao implements IdiomaImplementacao {
 
     @Override
     public IdiomaOrientacao obterIdiomaOrientacao() {
@@ -570,15 +570,16 @@ public class EspanolImplementacion implements IdiomaImplementacao {
         return opcion;
     }
 
-    @Override
-    public void mostrarMenuAtributoMudadoSucesso() {
-        System.out.println("============================================================");
-        System.out.println("                 CAMBIO EXITOSO                             ");
-        System.out.println("============================================================");
-    }
 
     @Override
     public String pegarMensagemFiltroJaCriado() {
         return "Filtro ya agregado";
+    }
+
+	@Override
+	public void mostrarMenuAlteradoAtributoComSucesso() {
+        System.out.println("============================================================");
+        System.out.println("                 CAMBIO EXITOSO                             ");
+        System.out.println("============================================================");
     }
 }

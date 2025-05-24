@@ -13,16 +13,22 @@ public class MenuIniciarSistema implements Menu{
 
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
-		System.out.println("Select a language:");
-		System.out.println(IdiomaOrientacao.listaIdiomasFormatado(new InglesImplementacao()));
-		int opcaoIdioma = input.nextInt();
-		input.nextLine();
+		try {
+			System.out.println("Select a language:");
+			System.out.println(IdiomaOrientacao.listaIdiomasFormatado(new InglesImplementacao()));
+			int opcaoIdioma = input.nextInt();
+			input.nextLine();
+			
+			IdiomaImplementacao idiomaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(IdiomaOrientacao.pegarIdioma(opcaoIdioma-1));
+			
+			var proximoMenu = MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao);
+			
+			menuHistorico.definirProximoMenu(proximoMenu);
+			
+		} catch (Exception e ) {
+			System.out.println(idioma);
+		}
 		
-		IdiomaImplementacao idiomaImplementacao = IdiomaFactory.pegarIdiomaImplementacao(IdiomaOrientacao.pegarIdioma(opcaoIdioma-1));
-		
-		var proximoMenu = MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao);
-		
-		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
 

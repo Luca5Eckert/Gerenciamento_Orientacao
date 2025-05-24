@@ -23,36 +23,36 @@ public class MenuTrocaIdioma implements Menu {
 		
 		String opcaoSelecionado = idiomaImplementacao.mostrarMenuTrocarIdioma(input, idiomaFormatado);
 		
-		var proximoMenu = processarOpcao(opcaoSelecionado, menuHistorico);
+		processarOpcao(opcaoSelecionado, menuHistorico);
 		
-		menuHistorico.definirProximoMenu(proximoMenu);
+		
 	}
 	
-	public Menu processarOpcao(String opcaoSelecionado, MenuHistorico menuHistorico) {
-		return switch(opcaoSelecionado.toUpperCase().trim()) {
+	public void processarOpcao(String opcaoSelecionado, MenuHistorico menuHistorico) {
+		switch(opcaoSelecionado.toUpperCase().trim()) {
 		case "S" -> menuHistorico.voltarMenu();
-		default -> processarMudanca(opcaoSelecionado);
+		default -> processarMudanca(opcaoSelecionado, menuHistorico);
 		};
 	}
 	
-	public Menu processarMudanca(String entradaUsuario) {
+	public void processarMudanca(String entradaUsuario, MenuHistorico menuHistorico) {
         try {
             int indiceIdioma = parseEntradaUsuario(entradaUsuario);
-            IdiomaOrientacao idiomaEscolhido = IdiomaOrientacao.pegarIdioma(indiceIdioma-1);
+            IdiomaOrientacao idiomaEscolhido = IdiomaOrientacao.pegarIdioma(indiceIdioma);
             IdiomaImplementacao novaImplementacao = pegarNovaImplementacao(idiomaEscolhido);
 
             atualizarIdiomaMenuAnterior(novaImplementacao);
 
             String mensagem = construirMensagemSucesso(idiomaEscolhido, novaImplementacao);
-			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuAnterior, mensagem, novaImplementacao);
+			var proximoFiltro = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(menuAnterior), mensagem, novaImplementacao);
 
+			menuHistorico.definirProximoMenu(proximoFiltro);
         } catch (NumberFormatException e) {
             System.err.println("Erro: entrada inválida.");
         } catch (Exception e) {
             System.err.println("Erro inesperado ao trocar o idioma: " + e.getMessage());
         }
 
-        return this;
     }
 
     private int parseEntradaUsuario(String entrada) throws Exception {
