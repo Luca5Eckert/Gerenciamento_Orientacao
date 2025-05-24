@@ -122,5 +122,7 @@ public interface IdiomaImplementacao {
 	String mostrarMenuConfirmarMudancaTipo(Scanner input);
 	
 	void mostrarMenuAlteradoAtributoComSucesso();
+	
+	String pegarMensagemFiltroJaCriado();
 
 }

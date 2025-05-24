@@ -8,6 +8,7 @@ import Dominio.IdiomaOrientacao;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.exceptions.FiltroJaAdicionadoException;
 import service.filtros.FiltroFactory;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
@@ -71,7 +72,7 @@ public class MenuDefinirFiltro implements Menu {
 			MenuHistorico menuHistorico) {
 		try {
 			int indexFiltro = Integer.parseInt(opcaoEscolhida);
-			var filtroEscolhido = tipoFiltro.getEnumFiltro().pegarValor(indexFiltro);
+			var filtroEscolhido = tipoFiltro.getEnumFiltro().pegarValor(indexFiltro-1);
 
 			boolean adicionou = gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, filtroEscolhido.name());
 
@@ -93,6 +94,8 @@ public class MenuDefinirFiltro implements Menu {
 
 		} catch (NullPointerException npe) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
+		} catch (FiltroJaAdicionadoException fjae) {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAtual(), idiomaImplementacao.pegarMensagemFiltroJaCriado(), idiomaImplementacao));
 		}
 
 	}

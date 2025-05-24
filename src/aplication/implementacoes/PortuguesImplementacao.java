@@ -586,5 +586,10 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 	}
 
+	@Override
+	public String pegarMensagemFiltroJaCriado() {
+		return " Filtro já foi adicionado";
+	}
+
 
 }

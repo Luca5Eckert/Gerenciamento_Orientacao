@@ -15,7 +15,6 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 
 	private IdiomaImplementacao idiomaImplementacao;
 	private final OrientacaoService orientacaoService;
-	private Menu menuAnterior;
 	private OrientacaoDto orientacaoDto;
 	private final IdiomaOrientacao idiomaOrientacao;
 
@@ -23,7 +22,6 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 			Menu menuAnterior, OrientacaoDto orientacaoDto, IdiomaOrientacao idiomaOrientacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.orientacaoService = orientacaoService;
-		this.menuAnterior = menuAnterior;
 		this.orientacaoDto = orientacaoDto;
 		this.idiomaOrientacao = idiomaOrientacao;
 	}
@@ -40,23 +38,18 @@ public class MenuAdicionarIdiomaOrientacao implements Menu {
 					tipoOrientacao);
 			proximoMenu = tratarOpcao(orientacaoCriada, idOrientacao);
 		} catch (SairMenuException sme) {
-			proximoMenu = menuAnterior;
+			menuHistorico.voltarPonteiro(1);
 
 		} catch (Exception e) {
-			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuAnterior,
-					idiomaImplementacao.pegarMensangemAdicaoFalhada(), idiomaImplementacao);
-		} finally {
-			menuHistorico.definirProximoMenu(proximoMenu);
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),
+					idiomaImplementacao.pegarMensangemAdicaoFalhada(), idiomaImplementacao));
 		}
 
 	}
 
-	private Menu tratarOpcao(OrientacaoDto orientacaoCriada, String idOrientacao) {
-		if (orientacaoCriada == null) {
-			return this;
-		}
+	private void tratarOpcao(OrientacaoDto orientacaoCriada, String idOrientacao, MenuHistorico menuHistorico) {
 		orientacaoService.criarOrientacao(orientacaoCriada, idOrientacao);
-		return menuAnterior;
+		menuHistorico.voltarMenu(MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoCriada, idiomaImplementacao));
 	}
 
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {

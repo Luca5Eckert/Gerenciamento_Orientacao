@@ -1,6 +1,6 @@
 import aplication.Sistema;
 
-public class PrincipalMain {
+public class App {
 
 	public static void main(String[] args) {
 
