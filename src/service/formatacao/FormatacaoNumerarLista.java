@@ -2,8 +2,6 @@ package service.formatacao;
 
 import java.util.List;
 
-import Dominio.Filtro;
-import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.filtros.TipoFiltro;

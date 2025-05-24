@@ -2,12 +2,8 @@ package aplication.interfaces.teste;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
-import aplication.implementacoes.PortuguesImplementacao;
-import aplication.interfaces.*;
 import dtos.OrientacaoDto;
-import repositorio.UsuarioRepositorio;
 import service.OrientacaoService;
-
 
 public class menuTeste01 {
 

@@ -9,7 +9,6 @@ import java.util.UUID;
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
-import Dominio.TipoOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;

@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
-import aplication.interfaces.TipoMenu;
 import dtos.OrientacaoDto;
 
 public class FiltroOrientacaoIdioma implements FiltroOrientacao<IdiomaOrientacao> {

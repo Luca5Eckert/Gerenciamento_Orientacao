@@ -49,8 +49,5 @@ public class UsuarioService {
 		return new Usuario(0, dto.email(), dto.nome(), dto.senha());
 	}
 	
-	private Usuario converterDtoParaUsuario(UsuarioDto dto, int idUsuario) {
-		return new Usuario(idUsuario, dto.email(), dto.nome(), dto.senha());
-	}
 
 }

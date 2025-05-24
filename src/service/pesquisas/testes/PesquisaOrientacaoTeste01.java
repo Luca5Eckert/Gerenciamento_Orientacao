@@ -35,6 +35,8 @@ public class PesquisaOrientacaoTeste01 {
 		} catch (OrientacaoException e) {
 			System.out.println("Nenhuma orientação encontrada para o termo: " + termoBusca.replaceAll("\\s+", " "));
 		}
+		
+		sc.close();
 	}
 	
 }

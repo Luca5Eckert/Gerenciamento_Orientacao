@@ -1,15 +1,12 @@
 package aplication.interfaces;
 
 import java.util.Scanner;
-import Dominio.Usuario;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
 import service.UsuarioService;
 import service.exceptions.usuario.LoginException;
-import service.exceptions.usuario.LoginSenhaException;
-import service.exceptions.usuario.LoginUsuarioException;
 
 public class MenuLogin extends Menu {
 

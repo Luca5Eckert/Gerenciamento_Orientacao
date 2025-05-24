@@ -1,9 +1,5 @@
 package repositorio.testes;
 
-import java.util.ArrayList;
-
-import Dominio.Usuario;
-import repositorio.UsuarioRepositorio;
 
 public class UsuarioRepositorioteste01 {
 

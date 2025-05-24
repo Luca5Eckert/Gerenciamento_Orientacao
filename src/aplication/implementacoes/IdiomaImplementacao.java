@@ -8,8 +8,6 @@ import Dominio.TipoOrientacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
-import service.filtros.GerenciadorFiltrosOrientacao;
-import service.filtros.TipoFiltro;
 
 public interface IdiomaImplementacao {
 
