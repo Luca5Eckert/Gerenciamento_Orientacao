@@ -20,19 +20,18 @@ public class MenuLogin extends Menu {
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		UsuarioDto usuarioParaLogar = idiomaImplementacao.mostrarMenuLogin(input);
-		Menu proximoMenu = null;
 
 		try {
 			service.realizarLogin(usuarioParaLogar);
-			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO,
+			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO,
 					MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
 					idiomaImplementacao.pegarMensagemLoginConcluido(), idiomaImplementacao);
+			menuHistorico.definirProximoMenu(proximoMenu);
 		} catch (LoginException e) {
-			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA,
-					MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao), e.getMessage(), idiomaImplementacao);
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA,
+					MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao), e.getMessage(), idiomaImplementacao));
 		}
 
-		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
 }

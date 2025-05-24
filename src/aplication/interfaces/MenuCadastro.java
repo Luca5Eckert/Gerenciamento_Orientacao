@@ -28,14 +28,11 @@ public class MenuCadastro extends Menu {
 			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemCadastroConcluido(), idiomaImplementacao);
 		} catch (CadastroException ce) {
-			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(), ce.getMessage(),
-					idiomaImplementacao);
-		} finally {
-			menuHistorico.definirProximoMenu(proximoMenu);
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),
+					ce.getMessage(), idiomaImplementacao);
 		}
+		menuHistorico.voltarMenu(proximoMenu);
 
 	}
-
-
 
 }
