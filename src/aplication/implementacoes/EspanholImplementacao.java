@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.TipoOrientacao;
+import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
-import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class EspanholImplementacao implements IdiomaImplementacao {
 
@@ -137,65 +137,6 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 		return listaOrientacaoDto;
 	}
 
-	@Override
-	public OrientacaoDto mostrarMenuEditarOrientacao(OrientacaoDto orientacaoDto, Scanner input) {
-		boolean edicaoMenu = true;
-		String titulo = orientacaoDto.titulo();
-		String conteudo = orientacaoDto.conteudo();
-		TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
-
-		do {
-			System.out.println("============================================================");
-			System.out.println("                        EDICIÓN                             ");
-			System.out.println("============================================================");
-			System.out.println(" Seleccione lo que desea cambiar: \n");
-
-			System.out.println(" 1- Título de la orientación");
-			System.out.println(" 2- Tipo de Orientación");
-			System.out.println(" 3- Contenido de Orientación");
-			System.out.println(" 0- Salir de edición");
-			System.out.println("------------------------------------------------------------");
-
-			String numeroRetorno = input.nextLine();
-
-			switch (numeroRetorno) {
-			case "1":
-				System.out.println("------------------------------------------------------------");
-				System.out.print(" Nuevo título: ");
-				titulo = input.nextLine();
-				System.out.println("------------------------------------------------------------");
-				break;
-			case "2":
-				System.out.println("------------------------------------------------------------");
-				System.out.println(" Nuevo tipo de orientación:");
-				System.out.println(TipoOrientacao.mostrarTodasTipos(obterIdiomaOrientacao()));
-				System.out.print(" Digite el número correspondiente: ");
-				String tipoStr = input.nextLine();
-				try {
-					int tipoOrientacaoOpcao = Integer.parseInt(tipoStr);
-					tipoOrientacao = TipoOrientacao.pegarOrientacao(tipoOrientacaoOpcao);
-				} catch (NumberFormatException e) {
-					System.out.println(" ¡Entrada inválida! Use un número.");
-				}
-				System.out.println("------------------------------------------------------------");
-				break;
-			case "3":
-				System.out.println("------------------------------------------------------------");
-				System.out.print(" Nuevo contenido: ");
-				conteudo = input.nextLine();
-				System.out.println("------------------------------------------------------------");
-				break;
-			case "0":
-				edicaoMenu = false;
-				break;
-			default:
-				System.out.println(" Opción inválida.");
-			}
-
-		} while (edicaoMenu);
-
-		return new OrientacaoDto(titulo, tipoOrientacao, conteudo, obterIdiomaOrientacao());
-	}
 
 	@Override
 	public String mostrarMenuOrientacaoDisponiveis(Scanner input, String listaFormatada, String palabraPesquisada) {
@@ -307,53 +248,6 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String mostrarMenuFiltro(Scanner input, GerenciadorFiltrosOrientacao gerenciador) {
-		String opcaoEscolhida;
-
-		System.out.println("============================================================");
-		System.out.println("                       FILTROS                             ");
-		System.out.println("============================================================");
-		System.out.println(" 1 - Filtrar por Idioma");
-		System.out.println(" 2 - Filtrar por Tipo de Orientación\n");
-		System.out.println(" 3 - Ver los filtros");
-		System.out.println(" 4 - Aplicar Filtros Seleccionados");
-		System.out.println("============================================================");
-
-		opcaoEscolhida = input.nextLine();
-
-		switch (opcaoEscolhida) {
-		case "1":
-			System.out.println("\nEscoja los idiomas para filtrar:");
-			System.out.println("P - Portugués");
-			System.out.println("I - Inglés");
-			System.out.println("E - Español");
-			System.out.println("A - Alemán");
-			opcaoEscolhida = input.nextLine();
-			break;
-
-		case "2":
-			System.out.println("\nEscoja los tipos de orientación para filtrar:");
-			System.out.println("M - Manual de Operación");
-			System.out.println("S - Procedimientos de Seguridad");
-			System.out.println("R - Mantenimiento y Reparaciones");
-			System.out.println("D - Pruebas y Diagnóstico");
-			System.out.println("C - Manual de Conducta y Operaciones Sectoriales");
-			opcaoEscolhida = input.nextLine();
-			break;
-		case "3":
-
-			System.out.println("------------------------------------------------------------");
-			System.out.println(gerenciador.formatarFiltrosAtivados());
-			System.out.println("------------------------------------------------------------");
-			System.out.println(" V- Volver");
-			String opcao = input.nextLine();
-
-		}
-
-		return opcaoEscolhida;
-	}
-
-	@Override
 	public String mostrarMenuPesquisaOrientacao(Scanner input) {
 		System.out.println("============================================================");
 		System.out.println("                      Búsqueda                              ");
@@ -395,16 +289,6 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String pegarFiltroIdioma() {
-		return "Filtros de idiomas: ";
-	}
-
-	@Override
-	public String pegarFiltroTipo() {
-		return "Filtros de tipos: ";
-	}
-
-	@Override
 	public String mostrarMenuTrocarIdioma(Scanner input, String idiomaFormatados) {
 		System.out.println("============================================================");
 		System.out.println("                    CAMBIAR IDIOMA                          ");
@@ -425,5 +309,163 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarMensagemOrientacoesNaoEncontrada() {
 		return " No se encontró ninguna guía";
+	}
+
+	@Override
+	public String pegarMensagemEdicaoFalha() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarIdiomaDisponivel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarIdiomaIndisponivel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemErro() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrientacaoDto mostrarMenuAdicionarOrientacao(Scanner input, TipoOrientacao tipoOrientacao,
+			IdiomaOrientacao idiomaOrientacao) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemRemoverComSucessoOrientacao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemErroAoRemoverOrientacao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrientacaoDto mostrarMenuAdicionarNovoIdiomaOrientacao(Scanner input, IdiomaOrientacao idiomaOrientacao,
+			TipoOrientacao tipoOrientacao) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuConfirmarApagarOrientacao(Scanner input) throws SairMenuException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuFiltro(Scanner input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuApagarFiltro(Scanner input, String tipoFiltro, String filtrosDisponiveis) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuVisualizarTiposFiltros(Scanner input, String tipoOrientacoesDisponiveis) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemEntradaInvalida() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuVisualizarFiltros(Scanner input, String filtrosDisponiveis, String tipoFiltro) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuVisualizarFiltrosDisponiveis(Scanner input, String filtroDisponiveis, String tipoFiltro) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemAdicionadoNovoFiltro(Scanner input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemFalhaAdicionarFiltro(Scanner input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuEditarOrientacao(Scanner input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuMudarTituloOrientacao(Scanner input, String tituloAntigo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuMudarConteudoOrientacao(Scanner input, String conteudoAntigo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuMudarTipoOrientacao(Scanner input, String tipoAntigo, String tiposFormatados) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuMudarIdiomaOrientacao(Scanner input, String idiomaAntigo, String idiomasFormatados) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuConfirmarEdicao(Scanner input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemIdiomaNaoDisponivel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String mostrarMenuConfirmarMudancaTipo(Scanner input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void mostrarMenuAlteradoAtributoComSucesso() {
+		// TODO Auto-generated method stub
+		
 	}
 }
