@@ -579,25 +579,28 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String pegarMensagemFiltroJaCriado() {
-		return "Filter bereits hinzugefügt";
-	}
-
-	@Override
 	public String pegarMensagemEmailInvalido() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemUsuarioInvalido() {
-		// TODO Auto-generated method stub
-		return null;
+		return " Ungültige eingegebene E-Mail:";
 	}
 
 	@Override
 	public String pegarMensagemEmailComSintaxeIncorreta() {
-		// TODO Auto-generated method stub
-		return null;
+		return " Ungültige E-Mail aufgrund eines falschen Formats \n benutzer@domain";
 	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalidoLimiteDeCaracters() {
+		return " Ungültiger Benutzername\n" + " Überschreitet das Limit von 15 Zeichen";
+	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalidoEmBranco() {
+		return " Ungültiger Benutzername\n" + " Leer oder beginnt mit einem Leerzeichen";
+	}
+
+	@Override
+	public String pegarMensagemFiltroJaCriado() {
+		return " Filter ist bereits vorhanden";
+	}
+
 }

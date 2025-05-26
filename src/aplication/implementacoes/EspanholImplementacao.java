@@ -586,19 +586,23 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 
 	@Override
 	public String pegarMensagemEmailInvalido() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String pegarMensagemUsuarioInvalido() {
-		// TODO Auto-generated method stub
-		return null;
+	    return " Correo electrónico ingresado no válido:";
 	}
 
 	@Override
 	public String pegarMensagemEmailComSintaxeIncorreta() {
-		// TODO Auto-generated method stub
-		return null;
+	    return " Correo electrónico no válido por formato incorrecto \n usuario@dominio";
 	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalidoLimiteDeCaracters() {
+	    return " Nombre de usuario no válido\n"
+	         + " Superó el límite de 15 caracteres";
+	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalidoEmBranco() {
+	    return " Nombre de usuario no válido\n" + " En blanco o comienza con un espacio";
+	}
+
 }

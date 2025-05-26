@@ -24,20 +24,12 @@ public class UsuarioService {
 	}
 
 	public boolean realizarLogin(UsuarioDto usuarioDto) throws LoginException {
-		if (!loginService.validarUsuarioExistente(usuarioDto, usuarioRepositorio)) {
-			throw new LoginUsuarioException(idiomaImplementacao.pegarMensagemErroLoginUsuario());
-
-		}
-		if (!loginService.validarSenha(usuarioDto, usuarioRepositorio)) {
-			throw new LoginSenhaException(idiomaImplementacao.pegarMensagemErroLoginSenha());
-		}
-
-		return true;
+		return loginService.validarLogin(usuarioDto, usuarioRepositorio, idiomaImplementacao);
 	}
 
 	public boolean realizarCadastro(UsuarioDto usuarioDto)
 			throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
-		cadastroService.validarUsuarioEmail(usuarioDto, usuarioRepositorio, idiomaImplementacao);
+		cadastroService.validarUsuario(usuarioDto, usuarioRepositorio, idiomaImplementacao);
 
 		Usuario usuario = converterDtoParaUsuario(usuarioDto);
 		this.usuarioRepositorio.adicionarUsuario(usuario);
@@ -48,6 +40,5 @@ public class UsuarioService {
 	private Usuario converterDtoParaUsuario(UsuarioDto dto) {
 		return new Usuario(0, dto.email(), dto.nome(), dto.senha());
 	}
-	
 
 }

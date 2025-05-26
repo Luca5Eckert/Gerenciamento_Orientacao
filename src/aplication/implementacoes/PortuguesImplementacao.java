@@ -273,8 +273,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return "Edição realizada com sucesso";
 	}
 
-
-
 	@Override
 	public String pegarMensangemAdicaoConcluida() {
 		return " Adição realizada com sucesso";
@@ -396,7 +394,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return opcaoEscolhida;
 	}
 
-
 	@Override
 	public String mostrarMenuApagarFiltro(Scanner input, String tipoFiltro, String filtrosDisponiveis) {
 		System.out.println("============================================================");
@@ -440,7 +437,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		return input.nextLine();
 	}
-	
+
 	@Override
 	public String mostrarMenuVisualizarFiltrosDisponiveis(Scanner input, String filtroDisponiveis, String tipoFiltro) {
 		System.out.println("============================================================");
@@ -464,9 +461,9 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemFalhaAdicionarFiltro(Scanner input) {
 		return " Falha ao adicionar filtro";
 	}
-	
+
 	@Override
-	public String mostrarMenuEditarOrientacao( Scanner input) {
+	public String mostrarMenuEditarOrientacao(Scanner input) {
 		System.out.println("============================================================");
 		System.out.println("                        EDIÇÃO                              ");
 		System.out.println("============================================================");
@@ -535,18 +532,18 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 
 	@Override
 	public String mostrarMenuConfirmarEdicao(Scanner input) {
-			System.out.println("============================================================");
-			System.out.println("                      TEM CERTEZA?                          ");
-			System.out.println("============================================================");
-			System.out.println(" Tem certeza que deseja editar essa orientação ?");
+		System.out.println("============================================================");
+		System.out.println("                      TEM CERTEZA?                          ");
+		System.out.println("============================================================");
+		System.out.println(" Tem certeza que deseja editar essa orientação ?");
 
-			System.out.println("\n A- Editar orientação ");
-			System.out.println(" C- Cancelar");
-			System.out.println("============================================================");
-			String opcao = input.nextLine().trim().toUpperCase();
+		System.out.println("\n A- Editar orientação ");
+		System.out.println(" C- Cancelar");
+		System.out.println("============================================================");
+		String opcao = input.nextLine().trim().toUpperCase();
 
-			return opcao;
-		}
+		return opcao;
+	}
 
 	@Override
 	public String pegarNomeIdioma(IdiomaOrientacao idiomaOrientacao) {
@@ -570,7 +567,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("                      TEM CERTEZA?                          ");
 		System.out.println("============================================================");
 		System.out.println(" O tipo será alterado em todas as outras orientações\n");
-		
+
 		System.out.println(" Tem certeza que deseja editar o tipo da orientação ?");
 		System.out.println("\n A- Confirmar");
 		System.out.println(" C- Cancelar");
@@ -598,15 +595,19 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String pegarMensagemUsuarioInvalido() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String pegarMensagemEmailComSintaxeIncorreta() {
 		return " Email invalido por não seguir formato \n usuario@dominio";
 	}
 
+	@Override
+	public String pegarMensagemUsuarioInvalidoLimiteDeCaracters() {
+		return " Nome de usuário invalido\n"
+				+ " Ultrapassou o limite de 15 caracteres";
+	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalidoEmBranco() {
+		return " Nome de usuário invalido\n" + " Em branco ou começa com espaço";
+	}
 
 }

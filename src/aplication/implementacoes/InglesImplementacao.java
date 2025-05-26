@@ -583,21 +583,25 @@ public class InglesImplementacao implements IdiomaImplementacao {
         return "Filter already added";
     }
 
-	@Override
-	public String pegarMensagemEmailInvalido() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String pegarMensagemEmailInvalido() {
+        return " Invalid email entered:";
+    }
 
-	@Override
-	public String pegarMensagemUsuarioInvalido() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String pegarMensagemEmailComSintaxeIncorreta() {
+        return " Invalid email due to incorrect format \n user@domain";
+    }
 
-	@Override
-	public String pegarMensagemEmailComSintaxeIncorreta() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String pegarMensagemUsuarioInvalidoLimiteDeCaracters() {
+        return " Invalid username\n"
+             + " Exceeded the 15-character limit";
+    }
+
+    @Override
+    public String pegarMensagemUsuarioInvalidoEmBranco() {
+        return " Invalid username\n" + " Blank or starts with a space";
+    }
+
 }
