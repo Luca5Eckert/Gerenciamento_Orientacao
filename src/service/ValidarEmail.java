@@ -33,9 +33,9 @@ public class ValidarEmail implements Validacao, Runnable {
 
 	public boolean validarEmailEscrita() throws EmailInvalidoException {
 		Matcher verificador = pattern.matcher(emailParaValidar);
-		boolean emailValido = verificador.matches();
+		boolean emailValido = !verificador.matches();
 
-		if (emailValido) {
+		if (!emailValido) {
 			throw new EmailInvalidoException(idiomaImplementacao.pegarMensagemEmailComSintaxeIncorreta());
 		}
 		return emailValido;
@@ -45,7 +45,7 @@ public class ValidarEmail implements Validacao, Runnable {
 		boolean emailValido = !usuarioRepositorio.verificaSeUsuarioExisteEmail(emailParaValidar);
 
 		if (!emailValido) {
-			throw new EmailInvalidoException(idiomaImplementacao.pegarMensagemEmailInvalido());
+			throw new EmailInvalidoException(idiomaImplementacao.pegarMensagemEmailInvalidoJaUsado());
 		}
 		return emailValido;
 

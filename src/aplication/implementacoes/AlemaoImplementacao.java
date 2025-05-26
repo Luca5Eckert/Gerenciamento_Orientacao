@@ -578,9 +578,8 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 	}
 
-	@Override
-	public String pegarMensagemEmailInvalido() {
-		return " Ungültige eingegebene E-Mail:";
+	public String pegarMensagemEmailInvalidoJaUsado() {
+	    return " Die eingegebene E-Mail-Adresse wird bereits verwendet";
 	}
 
 	@Override

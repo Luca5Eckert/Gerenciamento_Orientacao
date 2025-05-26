@@ -20,7 +20,7 @@ public class ValidarUsuario implements Validacao, Runnable {
     }
 
     private boolean comecaComEspaco() throws CadastroException   {
-        boolean usuarioValido = usuarioParaValidar != null && usuarioParaValidar.startsWith(" ");
+        boolean usuarioValido = usuarioParaValidar != null && !usuarioParaValidar.startsWith(" ") && !usuarioParaValidar.startsWith("");
         
         if (!usuarioValido) {
         	throw new CadastroException(idiomaImplementacao.pegarMensagemUsuarioInvalidoEmBranco());
@@ -29,7 +29,7 @@ public class ValidarUsuario implements Validacao, Runnable {
     }
 
     private boolean excedeLimiteCaracteres() {
-    	boolean usuarioValido = usuarioParaValidar != null && usuarioParaValidar.length() >= 15;
+    	boolean usuarioValido = usuarioParaValidar != null && !(usuarioParaValidar.length() >= 15);
     	
     	if(!usuarioValido) {
         	throw new CadastroUsuarioJaExistenteException(idiomaImplementacao.pegarMensagemUsuarioInvalidoLimiteDeCaracters());

@@ -123,7 +123,7 @@ public interface IdiomaImplementacao {
 	
 	String pegarMensagemFiltroJaCriado();
 	
-	String pegarMensagemEmailInvalido();
+	String pegarMensagemEmailInvalidoJaUsado();
 	
 	String pegarMensagemUsuarioInvalidoLimiteDeCaracters();
 	

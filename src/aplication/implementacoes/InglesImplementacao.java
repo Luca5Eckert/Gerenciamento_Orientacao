@@ -584,8 +584,8 @@ public class InglesImplementacao implements IdiomaImplementacao {
     }
 
     @Override
-    public String pegarMensagemEmailInvalido() {
-        return " Invalid email entered:";
+    public String pegarMensagemEmailInvalidoJaUsado() {
+        return " The entered email is already in use";
     }
 
     @Override

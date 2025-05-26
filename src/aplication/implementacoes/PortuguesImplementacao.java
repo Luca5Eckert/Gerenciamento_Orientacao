@@ -590,8 +590,8 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	}
 
 	@Override
-	public String pegarMensagemEmailInvalido() {
-		return " Email digitado é invalido:";
+	public String pegarMensagemEmailInvalidoJaUsado() {
+		return " Email digitado já está em uso";
 	}
 
 	@Override

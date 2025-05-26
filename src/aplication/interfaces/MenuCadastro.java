@@ -6,6 +6,8 @@ import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
 
 import java.util.Scanner;
+import java.util.concurrent.CompletionException;
+
 import service.UsuarioService;
 import service.exceptions.usuario.CadastroException;
 
@@ -27,9 +29,12 @@ public class MenuCadastro extends Menu {
 			usuarioService.realizarCadastro(usuarioCadastrar);
 			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemCadastroConcluido(), idiomaImplementacao);
-		} catch (CadastroException ce) {
+		} catch (CompletionException ce) {
 			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),
-					ce.getMessage(), idiomaImplementacao);
+					ce.getCause().getMessage(), idiomaImplementacao);
+		} catch (RuntimeException rte) {
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),
+					rte.getMessage(), idiomaImplementacao);
 		}
 		menuHistorico.voltarMenu(proximoMenu);
 

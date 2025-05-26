@@ -585,8 +585,8 @@ public class EspanholImplementacao implements IdiomaImplementacao {
     }
 
 	@Override
-	public String pegarMensagemEmailInvalido() {
-	    return " Correo electrónico ingresado no válido:";
+	public String pegarMensagemEmailInvalidoJaUsado() {
+	    return " El correo electrónico ingresado ya está en uso";
 	}
 
 	@Override

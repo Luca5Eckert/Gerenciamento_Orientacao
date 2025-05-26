@@ -1,6 +1,7 @@
 package service;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
@@ -23,9 +24,20 @@ public class CadastroService {
 		CompletableFuture<Void> validarSenha = CompletableFuture
 				.runAsync(() -> validarSenhaUsuario(usuarioDto.senha(), idiomaImplementacao));
 
-		CompletableFuture.allOf(validarNome, validarEmail, validarSenha).join();
-
+		try {
+			CompletableFuture.allOf(validarNome, validarEmail, validarSenha).join();
+		} catch (CompletionException ce) {
+			Throwable cause = ce.getCause();
+			if (cause instanceof CadastroUsuarioJaExistenteException) {
+				throw (CadastroUsuarioJaExistenteException) cause;
+			} else if (cause instanceof CadastroSenhaException) {
+				throw (CadastroSenhaException) cause;
+			} else {
+				throw ce;
+			}
+		}
 		return true;
+
 	}
 
 	private void validarNomeUsuario(String nomeUsuario, IdiomaImplementacao idiomaImplementacao) {
