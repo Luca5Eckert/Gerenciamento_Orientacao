@@ -241,7 +241,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 
 		System.out.println("\n Inhalt:");
 		System.out.println(" " + FormatacaoUtil.enquadrarTextoNoMenu(orientacao.conteudo(), 59, 1));
-		System.out.println("\n  S- Beenden         E- Bearbeiten             L-Löschen         ");
+		System.out.println("\n  S- Beenden         E- Bearbeiten             A-Löschen         ");
 		System.out.println("------------------------------------------------------------");
 		System.out.println("Verfügbar in anderen Sprachen:\n");
 		System.out.println(idiomasOrientacoes);
@@ -255,7 +255,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		System.out.println("                        SUCHE                              ");
 		System.out.println("============================================================");
-		System.out.println(" 1- Beenden ");
+		System.out.println(" S- Beenden ");
 		System.out.println("------------------------------------------------------------");
 		System.out.println(" Geben Sie Ihre Suche ein: ");
 		String pesquisa = input.nextLine();
@@ -359,12 +359,12 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		System.out.println(" Möchten Sie diese Orientierung wirklich löschen?");
 
-		System.out.println("\n L- Orientierung löschen ");
-		System.out.println(" A- Abbrechen");
+		System.out.println("\n A- Orientierung löschen ");
+		System.out.println(" C- Abbrechen");
 		System.out.println("============================================================");
 		String opcao = input.nextLine().trim().toUpperCase();
 
-		if (opcao.equals("A")) {
+		if (opcao.trim().toUpperCase().equals("C")) {
 			throw new SairMenuException();
 		}
 		return opcao;
@@ -531,8 +531,8 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		System.out.println(" Möchten Sie diese Orientierung wirklich bearbeiten?");
 
-		System.out.println("\n B- Orientierung bearbeiten ");
-		System.out.println(" A- Abbrechen");
+		System.out.println("\n A- Orientierung bearbeiten ");
+		System.out.println(" C- Abbrechen");
 		System.out.println("============================================================");
 		String opcao = input.nextLine().trim().toUpperCase();
 
@@ -563,8 +563,8 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println(" Der Typ wird in allen anderen Orientierungen geändert\n");
 
 		System.out.println(" Möchten Sie den Typ der Orientierung wirklich ändern?");
-		System.out.println("\n B- Bestätigen");
-		System.out.println(" A- Abbrechen");
+		System.out.println("\n A- Bestätigen");
+		System.out.println(" C- Abbrechen");
 		System.out.println("============================================================");
 		String opcao = input.nextLine().trim().toUpperCase();
 

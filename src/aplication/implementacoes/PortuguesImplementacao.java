@@ -369,7 +369,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("============================================================");
 		String opcao = input.nextLine().trim().toUpperCase();
 
-		if (opcao.equals("C")) {
+		if (opcao.trim().toUpperCase().equals("C")) {
 			throw new SairMenuException();
 		}
 		return opcao;

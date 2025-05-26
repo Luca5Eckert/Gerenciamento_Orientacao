@@ -21,23 +21,20 @@ public class MenuPesquisaOrientacao extends Menu {
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		String opcaoEscolhida = idiomaImplementacao.mostrarMenuPesquisaOrientacao(input);
 
-		var proximoMenu = devolverOpcaoEscolhida(opcaoEscolhida);
-
-		menuHistorico.definirProximoMenu(proximoMenu);
-
+		devolverOpcaoEscolhida(opcaoEscolhida, menuHistorico);
 	}
 
 	public void definirPalavraPesquisa(String palavraPesquisada) {
 		gerenciadorFiltro.setPalavraBuscada(palavraPesquisada);
 	}
 
-	public Menu devolverOpcaoEscolhida(String opcaoEscolhida) {
+	public void devolverOpcaoEscolhida(String opcaoEscolhida, MenuHistorico menuHistorico) {
 		switch (opcaoEscolhida.toUpperCase()) {
 		case "S":
-			return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao);
+			menuHistorico.voltarMenu();
 		default:
 			definirPalavraPesquisa(opcaoEscolhida);
-			return MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao);
+			menuHistorico.voltarMenu(MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
 		}
 
 	}

@@ -44,8 +44,7 @@ public class MenuVisualizarOrientacao extends Menu {
 			devolverOpcaoMenu(opcao, listaOrdenada, listaOrientacoesIdiomas, input, menuHistorico);
 
 		} catch (Exception e) {
-			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, this,
-					idiomaImplementacao.pegarMensagemErro(), idiomaImplementacao));
+			System.out.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 		}
 
 	}
@@ -61,20 +60,21 @@ public class MenuVisualizarOrientacao extends Menu {
 		;
 	}
 
-	public Menu removerOrientacao(Scanner input, MenuHistorico menuHistorico) {
+	public void removerOrientacao(Scanner input, MenuHistorico menuHistorico) {
 		try {
 			menuHistorico.sobscreverMenu(menuHistorico.pegarMenuAnterior());
 			idiomaImplementacao.mostrarMenuConfirmarApagarOrientacao(input);
 
 			orientacaoService.removerOrientacao(orientacaoDto);
-			return MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
+			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao(), idiomaImplementacao);
-
+			menuHistorico.definirProximoMenu(proximoMenu);
 		} catch (SairMenuException sme) {
-			return this;
+			menuHistorico.voltarMenu();
 		} catch (Exception le) {
-			return MenuFactory.criarMenuResultado(TipoMenu.FALHA, this,
+			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemErroAoRemoverOrientacao(), idiomaImplementacao);
+			menuHistorico.definirProximoMenu(proximoMenu);
 		}
 	}
 

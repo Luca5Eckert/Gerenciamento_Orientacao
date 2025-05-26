@@ -359,15 +359,15 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         System.out.println("============================================================");
         System.out.println(" ¿Está seguro que desea eliminar esta orientación?");
 
-        System.out.println("\n B- Borrar orientación ");
+        System.out.println("\n A- Borrar orientación ");
         System.out.println(" C- Cancelar");
         System.out.println("============================================================");
-        String opcion = input.nextLine().trim().toUpperCase();
+        String opcao = input.nextLine().trim().toUpperCase();
 
-        if (opcion.equals("C")) {
+        if (opcao.trim().toUpperCase().equals("C")) {
             throw new SairMenuException();
         }
-        return opcion;
+        return opcao;
     }
 
     @Override
@@ -439,7 +439,7 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         System.out.println("                  FILTROS " + tipoFiltro.toUpperCase());
         System.out.println("============================================================");
         System.out.println(" V- Volver ");
-        System.out.println(" E- Eliminar filtro");
+        System.out.println(" D- Eliminar filtro");
         System.out.println("------------------------------------------------------------");
         System.out.println(" Filtros " + tipoFiltro.toLowerCase());
         System.out.println(filtroDisponibles);
@@ -531,7 +531,7 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         System.out.println("============================================================");
         System.out.println(" ¿Está seguro que desea editar esta orientación?");
 
-        System.out.println("\n E- Editar orientación ");
+        System.out.println("\n A- Editar orientación ");
         System.out.println(" C- Cancelar");
         System.out.println("============================================================");
         String opcion = input.nextLine().trim().toUpperCase();
@@ -563,8 +563,8 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         System.out.println(" El tipo se cambiará en todas las demás orientaciones\n");
         
         System.out.println(" ¿Está seguro que desea cambiar el tipo de orientación?");
-        System.out.println("\n C- Confirmar");
-        System.out.println(" B- Cancelar");
+        System.out.println("\n A- Confirmar");
+        System.out.println(" C- Cancelar");
         System.out.println("============================================================");
         String opcion = input.nextLine().trim().toUpperCase();
 

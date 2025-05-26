@@ -142,6 +142,9 @@ public class MenuHistorico {
 	}
 
 	public boolean verificarDuplicacao(Menu menu) {
-		return pegarMenuAtual().equals(menu);
+		if(ponteiroDoMenu > -1) {
+			return pegarMenuAtual().equals(menu);			
+		}
+		return false;
 	}
 }

@@ -338,7 +338,8 @@ public class InglesImplementacao implements IdiomaImplementacao {
         System.out.println("============================================================");
         System.out.println("                 UNAVAILABLE ORIENTATION                    ");
         System.out.println("============================================================");
-        System.out.println(" The orientation you searched for doesn't exist in this language");
+        System.out.println(" The orientation you searched for doesn't exist in this"
+        		+ " language");
 
         System.out.println("\n A- Add in " + idiomaOrientacao.getNomeEmIngles());
         System.out.println(" V- Back");
@@ -359,12 +360,12 @@ public class InglesImplementacao implements IdiomaImplementacao {
         System.out.println("============================================================");
         System.out.println(" Are you sure you want to delete this orientation?");
 
-        System.out.println("\n D- Delete orientation ");
+        System.out.println("\n A- Delete orientation ");
         System.out.println(" C- Cancel");
         System.out.println("============================================================");
         String opcao = input.nextLine().trim().toUpperCase();
 
-        if (opcao.equals("C")) {
+        if (opcao.trim().toUpperCase().equals("C")) {
             throw new SairMenuException();
         }
         return opcao;
@@ -531,7 +532,7 @@ public class InglesImplementacao implements IdiomaImplementacao {
         System.out.println("============================================================");
         System.out.println(" Are you sure you want to edit this orientation?");
 
-        System.out.println("\n E- Edit orientation ");
+        System.out.println("\n A- Edit orientation ");
         System.out.println(" C- Cancel");
         System.out.println("============================================================");
         String opcao = input.nextLine().trim().toUpperCase();
@@ -563,8 +564,8 @@ public class InglesImplementacao implements IdiomaImplementacao {
         System.out.println(" The type will be changed in all other orientations\n");
         
         System.out.println(" Are you sure you want to change the orientation type?");
-        System.out.println("\n C- Confirm");
-        System.out.println(" B- Cancel");
+        System.out.println("\n A- Confirm");
+        System.out.println(" C- Cancel");
         System.out.println("============================================================");
         String opcao = input.nextLine().trim().toUpperCase();
 

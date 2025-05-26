@@ -5,15 +5,18 @@ import java.util.List;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.filtros.TipoFiltro;
+import utilitarios.FormatacaoUtil;
 
-public class FormatacaoNumerarLista{
+public class FormatacaoNumerarLista {
 
-	public String formatarOrientacoesPorTitulo(List<OrientacaoDto> listaParaFormatar, IdiomaImplementacao idiomaImplementacao) {
+	public String formatarOrientacoesPorTitulo(List<OrientacaoDto> listaParaFormatar,
+			IdiomaImplementacao idiomaImplementacao) {
 		StringBuilder formatado = new StringBuilder();
 		int numeroOrientacao = 1;
 
 		for (OrientacaoDto orientacao : listaParaFormatar) {
-			formatado.append(" " + numeroOrientacao + "- " + orientacao.titulo() + "\n");
+			formatado.append(
+					" " + numeroOrientacao + " " + FormatacaoUtil.enquadrarTextoNoMenu(orientacao.titulo(), 57, 0) + "\n");
 			numeroOrientacao++;
 		}
 		return formatado.toString();
@@ -22,15 +25,15 @@ public class FormatacaoNumerarLista{
 	public String formatarTiposDeFiltro(List<TipoFiltro> listaParaFormatar, IdiomaImplementacao idiomaImplementacao) {
 		StringBuilder formatado = new StringBuilder();
 		int numeroTipoFiltro = 1;
-		
-		
-		for(TipoFiltro tipoFiltro : listaParaFormatar) {
-			formatado.append(" " + numeroTipoFiltro + "- " + tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()) + "\n");
+
+		for (TipoFiltro tipoFiltro : listaParaFormatar) {
+			formatado.append(" " + numeroTipoFiltro + "- "
+					+ tipoFiltro.pegarNome(idiomaImplementacao.obterIdiomaOrientacao()) + "\n");
 			numeroTipoFiltro++;
 		}
 		return formatado.toString();
 	}
-	
+
 	public String formatarString(List<String> listaFiltros) {
 		StringBuilder formatado = new StringBuilder();
 		int numeroFiltro = 1;
