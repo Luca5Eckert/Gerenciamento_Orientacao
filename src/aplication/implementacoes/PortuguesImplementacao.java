@@ -592,5 +592,21 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return " Filtro já foi adicionado";
 	}
 
+	@Override
+	public String pegarMensagemEmailInvalido() {
+		return " Email digitado é invalido:";
+	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemEmailComSintaxeIncorreta() {
+		return " Email invalido por não seguir formato \n usuario@dominio";
+	}
+
 
 }

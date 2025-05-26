@@ -122,5 +122,11 @@ public interface IdiomaImplementacao {
 	void mostrarMenuAlteradoAtributoComSucesso();
 	
 	String pegarMensagemFiltroJaCriado();
+	
+	String pegarMensagemEmailInvalido();
+	
+	String pegarMensagemUsuarioInvalido();
+	
+	String pegarMensagemEmailComSintaxeIncorreta();
 
 }
