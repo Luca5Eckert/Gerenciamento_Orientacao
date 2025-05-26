@@ -36,14 +36,11 @@ public class OrientacaoService {
 
 	public void removerOrientacao(OrientacaoDto orientacaoDto) {
 		String stringIdOrientacao = pegarIdOrientacao(orientacaoDto);
-
 		var orientacaoId = new OrientacaoId(stringIdOrientacao, orientacaoDto.idiomaOrientacao());
-
 		repositorioOrientacao.removerOrientacao(orientacaoId);
 	}
 
 	public boolean criarOrientacoes(List<OrientacaoDto> listaOrientacao) {
-
 		String idOrientacao = UUID.randomUUID().toString();
 
 		for (OrientacaoDto orientacaoDto : listaOrientacao) {
@@ -55,14 +52,12 @@ public class OrientacaoService {
 
 	public List<OrientacaoDto> pesquisarOrientacao(String palavra, List<OrientacaoDto> listaOrientacao)
 			throws OrientacaoException {
-		List<OrientacaoDto> listaPesquisada = new ArrayList<OrientacaoDto>();
+		List<OrientacaoDto> listaPesquisada = new ArrayList<>();
 
 		try {
 			listaPesquisada = PesquisaFactory.toTitulo().aplicarPesquisa(listaOrientacao, palavra);
-
 		} catch (OrientacaoException oe) {
 			listaPesquisada = PesquisaFactory.toConteudo().aplicarPesquisa(listaOrientacao, palavra);
-
 		}
 
 		return listaPesquisada;
@@ -70,6 +65,7 @@ public class OrientacaoService {
 
 	public Map<IdiomaOrientacao, OrientacaoDto> pegarOrientacoesIdiomas(String idOrientacoes) {
 		var listaOrientacoesIdiomas = new HashMap<IdiomaOrientacao, OrientacaoDto>();
+
 		for (IdiomaOrientacao idioma : IdiomaOrientacao.values()) {
 			Orientacao orientacao = repositorioOrientacao.pegarOrientacaoPorIdeIdioma(idOrientacoes, idioma.name());
 
@@ -77,7 +73,6 @@ public class OrientacaoService {
 				var orientacaoDto = transformarModeloDto(orientacao);
 				listaOrientacoesIdiomas.put(idioma, orientacaoDto);
 			}
-
 		}
 
 		return listaOrientacoesIdiomas;
@@ -94,7 +89,6 @@ public class OrientacaoService {
 		String idOrientacao = pegarIdOrientacao(orientacaoAntiga);
 
 		if (!orientacaoAlterada.idiomaOrientacao().equals(orientacaoAntiga.idiomaOrientacao())) {
-
 			boolean idiomaDisponivel = repositorioOrientacao.verificarIdiomaOrientacao(idOrientacao,
 					orientacaoAlterada.idiomaOrientacao());
 
@@ -117,8 +111,8 @@ public class OrientacaoService {
 	}
 
 	public List<OrientacaoDto> pegarTodasOrientacoes() {
-		var listaModelo = this.repositorioOrientacao.getOrientacaoRepositorio();
-		return transformarListaModeloDto(listaModelo);
+		var arrayModelo = this.repositorioOrientacao.getOrientacaoRepositorio(); // Orientacao[]
+		return transformarArrayModeloDto(arrayModelo);
 	}
 
 	public OrientacaoRepositorio getRepositorioOrientacao() {
@@ -131,36 +125,38 @@ public class OrientacaoService {
 
 	public Orientacao transformarDtoModelo(OrientacaoDto orientacaoDto) {
 		Orientacao orientacaoModelo = new Orientacao();
-
 		orientacaoModelo.setIdOrientacao(new OrientacaoId(orientacaoDto.idiomaOrientacao()));
 		orientacaoModelo.setTitulo(orientacaoDto.titulo());
 		orientacaoModelo.setTipoOrientacao(orientacaoDto.tipoOrientacao());
 		orientacaoModelo.setConteudo(orientacaoDto.conteudo());
-
 		return orientacaoModelo;
 	}
 
 	public Orientacao transformarDtoModelo(OrientacaoDto orientacaoDto, String idOrientacao) {
 		Orientacao orientacaoModelo = new Orientacao();
-
 		OrientacaoId orientacaoId = new OrientacaoId(idOrientacao, orientacaoDto.idiomaOrientacao());
 		orientacaoModelo.setIdOrientacao(orientacaoId);
 		orientacaoModelo.setTitulo(orientacaoDto.titulo());
 		orientacaoModelo.setTipoOrientacao(orientacaoDto.tipoOrientacao());
 		orientacaoModelo.setConteudo(orientacaoDto.conteudo());
-
 		return orientacaoModelo;
 	}
 
 	public OrientacaoDto transformarModeloDto(Orientacao orientacao) {
-		return new OrientacaoDto(orientacao.getTitulo(), orientacao.getTipoOrientacao(), orientacao.getConteudo(),
-				orientacao.getIdOrientacao().getIdiomaOrientacao());
+		return new OrientacaoDto(
+				orientacao.getTitulo(),
+				orientacao.getTipoOrientacao(),
+				orientacao.getConteudo(),
+				orientacao.getIdOrientacao().getIdiomaOrientacao()
+		);
 	}
 
-	public List<OrientacaoDto> transformarListaModeloDto(List<Orientacao> listaOrientacao) {
+	public List<OrientacaoDto> transformarArrayModeloDto(Orientacao[] arrayOrientacao) {
 		var orientacaoRepositorioDto = new ArrayList<OrientacaoDto>();
-		for (Orientacao orientacao : listaOrientacao) {
-			orientacaoRepositorioDto.add(transformarModeloDto(orientacao));
+		for (Orientacao orientacao : arrayOrientacao) {
+			if (orientacao != null) {
+				orientacaoRepositorioDto.add(transformarModeloDto(orientacao));
+			}
 		}
 		return orientacaoRepositorioDto;
 	}

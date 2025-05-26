@@ -1,7 +1,6 @@
 package repositorio;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
@@ -16,13 +15,13 @@ public class OrientacaoRepositorio {
 		this.orientacaoDAO = new OrientacaoDAO();
 	}
 
-	public List<Orientacao> getOrientacaoRepositorio() {
+	public Orientacao[] getOrientacaoRepositorio() {
 		try {
 			return orientacaoDAO.buscarTodas();
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar orientações: " + e.getMessage());
 		}
-		return null;
+		return new Orientacao[0]; // Retorna array vazio em vez de null
 	}
 
 	public void adicionarOrientacao(Orientacao orientacaoModelo) {
@@ -101,7 +100,6 @@ public class OrientacaoRepositorio {
 			System.out.println("Erro ao pegar orientacao por id e idioma: " + se.getMessage());
 		}
 		return false;
-
 	}
 
 	public void atualizarTiposOrientacoes(String idOrientacao, TipoOrientacao tipoOrientacao) {
@@ -110,6 +108,5 @@ public class OrientacaoRepositorio {
 		} catch (SQLException se) {
 			System.out.println("Erro ao definir tipos para orientações: " + se.getMessage());
 		}
-		
 	}
 }

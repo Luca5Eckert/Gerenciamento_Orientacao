@@ -1,8 +1,6 @@
 package infrastructure.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
@@ -12,15 +10,18 @@ import infrastructure.ConexaoFactory;
 
 public class OrientacaoDAO {
 
-	public List<Orientacao> buscarTodas() throws SQLException {
-		List<Orientacao> orientacoes = new ArrayList<>();
-		String sql = "SELECT * FROM orientacao";
+	private static final int LIMITE_ORIENTACOES = 20;
+
+	public Orientacao[] buscarTodas() throws SQLException {
+		Orientacao[] orientacoes = new Orientacao[LIMITE_ORIENTACOES];
+		String sql = "SELECT * FROM orientacao LIMIT " + LIMITE_ORIENTACOES;
 
 		try (Connection conn = ConexaoFactory.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				ResultSet rs = stmt.executeQuery()) {
 
-			while (rs.next()) {
+			int index = 0;
+			while (rs.next() && index < LIMITE_ORIENTACOES) {
 				Orientacao orientacao = new Orientacao();
 
 				OrientacaoId id = new OrientacaoId();
@@ -32,9 +33,8 @@ public class OrientacaoDAO {
 				orientacao.setConteudo(rs.getString("conteudo"));
 				orientacao.setTipoOrientacao(TipoOrientacao.valueOf(rs.getString("tipo_orientacao")));
 
-				orientacoes.add(orientacao);
+				orientacoes[index++] = orientacao;
 			}
-
 		}
 		return orientacoes;
 	}
@@ -109,7 +109,6 @@ public class OrientacaoDAO {
 
 			stmt.executeUpdate();
 		}
-
 	}
 
 	public void remover(OrientacaoId idOrientacao) throws SQLException {
@@ -171,13 +170,11 @@ public class OrientacaoDAO {
 
 			statement.setString(1, tipoOrientacao);
 			statement.setString(2, idOrientacao);
-			
+
 			statement.executeUpdate();
 		}
-
 	}
-	
-	
+
 	public void atualizarIdiomaPorId(String idOrientacao, String idiomaAntigo, String novoIdioma) throws SQLException {
 		String sql = "UPDATE orientacao SET idioma_orientacao = ? WHERE id = ? AND idioma_orientacao = ?";
 
@@ -186,10 +183,9 @@ public class OrientacaoDAO {
 
 			statement.setString(1, novoIdioma);
 			statement.setString(2, idOrientacao);
-			statement.setString(3,idiomaAntigo);
+			statement.setString(3, idiomaAntigo);
 
 			statement.executeUpdate();
-
 		}
 	}
 }

@@ -1,25 +1,25 @@
 package repositorio;
 
 import java.sql.SQLException;
-import java.util.List;
 import Dominio.Usuario;
 import infrastructure.dao.UsuarioDAO;
 
 public class UsuarioRepositorio {
 
 	private final UsuarioDAO usuarioDAO;
+	private static final int LIMITE_USUARIOS = 20;
 
 	public UsuarioRepositorio() {
 		this.usuarioDAO = new UsuarioDAO();
 	}
 	
-	public List<Usuario> getUsuarios() {
+	public Usuario[] getUsuarios() {
 		try {
-			return usuarioDAO.buscarTodos();
+			return usuarioDAO.buscarTodos(); 
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar usuários: " + e.getMessage());
 		}
-		return null;
+		return new Usuario[0];
 	}
 
 	public void adicionarUsuario(Usuario usuario) {
@@ -41,7 +41,9 @@ public class UsuarioRepositorio {
 	public void removerUsuario(int index) {
 		try {
 			Usuario usuario = pegarUsuario(index);
-			usuarioDAO.remover(usuario);
+			if (usuario != null) {
+				usuarioDAO.remover(usuario);
+			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao remover usuário pelo índice: " + e.getMessage());
 		}
@@ -49,8 +51,11 @@ public class UsuarioRepositorio {
 
 	public void atualizarUsuario(int index, Usuario usuario) {
 		try {
-			usuario.setNome(pegarUsuario(index).getNome());
-			usuarioDAO.atualizar(usuario);
+			Usuario existente = pegarUsuario(index);
+			if (existente != null) {
+				usuario.setNome(existente.getNome());
+				usuarioDAO.atualizar(usuario);
+			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar usuário: " + e.getMessage());
 		}
@@ -58,8 +63,10 @@ public class UsuarioRepositorio {
 
 	public Usuario pegarUsuario(int index) {
 		try {
-			List<Usuario> usuarios = usuarioDAO.buscarTodos();
-			return usuarios.get(index);
+			Usuario[] usuarios = usuarioDAO.buscarTodos();
+			if (index >= 0 && index < usuarios.length) {
+				return usuarios[index];
+			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao pegar usuário pelo índice: " + e.getMessage());
 		}
@@ -83,7 +90,6 @@ public class UsuarioRepositorio {
 		}
 		return null;
 	}
-	
 
 	public boolean verificaSeUsuarioExisteNome(String nome) {
 		return pegarUsuarioNome(nome) != null;
@@ -95,7 +101,12 @@ public class UsuarioRepositorio {
 
 	public boolean verificarSeUsuarioExiste(Usuario usuario) {
 		try {
-			return usuarioDAO.buscarTodos().contains(usuario);
+			Usuario[] usuarios = usuarioDAO.buscarTodos();
+			for (Usuario u : usuarios) {
+				if (u != null && u.equals(usuario)) {
+					return true;
+				}
+			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao verificar se o usuário existe: " + e.getMessage());
 		}
@@ -110,5 +121,4 @@ public class UsuarioRepositorio {
 		}
 		return -1;
 	}
-
 }
