@@ -10,7 +10,7 @@ import dtos.OrientacaoDto;
 import service.OrientacaoService;
 
 public class MenuAdicaoOrientacao extends Menu {
-	private IdiomaImplementacao idiomaImplementacao;
+	
 	private OrientacaoService orientacaoService;
 
 	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService) {
@@ -22,12 +22,14 @@ public class MenuAdicaoOrientacao extends Menu {
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		Menu proximoMenu = null;
 		List<OrientacaoDto> listaOrientacaoCriada = null;
+		
 		try {
 			listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
 			orientacaoService.criarOrientacoes(listaOrientacaoCriada);
 			proximoMenu = devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			menuHistorico.voltarMenu();
 		}
 

@@ -27,7 +27,7 @@ public class MenuCadastro extends Menu {
 
 		try {
 			usuarioService.realizarCadastro(usuarioCadastrar);
-			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.pegarMenuAnterior(),
 					idiomaImplementacao.pegarMensagemCadastroConcluido(), idiomaImplementacao);
 		} catch (CompletionException ce) {
 			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),

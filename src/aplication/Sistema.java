@@ -10,10 +10,6 @@ public class Sistema {
 	private MenuGerenciador gerenciadorMenu;
 	private Scanner input = new Scanner(System.in);
 
-	public Sistema() {
-		this.gerenciadorMenu = new MenuGerenciador();
-	}
-
 	public void iniciarSistema() {
 		System.out.println("Starting the system....");
 		iniciarSistemaMenu();
@@ -28,7 +24,7 @@ public class Sistema {
 	}
 
 	private void iniciarSistemaMenu() {
-		this.gerenciadorMenu.setMenu(new MenuIniciarSistema(new InglesImplementacao()));
+		this.gerenciadorMenu = new MenuGerenciador(new MenuIniciarSistema(new InglesImplementacao()));
 	}
 
 	public MenuGerenciador getMenu() {

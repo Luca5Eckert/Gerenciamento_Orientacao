@@ -9,8 +9,9 @@ public class MenuGerenciador {
 	private MenuHistorico menuHistorico;
 
 
-	public MenuGerenciador() {
-		this.menuHistorico = new MenuHistorico();
+	public MenuGerenciador(Menu menu) {
+		this.menu = menu;
+		this.menuHistorico = new MenuHistorico(menu);
 	}
 
 	public boolean iniciarFluxoMenu(Scanner input) {

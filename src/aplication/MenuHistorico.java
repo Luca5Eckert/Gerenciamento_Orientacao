@@ -13,9 +13,6 @@ public class MenuHistorico {
         definirProximoMenu(menu);
     }
 
-    public MenuHistorico() {
-    }
-
     public List<Menu> getLinhaDoTempoMenu() {
         return linhaDoTempoMenu;
     }

@@ -20,7 +20,7 @@ public class ValidarUsuario implements Validacao, Runnable {
     }
 
     private boolean comecaComEspaco() throws CadastroException   {
-        boolean usuarioValido = usuarioParaValidar != null && !usuarioParaValidar.startsWith(" ") && !usuarioParaValidar.startsWith("");
+        boolean usuarioValido = usuarioParaValidar != null || !usuarioParaValidar.startsWith(" ") || !usuarioParaValidar.startsWith("");
         
         if (!usuarioValido) {
         	throw new CadastroException(idiomaImplementacao.pegarMensagemUsuarioInvalidoEmBranco());

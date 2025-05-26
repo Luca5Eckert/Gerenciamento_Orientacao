@@ -439,7 +439,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println("                  FILTER " + tipoFiltro.toUpperCase());
 		System.out.println("============================================================");
 		System.out.println(" V- Zurück ");
-		System.out.println(" L- Filter löschen");
+		System.out.println(" D- Filter löschen");
 		System.out.println("------------------------------------------------------------");
 		System.out.println(" " + tipoFiltro.toLowerCase() + " Filter");
 		System.out.println(filtroDisponiveis);

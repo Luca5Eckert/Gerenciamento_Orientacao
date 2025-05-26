@@ -9,7 +9,7 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 
 public class MenuTrocaIdioma extends Menu {
-	private IdiomaImplementacao idiomaImplementacao;
+
 	private Menu menuAnterior;
 
 	public MenuTrocaIdioma(IdiomaImplementacao idiomaImplementacao, Menu menuAnterior) {
@@ -19,11 +19,17 @@ public class MenuTrocaIdioma extends Menu {
 	
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
-		String idiomaFormatado = IdiomaOrientacao.listaIdiomasFormatado(idiomaImplementacao);
 		
-		String opcaoSelecionado = idiomaImplementacao.mostrarMenuTrocarIdioma(input, idiomaFormatado);
-		
-		processarOpcao(opcaoSelecionado, menuHistorico);
+		try {
+			String idiomaFormatado = IdiomaOrientacao.listaIdiomasFormatado(idiomaImplementacao);
+			
+			String opcaoSelecionado = idiomaImplementacao.mostrarMenuTrocarIdioma(input, idiomaFormatado);
+			
+			processarOpcao(opcaoSelecionado, menuHistorico);
+			
+		}catch(Exception e) {
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
+		}
 		
 		
 	}

@@ -28,8 +28,8 @@ public class MenuLogin extends Menu {
 					idiomaImplementacao.pegarMensagemLoginConcluido(), idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);
 		} catch (LoginException e) {
-			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA,
-					MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao), e.getMessage(), idiomaImplementacao));
+			menuHistorico.voltarMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA,
+					menuHistorico.pegarMenuAnterior(), e.getMessage(), idiomaImplementacao));
 		}
 
 	}
