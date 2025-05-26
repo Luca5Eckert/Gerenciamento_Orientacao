@@ -7,7 +7,7 @@ import dtos.OrientacaoDto;
 import service.exceptions.orientacao.OrientacaoException;
 import utilitarios.FormatacaoUtil;
 
-public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
+public class PesquisaOrientacaoConteudo implements PesquisaOrientacao {
 
 	@Override
 	public List<OrientacaoDto> aplicarPesquisa(List<OrientacaoDto> orientacoes, String palavraPesquisada)
@@ -34,7 +34,7 @@ public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
 	private List<OrientacaoDto> retornarOrientacoesPerfeitas(List<OrientacaoDto> orientacoes,
 			String palavraPesquisada) {
 		return orientacoes.stream()
-				.filter(o -> FormatacaoUtil.removerAcento(o.titulo().toLowerCase()).equals(palavraPesquisada))
+				.filter(o -> FormatacaoUtil.removerAcento(o.conteudo().toLowerCase()).equals(palavraPesquisada))
 				.collect(Collectors.toList());
 	}
 
@@ -51,7 +51,7 @@ public class PesquisaOrientacaoTitulo implements PesquisaOrientacao {
 	}
 
 	private boolean verificarSePalavraSeAdequa(OrientacaoDto orientacao, String[] palavrasChave) {
-		String[] tituloPalavras = FormatacaoUtil.removerAcento(orientacao.titulo().toLowerCase()).split("\\W+");
+		String[] tituloPalavras = FormatacaoUtil.removerAcento(orientacao.conteudo().toLowerCase()).split("\\W+");
 		int quantidadePalavraIgual = contarQuantidadeSimilaridade(palavrasChave, tituloPalavras);
 		double porcentagemSimilaridade = (double) quantidadePalavraIgual / palavrasChave.length;
 		return porcentagemSimilaridade >= 0.7;

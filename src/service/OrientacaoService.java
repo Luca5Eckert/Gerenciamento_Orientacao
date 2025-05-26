@@ -16,12 +16,9 @@ import repositorio.OrientacaoRepositorio;
 import service.exceptions.orientacao.OrientacaoException;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.pesquisas.PesquisaFactory;
-import service.pesquisas.PesquisaOrientacao;
-import service.pesquisas.PesquisaTipo;
 
 public class OrientacaoService {
 	private OrientacaoRepositorio repositorioOrientacao;
-	private PesquisaOrientacao pesquisaOrientacao;
 
 	public OrientacaoService() {
 		this.repositorioOrientacao = new OrientacaoRepositorio();
@@ -58,9 +55,17 @@ public class OrientacaoService {
 
 	public List<OrientacaoDto> pesquisarOrientacao(String palavra, List<OrientacaoDto> listaOrientacao)
 			throws OrientacaoException {
-		this.pesquisaOrientacao = PesquisaFactory.pegarPesquisa(PesquisaTipo.TITULO);
-		listaOrientacao = pesquisaOrientacao.aplicarPesquisa(listaOrientacao, palavra);
-		return listaOrientacao;
+		List<OrientacaoDto> listaPesquisada = new ArrayList<OrientacaoDto>();
+
+		try {
+			listaPesquisada = PesquisaFactory.toTitulo().aplicarPesquisa(listaOrientacao, palavra);
+
+		} catch (OrientacaoException oe) {
+			listaPesquisada = PesquisaFactory.toConteudo().aplicarPesquisa(listaOrientacao, palavra);
+
+		}
+
+		return listaPesquisada;
 	}
 
 	public Map<IdiomaOrientacao, OrientacaoDto> pegarOrientacoesIdiomas(String idOrientacoes) {
@@ -97,8 +102,9 @@ public class OrientacaoService {
 				throw new OrientacaoNaoDisponivelIdiomaException(
 						idiomaImplementacao.pegarMensagemIdiomaNaoDisponivel());
 			}
-			
-			repositorioOrientacao.atualizarIdioma(idOrientacao, orientacaoAntiga.idiomaOrientacao(), orientacaoAlterada.idiomaOrientacao());
+
+			repositorioOrientacao.atualizarIdioma(idOrientacao, orientacaoAntiga.idiomaOrientacao(),
+					orientacaoAlterada.idiomaOrientacao());
 		}
 
 		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao);
