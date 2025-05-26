@@ -1,11 +1,17 @@
 package service;
 
-public class ValidarUsuario implements Validacao {
+import aplication.implementacoes.IdiomaImplementacao;
+import service.exceptions.usuario.CadastroException;
+import service.exceptions.usuario.CadastroUsuarioJaExistenteException;
+
+public class ValidarUsuario implements Validacao, Runnable {
 
     private String usuarioParaValidar;
+    private IdiomaImplementacao idiomaImplementacao;
 
-    public ValidarUsuario(String usuarioParaValidar) {
+    public ValidarUsuario(String usuarioParaValidar, IdiomaImplementacao idiomaImplementacao) {
         this.usuarioParaValidar = usuarioParaValidar;
+        this.idiomaImplementacao = idiomaImplementacao;
     }
 
     @Override
@@ -13,12 +19,27 @@ public class ValidarUsuario implements Validacao {
         return !comecaComEspaco() && !excedeLimiteCaracteres();
     }
 
-    private boolean comecaComEspaco() {
-        return usuarioParaValidar != null && usuarioParaValidar.startsWith(" ");
+    private boolean comecaComEspaco() throws CadastroException   {
+        boolean usuarioValido = usuarioParaValidar != null && usuarioParaValidar.startsWith(" ");
+        
+        if (!usuarioValido) {
+        	throw new CadastroException(idiomaImplementacao.pegarMensagemUsuarioInvalidoEmBranco());
+        }
+        return true;
     }
 
     private boolean excedeLimiteCaracteres() {
-        return usuarioParaValidar != null && usuarioParaValidar.length() > 15;
+    	boolean usuarioValido = usuarioParaValidar != null && usuarioParaValidar.length() >= 15;
+    	
+    	if(!usuarioValido) {
+        	throw new CadastroUsuarioJaExistenteException(idiomaImplementacao.pegarMensagemUsuarioInvalidoLimiteDeCaracters());
+    	}
+    	return true;
     }
+
+	@Override
+	public void run() {
+		validar();	
+	}
 
 }

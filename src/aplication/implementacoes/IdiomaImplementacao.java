@@ -125,7 +125,9 @@ public interface IdiomaImplementacao {
 	
 	String pegarMensagemEmailInvalido();
 	
-	String pegarMensagemUsuarioInvalido();
+	String pegarMensagemUsuarioInvalidoLimiteDeCaracters();
+	
+	String pegarMensagemUsuarioInvalidoEmBranco();
 	
 	String pegarMensagemEmailComSintaxeIncorreta();
 

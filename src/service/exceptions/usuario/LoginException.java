@@ -1,6 +1,6 @@
 package service.exceptions.usuario;
 
-public class LoginException extends Exception {
+public class LoginException extends RuntimeException {
 	
 	/**
 	 * 

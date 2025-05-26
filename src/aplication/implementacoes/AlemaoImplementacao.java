@@ -582,4 +582,22 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemFiltroJaCriado() {
 		return "Filter bereits hinzugefügt";
 	}
+
+	@Override
+	public String pegarMensagemEmailInvalido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemEmailComSintaxeIncorreta() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

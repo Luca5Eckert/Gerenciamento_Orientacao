@@ -583,4 +583,22 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         System.out.println("                 CAMBIO EXITOSO                             ");
         System.out.println("============================================================");
     }
+
+	@Override
+	public String pegarMensagemEmailInvalido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemEmailComSintaxeIncorreta() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

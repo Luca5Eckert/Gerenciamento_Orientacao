@@ -582,4 +582,22 @@ public class InglesImplementacao implements IdiomaImplementacao {
     public String pegarMensagemFiltroJaCriado() {
         return "Filter already added";
     }
+
+	@Override
+	public String pegarMensagemEmailInvalido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemUsuarioInvalido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String pegarMensagemEmailComSintaxeIncorreta() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

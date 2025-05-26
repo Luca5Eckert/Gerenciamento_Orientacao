@@ -1,6 +1,6 @@
 package service.exceptions.usuario;
 
-public class CadastroException extends Exception{
+public class CadastroException extends RuntimeException{
 	
 	/**
 	 * 

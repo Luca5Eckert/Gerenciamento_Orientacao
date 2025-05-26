@@ -1,6 +1,6 @@
 package service;
 
-import java.util.regex.Pattern;
+import java.util.concurrent.CompletableFuture;
 
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
@@ -10,64 +10,35 @@ import service.exceptions.usuario.CadastroUsuarioJaExistenteException;
 
 public class CadastroService {
 
-	CadastroService() {
-
-	}
-
-	public boolean validarUsuarioEmail(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
+	public boolean validarUsuario(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
 			IdiomaImplementacao idiomaImplementacao)
 			throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
-		
-		return validarSeEhNovo(usuarioDto, usuarioRepositorio, idiomaImplementacao)
-				&& validarSenha(usuarioDto, idiomaImplementacao);
-	}
 
-	public boolean validarSeEhNovo(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
-			IdiomaImplementacao idiomaImplementacao) throws CadastroUsuarioJaExistenteException {
-		if (usuarioRepositorio.verificaSeUsuarioExisteEmail(usuarioDto.email())) {
-			throw new CadastroUsuarioJaExistenteException(idiomaImplementacao.pegarMensagemErroCadastroUsuarioExistente());
-		}
+		CompletableFuture<Void> validarNome = CompletableFuture
+				.runAsync(() -> validarNomeUsuario(usuarioDto.nome(), idiomaImplementacao));
+
+		CompletableFuture<Void> validarEmail = CompletableFuture
+				.runAsync(() -> validarEmailUsuario(usuarioDto.email(), idiomaImplementacao, usuarioRepositorio));
+
+		CompletableFuture<Void> validarSenha = CompletableFuture
+				.runAsync(() -> validarSenhaUsuario(usuarioDto.senha(), idiomaImplementacao));
+
+		CompletableFuture.allOf(validarNome, validarEmail, validarSenha).join();
+
 		return true;
-		
 	}
 
-	public boolean validarSenha(UsuarioDto usuarioDto, IdiomaImplementacao idiomaImplementacao)
-			throws CadastroSenhaException {
-		return validarTamanhoSenha(usuarioDto.senha(), idiomaImplementacao)
-				&& validarLetraMaiusculaSenha(usuarioDto.senha(), idiomaImplementacao)
-				&& validarCaracterEspecial(usuarioDto.senha(), idiomaImplementacao);
+	private void validarNomeUsuario(String nomeUsuario, IdiomaImplementacao idiomaImplementacao) {
+		Validacoes.toUsuario(nomeUsuario, idiomaImplementacao).run();
 	}
 
-	public boolean validarTamanhoSenha(String senhaUsuario, IdiomaImplementacao idiomaImplementacao)
-			throws CadastroSenhaException {
-		if (senhaUsuario.length() >= 8) {
-			return true;
-		}
-
-		throw new CadastroSenhaException(idiomaImplementacao.pegarMensagemErroCadastroSenhaPequena());
+	private void validarEmailUsuario(String emailUsuario, IdiomaImplementacao idiomaImplementacao,
+			UsuarioRepositorio usuarioRepositorio) {
+		Validacoes.toEmail(emailUsuario, usuarioRepositorio, idiomaImplementacao).run();
 	}
 
-	public boolean validarLetraMaiusculaSenha(String senhaUsuario, IdiomaImplementacao idiomaImplementacao)
-			throws CadastroSenhaException {
-		final Pattern MAIUSCULA = Pattern.compile("[A-Z]");
-
-		if (MAIUSCULA.matcher(senhaUsuario).find()) {
-			return true;
-		}
-
-		throw new CadastroSenhaException(idiomaImplementacao.pegarMensagemErroCadastroSenhaSemMaiscula());
-
+	private void validarSenhaUsuario(String senhaUsuario, IdiomaImplementacao idiomaImplementacao) {
+		Validacoes.toSenha(senhaUsuario, idiomaImplementacao).run();
 	}
 
-	public boolean validarCaracterEspecial(String senhaUsuario, IdiomaImplementacao idiomaImplementacao)
-			throws CadastroSenhaException {
-		final Pattern CARACTER_ESPECIAL = Pattern.compile("[^a-zA-Z0-9]");
-
-		if (CARACTER_ESPECIAL.matcher(senhaUsuario).find()) {
-			return true;
-		}
-
-		throw new CadastroSenhaException(idiomaImplementacao.pegarMensagemErroCadastroSenhaSemCaracterEspecial());
-
-	}
 }

@@ -1,6 +1,6 @@
 package service.exceptions.orientacao;
 
-public class OrientacaoException extends Exception{
+public class OrientacaoException extends RuntimeException{
 
 	/**
 	 * 
