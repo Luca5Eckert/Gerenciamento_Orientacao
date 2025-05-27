@@ -47,7 +47,7 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         String senha = input.nextLine();
 
         System.out.println("------------------------------------------------------------");
-        return new UsuarioDto(email, null, senha);
+        return new UsuarioDto(null, email, senha);
     }
 
     @Override

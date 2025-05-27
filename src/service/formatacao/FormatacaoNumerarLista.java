@@ -16,7 +16,7 @@ public class FormatacaoNumerarLista {
 
 		for (OrientacaoDto orientacao : listaParaFormatar) {
 			formatado.append(
-					" " + numeroOrientacao + " " + FormatacaoUtil.enquadrarTextoNoMenu(orientacao.titulo(), 57, 0) + "\n");
+					" " + numeroOrientacao + " - " + FormatacaoUtil.enquadrarTextoNoMenu(orientacao.titulo(), 57, 0) + "\n");
 			numeroOrientacao++;
 		}
 		return formatado.toString();

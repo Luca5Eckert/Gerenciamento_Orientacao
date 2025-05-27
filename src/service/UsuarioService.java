@@ -38,7 +38,7 @@ public class UsuarioService {
 	}
 
 	private Usuario converterDtoParaUsuario(UsuarioDto dto) {
-		return new Usuario(0, dto.email(), dto.nome(), dto.senha());
+		return new Usuario(0, dto.nome(), dto.email(), dto.senha());
 	}
 
 }
