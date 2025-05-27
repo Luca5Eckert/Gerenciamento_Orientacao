@@ -192,4 +192,17 @@ public class OrientacaoDAO {
 
 		}
 	}
+
+	public void removerPorId(String idOrientacao) throws SQLException {
+		String sql = "DELETE FROM orientacao WHERE id = ?";
+		
+		try( Connection conexao = ConexaoFactory.getConnection();
+				PreparedStatement statement = conexao.prepareStatement(sql)){
+			
+			statement.setString(1, idOrientacao);
+			
+			statement.executeUpdate();
+		}
+		
+	}
 }

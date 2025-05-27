@@ -17,7 +17,7 @@ public interface IdiomaImplementacao {
 
 	UsuarioDto mostrarMenuLogin(Scanner input);
 
-	UsuarioDto mostrarMenuCadastro(Scanner input);
+	UsuarioDto  mostrarMenuCadastro(Scanner input);
 
 	String mostrarMenuGeral(Scanner input);
 
@@ -131,4 +131,7 @@ public interface IdiomaImplementacao {
 	
 	String pegarMensagemEmailComSintaxeIncorreta();
 
+	String mostrarMenuOpcaoApagarOrientacao(Scanner input) throws SairMenuException;
+	
+	String pegarMensagemVoltandoMenu();
 }

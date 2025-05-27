@@ -605,4 +605,25 @@ public class InglesImplementacao implements IdiomaImplementacao {
         return " Invalid username\n" + " Blank or starts with a space";
     }
 
+	@Override
+	public String mostrarMenuOpcaoApagarOrientacao(Scanner input) throws SairMenuException {
+		System.out.println("============================================================");
+	    System.out.println("               SELECT DELETE OPTION                         ");
+	    System.out.println("============================================================");
+	    System.out.println("A- Delete only for Portuguese");
+	    System.out.println("T- Delete in all languages");
+	    System.out.println("C- Cancel");
+	    String opcao = input.nextLine().trim().toUpperCase();
+
+	    if (opcao.equals("C")) {
+	        throw new SairMenuException();
+	    }
+	    return opcao;
+	}
+
+	@Override
+	public String pegarMensagemVoltandoMenu() {
+		return " Returning ";
+	}
+
 }

@@ -604,5 +604,27 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemUsuarioInvalidoEmBranco() {
 	    return " Nombre de usuario no válido\n" + " En blanco o comienza con un espacio";
 	}
+	
+	@Override
+	public String mostrarMenuOpcaoApagarOrientacao(Scanner input) throws SairMenuException {
+	    System.out.println("============================================================");
+	    System.out.println("               SELECCIONAR OPCIÓN DE BORRADO                ");
+	    System.out.println("============================================================");
+	    System.out.println("A- Borrar solo en portugués");
+	    System.out.println("T- Borrar en todos los idiomas");
+	    System.out.println("C- Cancelar");
+	    String opcao = input.nextLine().trim().toUpperCase();
+
+	    if (opcao.equals("C")) {
+	        throw new SairMenuException();
+	    }
+	    return opcao;
+	}
+
+	@Override
+	public String pegarMensagemVoltandoMenu() {
+		return " Volviendo ";
+	}
+
 
 }

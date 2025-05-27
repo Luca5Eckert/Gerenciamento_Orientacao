@@ -1,6 +1,7 @@
 package Dominio;
 
 public class Orientacao {
+	
 	private OrientacaoId idOrientacao;
 	
 	private String titulo;

@@ -7,7 +7,8 @@ import aplication.implementacoes.IdiomaImplementacao;
 
 public enum IdiomaOrientacao implements Filtro<IdiomaOrientacao> {
 	PORTUGUES("Português", "Portuguese", "Portugiesisch", "Portugués"),
-	INGLES("Inglês", "English", "Englisch", "Inglés"), ALEMAO("Alemão", "German", "Deutsch", "Alemán"),
+	INGLES("Inglês", "English", "Englisch", "Inglés"), 
+	ALEMAO("Alemão", "German", "Deutsch", "Alemán"),
 	ESPANHOL("Espanhol", "Spanish", "Spanisch", "Español");
 
 	private final String idiomaPortugues;

@@ -601,13 +601,33 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 
 	@Override
 	public String pegarMensagemUsuarioInvalidoLimiteDeCaracters() {
-		return " Nome de usuário invalido\n"
-				+ " Ultrapassou o limite de 15 caracteres";
+		return " Nome de usuário invalido\n" + " Ultrapassou o limite de 15 caracteres";
 	}
 
 	@Override
 	public String pegarMensagemUsuarioInvalidoEmBranco() {
 		return " Nome de usuário invalido\n" + " Em branco ou começa com espaço";
+	}
+
+	@Override
+	public String mostrarMenuOpcaoApagarOrientacao(Scanner input) throws SairMenuException {
+		System.out.println("============================================================");
+		System.out.println("               SELECIONAR OPCAO APAGAR                      ");
+		System.out.println("============================================================");
+		System.out.println("A- Apagar apenas para português");
+		System.out.println("T- Apagar em todos idiomas");
+		System.out.println("C- Cancelar");
+		String opcao = input.nextLine().trim().toUpperCase();
+
+		if (opcao.equals("C")) {
+			throw new SairMenuException();
+		}
+		return opcao;
+	}
+
+	@Override
+	public String pegarMensagemVoltandoMenu() {
+		return " Voltando ";
 	}
 
 }

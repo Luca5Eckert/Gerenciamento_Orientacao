@@ -169,4 +169,11 @@ public class OrientacaoService {
 		var orientacaoModelo = transformarDtoModelo(orientacaoDto);
 		return repositorioOrientacao.pegarIndexOrientacao(orientacaoModelo);
 	}
+
+	public void apagarOrientacaoId(OrientacaoDto orientacaoDto) {
+		var idOrientacao = pegarIdOrientacao(orientacaoDto);
+		
+		repositorioOrientacao.removerOrientacoesPorId(idOrientacao);
+		
+	}
 }
