@@ -22,17 +22,14 @@ public class UsuarioService {
 	}
 
 	public boolean realizarLogin(UsuarioDto usuarioDto) throws LoginException {
-		return loginService.validarLogin(usuarioDto, usuarioRepositorio, idiomaImplementacao);
+		var usuarioDb = usuarioRepositorio.pegarUsuarioEmail(usuarioDto.email());
+		return loginService.validarLogin(usuarioDto, usuarioDb, idiomaImplementacao);
 	}
 
 	public boolean realizarCadastro(UsuarioDto usuarioDto)
 			throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
-		cadastroService.validarUsuario(usuarioDto, usuarioRepositorio, idiomaImplementacao);
-
 		Usuario usuario = converterDtoParaUsuario(usuarioDto);
-		this.usuarioRepositorio.adicionarUsuario(usuario);
-
-		return true;
+		return cadastroService.realizarCadastro(usuario, usuarioRepositorio, idiomaImplementacao);
 	}
 
 	private Usuario converterDtoParaUsuario(UsuarioDto dto) {

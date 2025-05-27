@@ -2,44 +2,48 @@ package service;
 
 import java.util.concurrent.CompletableFuture;
 
+import Dominio.Usuario;
 import aplication.implementacoes.IdiomaImplementacao;
-import dtos.UsuarioDto;
 import infrastructure.security.UsuarioSecurity;
 import repositorio.UsuarioRepositorio;
 import service.exceptions.usuario.CadastroSenhaException;
 import service.exceptions.usuario.CadastroUsuarioJaExistenteException;
 
 public class CadastroService {
-	
+
 	private UsuarioSecurity seguranca;
-	
+
 	public CadastroService() {
 		this.seguranca = new UsuarioSecurity();
 	}
-	
+
 	public boolean realizarCadastro(Usuario usuario, UsuarioRepositorio usuarioRepositorio,
 			IdiomaImplementacao idiomaImplementacao) {
-		validarUsuario(usuarioDto, idiomaImplementacao);
+		validarUsuario(usuario, idiomaImplementacao, usuarioRepositorio);
 		
-		usuarioRepositorio.adicionarUsuario(usuarioDto);
+		String senhaHash = seguranca.criptogramarSenha(usuario.getSenha());
+		
+		usuario.setSenha(senhaHash);
+		
+		usuarioRepositorio.adicionarUsuario(usuario);
+		return true;
+
 	}
 
-	public boolean validarUsuario(UsuarioDto usuarioDto,
-			IdiomaImplementacao idiomaImplementacao)
-			throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
+	public boolean validarUsuario(Usuario usuario, IdiomaImplementacao idiomaImplementacao,
+			UsuarioRepositorio usuarioRepositorio) throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
 
 		CompletableFuture<Void> validarNome = CompletableFuture
-				.runAsync(() -> validarNomeUsuario(usuarioDto.nome(), idiomaImplementacao));
+				.runAsync(() -> validarNomeUsuario(usuario.getNome(), idiomaImplementacao));
 
 		CompletableFuture<Void> validarEmail = CompletableFuture
-				.runAsync(() -> validarEmailUsuario(usuarioDto.email(), idiomaImplementacao, usuarioRepositorio));
+				.runAsync(() -> validarEmailUsuario(usuario.getEmail(), idiomaImplementacao, usuarioRepositorio));
 
 		CompletableFuture<Void> validarSenha = CompletableFuture
-				.runAsync(() -> validarSenhaUsuario(usuarioDto.senha(), idiomaImplementacao));
+				.runAsync(() -> validarSenhaUsuario(usuario.getSenha(), idiomaImplementacao));
 
-		
 		CompletableFuture.allOf(validarNome, validarEmail, validarSenha).join();
-	
+
 		return true;
 
 	}
