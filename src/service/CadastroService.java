@@ -24,18 +24,9 @@ public class CadastroService {
 		CompletableFuture<Void> validarSenha = CompletableFuture
 				.runAsync(() -> validarSenhaUsuario(usuarioDto.senha(), idiomaImplementacao));
 
-		try {
-			CompletableFuture.allOf(validarNome, validarEmail, validarSenha).join();
-		} catch (CompletionException ce) {
-			Throwable cause = ce.getCause();
-			if (cause instanceof CadastroUsuarioJaExistenteException) {
-				throw (CadastroUsuarioJaExistenteException) cause;
-			} else if (cause instanceof CadastroSenhaException) {
-				throw (CadastroSenhaException) cause;
-			} else {
-				throw ce;
-			}
-		}
+		
+		CompletableFuture.allOf(validarNome, validarEmail, validarSenha).join();
+	
 		return true;
 
 	}

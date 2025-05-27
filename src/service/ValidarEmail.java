@@ -4,13 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import aplication.implementacoes.IdiomaImplementacao;
-import repositorio.OrientacaoRepositorio;
 import repositorio.UsuarioRepositorio;
 import service.exceptions.usuario.EmailInvalidoException;
 
 public class ValidarEmail implements Validacao, Runnable {
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})?$";
 
 	private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
 
@@ -33,8 +31,8 @@ public class ValidarEmail implements Validacao, Runnable {
 
 	public boolean validarEmailEscrita() throws EmailInvalidoException {
 		Matcher verificador = pattern.matcher(emailParaValidar);
-		boolean emailValido = !verificador.matches();
-
+		boolean emailValido = verificador.matches();
+		
 		if (!emailValido) {
 			throw new EmailInvalidoException(idiomaImplementacao.pegarMensagemEmailComSintaxeIncorreta());
 		}
