@@ -30,18 +30,18 @@ public class MenuExibirOrientacoes extends Menu {
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		List<OrientacaoDto> orientacoesFiltradas = new ArrayList<>();
-		String textoFormatado;
+		String textoFormatado = null;
 
 		try {
 			orientacoesFiltradas = orientacaoService.aplicarFiltro(gerenciadorFiltro);
-		} catch (OrientacaoException e) {
+			textoFormatado = formatacaoLista.formatarOrientacoesPorTitulo(orientacoesFiltradas, idiomaImplementacao);
+		} catch (OrientacaoException oe) {
 			textoFormatado = idiomaImplementacao.pegarMensagemOrientacoesNaoEncontrada();
 		}
 
-		textoFormatado = formatacaoLista.formatarOrientacoesPorTitulo(orientacoesFiltradas, idiomaImplementacao);
-
-		String palavra = obterPalavraPesquisada();
-		String opcao = idiomaImplementacao.mostrarMenuOrientacaoDisponiveis(input, textoFormatado, palavra);
+		var palavraPesquisada = obterPalavraPesquisada();
+		
+		String opcao = idiomaImplementacao.mostrarMenuOrientacaoDisponiveis(input, textoFormatado, palavraPesquisada);
 
 		if (opcao.trim().toUpperCase().equals("V")) {
 			menuHistorico.voltarMenu(MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao));
@@ -70,8 +70,9 @@ public class MenuExibirOrientacoes extends Menu {
 	}
 
 	private void irMenuFiltro(MenuHistorico menuHistorico) {
-		menuHistorico.definirProximoMenu(MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao));
-		
+		menuHistorico.definirProximoMenu(
+				MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao));
+
 	}
 
 	private void irMenuPesquisa(MenuHistorico menuHistorico) {
@@ -80,6 +81,10 @@ public class MenuExibirOrientacoes extends Menu {
 	}
 
 	private void criarMenuPesquisa(String opcao, List<OrientacaoDto> listaOrientacao, MenuHistorico menuHistorico) {
+		if (opcao.trim().toUpperCase().equals("L")) {
+			return;
+		}
+
 		try {
 			int numeroOrientacao = Integer.parseInt(opcao);
 			var orientacao = listaOrientacao.get(numeroOrientacao - 1);

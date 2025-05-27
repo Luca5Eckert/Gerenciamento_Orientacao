@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -7,7 +7,13 @@
   <artifactId>GerenciadorOrientacoesWeg</artifactId>
   <version>1.0.0</version>
   <name>GerenciadorOrientacoesWeg</name>
-  <description>Gerenciador de orientações da weg</description>
+  <description>Gerenciador de orientações da WEG</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+  </properties>
 
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -24,9 +30,15 @@
 
   <dependencies>
     <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.32</version>
-	</dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>0.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.32</version>
+    </dependency>
   </dependencies>
 </project>

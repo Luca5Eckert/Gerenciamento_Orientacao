@@ -4,8 +4,8 @@ import java.util.List;
 
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
+import infrastructure.utilitarios.FormatacaoUtil;
 import service.filtros.TipoFiltro;
-import utilitarios.FormatacaoUtil;
 
 public class FormatacaoNumerarLista {
 

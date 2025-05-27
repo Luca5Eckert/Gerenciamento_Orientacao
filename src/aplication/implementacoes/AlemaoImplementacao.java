@@ -9,7 +9,7 @@ import Dominio.TipoOrientacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
-import utilitarios.FormatacaoUtil;
+import infrastructure.utilitarios.FormatacaoUtil;
 
 public class AlemaoImplementacao implements IdiomaImplementacao {
 
@@ -149,7 +149,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println(" V- Zum Hauptmenü zurückkehren");
 		System.out.println(" F- Filter                                   P- Suchen     ");
 
-		System.out.println(" A- Suche löschen");
+		System.out.println(" A - Suche löschen                           L - Neu laden ");
 		System.out.println(" R- Filter entfernen  \n ");
 		System.out.println("\n Ergebnisse: " + palavraPesquisada);
 

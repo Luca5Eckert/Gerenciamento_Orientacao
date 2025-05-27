@@ -9,8 +9,8 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;
+import infrastructure.utilitarios.FormatacaoUtil;
 import service.OrientacaoService;
-import utilitarios.FormatacaoUtil;
 
 public class MenuEditarOrientacao extends Menu {
 

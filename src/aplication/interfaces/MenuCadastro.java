@@ -9,7 +9,6 @@ import java.util.Scanner;
 import java.util.concurrent.CompletionException;
 
 import service.UsuarioService;
-import service.exceptions.usuario.CadastroException;
 
 public class MenuCadastro extends Menu {
 

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dtos.OrientacaoDto;
+import infrastructure.utilitarios.FormatacaoUtil;
 import service.exceptions.orientacao.OrientacaoException;
-import utilitarios.FormatacaoUtil;
 
 public class PesquisaOrientacaoConteudo implements PesquisaOrientacao {
 

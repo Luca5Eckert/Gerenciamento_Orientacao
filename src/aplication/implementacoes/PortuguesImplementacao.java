@@ -9,7 +9,7 @@ import Dominio.TipoOrientacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import dtos.UsuarioDto;
-import utilitarios.FormatacaoUtil;
+import infrastructure.utilitarios.FormatacaoUtil;
 
 public class PortuguesImplementacao implements IdiomaImplementacao {
 
@@ -151,7 +151,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(" V- Voltar para o menu geral");
 		System.out.println(" F- Filtros                                   P- Pesquisar  ");
 
-		System.out.println(" A- Apagar pesquisa");
+		System.out.println(" A- Apagar pesquisa                           L- Recarregar ");
 		System.out.println(" R- Retirar filtros  \n ");
 		System.out.println("\n Resultado: " + palavraPesquisada);
 

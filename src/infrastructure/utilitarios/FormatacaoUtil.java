@@ -1,4 +1,4 @@
-package utilitarios;
+package infrastructure.utilitarios;
 
 import java.text.Normalizer;
 import java.util.regex.Pattern;

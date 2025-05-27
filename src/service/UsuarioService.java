@@ -7,8 +7,6 @@ import repositorio.UsuarioRepositorio;
 import service.exceptions.usuario.CadastroSenhaException;
 import service.exceptions.usuario.CadastroUsuarioJaExistenteException;
 import service.exceptions.usuario.LoginException;
-import service.exceptions.usuario.LoginSenhaException;
-import service.exceptions.usuario.LoginUsuarioException;
 
 public class UsuarioService {
 	private final UsuarioRepositorio usuarioRepositorio;

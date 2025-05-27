@@ -1,17 +1,30 @@
 package service;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
+import infrastructure.security.UsuarioSecurity;
 import repositorio.UsuarioRepositorio;
 import service.exceptions.usuario.CadastroSenhaException;
 import service.exceptions.usuario.CadastroUsuarioJaExistenteException;
 
 public class CadastroService {
+	
+	private UsuarioSecurity seguranca;
+	
+	public CadastroService() {
+		this.seguranca = new UsuarioSecurity();
+	}
+	
+	public boolean realizarCadastro(Usuario usuario, UsuarioRepositorio usuarioRepositorio,
+			IdiomaImplementacao idiomaImplementacao) {
+		validarUsuario(usuarioDto, idiomaImplementacao);
+		
+		usuarioRepositorio.adicionarUsuario(usuarioDto);
+	}
 
-	public boolean validarUsuario(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
+	public boolean validarUsuario(UsuarioDto usuarioDto,
 			IdiomaImplementacao idiomaImplementacao)
 			throws CadastroUsuarioJaExistenteException, CadastroSenhaException {
 

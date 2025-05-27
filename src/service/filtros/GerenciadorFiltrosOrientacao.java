@@ -61,6 +61,9 @@ public class GerenciadorFiltrosOrientacao {
 			listaFiltrada = service.pesquisarOrientacao(palavraBuscada, listaFiltrada);
 		}
 
+		if(listaFiltrada.isEmpty()) {
+			throw new OrientacaoException();
+		}
 		return listaFiltrada;
 	}
 
