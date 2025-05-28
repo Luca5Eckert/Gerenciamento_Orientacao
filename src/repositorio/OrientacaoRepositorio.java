@@ -120,4 +120,12 @@ public class OrientacaoRepositorio {
 		}
 		
 	}
+	
+	public void removerOrientacaoPorId(String idOrientacao) {
+		try {
+			orientacaoDAO.removerPorId(idOrientacao);
+		} catch ( SQLException se) {
+			System.out.println("Erro ao remover orientação por id: " + se.getMessage());
+		}
+	}
 }
