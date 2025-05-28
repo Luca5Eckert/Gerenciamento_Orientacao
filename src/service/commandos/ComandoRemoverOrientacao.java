@@ -1,6 +1,6 @@
 package service.commandos;
 
-import Dominio.SessaoUsuario;
+import service.SessaoUsuario;
 
 public class ComandoRemoverOrientacao extends Comando{
 	

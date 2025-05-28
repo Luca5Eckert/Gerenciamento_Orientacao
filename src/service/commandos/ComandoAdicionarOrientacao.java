@@ -1,7 +1,7 @@
 package service.commandos;
 
-import Dominio.SessaoUsuario;
 import repositorio.OrientacaoRepositorio;
+import service.SessaoUsuario;
 
 public class ComandoAdicionarOrientacao extends Comando {
 	private String idOrientacao;
