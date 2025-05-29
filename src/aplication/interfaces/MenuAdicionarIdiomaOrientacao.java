@@ -10,19 +10,22 @@ import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
+import service.SessaoUsuario;
 
 public class MenuAdicionarIdiomaOrientacao extends Menu {
 
 	private final OrientacaoService orientacaoService;
 	private OrientacaoDto orientacaoDto;
 	private final IdiomaOrientacao idiomaOrientacao;
+	private SessaoUsuario sessaoUsuario;
 
 	public MenuAdicionarIdiomaOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService,
-			Menu menuAnterior, OrientacaoDto orientacaoDto, IdiomaOrientacao idiomaOrientacao) {
+			Menu menuAnterior, OrientacaoDto orientacaoDto, IdiomaOrientacao idiomaOrientacao, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
 		this.orientacaoDto = orientacaoDto;
 		this.idiomaOrientacao = idiomaOrientacao;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override

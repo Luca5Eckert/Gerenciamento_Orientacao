@@ -1,13 +1,32 @@
 package service.commandos;
 
+import dtos.OrientacaoDto;
+import service.OrientacaoService;
 import service.SessaoUsuario;
 
-public class ComandoRemoverOrientacao extends Comando{
-	
+public class ComandoRemoverOrientacao extends Comando {
 
-	public ComandoRemoverOrientacao(SessaoUsuario usuarioEfetor) {
+	private OrientacaoService service;
+	private OrientacaoDto orientacaoRemover;
+
+	public ComandoRemoverOrientacao(SessaoUsuario usuarioEfetor, OrientacaoService service,
+			OrientacaoDto orientacaoRemover) {
 		super(usuarioEfetor);
-		// TODO Auto-generated constructor stub
+		this.service = service;
+		this.orientacaoRemover = orientacaoRemover;
+	}
+
+	@Override
+	public RegistroComando executarComando() {
+		var registroComando = devolverRegistroComando();
+		service.removerOrientacao(orientacaoRemover);
+		return registroComando;
+	}
+
+	@Override
+	public RegistroComando devolverRegistroComando() {
+		String idOrientacao = service.pegarIdOrientacao(orientacaoRemover);
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, pegarTipo());
 	}
 
 	@Override
@@ -17,8 +36,7 @@ public class ComandoRemoverOrientacao extends Comando{
 
 	@Override
 	public void voltarAcao() {
-		// TODO Auto-generated method stub
-		
+		service.criarOrientacao(orientacaoRemover);
 	}
 
 }

@@ -5,11 +5,15 @@ import java.util.Scanner;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.SessaoUsuario;
 
 public class MenuGeral extends Menu {
 
-	public MenuGeral(IdiomaImplementacao idiomaImplementacao) {
+	private SessaoUsuario sessaoUsuario;
+	
+	public MenuGeral(IdiomaImplementacao idiomaImplementacao, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override

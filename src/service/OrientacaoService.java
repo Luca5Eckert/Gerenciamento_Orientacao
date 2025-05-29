@@ -176,4 +176,8 @@ public class OrientacaoService {
 		repositorioOrientacao.removerOrientacoesPorId(idOrientacao);
 		
 	}
+	
+	public void removerOrientacaoPorId(String idOrientacao) {
+		repositorioOrientacao.removerOrientacaoPorId(idOrientacao);
+	}
 }

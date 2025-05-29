@@ -5,6 +5,7 @@ import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
+import service.SessaoUsuario;
 import service.UsuarioService;
 import service.exceptions.usuario.LoginException;
 
@@ -22,7 +23,7 @@ public class MenuLogin extends Menu {
 		UsuarioDto usuarioParaLogar = idiomaImplementacao.mostrarMenuLogin(input);
 
 		try {
-			service.realizarLogin(usuarioParaLogar);
+			SessaoUsuario sessaoUsuario = service.realizarLogin(usuarioParaLogar);
 			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO,
 					MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
 					idiomaImplementacao.pegarMensagemLoginConcluido(), idiomaImplementacao);

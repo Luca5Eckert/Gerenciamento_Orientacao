@@ -9,6 +9,7 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
+import service.SessaoUsuario;
 import service.exceptions.orientacao.OrientacaoException;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.formatacao.FormatacaoNumerarLista;
@@ -18,13 +19,15 @@ public class MenuExibirOrientacoes extends Menu {
 	private final OrientacaoService orientacaoService;
 	private final GerenciadorFiltrosOrientacao gerenciadorFiltro;
 	private final FormatacaoNumerarLista formatacaoLista;
+	private SessaoUsuario sessaoUsuario;
 
 	public MenuExibirOrientacoes(OrientacaoService orientacaoService, GerenciadorFiltrosOrientacao gerenciadorFiltro,
-			FormatacaoNumerarLista formatacaoLista, IdiomaImplementacao idiomaImplementacao) {
+			FormatacaoNumerarLista formatacaoLista, IdiomaImplementacao idiomaImplementacao, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
 		this.gerenciadorFiltro = gerenciadorFiltro;
 		this.formatacaoLista = formatacaoLista;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override

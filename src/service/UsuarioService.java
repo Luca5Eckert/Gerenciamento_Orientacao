@@ -21,9 +21,8 @@ public class UsuarioService {
 		this.loginService = new LoginService();
 	}
 
-	public boolean realizarLogin(UsuarioDto usuarioDto) throws LoginException {
-		var usuarioDb = usuarioRepositorio.pegarUsuarioEmail(usuarioDto.email());
-		return loginService.validarLogin(usuarioDto, usuarioDb, idiomaImplementacao);
+	public SessaoUsuario realizarLogin(UsuarioDto usuarioDto) throws LoginException {
+		return loginService.realizarLogin(usuarioDto, usuarioRepositorio, idiomaImplementacao);
 	}
 
 	public boolean realizarCadastro(UsuarioDto usuarioDto)

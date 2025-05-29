@@ -13,6 +13,7 @@ import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
+import service.SessaoUsuario;
 import service.formatacao.FormatacaoListaComDivisoria;
 
 public class MenuVisualizarOrientacao extends Menu {
@@ -20,13 +21,15 @@ public class MenuVisualizarOrientacao extends Menu {
 	private final OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
 	private final FormatacaoListaComDivisoria formatador;
+	private SessaoUsuario sessaoUsuario;
 
 	public MenuVisualizarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
-			OrientacaoService orientacaoService, FormatacaoListaComDivisoria formatador) {
+			OrientacaoService orientacaoService, FormatacaoListaComDivisoria formatador, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.orientacaoDto = orientacaoDto;
 		this.orientacaoService = orientacaoService;
 		this.formatador = formatador;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override
@@ -52,7 +55,8 @@ public class MenuVisualizarOrientacao extends Menu {
 	public void devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input, MenuHistorico menuHistorico) {
 		switch (opcao.trim().toUpperCase()) {
-		case "E" ->menuHistorico.definirProximoMenu( MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao));
+		case "E" -> menuHistorico.definirProximoMenu(
+				MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao));
 		case "S" -> menuHistorico.voltarMenu();
 		case "A" -> removerOrientacao(input, menuHistorico);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes, menuHistorico);
@@ -61,9 +65,9 @@ public class MenuVisualizarOrientacao extends Menu {
 	}
 
 	public void removerOrientacao(Scanner input, MenuHistorico menuHistorico) {
-		try {			
+		try {
 			escolherOpcaoDeletar(input, menuHistorico);
-			
+
 			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao(), idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);
@@ -78,28 +82,28 @@ public class MenuVisualizarOrientacao extends Menu {
 
 	private void escolherOpcaoDeletar(Scanner input, MenuHistorico menuHistorico) throws SairMenuException {
 		String opcaoDelete = idiomaImplementacao.mostrarMenuOpcaoApagarOrientacao(input);
-		
-		switch(opcaoDelete.trim().toUpperCase()) {
+
+		switch (opcaoDelete.trim().toUpperCase()) {
 		case "T":
-			if(confirmarSeDesejaApagar(input)) {
+			if (confirmarSeDesejaApagar(input)) {
 				menuHistorico.sobscreverMenu(menuHistorico.pegarMenuAnterior());
 				orientacaoService.apagarOrientacaoId(orientacaoDto);
 			}
 			break;
 		case "A":
-			if(confirmarSeDesejaApagar(input)) {
+			if (confirmarSeDesejaApagar(input)) {
 				menuHistorico.sobscreverMenu(menuHistorico.pegarMenuAnterior());
 				orientacaoService.removerOrientacao(orientacaoDto);
 			}
 			break;
 		}
-		
+
 	}
-	
+
 	private boolean confirmarSeDesejaApagar(Scanner input) throws SairMenuException {
 		String confirmar = idiomaImplementacao.mostrarMenuConfirmarApagarOrientacao(input);
-		
-		if(confirmar.trim().toUpperCase().equals("A")) {
+
+		if (confirmar.trim().toUpperCase().equals("A")) {
 			return true;
 		}
 		return false;
@@ -166,5 +170,4 @@ public class MenuVisualizarOrientacao extends Menu {
 		return listaNaoDisponivel;
 	}
 
-	
 }

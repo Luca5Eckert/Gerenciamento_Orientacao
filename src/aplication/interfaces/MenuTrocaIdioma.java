@@ -7,14 +7,17 @@ import aplication.IdiomaFactory;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.SessaoUsuario;
 
 public class MenuTrocaIdioma extends Menu {
 
 	private Menu menuAnterior;
+	private SessaoUsuario sessaoUsuario;
 
-	public MenuTrocaIdioma(IdiomaImplementacao idiomaImplementacao, Menu menuAnterior) {
+	public MenuTrocaIdioma(IdiomaImplementacao idiomaImplementacao, Menu menuAnterior, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.menuAnterior = menuAnterior;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 	
 	@Override

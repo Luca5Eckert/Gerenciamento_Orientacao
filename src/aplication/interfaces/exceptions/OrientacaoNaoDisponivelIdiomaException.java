@@ -1,6 +1,6 @@
 package aplication.interfaces.exceptions;
 
-public class OrientacaoNaoDisponivelIdiomaException extends Exception {
+public class OrientacaoNaoDisponivelIdiomaException extends RuntimeException {
 
 	/**
 	 * 

@@ -13,6 +13,10 @@ public abstract class Comando {
 		return usuarioEfetor;
 	}
 	
+	public abstract RegistroComando executarComando();
+	
+	public abstract RegistroComando devolverRegistroComando();
+	
 	public abstract TiposComando pegarTipo();
 	
 	public abstract void voltarAcao();

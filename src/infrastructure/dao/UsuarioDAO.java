@@ -121,4 +121,22 @@ public class UsuarioDAO {
             return 1;
         }
     }
+
+	public int pegarIdPeloEmail(String email) throws SQLException {
+		String consulta = "SELECT id FROM usuarios WHERE email = ?";
+		
+		try(Connection conexao = ConexaoFactory.getConnection();
+				PreparedStatement statement = conexao.prepareStatement(consulta)){
+			
+			statement.setString(1, email);
+			
+			ResultSet resultado = statement.executeQuery();
+			
+			if(resultado.next()) {
+				return resultado.getInt(1);
+			}
+		}
+		return 0;
+		
+	}
 }

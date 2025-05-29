@@ -9,17 +9,25 @@ import service.exceptions.usuario.LoginSenhaException;
 import service.exceptions.usuario.LoginUsuarioException;
 
 public class LoginService {
-	
+
 	private UsuarioSecurity seguranca;
-	
+	private CriadorSessao criadorSessao;
+
 	public LoginService() {
 		this.seguranca = new UsuarioSecurity();
+		this.criadorSessao = new CriadorSessao();
 	}
 
-	public boolean realizarLogin(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
+	public SessaoUsuario realizarLogin(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
 			IdiomaImplementacao idiomaImplementacao) {
 		Usuario usuario = usuarioRepositorio.pegarUsuarioEmail(usuarioDto.email());
-		return validarLogin(usuarioDto, usuario, idiomaImplementacao);
+		validarLogin(usuarioDto, usuario, idiomaImplementacao);
+
+		return criarSessaoUsuario(usuarioRepositorio.pegarIdPeloEmail(usuario.getEmail()));
+	}
+
+	private SessaoUsuario criarSessaoUsuario(int idUsuario) {
+		return criadorSessao.criarSessao(idUsuario);
 	}
 
 	public boolean validarLogin(UsuarioDto usuarioDto, Usuario usuarioDB, IdiomaImplementacao idiomaImplementacao)
@@ -36,10 +44,8 @@ public class LoginService {
 		return true;
 	}
 
-
 	private boolean senhaEhValida(String senhaInformada, String senhaCadastrada) {
 		return seguranca.verificarSenha(senhaInformada, senhaCadastrada);
 	}
-
 
 }

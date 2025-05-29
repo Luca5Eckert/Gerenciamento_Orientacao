@@ -1,16 +1,32 @@
 package service.commandos;
 
-import repositorio.OrientacaoRepositorio;
+import dtos.OrientacaoDto;
+import service.OrientacaoService;
 import service.SessaoUsuario;
 
 public class ComandoAdicionarOrientacao extends Comando {
-	private String idOrientacao;
-	private OrientacaoRepositorio repositorio;
+	
+	private OrientacaoDto orientacaoDto;
+	private OrientacaoService service;
 
-	public ComandoAdicionarOrientacao(SessaoUsuario usuarioEfetor, String idOrientacao, OrientacaoRepositorio repositorio) {
+	public ComandoAdicionarOrientacao(SessaoUsuario usuarioEfetor, OrientacaoDto orientacaoDto,
+			OrientacaoService service) {
 		super(usuarioEfetor);
-		this.idOrientacao = idOrientacao;
-		this.repositorio = repositorio;
+		this.orientacaoDto = orientacaoDto;
+		this.service = service;
+	}
+
+	@Override
+	public RegistroComando executarComando() {
+		service.criarOrientacao(orientacaoDto);
+		return devolverRegistroComando();
+	}
+
+	@Override
+	public RegistroComando devolverRegistroComando() {
+		String idOrientacao = service.pegarIdOrientacao(orientacaoDto);
+
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, pegarTipo());
 	}
 
 	@Override
@@ -20,7 +36,7 @@ public class ComandoAdicionarOrientacao extends Comando {
 
 	@Override
 	public void voltarAcao() {
-		repositorio.removerOrientacaoPorId(idOrientacao);
+		service.removerOrientacao(orientacaoDto);
 	}
 
 }

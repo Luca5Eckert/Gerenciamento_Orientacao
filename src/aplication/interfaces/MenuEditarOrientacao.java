@@ -11,11 +11,13 @@ import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;
 import infrastructure.utilitarios.FormatacaoUtil;
 import service.OrientacaoService;
+import service.SessaoUsuario;
 
 public class MenuEditarOrientacao extends Menu {
 
 	private final OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
+	private SessaoUsuario sessaoUsuario;
 
 	private String tituloOrientacao;
 	private String conteudoOrientacao;
@@ -23,10 +25,11 @@ public class MenuEditarOrientacao extends Menu {
 	private IdiomaOrientacao idiomaOrientacao;
 
 	public MenuEditarOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoDto orientacaoDto,
-			OrientacaoService orientacaoService) {
+			OrientacaoService orientacaoService, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.orientacaoDto = orientacaoDto;
 		this.orientacaoService = orientacaoService;
+		this.sessaoUsuario = sessaoUsuario;
 
 		this.tituloOrientacao = orientacaoDto.titulo();
 		this.conteudoOrientacao = orientacaoDto.conteudo();

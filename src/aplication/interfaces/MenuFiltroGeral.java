@@ -5,15 +5,18 @@ import java.util.Scanner;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.SessaoUsuario;
 import service.filtros.GerenciadorFiltrosOrientacao;
 
 public class MenuFiltroGeral extends Menu {
 
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
+	private SessaoUsuario sessaoUsuario;
 
-	public MenuFiltroGeral(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro) {
+	public MenuFiltroGeral(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.gerenciadorFiltro = gerenciadorFiltro;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override

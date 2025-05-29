@@ -6,6 +6,7 @@ import java.util.Scanner;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.SessaoUsuario;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
 import service.formatacao.FormatacaoNumerarLista;
@@ -14,9 +15,10 @@ public class MenuExibirFiltros extends Menu {
 
 	private GerenciadorFiltrosOrientacao gerenciadorFiltro;
 	private FormatacaoNumerarLista formatacaoLista;
+	private SessaoUsuario sessaoUsuario;
 
 	public MenuExibirFiltros(IdiomaImplementacao idiomaImplementacao, GerenciadorFiltrosOrientacao gerenciadorFiltro,
-			FormatacaoNumerarLista formatacaoLista) {
+			FormatacaoNumerarLista formatacaoLista, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.idiomaImplementacao = idiomaImplementacao;
 		this.gerenciadorFiltro = gerenciadorFiltro;

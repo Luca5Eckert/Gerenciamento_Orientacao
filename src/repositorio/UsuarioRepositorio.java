@@ -22,6 +22,15 @@ public class UsuarioRepositorio {
 		return null;
 	}
 
+	public int pegarIdPeloEmail(String emailUsuario) {
+		try {
+			return usuarioDAO.pegarIdPeloEmail(emailUsuario);
+		} catch ( SQLException se) {
+			System.out.println("Erro ao pegar id pelo email: " + se.getMessage());
+		}
+		return -1;
+	}
+	
 	public void adicionarUsuario(Usuario usuario) {
 		try {
 			usuarioDAO.salvar(usuario);

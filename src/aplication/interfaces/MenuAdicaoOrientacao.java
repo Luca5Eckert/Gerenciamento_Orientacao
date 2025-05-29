@@ -8,14 +8,17 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
+import service.SessaoUsuario;
 
 public class MenuAdicaoOrientacao extends Menu {
 	
 	private OrientacaoService orientacaoService;
+	private SessaoUsuario sessaoUsuario;
 
-	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService) {
+	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override

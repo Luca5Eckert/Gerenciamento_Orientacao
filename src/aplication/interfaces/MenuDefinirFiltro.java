@@ -7,6 +7,7 @@ import Dominio.IdiomaOrientacao;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import service.SessaoUsuario;
 import service.exceptions.FiltroJaAdicionadoException;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.filtros.TipoFiltro;
@@ -16,12 +17,14 @@ public class MenuDefinirFiltro extends Menu {
 
 	private GerenciadorFiltrosOrientacao gerenciadorFiltrosOrientacao;
 	private FormatacaoNumerarLista formatacaoLista;
+	private SessaoUsuario sessaoUsuario;
 
 	public MenuDefinirFiltro(IdiomaImplementacao idiomaImplementacao,
-			GerenciadorFiltrosOrientacao gerenciadorFiltrosOrientacao, FormatacaoNumerarLista formatacaoLista) {
+			GerenciadorFiltrosOrientacao gerenciadorFiltrosOrientacao, FormatacaoNumerarLista formatacaoLista, SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.gerenciadorFiltrosOrientacao = gerenciadorFiltrosOrientacao;
 		this.formatacaoLista = formatacaoLista;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override
