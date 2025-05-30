@@ -160,7 +160,7 @@ public class MenuEditarOrientacao extends Menu {
 				menuHistorico.voltarPonteiro(2);
 
 				var menuCorreto = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada,
-						idiomaImplementacao);
+						idiomaImplementacao, sessaoUsuario);
 
 				proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuCorreto,
 						idiomaImplementacao.pegarMensagemEdicaoConcluida(), idiomaImplementacao);

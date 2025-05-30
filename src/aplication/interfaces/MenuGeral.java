@@ -27,11 +27,11 @@ public class MenuGeral extends Menu {
 	public void processarOpcao(String opcao, MenuHistorico menuHistorico) {
 		switch (opcao) {
 		case "0" -> menuHistorico
-				.definirProximoMenu(MenuFactory.criarMenuComIdioma(TipoMenu.ADICAO_ORIENTACAO, idiomaImplementacao));
+				.definirProximoMenu(MenuFactory.criarMenuComSessao(TipoMenu.ADICAO_ORIENTACAO, idiomaImplementacao, sessaoUsuario));
 		case "1" -> menuHistorico
-				.definirProximoMenu(MenuFactory.criarMenuComIdioma(TipoMenu.EXIBIR_ORIENTACOES, idiomaImplementacao));
+				.definirProximoMenu(MenuFactory.criarMenuComSessao(TipoMenu.EXIBIR_ORIENTACOES, idiomaImplementacao, sessaoUsuario));
 		case "2" ->
-			menuHistorico.definirProximoMenu(MenuFactory.criarMenuComIdioma(TipoMenu.INICIO, idiomaImplementacao));
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuComSessao(TipoMenu.INICIO, idiomaImplementacao, sessaoUsuario));
 		case "3" -> menuHistorico.definirProximoMenu(null);
 		case "4" -> menuHistorico.definirProximoMenu(
 				MenuFactory.criarMenuAlterarSistema(TipoMenu.ALTERAR_IDIOMA, this, idiomaImplementacao));

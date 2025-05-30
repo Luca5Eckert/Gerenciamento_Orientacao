@@ -56,7 +56,7 @@ public class MenuVisualizarOrientacao extends Menu {
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input, MenuHistorico menuHistorico) {
 		switch (opcao.trim().toUpperCase()) {
 		case "E" -> menuHistorico.definirProximoMenu(
-				MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao));
+				MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao, sessaoUsuario));
 		case "S" -> menuHistorico.voltarMenu();
 		case "A" -> removerOrientacao(input, menuHistorico);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes, menuHistorico);
@@ -126,7 +126,7 @@ public class MenuVisualizarOrientacao extends Menu {
 			opcaoEscolhida = Integer.parseInt(opcao) - 1;
 			var orientacao = pegarOrientacao(opcaoEscolhida, listaOrdenada, listaComOrientacoes);
 			var proximoMenu = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao,
-					idiomaImplementacao);
+					idiomaImplementacao, sessaoUsuario);
 			menuHistorico.trocarMenuAtual(proximoMenu);
 
 		} catch (NullPointerException npe) {
@@ -134,7 +134,7 @@ public class MenuVisualizarOrientacao extends Menu {
 		} catch (OrientacaoNaoDisponivelIdiomaException ondie) {
 			IdiomaOrientacao idiomaOrientacao = listaOrdenada.get(opcaoEscolhida);
 			var proximoMenu = MenuFactory.criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu.ADICAO_ORIENTACAO, this,
-					orientacaoDto, idiomaOrientacao, idiomaImplementacao);
+					orientacaoDto, idiomaOrientacao, idiomaImplementacao, sessaoUsuario);
 			menuHistorico.definirProximoMenu(proximoMenu);
 
 		} catch (NumberFormatException nfe) {

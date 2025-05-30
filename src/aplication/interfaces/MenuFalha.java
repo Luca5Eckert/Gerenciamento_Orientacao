@@ -10,13 +10,11 @@ public class MenuFalha extends Menu {
 	
 	private final Menu proximoMenu;
 	private final String mensagemErro;
-	private SessaoUsuario sessaoUsuario;
 	
-	public MenuFalha(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemErro, SessaoUsuario sessaoUsuario) {
+	public MenuFalha(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemErro) {
 		super(idiomaImplementacao);
 		this.proximoMenu = proximoMenu;
 		this.mensagemErro = mensagemErro;
-		this.sessaoUsuario = sessaoUsuario;
 	}
 	
 	

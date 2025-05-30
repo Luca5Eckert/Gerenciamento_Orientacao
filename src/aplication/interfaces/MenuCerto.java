@@ -10,13 +10,11 @@ public class MenuCerto extends Menu {
 
 	private Menu proximoMenu;
 	private String mensagemAcerto;
-	private SessaoUsuario sessaoUsuario;
 
-	public MenuCerto(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemAcerto, SessaoUsuario sessaoUsuario) {
+	public MenuCerto(IdiomaImplementacao idiomaImplementacao, Menu proximoMenu, String mensagemAcerto) {
 		super(idiomaImplementacao);
 		this.proximoMenu = proximoMenu;
 		this.mensagemAcerto = mensagemAcerto;
-		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override

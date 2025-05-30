@@ -50,7 +50,7 @@ public class MenuAdicionarIdiomaOrientacao extends Menu {
 
 	private void tratarOpcao(OrientacaoDto orientacaoCriada, String idOrientacao, MenuHistorico menuHistorico) {
 		orientacaoService.criarOrientacao(orientacaoCriada, idOrientacao);
-		menuHistorico.voltarMenu(MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoCriada, idiomaImplementacao));
+		menuHistorico.voltarMenu(MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoCriada, idiomaImplementacao, sessaoUsuario));
 	}
 
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {

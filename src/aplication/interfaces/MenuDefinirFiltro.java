@@ -37,7 +37,7 @@ public class MenuDefinirFiltro extends Menu {
 
 		switch (opcao.trim().toUpperCase()) {
 		case "V" -> menuHistorico.voltarMenu(menuHistorico.voltarMenu(MenuFactory
-				.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltrosOrientacao, idiomaImplementacao)));
+				.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltrosOrientacao, idiomaImplementacao, sessaoUsuario)));
 		default -> visualizarFiltros(opcao, input, menuHistorico);
 		}
 
@@ -76,7 +76,7 @@ public class MenuDefinirFiltro extends Menu {
 			boolean adicionou = gerenciadorFiltrosOrientacao.adicionarFiltro(tipoFiltro, filtroEscolhido.name());
 
 			menuHistorico.voltarMenu(MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL,
-					gerenciadorFiltrosOrientacao, idiomaImplementacao));
+					gerenciadorFiltrosOrientacao, idiomaImplementacao, sessaoUsuario));
 
 			if (adicionou) {
 				menuHistorico.definirProximoMenu(

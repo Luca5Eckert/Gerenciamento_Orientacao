@@ -6,6 +6,7 @@ import aplication.interfaces.*;
 import dtos.OrientacaoDto;
 import repositorio.UsuarioRepositorio;
 import service.OrientacaoService;
+import service.SessaoUsuario;
 import service.UsuarioService;
 import service.filtros.FiltroFactory;
 import service.filtros.FiltroOrientacao;
@@ -15,6 +16,7 @@ import service.formatacao.FormatacaoListaComDivisoria;
 import service.formatacao.FormatacaoNumerarLista;
 
 public class MenuFactory {
+	private static Menu menu;
 
 	public static UsuarioService criarUsuarioService(IdiomaImplementacao idioma) {
 		return new UsuarioService(new UsuarioRepositorio(), idioma);
@@ -42,33 +44,33 @@ public class MenuFactory {
 	public static Menu criarMenu(TipoMenu tipoMenu, IdiomaImplementacao idioma) {
 		return switch (tipoMenu) {
 		case INICIO -> new MenuInicial(idioma);
-		case GERAL -> new MenuGeral(idioma);
+		case CADASTRO -> new MenuCadastro(idioma, criarUsuarioService(idioma));
+		case LOGIN -> new MenuLogin(idioma, criarUsuarioService(idioma));
 		default -> new MenuInicial(idioma);
 		};
 	}
 
-	public static Menu criarMenuComIdioma(TipoMenu tipoMenu, IdiomaImplementacao idioma) {
+	public static Menu criarMenuComSessao(TipoMenu tipoMenu, IdiomaImplementacao idioma, SessaoUsuario sessaoUsuario) {
 		return switch (tipoMenu) {
-		case CADASTRO -> new MenuCadastro(idioma, criarUsuarioService(idioma));
-		case LOGIN -> new MenuLogin(idioma, criarUsuarioService(idioma));
-		case ADICAO_ORIENTACAO -> new MenuAdicaoOrientacao(idioma, criarOrientacaoService());
+		case GERAL -> new MenuGeral(idioma, sessaoUsuario);
+		case ADICAO_ORIENTACAO -> new MenuAdicaoOrientacao(idioma, criarOrientacaoService(), sessaoUsuario);
 		case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), criarGerenciadorFiltro(idioma),
-				new FormatacaoNumerarLista(), idioma);
-		case FILTRO_GERAL -> new MenuFiltroGeral(idioma, criarGerenciadorFiltro(idioma));
+				new FormatacaoNumerarLista(), idioma, sessaoUsuario);
+		case FILTRO_GERAL -> new MenuFiltroGeral(idioma, criarGerenciadorFiltro(idioma), sessaoUsuario);
 		default -> new MenuInicial(idioma);
 		};
 	}
 
 	public static Menu criarMenuComFiltros(TipoMenu tipoMenu, GerenciadorFiltrosOrientacao gerenciadorFiltros,
-			IdiomaImplementacao idioma) {
+			IdiomaImplementacao idioma, SessaoUsuario sessaoUsuario) {
 		return switch (tipoMenu) {
-		case FILTRO_GERAL -> new MenuFiltroGeral(idioma, gerenciadorFiltros);
-		case DEFINIR_FILTRO -> new MenuDefinirFiltro(idioma, gerenciadorFiltros, new FormatacaoNumerarLista());
-		case VISUALIZAR_FILTRO -> new MenuExibirFiltros(idioma, gerenciadorFiltros, new FormatacaoNumerarLista());
+		case FILTRO_GERAL -> new MenuFiltroGeral(idioma, gerenciadorFiltros, sessaoUsuario);
+		case DEFINIR_FILTRO -> new MenuDefinirFiltro(idioma, gerenciadorFiltros, new FormatacaoNumerarLista(), sessaoUsuario);
+		case VISUALIZAR_FILTRO -> new MenuExibirFiltros(idioma, gerenciadorFiltros, new FormatacaoNumerarLista(), sessaoUsuario);
 		case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), gerenciadorFiltros,
-				new FormatacaoNumerarLista(), idioma);
-		case PESQUISA_ORIENTACAO -> new MenuPesquisaOrientacao(idioma, gerenciadorFiltros);
-		default -> new MenuGeral(idioma);
+				new FormatacaoNumerarLista(), idioma, sessaoUsuario);
+		case PESQUISA_ORIENTACAO -> new MenuPesquisaOrientacao(idioma, gerenciadorFiltros, sessaoUsuario);
+		default -> new MenuGeral(idioma, sessaoUsuario);
 		};
 	}
 
@@ -82,13 +84,13 @@ public class MenuFactory {
 	}
 
 	public static Menu criarMenuPesquisa(TipoMenu tipoMenu, OrientacaoDto orientacaoDto,
-			IdiomaImplementacao idiomaImplementacao) {
+			IdiomaImplementacao idiomaImplementacao, SessaoUsuario sessaoUsuario) {
 
 		return switch (tipoMenu) {
 		case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(idiomaImplementacao, orientacaoDto,
-				criarOrientacaoService(), new FormatacaoListaComDivisoria());
+				criarOrientacaoService(), new FormatacaoListaComDivisoria(), sessaoUsuario);
 		case EDICAO_ORIENTACAO ->
-			new MenuEditarOrientacao(idiomaImplementacao, orientacaoDto, criarOrientacaoService());
+			new MenuEditarOrientacao(idiomaImplementacao, orientacaoDto, criarOrientacaoService(), sessaoUsuario);
 
 		default -> new MenuInicial(idiomaImplementacao);
 		};
@@ -102,10 +104,10 @@ public class MenuFactory {
 	}
 
 	public static Menu criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu tipoMenu, Menu menuAnterior,
-			OrientacaoDto orientacao, IdiomaOrientacao idiomaOrientacao, IdiomaImplementacao idioma) {
+			OrientacaoDto orientacao, IdiomaOrientacao idiomaOrientacao, IdiomaImplementacao idioma, SessaoUsuario sessaoUsuario) {
 		return switch (tipoMenu) {
 		case ADICAO_ORIENTACAO -> new MenuAdicionarIdiomaOrientacao(idioma, criarOrientacaoService(), menuAnterior,
-				orientacao, idiomaOrientacao);
+				orientacao, idiomaOrientacao, sessaoUsuario);
 		default -> new MenuInicial(idioma);
 		};
 	}

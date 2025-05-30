@@ -37,7 +37,7 @@ public class MenuPesquisaOrientacao extends Menu {
 			menuHistorico.voltarMenu();
 		default:
 			definirPalavraPesquisa(opcaoEscolhida);
-			menuHistorico.voltarMenu(MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
+			menuHistorico.voltarMenu(MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 		}
 
 	}

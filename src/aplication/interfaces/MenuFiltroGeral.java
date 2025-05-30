@@ -29,13 +29,13 @@ public class MenuFiltroGeral extends Menu {
 	public void processarOpcao(String opcao, Scanner input, MenuHistorico menuHistorico) {
 		switch (opcao.trim().toUpperCase()) {
 		case "V" -> menuHistorico.voltarMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
+				MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 		case "1" -> menuHistorico.definirProximoMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.VISUALIZAR_FILTRO, gerenciadorFiltro, idiomaImplementacao));
+				MenuFactory.criarMenuComFiltros(TipoMenu.VISUALIZAR_FILTRO, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 		case "2" -> menuHistorico.definirProximoMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.DEFINIR_FILTRO, gerenciadorFiltro, idiomaImplementacao));
+				MenuFactory.criarMenuComFiltros(TipoMenu.DEFINIR_FILTRO, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 		case "3" -> menuHistorico.voltarMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao));
+				MenuFactory.criarMenuComFiltros(TipoMenu.EXIBIR_ORIENTACOES, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 		}
 	}
 

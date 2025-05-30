@@ -24,8 +24,8 @@ public class MenuInicial extends Menu {
 
 	public Menu devolverOpcaoEscolhida(String opcao) {
 		return switch (opcao) {
-		case "1" -> MenuFactory.criarMenuComIdioma(TipoMenu.LOGIN, idiomaImplementacao);
-		case "2" -> MenuFactory.criarMenuComIdioma(TipoMenu.CADASTRO, idiomaImplementacao);
+		case "1" -> MenuFactory.criarMenu(TipoMenu.LOGIN, idiomaImplementacao);
+		case "2" -> MenuFactory.criarMenu(TipoMenu.CADASTRO, idiomaImplementacao);
 		case "3" -> MenuFactory.criarMenuAlterarSistema(TipoMenu.ALTERAR_IDIOMA, this, idiomaImplementacao);
 		case "4" -> null;
 		default -> MenuFactory.criarMenu(TipoMenu.INICIO, idiomaImplementacao);

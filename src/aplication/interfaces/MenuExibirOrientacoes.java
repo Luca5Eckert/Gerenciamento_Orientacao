@@ -74,13 +74,13 @@ public class MenuExibirOrientacoes extends Menu {
 
 	private void irMenuFiltro(MenuHistorico menuHistorico) {
 		menuHistorico.definirProximoMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao));
+				MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 
 	}
 
 	private void irMenuPesquisa(MenuHistorico menuHistorico) {
 		menuHistorico.definirProximoMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao));
+				MenuFactory.criarMenuComFiltros(TipoMenu.PESQUISA_ORIENTACAO, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 	}
 
 	private void criarMenuPesquisa(String opcao, List<OrientacaoDto> listaOrientacao, MenuHistorico menuHistorico) {
@@ -92,7 +92,7 @@ public class MenuExibirOrientacoes extends Menu {
 			int numeroOrientacao = Integer.parseInt(opcao);
 			var orientacao = listaOrientacao.get(numeroOrientacao - 1);
 			menuHistorico.definirProximoMenu(
-					MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao));
+					MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacao, idiomaImplementacao, sessaoUsuario));
 		} catch (Exception e) {
 			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 			;

@@ -35,7 +35,7 @@ public class MenuExibirFiltros extends Menu {
 
 		switch (opcao.trim().toUpperCase()) {
 		case "V" -> menuHistorico.voltarMenu(
-				MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao));
+				MenuFactory.criarMenuComFiltros(TipoMenu.FILTRO_GERAL, gerenciadorFiltro, idiomaImplementacao, sessaoUsuario));
 		default -> visualizarTipoFiltroAtivados(input, opcao);
 		}
 
