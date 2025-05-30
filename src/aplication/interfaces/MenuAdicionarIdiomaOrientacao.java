@@ -9,11 +9,18 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
+import infrastructure.dao.RegistroComandoDAO;
 import service.OrientacaoService;
 import service.SessaoUsuario;
+import service.commandos.Comando;
+import service.commandos.ComandoAdicionarOrientacao;
+import service.commandos.ExecutadorComando;
 
-public class MenuAdicionarIdiomaOrientacao extends Menu {
+public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 
+	private ExecutadorComando executadorComando;
+	private OrientacaoDto orientacaoCriada;
+	
 	private final OrientacaoService orientacaoService;
 	private OrientacaoDto orientacaoDto;
 	private final IdiomaOrientacao idiomaOrientacao;
@@ -32,7 +39,7 @@ public class MenuAdicionarIdiomaOrientacao extends Menu {
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		final TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
 		String idOrientacao = orientacaoService.pegarIdOrientacao(orientacaoDto);
-		OrientacaoDto orientacaoCriada = null;
+		orientacaoCriada = null;
 
 		try {
 			orientacaoCriada = idiomaImplementacao.mostrarMenuAdicionarNovoIdiomaOrientacao(input, idiomaOrientacao,
@@ -49,12 +56,30 @@ public class MenuAdicionarIdiomaOrientacao extends Menu {
 	}
 
 	private void tratarOpcao(OrientacaoDto orientacaoCriada, String idOrientacao, MenuHistorico menuHistorico) {
-		orientacaoService.criarOrientacao(orientacaoCriada, idOrientacao);
+		executar();
 		menuHistorico.voltarMenu(MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoCriada, idiomaImplementacao, sessaoUsuario));
 	}
 
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
+
+	@Override
+	public void executar() {
+		criarExecutadorComando();
+		executadorComando.aplicarComando(idiomaImplementacao);
+	}
+
+	@Override
+	public Comando pegarComando() {
+		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService);
+	}
+
+	@Override
+	public void criarExecutadorComando() {
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(), sessaoUsuario,
+				new RegistroComandoDAO());
+	}
+
 
 }

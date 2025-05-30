@@ -3,20 +3,22 @@ package Dominio;
 import java.util.Objects;
 
 public class Usuario {
+	
 	private int idUsuario;
 	private String nome;
 	private String email;
 	private String senha;
+	private NivelAcesso nivelAcesso;
 
 	public Usuario() {
-
 	}
 
-	public Usuario(int idUsuario, String nome, String email, String senha) {
+	public Usuario(int idUsuario, String nome, String email, String senha, NivelAcesso nivelAcesso) {
 		this.idUsuario = idUsuario;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
+		this.setNivelAcesso(nivelAcesso);
 	}
 
 	public int getIdUsuario() {
@@ -64,6 +66,14 @@ public class Usuario {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public NivelAcesso getNivelAcesso() {
+		return nivelAcesso;
+	}
+
+	public void setNivelAcesso(NivelAcesso nivelAcesso) {
+		this.nivelAcesso = nivelAcesso;
 	}
 
 }

@@ -5,7 +5,8 @@ import service.OrientacaoService;
 import service.SessaoUsuario;
 
 public class ComandoAdicionarOrientacao extends Comando {
-	
+	private final int NIVEL_DE_ACESSO_MINIMO = 2;
+
 	private OrientacaoDto orientacaoDto;
 	private OrientacaoService service;
 
@@ -17,9 +18,8 @@ public class ComandoAdicionarOrientacao extends Comando {
 	}
 
 	@Override
-	public RegistroComando executarComando() {
+	public void executarComando() {
 		service.criarOrientacao(orientacaoDto);
-		return devolverRegistroComando();
 	}
 
 	@Override
@@ -37,6 +37,14 @@ public class ComandoAdicionarOrientacao extends Comando {
 	@Override
 	public void voltarAcao() {
 		service.removerOrientacao(orientacaoDto);
+	}
+
+	@Override
+	public boolean validarNivelDeAcesso(SessaoUsuario sessaoUsuario) {
+		if (sessaoUsuario.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO) {
+			return true;
+		}
+		return false;
 	}
 
 }

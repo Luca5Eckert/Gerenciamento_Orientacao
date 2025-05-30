@@ -13,11 +13,14 @@ public abstract class Comando {
 		return usuarioEfetor;
 	}
 	
-	public abstract RegistroComando executarComando();
+	public abstract void executarComando();
 	
 	public abstract RegistroComando devolverRegistroComando();
 	
 	public abstract TiposComando pegarTipo();
 	
 	public abstract void voltarAcao();
+	
+	public abstract boolean validarNivelDeAcesso(SessaoUsuario sessaoUsuario);
+	
 }

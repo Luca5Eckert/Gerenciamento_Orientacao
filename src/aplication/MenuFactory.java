@@ -65,8 +65,10 @@ public class MenuFactory {
 			IdiomaImplementacao idioma, SessaoUsuario sessaoUsuario) {
 		return switch (tipoMenu) {
 		case FILTRO_GERAL -> new MenuFiltroGeral(idioma, gerenciadorFiltros, sessaoUsuario);
-		case DEFINIR_FILTRO -> new MenuDefinirFiltro(idioma, gerenciadorFiltros, new FormatacaoNumerarLista(), sessaoUsuario);
-		case VISUALIZAR_FILTRO -> new MenuExibirFiltros(idioma, gerenciadorFiltros, new FormatacaoNumerarLista(), sessaoUsuario);
+		case DEFINIR_FILTRO ->
+			new MenuDefinirFiltro(idioma, gerenciadorFiltros, new FormatacaoNumerarLista(), sessaoUsuario);
+		case VISUALIZAR_FILTRO ->
+			new MenuExibirFiltros(idioma, gerenciadorFiltros, new FormatacaoNumerarLista(), sessaoUsuario);
 		case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), gerenciadorFiltros,
 				new FormatacaoNumerarLista(), idioma, sessaoUsuario);
 		case PESQUISA_ORIENTACAO -> new MenuPesquisaOrientacao(idioma, gerenciadorFiltros, sessaoUsuario);
@@ -87,6 +89,8 @@ public class MenuFactory {
 			IdiomaImplementacao idiomaImplementacao, SessaoUsuario sessaoUsuario) {
 
 		return switch (tipoMenu) {
+		case APAGAR_ORIENTACAO ->
+			new MenuApagarOrientacao(idiomaImplementacao, criarOrientacaoService(), orientacaoDto, sessaoUsuario);
 		case MOSTRAR_ORIENTACAO -> new MenuVisualizarOrientacao(idiomaImplementacao, orientacaoDto,
 				criarOrientacaoService(), new FormatacaoListaComDivisoria(), sessaoUsuario);
 		case EDICAO_ORIENTACAO ->
@@ -104,7 +108,8 @@ public class MenuFactory {
 	}
 
 	public static Menu criarMenuAdicionarNovoIdiomaOrientacao(TipoMenu tipoMenu, Menu menuAnterior,
-			OrientacaoDto orientacao, IdiomaOrientacao idiomaOrientacao, IdiomaImplementacao idioma, SessaoUsuario sessaoUsuario) {
+			OrientacaoDto orientacao, IdiomaOrientacao idiomaOrientacao, IdiomaImplementacao idioma,
+			SessaoUsuario sessaoUsuario) {
 		return switch (tipoMenu) {
 		case ADICAO_ORIENTACAO -> new MenuAdicionarIdiomaOrientacao(idioma, criarOrientacaoService(), menuAnterior,
 				orientacao, idiomaOrientacao, sessaoUsuario);

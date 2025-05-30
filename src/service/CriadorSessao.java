@@ -2,6 +2,7 @@ package service;
 
 import java.sql.SQLException;
 
+import Dominio.NivelAcesso;
 import infrastructure.dao.RegistroLoginDAO;
 import service.exceptions.usuario.LoginException;
 
@@ -14,7 +15,7 @@ public class CriadorSessao {
 	}
 
 	public SessaoUsuario criarSessao(int idUsuario) {
-		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario);
+		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario, NivelAcesso.ALTERADOR);
 		registrarSessaoLogin(sessaoUsuario);
 
 		return sessaoUsuario;

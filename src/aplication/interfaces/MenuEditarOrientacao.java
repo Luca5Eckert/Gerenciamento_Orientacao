@@ -9,11 +9,17 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;
+import infrastructure.dao.RegistroComandoDAO;
 import infrastructure.utilitarios.FormatacaoUtil;
 import service.OrientacaoService;
 import service.SessaoUsuario;
+import service.commandos.Comando;
+import service.commandos.ComandoAdicionarOrientacao;
+import service.commandos.ExecutadorComando;
 
-public class MenuEditarOrientacao extends Menu {
+public class MenuEditarOrientacao extends Menu implements Executor {
+
+	private ExecutadorComando executadorComando;
 
 	private final OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
@@ -69,7 +75,8 @@ public class MenuEditarOrientacao extends Menu {
 	}
 
 	private void editarTitulo(Scanner input) {
-		String novoTitulo = idiomaImplementacao.mostrarMenuMudarTituloOrientacao(input, FormatacaoUtil.enquadrarTextoNoMenu(orientacaoDto.titulo(), 59, 1));
+		String novoTitulo = idiomaImplementacao.mostrarMenuMudarTituloOrientacao(input,
+				FormatacaoUtil.enquadrarTextoNoMenu(orientacaoDto.titulo(), 59, 1));
 
 		if (!novoTitulo.toUpperCase().trim().equals("V")) {
 			this.tituloOrientacao = novoTitulo;
@@ -79,7 +86,8 @@ public class MenuEditarOrientacao extends Menu {
 	}
 
 	private void editarConteudo(Scanner input) {
-		String novoConteudo = idiomaImplementacao.mostrarMenuMudarConteudoOrientacao(input, FormatacaoUtil.enquadrarTextoNoMenu(orientacaoDto.titulo(), 59, 1));
+		String novoConteudo = idiomaImplementacao.mostrarMenuMudarConteudoOrientacao(input,
+				FormatacaoUtil.enquadrarTextoNoMenu(orientacaoDto.titulo(), 59, 1));
 
 		if (!novoConteudo.equals("V")) {
 			this.conteudoOrientacao = novoConteudo;
@@ -179,5 +187,21 @@ public class MenuEditarOrientacao extends Menu {
 		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
+	@Override
+	public void executar() {
+		criarExecutadorComando();
+		executadorComando.aplicarComando(idiomaImplementacao);
+	}
+
+	@Override
+	public Comando pegarComando() {
+		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoDto, orientacaoService);
+	}
+	
+	@Override
+	public void criarExecutadorComando() {
+		this.executadorComando =ExecutadorComando.criarExecutadorComando(pegarComando(), sessaoUsuario,
+				new RegistroComandoDAO());
+	}
 
 }

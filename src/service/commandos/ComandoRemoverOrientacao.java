@@ -5,9 +5,12 @@ import service.OrientacaoService;
 import service.SessaoUsuario;
 
 public class ComandoRemoverOrientacao extends Comando {
-
+	private final int NIVEL_DE_ACESSO_MINIMO = 2;
+	
 	private OrientacaoService service;
 	private OrientacaoDto orientacaoRemover;
+	
+	private String idOrientacao;
 
 	public ComandoRemoverOrientacao(SessaoUsuario usuarioEfetor, OrientacaoService service,
 			OrientacaoDto orientacaoRemover) {
@@ -17,15 +20,17 @@ public class ComandoRemoverOrientacao extends Comando {
 	}
 
 	@Override
-	public RegistroComando executarComando() {
-		var registroComando = devolverRegistroComando();
+	public void executarComando() {
+		salvarIdOrientacao();
 		service.removerOrientacao(orientacaoRemover);
-		return registroComando;
+	}
+
+	private void salvarIdOrientacao() {
+		idOrientacao = service.pegarIdOrientacao(orientacaoRemover);
 	}
 
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		String idOrientacao = service.pegarIdOrientacao(orientacaoRemover);
 		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, pegarTipo());
 	}
 
@@ -37,6 +42,14 @@ public class ComandoRemoverOrientacao extends Comando {
 	@Override
 	public void voltarAcao() {
 		service.criarOrientacao(orientacaoRemover);
+	}
+
+	@Override
+	public boolean validarNivelDeAcesso(SessaoUsuario sessaoUsuario) {
+		if (sessaoUsuario.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO) {
+			return true;
+		}
+		return false;
 	}
 
 }

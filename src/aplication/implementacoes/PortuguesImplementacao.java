@@ -630,4 +630,9 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return " Voltando ";
 	}
 
+	@Override
+	public String pegarMensagemNivelDeAcessoInsuficiente() {
+		return " Nível de acesso insuficiente";
+	}
+
 }

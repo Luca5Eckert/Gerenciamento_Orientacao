@@ -1,5 +1,6 @@
 package service;
 
+import Dominio.NivelAcesso;
 import Dominio.Usuario;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;
@@ -32,7 +33,7 @@ public class UsuarioService {
 	}
 
 	private Usuario converterDtoParaUsuario(UsuarioDto dto) {
-		return new Usuario(0, dto.nome(), dto.email(), dto.senha());
+		return new Usuario(0, dto.nome(), dto.email(), dto.senha(), NivelAcesso.ALTERADOR);
 	}
 
 }

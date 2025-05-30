@@ -7,15 +7,24 @@ import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
+import infrastructure.dao.RegistroComandoDAO;
 import service.OrientacaoService;
 import service.SessaoUsuario;
+import service.commandos.Comando;
+import service.commandos.ComandoAdicionarOrientacao;
+import service.commandos.ExecutadorComando;
 
-public class MenuAdicaoOrientacao extends Menu {
-	
+public class MenuAdicaoOrientacao extends Menu implements Executor {
+
+	private ExecutadorComando executadorComando;
+
 	private OrientacaoService orientacaoService;
 	private SessaoUsuario sessaoUsuario;
 
-	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService, SessaoUsuario sessaoUsuario) {
+	private OrientacaoDto orientacaoCriar;
+
+	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService,
+			SessaoUsuario sessaoUsuario) {
 		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
 		this.sessaoUsuario = sessaoUsuario;
@@ -25,10 +34,10 @@ public class MenuAdicaoOrientacao extends Menu {
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		Menu proximoMenu = null;
 		List<OrientacaoDto> listaOrientacaoCriada = null;
-		
+
 		try {
 			listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
-			orientacaoService.criarOrientacoes(listaOrientacaoCriada);
+			criarOrientacoes(listaOrientacaoCriada);
 			proximoMenu = devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);
 		} catch (Exception e) {
@@ -36,6 +45,13 @@ public class MenuAdicaoOrientacao extends Menu {
 			menuHistorico.voltarMenu();
 		}
 
+	}
+
+	public void criarOrientacoes(List<OrientacaoDto> listaOrientacaoCriada) {
+		for (OrientacaoDto orientacao : listaOrientacaoCriada) {
+			orientacaoCriar = orientacao;
+			executar();
+		}
 	}
 
 	public Menu devolverOpcaoEscolhida(TipoMenu opcao, IdiomaImplementacao idiomaImplementacao) {
@@ -50,6 +66,23 @@ public class MenuAdicaoOrientacao extends Menu {
 
 	public void mudarIdioma(IdiomaImplementacao idiomaImplementacao) {
 		this.idiomaImplementacao = idiomaImplementacao;
+	}
+
+	@Override
+	public void executar() {
+		criarExecutadorComando();
+		executadorComando.aplicarComando(idiomaImplementacao);
+	}
+
+	@Override
+	public Comando pegarComando() {
+		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoCriar, orientacaoService);
+	}
+
+	@Override
+	public void criarExecutadorComando() {
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(), sessaoUsuario,
+				new RegistroComandoDAO());
 	}
 
 }

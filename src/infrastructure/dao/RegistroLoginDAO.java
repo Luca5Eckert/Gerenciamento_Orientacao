@@ -15,6 +15,8 @@ public class RegistroLoginDAO {
 		try (Connection conexao = ConexaoFactory.getConnection();
 				PreparedStatement statement = conexao.prepareStatement(sql)) {
 			statement.setInt(1, sessaoUsuario.pegarIdUsuario());
+			
+			statement.executeUpdate();
 		}
 	}
 }

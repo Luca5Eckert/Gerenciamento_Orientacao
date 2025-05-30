@@ -55,8 +55,8 @@ public class MenuVisualizarOrientacao extends Menu {
 	public void devolverOpcaoMenu(String opcao, List<IdiomaOrientacao> listaOrdenada,
 			Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes, Scanner input, MenuHistorico menuHistorico) {
 		switch (opcao.trim().toUpperCase()) {
-		case "E" -> menuHistorico.definirProximoMenu(
-				MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO, orientacaoDto, idiomaImplementacao, sessaoUsuario));
+		case "E" -> menuHistorico.definirProximoMenu(MenuFactory.criarMenuPesquisa(TipoMenu.EDICAO_ORIENTACAO,
+				orientacaoDto, idiomaImplementacao, sessaoUsuario));
 		case "S" -> menuHistorico.voltarMenu();
 		case "A" -> removerOrientacao(input, menuHistorico);
 		default -> processarOpcao(opcao, listaOrdenada, listaComOrientacoes, menuHistorico);
@@ -65,48 +65,8 @@ public class MenuVisualizarOrientacao extends Menu {
 	}
 
 	public void removerOrientacao(Scanner input, MenuHistorico menuHistorico) {
-		try {
-			escolherOpcaoDeletar(input, menuHistorico);
-
-			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
-					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao(), idiomaImplementacao);
-			menuHistorico.definirProximoMenu(proximoMenu);
-		} catch (SairMenuException sme) {
-			System.out.println(idiomaImplementacao.pegarMensagemVoltandoMenu());
-		} catch (Exception le) {
-			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
-					idiomaImplementacao.pegarMensagemErroAoRemoverOrientacao(), idiomaImplementacao);
-			menuHistorico.definirProximoMenu(proximoMenu);
-		}
-	}
-
-	private void escolherOpcaoDeletar(Scanner input, MenuHistorico menuHistorico) throws SairMenuException {
-		String opcaoDelete = idiomaImplementacao.mostrarMenuOpcaoApagarOrientacao(input);
-
-		switch (opcaoDelete.trim().toUpperCase()) {
-		case "T":
-			if (confirmarSeDesejaApagar(input)) {
-				menuHistorico.sobscreverMenu(menuHistorico.pegarMenuAnterior());
-				orientacaoService.apagarOrientacaoId(orientacaoDto);
-			}
-			break;
-		case "A":
-			if (confirmarSeDesejaApagar(input)) {
-				menuHistorico.sobscreverMenu(menuHistorico.pegarMenuAnterior());
-				orientacaoService.removerOrientacao(orientacaoDto);
-			}
-			break;
-		}
-
-	}
-
-	private boolean confirmarSeDesejaApagar(Scanner input) throws SairMenuException {
-		String confirmar = idiomaImplementacao.mostrarMenuConfirmarApagarOrientacao(input);
-
-		if (confirmar.trim().toUpperCase().equals("A")) {
-			return true;
-		}
-		return false;
+		menuHistorico.definirProximoMenu(MenuFactory.criarMenuPesquisa(TipoMenu.APAGAR_ORIENTACAO, orientacaoDto,
+				idiomaImplementacao, sessaoUsuario));
 	}
 
 	public List<IdiomaOrientacao> gerarListaOrdenada(Map<IdiomaOrientacao, OrientacaoDto> listaComOrientacoes) {

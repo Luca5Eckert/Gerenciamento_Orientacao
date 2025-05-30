@@ -626,4 +626,9 @@ public class InglesImplementacao implements IdiomaImplementacao {
 		return " Returning ";
 	}
 
+	@Override
+	public String pegarMensagemNivelDeAcessoInsuficiente() {
+		return " Insufficient access level";
+	}
+
 }

@@ -3,12 +3,12 @@ package service.commandos;
 public class RegistroComando {
 	private int idUsuario;
 	private String idOrientacao;
-	private TiposComando tiposComandos;
+	private TiposComando tipoComando;
 	
-	public RegistroComando(int idUsuario, String idOrientacao, TiposComando tiposComandos) {
+	public RegistroComando(int idUsuario, String idOrientacao, TiposComando tipoComando) {
 		this.idUsuario = idUsuario;
 		this.idOrientacao = idOrientacao;
-		this.tiposComandos = tiposComandos;
+		this.tipoComando = tipoComando;
 	}
 
 	public int getIdUsuario() {
@@ -27,11 +27,11 @@ public class RegistroComando {
 		this.idOrientacao = idOrientacao;
 	}
 
-	public TiposComando getTiposComandos() {
-		return tiposComandos;
+	public TiposComando getTipoComando() {
+		return tipoComando;
 	}
 
-	public void setTiposComandos(TiposComando tiposComandos) {
-		this.tiposComandos = tiposComandos;
+	public void setTipoComando(TiposComando tipoComando) {
+		this.tipoComando = tipoComando;
 	}
 }

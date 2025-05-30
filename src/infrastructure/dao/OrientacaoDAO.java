@@ -8,6 +8,7 @@ import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
 import Dominio.TipoOrientacao;
+import dtos.OrientacaoDto;
 import infrastructure.ConexaoFactory;
 
 public class OrientacaoDAO {
@@ -171,13 +172,12 @@ public class OrientacaoDAO {
 
 			statement.setString(1, tipoOrientacao);
 			statement.setString(2, idOrientacao);
-			
+
 			statement.executeUpdate();
 		}
 
 	}
-	
-	
+
 	public void atualizarIdiomaPorId(String idOrientacao, String idiomaAntigo, String novoIdioma) throws SQLException {
 		String sql = "UPDATE orientacao SET idioma_orientacao = ? WHERE id = ? AND idioma_orientacao = ?";
 
@@ -186,7 +186,7 @@ public class OrientacaoDAO {
 
 			statement.setString(1, novoIdioma);
 			statement.setString(2, idOrientacao);
-			statement.setString(3,idiomaAntigo);
+			statement.setString(3, idiomaAntigo);
 
 			statement.executeUpdate();
 
@@ -195,14 +195,45 @@ public class OrientacaoDAO {
 
 	public void removerPorId(String idOrientacao) throws SQLException {
 		String sql = "DELETE FROM orientacao WHERE id = ?";
-		
-		try( Connection conexao = ConexaoFactory.getConnection();
-				PreparedStatement statement = conexao.prepareStatement(sql)){
-			
+
+		try (Connection conexao = ConexaoFactory.getConnection();
+				PreparedStatement statement = conexao.prepareStatement(sql)) {
+
 			statement.setString(1, idOrientacao);
-			
+
 			statement.executeUpdate();
 		}
-		
+
+	}
+
+	public List<Orientacao> pegarOrientacoesPorId(String idOrientacao) throws SQLException {
+		List<Orientacao> orientacoes = null;
+
+		String sql = "SELECT id FROM orientacao WHERE id = ?";
+
+		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, idOrientacao);
+
+			try (ResultSet resultSet = stmt.executeQuery()) {
+
+				while (resultSet.next()) {
+					Orientacao orientacao = new Orientacao();
+
+					OrientacaoId id = new OrientacaoId();
+					id.setIdOrientacao(resultSet.getString("id"));
+					id.setIdiomaOrientacao(IdiomaOrientacao.valueOf(resultSet.getString("idioma_orientacao")));
+					orientacao.setIdOrientacao(id);
+
+					orientacao.setTitulo(resultSet.getString("titulo"));
+					orientacao.setConteudo(resultSet.getString("conteudo"));
+					orientacao.setTipoOrientacao(TipoOrientacao.valueOf(resultSet.getString("tipo_orientacao")));
+
+					orientacoes.add(orientacao);
+				}
+				return orientacoes;
+			}
+		}
+
 	}
 }

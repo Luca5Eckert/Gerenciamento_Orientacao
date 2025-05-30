@@ -180,4 +180,10 @@ public class OrientacaoService {
 	public void removerOrientacaoPorId(String idOrientacao) {
 		repositorioOrientacao.removerOrientacaoPorId(idOrientacao);
 	}
+
+	public List<OrientacaoDto> pegarOrientacoesPorId(OrientacaoDto orientacaoDto) {
+		var listaOrientacao = repositorioOrientacao.pegarOrientacoesPorId(pegarIdOrientacao(orientacaoDto));
+		
+		return transformarListaModeloDto(listaOrientacao);
+	}
 }

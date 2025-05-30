@@ -134,4 +134,7 @@ public interface IdiomaImplementacao {
 	String mostrarMenuOpcaoApagarOrientacao(Scanner input) throws SairMenuException;
 	
 	String pegarMensagemVoltandoMenu();
+	
+	String pegarMensagemNivelDeAcessoInsuficiente();
+	
 }

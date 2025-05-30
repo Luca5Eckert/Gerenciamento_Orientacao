@@ -623,5 +623,10 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		return " Zurückkehren ";
 	}
 
+	@Override
+	public String pegarMensagemNivelDeAcessoInsuficiente() {
+		return " Unzureichende Zugriffsebene";
+	}
+
 
 }

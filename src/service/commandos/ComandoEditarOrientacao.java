@@ -6,6 +6,7 @@ import service.OrientacaoService;
 import service.SessaoUsuario;
 
 public class ComandoEditarOrientacao extends Comando {
+	private final int NIVEL_DE_ACESSO_MINIMO = 2;
 	
 	private OrientacaoService service;
 	private OrientacaoDto orientacaoAntiga;
@@ -20,9 +21,8 @@ public class ComandoEditarOrientacao extends Comando {
 	}
 	
 	@Override
-	public RegistroComando executarComando() {
+	public void executarComando() {
 		service.atualizarOrientacao(orientacaoNova, orientacaoAntiga, idiomaImplementacao);
-		return devolverRegistroComando();
 	}
 	
 	@Override
@@ -39,6 +39,14 @@ public class ComandoEditarOrientacao extends Comando {
 	@Override
 	public void voltarAcao() {
 		service.atualizarOrientacao(orientacaoNova, orientacaoAntiga, idiomaImplementacao);
+	}
+
+	@Override
+	public boolean validarNivelDeAcesso(SessaoUsuario sessaoUsuario) {
+		if (sessaoUsuario.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO) {
+			return true;
+		}
+		return false;
 	}
 
 }
