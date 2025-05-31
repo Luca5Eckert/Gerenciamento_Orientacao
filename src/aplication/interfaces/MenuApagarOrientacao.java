@@ -36,6 +36,7 @@ public class MenuApagarOrientacao extends Menu implements Executor {
 		try {
 			escolherOpcaoDeletar(input, menuHistorico);
 
+			menuHistorico.voltarMenu();
 			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao(), idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);
