@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
+import Dominio.NivelAcesso;
 import Dominio.TipoOrientacao;
 import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
@@ -48,7 +49,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		String senha = input.nextLine();
 
 		System.out.println("------------------------------------------------------------");
-		return new UsuarioDto(null, email, senha);
+        return new UsuarioDto(null, email, senha, NivelAcesso.ALTERADOR);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		String senha = input.nextLine();
 
 		System.out.println("------------------------------------------------------------");
-		return new UsuarioDto(nome, email, senha);
+		return new UsuarioDto(nome, email, senha, NivelAcesso.ALTERADOR);
 	}
 
 	@Override

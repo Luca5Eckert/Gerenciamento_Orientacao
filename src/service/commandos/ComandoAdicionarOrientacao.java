@@ -9,24 +9,25 @@ public class ComandoAdicionarOrientacao extends Comando {
 
 	private OrientacaoDto orientacaoDto;
 	private OrientacaoService service;
+	private String idOrientacao;
 
 	public ComandoAdicionarOrientacao(SessaoUsuario usuarioEfetor, OrientacaoDto orientacaoDto,
-			OrientacaoService service) {
+			OrientacaoService service, String idOrientacao) {
 		super(usuarioEfetor);
 		this.orientacaoDto = orientacaoDto;
 		this.service = service;
+		this.idOrientacao = idOrientacao;
 	}
 
 	@Override
 	public void executarComando() {
-		service.criarOrientacao(orientacaoDto);
+		service.criarOrientacao(orientacaoDto, idOrientacao);
 	}
 
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		String idOrientacao = service.pegarIdOrientacao(orientacaoDto);
-
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, pegarTipo());
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoDto.idiomaOrientacao(),
+				pegarTipo());
 	}
 
 	@Override

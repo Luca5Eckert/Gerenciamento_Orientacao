@@ -8,7 +8,6 @@ import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
 import Dominio.TipoOrientacao;
-import dtos.OrientacaoDto;
 import infrastructure.ConexaoFactory;
 
 public class OrientacaoDAO {
@@ -207,7 +206,7 @@ public class OrientacaoDAO {
 	}
 
 	public List<Orientacao> pegarOrientacoesPorId(String idOrientacao) throws SQLException {
-		List<Orientacao> orientacoes = null;
+		List<Orientacao> orientacoes = new ArrayList<>();
 
 		String sql = "SELECT id FROM orientacao WHERE id = ?";
 

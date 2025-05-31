@@ -7,7 +7,6 @@ import aplication.IdiomaFactory;
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
-import service.SessaoUsuario;
 
 public class MenuTrocaIdioma extends Menu {
 

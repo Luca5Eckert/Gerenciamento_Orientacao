@@ -3,13 +3,11 @@ package repositorio;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.mysql.cj.jdbc.exceptions.SQLError;
 
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
 import Dominio.TipoOrientacao;
-import dtos.OrientacaoDto;
 import infrastructure.dao.OrientacaoDAO;
 
 public class OrientacaoRepositorio {

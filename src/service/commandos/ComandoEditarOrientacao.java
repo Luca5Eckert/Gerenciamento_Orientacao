@@ -20,6 +20,7 @@ public class ComandoEditarOrientacao extends Comando {
 		this.idiomaImplementacao = idiomaImplementacao;
 	}
 	
+
 	@Override
 	public void executarComando() {
 		service.atualizarOrientacao(orientacaoNova, orientacaoAntiga, idiomaImplementacao);
@@ -27,8 +28,8 @@ public class ComandoEditarOrientacao extends Comando {
 	
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		String idOrientacao = service.pegarIdOrientacao(orientacaoNova);
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, pegarTipo());
+		String idOrientacao = service.pegarIdOrientacao(orientacaoAntiga);
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoNova.idiomaOrientacao(), pegarTipo());
 	}
 
 	@Override

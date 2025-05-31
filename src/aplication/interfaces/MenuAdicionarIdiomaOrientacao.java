@@ -72,7 +72,7 @@ public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService);
+		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService, orientacaoService.pegarIdOrientacao(orientacaoDto));
 	}
 
 	@Override

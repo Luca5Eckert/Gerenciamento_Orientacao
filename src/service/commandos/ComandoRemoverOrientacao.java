@@ -31,7 +31,7 @@ public class ComandoRemoverOrientacao extends Comando {
 
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, pegarTipo());
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoRemover.idiomaOrientacao(), pegarTipo());
 	}
 
 	@Override

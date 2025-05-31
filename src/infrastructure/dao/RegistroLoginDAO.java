@@ -10,7 +10,7 @@ import service.SessaoUsuario;
 public class RegistroLoginDAO {
 
 	public void registrarSessaoLogin(SessaoUsuario sessaoUsuario) throws SQLException {
-		String sql = "INSERT INTO registroSessaoLogin ( id_sessao_login ) values ( ? ) ";
+		String sql = "INSERT INTO registroSessaoLogin ( id_usuario ) values ( ? ) ";
 
 		try (Connection conexao = ConexaoFactory.getConnection();
 				PreparedStatement statement = conexao.prepareStatement(sql)) {

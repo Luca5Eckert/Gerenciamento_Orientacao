@@ -1,5 +1,7 @@
 package dtos;
 
-public record UsuarioDto(String nome, String email, String senha) {
+import Dominio.NivelAcesso;
+
+public record UsuarioDto(String nome, String email, String senha, NivelAcesso nivelAcesso) {
 
 }

@@ -2,7 +2,6 @@ package aplication.interfaces;
 
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
-import service.SessaoUsuario;
 
 import java.util.Scanner;
 

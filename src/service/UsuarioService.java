@@ -33,7 +33,7 @@ public class UsuarioService {
 	}
 
 	private Usuario converterDtoParaUsuario(UsuarioDto dto) {
-		return new Usuario(0, dto.nome(), dto.email(), dto.senha(), NivelAcesso.ALTERADOR);
+		return new Usuario(0, dto.nome(), dto.email(), dto.senha(), dto.nivelAcesso());
 	}
 
 }

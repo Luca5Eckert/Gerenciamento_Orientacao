@@ -16,8 +16,7 @@ import service.formatacao.FormatacaoListaComDivisoria;
 import service.formatacao.FormatacaoNumerarLista;
 
 public class MenuFactory {
-	private static Menu menu;
-
+	
 	public static UsuarioService criarUsuarioService(IdiomaImplementacao idioma) {
 		return new UsuarioService(new UsuarioRepositorio(), idioma);
 	}

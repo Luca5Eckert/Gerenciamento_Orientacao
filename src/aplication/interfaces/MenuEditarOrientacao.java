@@ -14,7 +14,7 @@ import infrastructure.utilitarios.FormatacaoUtil;
 import service.OrientacaoService;
 import service.SessaoUsuario;
 import service.commandos.Comando;
-import service.commandos.ComandoAdicionarOrientacao;
+import service.commandos.ComandoEditarOrientacao;
 import service.commandos.ExecutadorComando;
 
 public class MenuEditarOrientacao extends Menu implements Executor {
@@ -24,6 +24,8 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 	private final OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
 	private SessaoUsuario sessaoUsuario;
+	
+	private OrientacaoDto orientacaoAlterada;
 
 	private String tituloOrientacao;
 	private String conteudoOrientacao;
@@ -49,7 +51,7 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 
 		switch (opcaoEscolhida.trim().toUpperCase()) {
 		case "V":
-			var orientacaoAlterada = criarOrientacaoAlterada(tituloOrientacao, conteudoOrientacao, tipoOrientacao,
+			orientacaoAlterada = criarOrientacaoAlterada(tituloOrientacao, conteudoOrientacao, tipoOrientacao,
 					idiomaOrientacao);
 			confirmarSaida(input, menuHistorico, orientacaoAlterada);
 			break;
@@ -195,7 +197,7 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoDto, orientacaoService);
+		return new ComandoEditarOrientacao(sessaoUsuario, orientacaoDto, orientacaoAlterada, idiomaImplementacao);
 	}
 	
 	@Override

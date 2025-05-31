@@ -1,13 +1,17 @@
 package service.commandos;
 
+import Dominio.IdiomaOrientacao;
+
 public class RegistroComando {
 	private int idUsuario;
 	private String idOrientacao;
+	private IdiomaOrientacao idiomaOrientacao;
 	private TiposComando tipoComando;
 	
-	public RegistroComando(int idUsuario, String idOrientacao, TiposComando tipoComando) {
+	public RegistroComando(int idUsuario, String idOrientacao, IdiomaOrientacao idiomaOrientacao, TiposComando tipoComando) {
 		this.idUsuario = idUsuario;
 		this.idOrientacao = idOrientacao;
+		this.setIdiomaOrientacao(idiomaOrientacao);
 		this.tipoComando = tipoComando;
 	}
 
@@ -33,5 +37,13 @@ public class RegistroComando {
 
 	public void setTipoComando(TiposComando tipoComando) {
 		this.tipoComando = tipoComando;
+	}
+
+	public IdiomaOrientacao getIdiomaOrientacao() {
+		return idiomaOrientacao;
+	}
+
+	public void setIdiomaOrientacao(IdiomaOrientacao idiomaOrientacao) {
+		this.idiomaOrientacao = idiomaOrientacao;
 	}
 }

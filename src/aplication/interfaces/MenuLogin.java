@@ -25,7 +25,7 @@ public class MenuLogin extends Menu {
 		try {
 			SessaoUsuario sessaoUsuario = service.realizarLogin(usuarioParaLogar);
 			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO,
-					MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
+					MenuFactory.criarMenuComSessao(TipoMenu.GERAL, idiomaImplementacao, sessaoUsuario),
 					idiomaImplementacao.pegarMensagemLoginConcluido(), idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);
 		} catch (LoginException e) {

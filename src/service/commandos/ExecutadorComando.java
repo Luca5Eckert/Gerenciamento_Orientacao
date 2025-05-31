@@ -29,6 +29,7 @@ public class ExecutadorComando {
 		if(comando.validarNivelDeAcesso(sessaoUsuario)) {
 			comando.executarComando();
 			salvarRegistroComando();
+			return;
 		}
 		
 		throw new NivelDeAcessoInsuficienteException(idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente());

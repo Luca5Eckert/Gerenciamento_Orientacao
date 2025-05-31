@@ -2,6 +2,7 @@ package aplication.interfaces;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 import aplication.MenuFactory;
 import aplication.MenuHistorico;
@@ -13,6 +14,7 @@ import service.SessaoUsuario;
 import service.commandos.Comando;
 import service.commandos.ComandoAdicionarOrientacao;
 import service.commandos.ExecutadorComando;
+import service.exceptions.NivelDeAcessoInsuficienteException;
 
 public class MenuAdicaoOrientacao extends Menu implements Executor {
 
@@ -22,6 +24,8 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 	private SessaoUsuario sessaoUsuario;
 
 	private OrientacaoDto orientacaoCriar;
+
+	private String id_orientacao;
 
 	public MenuAdicaoOrientacao(IdiomaImplementacao idiomaImplementacao, OrientacaoService orientacaoService,
 			SessaoUsuario sessaoUsuario) {
@@ -38,8 +42,12 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 		try {
 			listaOrientacaoCriada = idiomaImplementacao.mostrarMenuCriarOrientacao(input);
 			criarOrientacoes(listaOrientacaoCriada);
-			proximoMenu = devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao);
+			proximoMenu = devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao, menuHistorico);
 			menuHistorico.definirProximoMenu(proximoMenu);
+		} catch (NivelDeAcessoInsuficienteException naie) {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, proximoMenu,
+					naie.getMessage(), idiomaImplementacao));
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			menuHistorico.voltarMenu();
@@ -48,17 +56,20 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 	}
 
 	public void criarOrientacoes(List<OrientacaoDto> listaOrientacaoCriada) {
+		id_orientacao = UUID.randomUUID().toString();
+
 		for (OrientacaoDto orientacao : listaOrientacaoCriada) {
 			orientacaoCriar = orientacao;
 			executar();
 		}
 	}
 
-	public Menu devolverOpcaoEscolhida(TipoMenu opcao, IdiomaImplementacao idiomaImplementacao) {
+	public Menu devolverOpcaoEscolhida(TipoMenu opcao, IdiomaImplementacao idiomaImplementacao,
+			MenuHistorico menuHistorico) {
 		return switch (opcao) {
-		case CERTO -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
+		case CERTO -> MenuFactory.criarMenuResultado(opcao, menuHistorico.pegarMenuAnterior(),
 				idiomaImplementacao.pegarMensangemAdicaoConcluida(), idiomaImplementacao);
-		case FALHA -> MenuFactory.criarMenuResultado(opcao, MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao),
+		case FALHA -> MenuFactory.criarMenuResultado(opcao, menuHistorico.pegarMenuAnterior(),
 				idiomaImplementacao.pegarMensangemAdicaoFalhada(), idiomaImplementacao);
 		default -> this;
 		};
@@ -76,7 +87,7 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoCriar, orientacaoService);
+		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoCriar, orientacaoService, id_orientacao);
 	}
 
 	@Override

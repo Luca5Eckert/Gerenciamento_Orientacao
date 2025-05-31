@@ -10,7 +10,6 @@ import aplication.MenuFactory;
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
-import aplication.interfaces.exceptions.SairMenuException;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.SessaoUsuario;

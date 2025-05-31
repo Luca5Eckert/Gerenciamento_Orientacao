@@ -47,7 +47,7 @@ public class MenuExibirOrientacoes extends Menu {
 		String opcao = idiomaImplementacao.mostrarMenuOrientacaoDisponiveis(input, textoFormatado, palavraPesquisada);
 
 		if (opcao.trim().toUpperCase().equals("V")) {
-			menuHistorico.voltarMenu(MenuFactory.criarMenu(TipoMenu.GERAL, idiomaImplementacao));
+			menuHistorico.voltarMenu();
 		} else {
 			processarOpcao(opcao, idiomaImplementacao, orientacoesFiltradas, menuHistorico);
 
