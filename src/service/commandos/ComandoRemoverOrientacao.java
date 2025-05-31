@@ -6,10 +6,10 @@ import service.SessaoUsuario;
 
 public class ComandoRemoverOrientacao extends Comando {
 	private final int NIVEL_DE_ACESSO_MINIMO = 2;
-	
+
 	private OrientacaoService service;
 	private OrientacaoDto orientacaoRemover;
-	
+
 	private String idOrientacao;
 
 	public ComandoRemoverOrientacao(SessaoUsuario usuarioEfetor, OrientacaoService service,
@@ -31,7 +31,8 @@ public class ComandoRemoverOrientacao extends Comando {
 
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoRemover.idiomaOrientacao(), pegarTipo());
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoRemover.idiomaOrientacao(),
+				pegarTipo());
 	}
 
 	@Override
@@ -40,13 +41,18 @@ public class ComandoRemoverOrientacao extends Comando {
 	}
 
 	@Override
-	public void voltarAcao() {
-		service.criarOrientacao(orientacaoRemover);
+	public RegistroComando voltarAcao() {
+		service.desfazerRemocaoOrientacao(idOrientacao, orientacaoRemover.idiomaOrientacao());
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoRemover.idiomaOrientacao(),
+				TiposComando.DESFAZER_REMOCAO_ORIENTACAO);
 	}
 
 	@Override
 	public boolean validarNivelDeAcesso(SessaoUsuario sessaoUsuario) {
-		if (sessaoUsuario.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO) {
+		int idAutorOrientacao = service.pegarIdCriadorOrientacao(idOrientacao, orientacaoRemover.idiomaOrientacao());
+
+		if (sessaoUsuario.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO
+				|| usuarioEfetor.pegarIdUsuario() == idAutorOrientacao) {
 			return true;
 		}
 		return false;

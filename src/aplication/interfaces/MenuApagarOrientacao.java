@@ -28,6 +28,7 @@ public class MenuApagarOrientacao extends Menu implements Executor {
 		super(idiomaImplementacao);
 		this.orientacaoService = orientacaoService;
 		this.orientacaoDto = orientacaoDto;
+		this.sessaoUsuario = sessaoUsuario;
 	}
 
 	@Override
@@ -41,6 +42,8 @@ public class MenuApagarOrientacao extends Menu implements Executor {
 		} catch (SairMenuException sme) {
 			System.out.println(idiomaImplementacao.pegarMensagemVoltandoMenu());
 		} catch (Exception le) {
+			le.printStackTrace();
+			System.out.println(le.getMessage());
 			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemErroAoRemoverOrientacao(), idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);

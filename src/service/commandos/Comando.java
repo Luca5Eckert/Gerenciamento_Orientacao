@@ -19,7 +19,7 @@ public abstract class Comando {
 	
 	public abstract TiposComando pegarTipo();
 	
-	public abstract void voltarAcao();
+	public abstract RegistroComando voltarAcao();
 	
 	public abstract boolean validarNivelDeAcesso(SessaoUsuario sessaoUsuario);
 	

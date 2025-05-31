@@ -29,9 +29,13 @@ public class OrientacaoService {
 		repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
 	}
 
-	public void criarOrientacao(OrientacaoDto orientacaoDto, String idOrientacao) {
-		Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao);
+	public void criarOrientacao(OrientacaoDto orientacaoDto, String idOrientacao, int idUsuario) {
+		Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao, idUsuario);
 		repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
+	}
+	
+	public void desfazerRemocaoOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao){
+		repositorioOrientacao.desfazerRemocaoOrientacao(idOrientacao, idiomaOrientacao);
 	}
 
 	public void removerOrientacao(OrientacaoDto orientacaoDto) {
@@ -42,12 +46,12 @@ public class OrientacaoService {
 		repositorioOrientacao.removerOrientacao(orientacaoId);
 	}
 
-	public boolean criarOrientacoes(List<OrientacaoDto> listaOrientacao) {
+	public boolean criarOrientacoes(List<OrientacaoDto> listaOrientacao, int idUsuario) {
 
 		String idOrientacao = UUID.randomUUID().toString();
 
 		for (OrientacaoDto orientacaoDto : listaOrientacao) {
-			Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao);
+			Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao, idUsuario);
 			repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
 		}
 		return true;
@@ -90,7 +94,7 @@ public class OrientacaoService {
 	}
 
 	public boolean atualizarOrientacao(OrientacaoDto orientacaoAlterada, OrientacaoDto orientacaoAntiga,
-			IdiomaImplementacao idiomaImplementacao) throws OrientacaoNaoDisponivelIdiomaException {
+			IdiomaImplementacao idiomaImplementacao, int idUsuario) throws OrientacaoNaoDisponivelIdiomaException {
 		String idOrientacao = pegarIdOrientacao(orientacaoAntiga);
 
 		if (!orientacaoAlterada.idiomaOrientacao().equals(orientacaoAntiga.idiomaOrientacao())) {
@@ -107,7 +111,7 @@ public class OrientacaoService {
 					orientacaoAlterada.idiomaOrientacao());
 		}
 
-		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao);
+		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao, idUsuario);
 
 		if (orientacaoModelo.getTipoOrientacao().name().equals(orientacaoAntiga.tipoOrientacao().name())) {
 			repositorioOrientacao.atualizarTiposOrientacoes(idOrientacao, orientacaoModelo.getTipoOrientacao());
@@ -140,7 +144,7 @@ public class OrientacaoService {
 		return orientacaoModelo;
 	}
 
-	public Orientacao transformarDtoModelo(OrientacaoDto orientacaoDto, String idOrientacao) {
+	public Orientacao transformarDtoModelo(OrientacaoDto orientacaoDto, String idOrientacao, int usuarioCriador) {
 		Orientacao orientacaoModelo = new Orientacao();
 
 		OrientacaoId orientacaoId = new OrientacaoId(idOrientacao, orientacaoDto.idiomaOrientacao());
@@ -148,6 +152,7 @@ public class OrientacaoService {
 		orientacaoModelo.setTitulo(orientacaoDto.titulo());
 		orientacaoModelo.setTipoOrientacao(orientacaoDto.tipoOrientacao());
 		orientacaoModelo.setConteudo(orientacaoDto.conteudo());
+		orientacaoModelo.setUsuarioCriador(usuarioCriador);
 
 		return orientacaoModelo;
 	}
@@ -172,18 +177,22 @@ public class OrientacaoService {
 
 	public void apagarOrientacaoId(OrientacaoDto orientacaoDto) {
 		var idOrientacao = pegarIdOrientacao(orientacaoDto);
-		
+
 		repositorioOrientacao.removerOrientacoesPorId(idOrientacao);
-		
+
 	}
-	
+
 	public void removerOrientacaoPorId(String idOrientacao) {
 		repositorioOrientacao.removerOrientacaoPorId(idOrientacao);
 	}
 
 	public List<OrientacaoDto> pegarOrientacoesPorId(OrientacaoDto orientacaoDto) {
 		var listaOrientacao = repositorioOrientacao.pegarOrientacoesPorId(pegarIdOrientacao(orientacaoDto));
-		
+
 		return transformarListaModeloDto(listaOrientacao);
+	}
+
+	public int pegarIdCriadorOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
+		return repositorioOrientacao.pegarIdCriadorOrientacao(idOrientacao, idiomaOrientacao);
 	}
 }

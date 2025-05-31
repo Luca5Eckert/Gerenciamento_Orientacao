@@ -21,7 +21,7 @@ public class ComandoAdicionarOrientacao extends Comando {
 
 	@Override
 	public void executarComando() {
-		service.criarOrientacao(orientacaoDto, idOrientacao);
+		service.criarOrientacao(orientacaoDto, idOrientacao, usuarioEfetor.pegarIdUsuario());
 	}
 
 	@Override
@@ -36,8 +36,11 @@ public class ComandoAdicionarOrientacao extends Comando {
 	}
 
 	@Override
-	public void voltarAcao() {
+	public RegistroComando voltarAcao() {
 		service.removerOrientacao(orientacaoDto);
+		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoDto.idiomaOrientacao(),
+				TiposComando.DESFAZER_ADICAO_ORIENTACAO);
+
 	}
 
 	@Override

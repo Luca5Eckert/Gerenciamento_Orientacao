@@ -1,19 +1,21 @@
 package Dominio;
 
 public class Orientacao {
-	
+
 	private OrientacaoId idOrientacao;
-	
+
 	private String titulo;
 	private TipoOrientacao tipoOrientacao;
 	private String conteudo;
+	private int usuarioCriador;
 
 	public Orientacao(OrientacaoId idOrientacao, String titulo, TipoOrientacao tipoOrientacao, String conteudo,
-			IdiomaOrientacao idiomaOrientacao) {
+			IdiomaOrientacao idiomaOrientacao, int usuarioCriador) {
 		this.idOrientacao = idOrientacao;
 		this.titulo = titulo;
 		this.tipoOrientacao = tipoOrientacao;
 		this.conteudo = conteudo;
+		this.usuarioCriador = usuarioCriador;
 	}
 
 	public Orientacao() {
@@ -51,6 +53,12 @@ public class Orientacao {
 		this.conteudo = conteudo;
 	}
 
-	
+	public int getUsuarioCriador() {
+		return usuarioCriador;
+	}
+
+	public void setUsuarioCriador(int idUsuario) {
+		this.usuarioCriador = idUsuario;
+	}
 
 }

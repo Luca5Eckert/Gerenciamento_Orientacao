@@ -1,5 +1,6 @@
 package aplication.interfaces;
 
+import java.util.List;
 import java.util.Scanner;
 
 import Dominio.IdiomaOrientacao;
@@ -21,10 +22,10 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 
 	private ExecutadorComando executadorComando;
 
-	private final OrientacaoDto orientacaoDto;
+	private OrientacaoDto orientacaoDto;
 	private final OrientacaoService orientacaoService;
 	private SessaoUsuario sessaoUsuario;
-	
+
 	private OrientacaoDto orientacaoAlterada;
 
 	private String tituloOrientacao;
@@ -159,26 +160,25 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 	}
 
 	public void salvarAlteracaoOrientacao(OrientacaoDto orientacaoAlterada, MenuHistorico menuHistorico) {
-		Menu proximoMenu;
+		Menu proximoMenu = null;
 
 		try {
+			if (verificarAlterouTipo()) {
+				executar();
 
-			boolean atualizacaoOrientacao = orientacaoService.atualizarOrientacao(orientacaoAlterada, orientacaoDto,
-					idiomaImplementacao);
-
-			if (atualizacaoOrientacao) {
 				menuHistorico.voltarPonteiro(2);
 
-				var menuCorreto = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada,
-						idiomaImplementacao, sessaoUsuario);
-
-				proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuCorreto,
-						idiomaImplementacao.pegarMensagemEdicaoConcluida(), idiomaImplementacao);
-
 			} else {
-				proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, this,
-						idiomaImplementacao.pegarMensagemEdicaoFalha(), idiomaImplementacao);
+				var listaOrientacoesId = orientacaoService.pegarOrientacoesPorId(orientacaoDto);
+
+				alterarOrientações(listaOrientacoesId);
 			}
+
+			var menuCorreto = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada,
+					idiomaImplementacao, sessaoUsuario);
+
+			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuCorreto,
+					idiomaImplementacao.pegarMensagemEdicaoConcluida(), idiomaImplementacao);
 
 		} catch (OrientacaoNaoDisponivelIdiomaException ondi) {
 			proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),
@@ -189,6 +189,20 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 		menuHistorico.definirProximoMenu(proximoMenu);
 	}
 
+	private void alterarOrientações(List<OrientacaoDto> listaOrientacoesId) {
+		for (OrientacaoDto orientacao : listaOrientacoesId) {
+			orientacaoDto = orientacao;
+			orientacaoAlterada = new OrientacaoDto(orientacao.titulo(), orientacaoAlterada.tipoOrientacao(),
+					orientacao.conteudo(), orientacao.idiomaOrientacao());
+			executar();
+		}
+
+	}
+
+	private boolean verificarAlterouTipo() {
+		return orientacaoDto.tipoOrientacao().equals(orientacaoAlterada.tipoOrientacao());
+	}
+
 	@Override
 	public void executar() {
 		criarExecutadorComando();
@@ -197,12 +211,13 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoEditarOrientacao(sessaoUsuario, orientacaoDto, orientacaoAlterada, idiomaImplementacao);
+		return new ComandoEditarOrientacao(sessaoUsuario, orientacaoService, orientacaoDto, orientacaoAlterada,
+				idiomaImplementacao);
 	}
-	
+
 	@Override
 	public void criarExecutadorComando() {
-		this.executadorComando =ExecutadorComando.criarExecutadorComando(pegarComando(), sessaoUsuario,
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(), sessaoUsuario,
 				new RegistroComandoDAO());
 	}
 

@@ -3,7 +3,6 @@ package repositorio;
 import java.sql.SQLException;
 import java.util.List;
 
-
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
@@ -41,7 +40,7 @@ public class OrientacaoRepositorio {
 			System.out.println("Erro ao remover orientação: " + e.getMessage());
 		}
 	}
-	
+
 	public void removerOrientacoesPorId(String idOrientacao) {
 		try {
 			orientacaoDAO.removerPorId(idOrientacao);
@@ -95,14 +94,15 @@ public class OrientacaoRepositorio {
 		return -1;
 	}
 
-	public void atualizarIdioma(String idOrientacao, IdiomaOrientacao idiomaAntigo, IdiomaOrientacao novoIdiomaOrientacao) {
+	public void atualizarIdioma(String idOrientacao, IdiomaOrientacao idiomaAntigo,
+			IdiomaOrientacao novoIdiomaOrientacao) {
 		try {
 			orientacaoDAO.atualizarIdiomaPorId(idOrientacao, idiomaAntigo.name(), novoIdiomaOrientacao.name());
-		} catch(SQLException se) {
+		} catch (SQLException se) {
 			System.out.println("Erro ao atualizar idioma da orientação: " + se.getMessage());
 		}
 	}
-	
+
 	public boolean verificarIdiomaOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
 		try {
 			return orientacaoDAO.buscarPorId(idOrientacao, idiomaOrientacao.name()) == null;
@@ -119,13 +119,13 @@ public class OrientacaoRepositorio {
 		} catch (SQLException se) {
 			System.out.println("Erro ao definir tipos para orientações: " + se.getMessage());
 		}
-		
+
 	}
-	
+
 	public void removerOrientacaoPorId(String idOrientacao) {
 		try {
 			orientacaoDAO.removerPorId(idOrientacao);
-		} catch ( SQLException se) {
+		} catch (SQLException se) {
 			System.out.println("Erro ao remover orientação por id: " + se.getMessage());
 		}
 	}
@@ -137,5 +137,22 @@ public class OrientacaoRepositorio {
 			System.out.println(" Erro ao pegar orientações pelo id: " + se.getMessage());
 		}
 		return null;
+	}
+
+	public int pegarIdCriadorOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
+		try {
+			return orientacaoDAO.pegarIdCriadorOrientacao(idOrientacao, idiomaOrientacao);
+		} catch (SQLException se) {
+			System.out.println(" Erro ao pegar orientações pelo id: " + se.getMessage());
+		}
+		return 0;
+	}
+
+	public void desfazerRemocaoOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
+		try {
+			orientacaoDAO.desfazerRemocaoOrientacao(idOrientacao, idiomaOrientacao);
+		} catch (SQLException se) {
+			System.out.println(" Erro ao desfazer remoção da orientação: " + se.getMessage());
+		}
 	}
 }
