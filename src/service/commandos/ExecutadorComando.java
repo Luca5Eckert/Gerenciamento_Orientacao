@@ -4,29 +4,26 @@ import java.sql.SQLException;
 
 import aplication.implementacoes.IdiomaImplementacao;
 import infrastructure.dao.RegistroComandoDAO;
-import service.SessaoUsuario;
 import service.exceptions.NivelDeAcessoInsuficienteException;
 
 public class ExecutadorComando {
 
 	private Comando comando;
-	private SessaoUsuario sessaoUsuario;
 	private RegistroComandoDAO registroComandoDAO;
 
-	public ExecutadorComando(Comando comando, SessaoUsuario sessaoUsuario, RegistroComandoDAO registroComandoDAO) {
+	public ExecutadorComando(Comando comando, RegistroComandoDAO registroComandoDAO) {
 		this.comando = comando;
-		this.sessaoUsuario = sessaoUsuario;
 		this.registroComandoDAO = registroComandoDAO;
 	}
 
-	public static ExecutadorComando criarExecutadorComando(Comando comando, SessaoUsuario sessaoUsuario,
+	public static ExecutadorComando criarExecutadorComando(Comando comando,
 			RegistroComandoDAO registroComandoDAO) {
-				return new ExecutadorComando(comando, sessaoUsuario, registroComandoDAO);
+				return new ExecutadorComando(comando, registroComandoDAO);
 	}
 	
 	public void aplicarComando(IdiomaImplementacao idiomaImplementacao) {
 		
-		if(comando.validarNivelDeAcesso(sessaoUsuario)) {
+		if(comando.validarNivelDeAcesso()) {
 			comando.executarComando();
 			salvarRegistroComando();
 			return;

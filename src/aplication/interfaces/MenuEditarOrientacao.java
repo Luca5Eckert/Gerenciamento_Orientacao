@@ -217,7 +217,7 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 
 	@Override
 	public void criarExecutadorComando() {
-		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(), sessaoUsuario,
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(),
 				new RegistroComandoDAO());
 	}
 

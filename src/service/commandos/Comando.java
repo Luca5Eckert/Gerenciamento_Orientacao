@@ -21,6 +21,6 @@ public abstract class Comando {
 	
 	public abstract RegistroComando voltarAcao();
 	
-	public abstract boolean validarNivelDeAcesso(SessaoUsuario sessaoUsuario);
+	public abstract boolean validarNivelDeAcesso();
 	
 }

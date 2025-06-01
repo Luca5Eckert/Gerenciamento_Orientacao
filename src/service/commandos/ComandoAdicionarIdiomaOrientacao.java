@@ -1,26 +1,37 @@
 package service.commandos;
 
+import Dominio.IdiomaOrientacao;
+import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.SessaoUsuario;
 
-public class ComandoAdicionarOrientacao extends Comando {
+public class ComandoAdicionarIdiomaOrientacao extends Comando {
 	private final int NIVEL_DE_ACESSO_MINIMO = 2;
 
 	private OrientacaoDto orientacaoDto;
 	private OrientacaoService service;
 	private String idOrientacao;
+	
+	private IdiomaImplementacao idiomaImplementacao;
+	private IdiomaOrientacao idiomaAntigo;
 
-	public ComandoAdicionarOrientacao(SessaoUsuario usuarioEfetor, OrientacaoDto orientacaoDto,
-			OrientacaoService service, String idOrientacao) {
+	public ComandoAdicionarIdiomaOrientacao(SessaoUsuario usuarioEfetor, OrientacaoDto orientacaoDto,
+			OrientacaoService service, String idOrientacao, IdiomaImplementacao idiomaImplementacao, IdiomaOrientacao idiomaAntigo) {
 		super(usuarioEfetor);
 		this.orientacaoDto = orientacaoDto;
 		this.service = service;
 		this.idOrientacao = idOrientacao;
+		this.idiomaImplementacao = idiomaImplementacao;
+		this.idiomaAntigo = idiomaAntigo;
 	}
 
 	@Override
 	public void executarComando() {
+		if (verificarSeOrientacaoExiste()) {
+			service.atualizarOrientacao(orientacaoDto, orientacaoDto, idiomaImplementacao, NIVEL_DE_ACESSO_MINIMO);
+			return;
+		}
 		service.criarOrientacao(orientacaoDto, idOrientacao, usuarioEfetor.pegarIdUsuario());
 	}
 
@@ -45,10 +56,17 @@ public class ComandoAdicionarOrientacao extends Comando {
 
 	@Override
 	public boolean validarNivelDeAcesso() {
-		if (usuarioEfetor.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO) {
+		int idAutorOrientacao = service.pegarIdCriadorOrientacao(idOrientacao, idiomaAntigo);
+
+		if (usuarioEfetor.pegarNivelAcesso() > NIVEL_DE_ACESSO_MINIMO
+				|| usuarioEfetor.pegarIdUsuario() == idAutorOrientacao) {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean verificarSeOrientacaoExiste() {
+		return service.verificarOrientacaoExiste(idiomaAntigo, idOrientacao);
 	}
 
 }

@@ -1,6 +1,5 @@
 package service;
 
-import Dominio.NivelAcesso;
 import Dominio.Usuario;
 import aplication.implementacoes.IdiomaImplementacao;
 import dtos.UsuarioDto;

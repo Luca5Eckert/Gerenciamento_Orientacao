@@ -13,7 +13,7 @@ import infrastructure.dao.RegistroComandoDAO;
 import service.OrientacaoService;
 import service.SessaoUsuario;
 import service.commandos.Comando;
-import service.commandos.ComandoAdicionarOrientacao;
+import service.commandos.ComandoAdicionarIdiomaOrientacao;
 import service.commandos.ExecutadorComando;
 
 public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
@@ -72,12 +72,12 @@ public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoAdicionarOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService, orientacaoService.pegarIdOrientacao(orientacaoDto));
+		return new ComandoAdicionarIdiomaOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService, orientacaoService.pegarIdOrientacao(orientacaoDto), idiomaImplementacao, orientacaoDto.idiomaOrientacao());
 	}
 
 	@Override
 	public void criarExecutadorComando() {
-		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(), sessaoUsuario,
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(),
 				new RegistroComandoDAO());
 	}
 

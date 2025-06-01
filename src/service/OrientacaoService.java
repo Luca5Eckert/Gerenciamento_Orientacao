@@ -195,4 +195,8 @@ public class OrientacaoService {
 	public int pegarIdCriadorOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
 		return repositorioOrientacao.pegarIdCriadorOrientacao(idOrientacao, idiomaOrientacao);
 	}
+
+	public boolean verificarOrientacaoExiste(IdiomaOrientacao idiomaOrientacao, String idOrientacao) {
+		return !repositorioOrientacao.verificarIdiomaOrientacao(idOrientacao, idiomaOrientacao);
+	}
 }

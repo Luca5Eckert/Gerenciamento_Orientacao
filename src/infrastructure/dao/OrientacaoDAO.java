@@ -14,7 +14,7 @@ public class OrientacaoDAO {
 
 	public List<Orientacao> buscarTodas() throws SQLException {
 		List<Orientacao> orientacoes = new ArrayList<>();
-		String sql = "SELECT * FROM orientacao WHERE ativo = TRUE";
+		String sql = "SELECT * FROM orientacao WHERE ativo = 1";
 
 		try (Connection conn = ConexaoFactory.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
@@ -22,18 +22,14 @@ public class OrientacaoDAO {
 
 			while (rs.next()) {
 				Orientacao orientacao = new Orientacao();
-
 				OrientacaoId id = new OrientacaoId();
 				id.setIdOrientacao(rs.getString("id"));
 				id.setIdiomaOrientacao(IdiomaOrientacao.valueOf(rs.getString("idioma_orientacao")));
 				orientacao.setIdOrientacao(id);
-
 				orientacao.setTitulo(rs.getString("titulo"));
 				orientacao.setConteudo(rs.getString("conteudo"));
 				orientacao.setTipoOrientacao(TipoOrientacao.valueOf(rs.getString("tipo_orientacao")));
-
 				orientacao.setUsuarioCriador(rs.getInt("id_fk_usuario_criou"));
-
 				orientacoes.add(orientacao);
 			}
 		}
@@ -41,7 +37,7 @@ public class OrientacaoDAO {
 	}
 
 	public Orientacao buscarPorId(String id, String idiomaOrientacao) throws SQLException {
-		String sql = "SELECT * FROM orientacao WHERE id = ? AND idioma_orientacao = ? AND ativo = TRUE";
+		String sql = "SELECT * FROM orientacao WHERE id = ? AND idioma_orientacao = ? AND ativo = 1";
 		Orientacao orientacao = null;
 
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -52,15 +48,12 @@ public class OrientacaoDAO {
 				if (rs.next()) {
 					orientacao = new Orientacao();
 					OrientacaoId orientacaoId = new OrientacaoId();
-
 					orientacaoId.setIdOrientacao(rs.getString("id"));
 					orientacaoId.setIdiomaOrientacao(IdiomaOrientacao.valueOf(rs.getString("idioma_orientacao")));
 					orientacao.setIdOrientacao(orientacaoId);
-
 					orientacao.setTitulo(rs.getString("titulo"));
 					orientacao.setConteudo(rs.getString("conteudo"));
 					orientacao.setTipoOrientacao(TipoOrientacao.valueOf(rs.getString("tipo_orientacao")));
-
 					orientacao.setUsuarioCriador(rs.getInt("id_fk_usuario_criou"));
 				}
 			}
@@ -70,7 +63,7 @@ public class OrientacaoDAO {
 
 	public List<Orientacao> buscarPorIdUsuarioCriador(int idUsuarioCriador) throws SQLException {
 		List<Orientacao> orientacoes = new ArrayList<>();
-		String sql = "SELECT * FROM orientacao WHERE id_fk_usuario_criou = ? AND ativo = TRUE";
+		String sql = "SELECT * FROM orientacao WHERE id_fk_usuario_criou = ? AND ativo = 1";
 
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setInt(1, idUsuarioCriador);
@@ -78,18 +71,14 @@ public class OrientacaoDAO {
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					Orientacao orientacao = new Orientacao();
-
 					OrientacaoId id = new OrientacaoId();
 					id.setIdOrientacao(rs.getString("id"));
 					id.setIdiomaOrientacao(IdiomaOrientacao.valueOf(rs.getString("idioma_orientacao")));
 					orientacao.setIdOrientacao(id);
-
 					orientacao.setTitulo(rs.getString("titulo"));
 					orientacao.setConteudo(rs.getString("conteudo"));
 					orientacao.setTipoOrientacao(TipoOrientacao.valueOf(rs.getString("tipo_orientacao")));
-
 					orientacao.setUsuarioCriador(rs.getInt("id_fk_usuario_criou"));
-
 					orientacoes.add(orientacao);
 				}
 			}
@@ -98,7 +87,7 @@ public class OrientacaoDAO {
 	}
 
 	public void salvar(Orientacao orientacao) throws SQLException {
-		String sql = "INSERT INTO orientacao (id, titulo, tipo_orientacao, conteudo, idioma_orientacao, id_fk_usuario_criou) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO orientacao (id, titulo, tipo_orientacao, conteudo, idioma_orientacao, id_fk_usuario_criou, ativo) VALUES (?, ?, ?, ?, ?, ?, TRUE)";
 
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, orientacao.getIdOrientacao().getIdOrientacao());
@@ -107,13 +96,12 @@ public class OrientacaoDAO {
 			stmt.setString(4, orientacao.getConteudo());
 			stmt.setString(5, orientacao.getIdOrientacao().getIdiomaOrientacao().name());
 			stmt.setInt(6, orientacao.getUsuarioCriador());
-
 			stmt.executeUpdate();
 		}
 	}
 
 	public void atualizar(Orientacao orientacao) throws SQLException {
-		String sql = "UPDATE orientacao SET titulo = ?, tipo_orientacao = ?, conteudo = ?, id_fk_usuario_criou = ? WHERE id = ? AND idioma_orientacao = ?";
+		String sql = "UPDATE orientacao SET titulo = ?, tipo_orientacao = ?, conteudo = ?, id_fk_usuario_criou = ?, ativo = TRUE WHERE id = ? AND idioma_orientacao = ?";
 
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, orientacao.getTitulo());
@@ -122,20 +110,12 @@ public class OrientacaoDAO {
 			stmt.setInt(4, orientacao.getUsuarioCriador());
 			stmt.setString(5, orientacao.getIdOrientacao().getIdOrientacao());
 			stmt.setString(6, orientacao.getIdOrientacao().getIdiomaOrientacao().name());
-
 			stmt.executeUpdate();
 		}
 	}
 
 	public void remover(Orientacao orientacao) throws SQLException {
-		String sql = "UPDATE orientacao SET ativo = FALSE WHERE id = ? AND idioma_orientacao = ?";
-
-		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, orientacao.getIdOrientacao().getIdOrientacao());
-			stmt.setString(2, orientacao.getIdOrientacao().getIdiomaOrientacao().name());
-
-			stmt.executeUpdate();
-		}
+		remover(orientacao.getIdOrientacao());
 	}
 
 	public void remover(OrientacaoId idOrientacao) throws SQLException {
@@ -144,13 +124,12 @@ public class OrientacaoDAO {
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, idOrientacao.getIdOrientacao());
 			stmt.setString(2, idOrientacao.getIdiomaOrientacao().name());
-
 			stmt.executeUpdate();
 		}
 	}
 
 	public int obterProximoIdOrientacaoIdioma(IdiomaOrientacao idioma) throws SQLException {
-		String sql = "SELECT MAX(id) FROM orientacao WHERE idioma_orientacao = ?";
+		String sql = "SELECT MAX(CAST(id AS UNSIGNED)) FROM orientacao WHERE idioma_orientacao = ?";
 
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, idioma.name());
@@ -186,62 +165,51 @@ public class OrientacaoDAO {
 	public void definirTipoPorId(String idOrientacao, String tipoOrientacao) throws SQLException {
 		String sql = "UPDATE orientacao SET tipo_orientacao = ? WHERE id = ?";
 
-		try (Connection conexao = ConexaoFactory.getConnection();
-				PreparedStatement statement = conexao.prepareStatement(sql)) {
-			statement.setString(1, tipoOrientacao);
-			statement.setString(2, idOrientacao);
-
-			statement.executeUpdate();
+		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, tipoOrientacao);
+			stmt.setString(2, idOrientacao);
+			stmt.executeUpdate();
 		}
 	}
 
 	public void atualizarIdiomaPorId(String idOrientacao, String idiomaAntigo, String novoIdioma) throws SQLException {
 		String sql = "UPDATE orientacao SET idioma_orientacao = ? WHERE id = ? AND idioma_orientacao = ?";
 
-		try (Connection conexao = ConexaoFactory.getConnection();
-				PreparedStatement statement = conexao.prepareStatement(sql)) {
-			statement.setString(1, novoIdioma);
-			statement.setString(2, idOrientacao);
-			statement.setString(3, idiomaAntigo);
-
-			statement.executeUpdate();
+		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, novoIdioma);
+			stmt.setString(2, idOrientacao);
+			stmt.setString(3, idiomaAntigo);
+			stmt.executeUpdate();
 		}
 	}
 
 	public void removerPorId(String idOrientacao) throws SQLException {
 		String sql = "DELETE FROM orientacao WHERE id = ?";
 
-		try (Connection conexao = ConexaoFactory.getConnection();
-				PreparedStatement statement = conexao.prepareStatement(sql)) {
-			statement.setString(1, idOrientacao);
-
-			statement.executeUpdate();
+		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, idOrientacao);
+			stmt.executeUpdate();
 		}
 	}
 
 	public List<Orientacao> pegarOrientacoesPorId(String idOrientacao) throws SQLException {
 		List<Orientacao> orientacoes = new ArrayList<>();
-
 		String sql = "SELECT * FROM orientacao WHERE id = ? AND ativo = TRUE";
 
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, idOrientacao);
 
-			try (ResultSet resultSet = stmt.executeQuery()) {
-				while (resultSet.next()) {
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
 					Orientacao orientacao = new Orientacao();
-
 					OrientacaoId id = new OrientacaoId();
-					id.setIdOrientacao(resultSet.getString("id"));
-					id.setIdiomaOrientacao(IdiomaOrientacao.valueOf(resultSet.getString("idioma_orientacao")));
+					id.setIdOrientacao(rs.getString("id"));
+					id.setIdiomaOrientacao(IdiomaOrientacao.valueOf(rs.getString("idioma_orientacao")));
 					orientacao.setIdOrientacao(id);
-
-					orientacao.setTitulo(resultSet.getString("titulo"));
-					orientacao.setConteudo(resultSet.getString("conteudo"));
-					orientacao.setTipoOrientacao(TipoOrientacao.valueOf(resultSet.getString("tipo_orientacao")));
-
-					orientacao.setUsuarioCriador(resultSet.getInt("id_fk_usuario_criou"));
-
+					orientacao.setTitulo(rs.getString("titulo"));
+					orientacao.setConteudo(rs.getString("conteudo"));
+					orientacao.setTipoOrientacao(TipoOrientacao.valueOf(rs.getString("tipo_orientacao")));
+					orientacao.setUsuarioCriador(rs.getInt("id_fk_usuario_criou"));
 					orientacoes.add(orientacao);
 				}
 			}
@@ -271,7 +239,6 @@ public class OrientacaoDAO {
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, idOrientacao);
 			stmt.setString(2, idiomaOrientacao.name());
-
 			stmt.executeUpdate();
 		}
 	}
