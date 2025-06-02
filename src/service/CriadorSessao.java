@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import Dominio.NivelAcesso;
 import infrastructure.dao.RegistroLoginDAO;
+import repositorio.UsuarioRepositorio;
 import service.exceptions.usuario.LoginException;
 
 public class CriadorSessao {
@@ -14,8 +15,9 @@ public class CriadorSessao {
 		this.registradorLogin = new RegistroLoginDAO();
 	}
 
-	public SessaoUsuario criarSessao(int idUsuario) {
-		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario, NivelAcesso.ALTERADOR);
+	public SessaoUsuario criarSessao(int idUsuario, UsuarioRepositorio repositorio) {
+		NivelAcesso nivelAcesso = repositorio.pegarNivelPeloId(idUsuario);
+		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario, nivelAcesso);
 		registrarSessaoLogin(sessaoUsuario);
 
 		return sessaoUsuario;

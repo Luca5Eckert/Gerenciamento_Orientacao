@@ -17,6 +17,8 @@ import service.SessaoUsuario;
 import service.commandos.Comando;
 import service.commandos.ComandoEditarOrientacao;
 import service.commandos.ExecutadorComando;
+import service.exceptions.NivelDeAcessoInsuficienteException;
+import service.exceptions.orientacao.TituloNaoDisponivelException;
 
 public class MenuEditarOrientacao extends Menu implements Executor {
 
@@ -54,7 +56,17 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 		case "V":
 			orientacaoAlterada = criarOrientacaoAlterada(tituloOrientacao, conteudoOrientacao, tipoOrientacao,
 					idiomaOrientacao);
-			confirmarSaida(input, menuHistorico, orientacaoAlterada);
+			try {
+				confirmarSaida(input, menuHistorico, orientacaoAlterada);				
+			} catch (NivelDeAcessoInsuficienteException naie) {
+				menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+						idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente(), idiomaImplementacao));
+
+			} catch (TituloNaoDisponivelException tnde) {
+				menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+						idiomaImplementacao.pegarMensagemTituloNaoDisponivel(), idiomaImplementacao));
+
+			} 
 			break;
 		case "1":
 			editarTitulo(input);

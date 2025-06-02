@@ -15,6 +15,8 @@ import service.SessaoUsuario;
 import service.commandos.Comando;
 import service.commandos.ComandoAdicionarIdiomaOrientacao;
 import service.commandos.ExecutadorComando;
+import service.exceptions.NivelDeAcessoInsuficienteException;
+import service.exceptions.orientacao.TituloNaoDisponivelException;
 
 public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 
@@ -46,6 +48,14 @@ public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 			tratarOpcao(orientacaoCriada, menuHistorico);
 		} catch (SairMenuException sme) {
 			menuHistorico.voltarPonteiro(1);
+
+		} catch (NivelDeAcessoInsuficienteException naie) {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+					idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente(), idiomaImplementacao));
+
+		} catch (TituloNaoDisponivelException tnde) {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+					idiomaImplementacao.pegarMensagemTituloNaoDisponivel(), idiomaImplementacao));
 
 		} catch (Exception e) {
 			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.pegarMenuAnterior(),

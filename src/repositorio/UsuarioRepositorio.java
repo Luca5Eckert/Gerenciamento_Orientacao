@@ -2,6 +2,8 @@ package repositorio;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import Dominio.NivelAcesso;
 import Dominio.Usuario;
 import infrastructure.dao.UsuarioDAO;
 
@@ -118,6 +120,14 @@ public class UsuarioRepositorio {
 			System.out.println("Erro ao obter próximo ID de usuário: " + e.getMessage());
 		}
 		return -1;
+	}
+
+	public NivelAcesso pegarNivelPeloId(int idUsuario) {
+		try {
+			return usuarioDAO.pegarNivelPeloId(idUsuario);
+		} catch (SQLException e) {
+			System.out.println("Erro ao obter próximo ID de usuário: " + e.getMessage());
+		}		return null;
 	}
 
 }

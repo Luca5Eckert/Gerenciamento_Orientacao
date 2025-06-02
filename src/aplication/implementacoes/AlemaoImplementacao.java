@@ -629,5 +629,10 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		return " Unzureichende Zugriffsebene";
 	}
 
+	@Override
+	public String pegarMensagemTituloNaoDisponivel() {
+		return " Kann nicht erstellt werden: Titel wird bereits verwendet";
+	}
+
 
 }

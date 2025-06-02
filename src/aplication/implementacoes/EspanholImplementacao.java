@@ -632,5 +632,10 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 		return " Nivel de acceso insuficiente";
 	}
 
+	@Override
+	public String pegarMensagemTituloNaoDisponivel() {
+		return " No se puede crear: el título ya está en uso";
+	}
+
 
 }

@@ -14,6 +14,7 @@ import aplication.interfaces.exceptions.OrientacaoNaoDisponivelIdiomaException;
 import dtos.OrientacaoDto;
 import repositorio.OrientacaoRepositorio;
 import service.exceptions.orientacao.OrientacaoException;
+import service.exceptions.orientacao.TituloNaoDisponivelException;
 import service.filtros.GerenciadorFiltrosOrientacao;
 import service.pesquisas.PesquisaFactory;
 
@@ -25,13 +26,23 @@ public class OrientacaoService {
 	}
 
 	public void criarOrientacao(OrientacaoDto orientacaoDto) {
-		Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto);
-		repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
+		if (tituloEhUnico(orientacaoDto.titulo())) {
+			Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto);
+			repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
+			return;
+		}
+
+		throw new TituloNaoDisponivelException();
 	}
 
 	public void criarOrientacao(OrientacaoDto orientacaoDto, String idOrientacao, int idUsuario) {
-		Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao, idUsuario);
-		repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
+		if (tituloEhUnico(orientacaoDto.titulo())) {
+			Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao, idUsuario);
+			repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
+			return;
+		}
+
+		throw new TituloNaoDisponivelException();
 	}
 
 	public void desfazerRemocaoOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
@@ -51,8 +62,7 @@ public class OrientacaoService {
 		String idOrientacao = UUID.randomUUID().toString();
 
 		for (OrientacaoDto orientacaoDto : listaOrientacao) {
-			Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao, idUsuario);
-			repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
+			criarOrientacao(orientacaoDto, idOrientacao, idUsuario);
 		}
 		return true;
 	}
@@ -101,7 +111,11 @@ public class OrientacaoService {
 
 			boolean idiomaDisponivel = repositorioOrientacao.verificarIdiomaOrientacao(idOrientacao,
 					orientacaoAlterada.idiomaOrientacao());
-
+			
+			if (!tituloEhUnico(orientacaoAlterada.titulo())) {
+				throw new TituloNaoDisponivelException();
+			}
+			
 			if (!idiomaDisponivel) {
 				throw new OrientacaoNaoDisponivelIdiomaException(
 						idiomaImplementacao.pegarMensagemIdiomaNaoDisponivel());
@@ -134,7 +148,7 @@ public class OrientacaoService {
 	}
 
 	public void atualizarOrientacao(OrientacaoDto orientacaoAlterada, String idOrientacao, int idUsuario) {
- 		var orientacaoId = new OrientacaoId(idOrientacao, orientacaoAlterada.idiomaOrientacao());
+		var orientacaoId = new OrientacaoId(idOrientacao, orientacaoAlterada.idiomaOrientacao());
 		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao, idUsuario);
 		repositorioOrientacao.atualizarOrientacao(orientacaoId, orientacaoModelo);
 	}
@@ -204,5 +218,9 @@ public class OrientacaoService {
 
 	public boolean verificarOrientacaoExiste(IdiomaOrientacao idiomaOrientacao, String idOrientacao) {
 		return !repositorioOrientacao.verificarIdiomaOrientacao(idOrientacao, idiomaOrientacao);
+	}
+
+	public boolean tituloEhUnico(String titulo) {
+		return !repositorioOrientacao.verificarTituloUnico(titulo);
 	}
 }

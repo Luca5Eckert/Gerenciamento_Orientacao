@@ -288,4 +288,18 @@ public class OrientacaoDAO {
 		}
 
 	}
+
+	public boolean verificarTituloUnico(String titulo) throws SQLException {
+		String consulta = "SELECT id_fk_usuario_criou FROM orientacao WHERE titulo = ? AND ativo = TRUE";
+
+		try (Connection connection = ConexaoFactory.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(consulta)) {
+			stmt.setString(1, titulo);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				return rs.next();
+			}
+		}
+
+	}
 }

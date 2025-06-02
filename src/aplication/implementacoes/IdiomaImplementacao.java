@@ -29,6 +29,8 @@ public interface IdiomaImplementacao {
 
 	String mostrarMenuErro(Scanner input, String mensagemErro);
 
+	String pegarMensagemTituloNaoDisponivel();
+	
 	String mostrarMenuAcerto(Scanner input, String mensagemAcerto);
 
 	String mostrarMenuPesquisaOrientacao(Scanner input);

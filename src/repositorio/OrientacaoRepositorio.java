@@ -164,4 +164,13 @@ public class OrientacaoRepositorio {
 		}
 
 	}
+
+	public boolean verificarTituloUnico(String titulo) {
+		try {
+			return orientacaoDAO.verificarTituloUnico(titulo);
+		} catch(SQLException se) {
+			System.out.println("Impossível verificar titulo unico: " + se.getMessage());
+		}
+		return false;
+	}
 }

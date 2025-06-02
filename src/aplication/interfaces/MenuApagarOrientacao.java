@@ -14,6 +14,7 @@ import service.SessaoUsuario;
 import service.commandos.Comando;
 import service.commandos.ComandoRemoverOrientacao;
 import service.commandos.ExecutadorComando;
+import service.exceptions.NivelDeAcessoInsuficienteException;
 
 public class MenuApagarOrientacao extends Menu implements Executor {
 
@@ -40,6 +41,10 @@ public class MenuApagarOrientacao extends Menu implements Executor {
 			var proximoMenu = MenuFactory.criarMenuResultado(TipoMenu.CERTO, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemRemoverComSucessoOrientacao(), idiomaImplementacao);
 			menuHistorico.definirProximoMenu(proximoMenu);
+		} catch (NivelDeAcessoInsuficienteException naie) {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+					idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente(), idiomaImplementacao));
+
 		} catch (SairMenuException sme) {
 			System.out.println(idiomaImplementacao.pegarMensagemVoltandoMenu());
 		} catch (Exception le) {

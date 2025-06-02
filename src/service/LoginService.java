@@ -23,11 +23,11 @@ public class LoginService {
 		Usuario usuario = usuarioRepositorio.pegarUsuarioEmail(usuarioDto.email());
 		validarLogin(usuarioDto, usuario, idiomaImplementacao);
 
-		return criarSessaoUsuario(usuarioRepositorio.pegarIdPeloEmail(usuario.getEmail()));
+		return criarSessaoUsuario(usuarioRepositorio.pegarIdPeloEmail(usuario.getEmail()), usuarioRepositorio);
 	}
 
-	private SessaoUsuario criarSessaoUsuario(int idUsuario) {
-		return criadorSessao.criarSessao(idUsuario);
+	private SessaoUsuario criarSessaoUsuario(int idUsuario, UsuarioRepositorio usuarioRepositorio) {
+		return criadorSessao.criarSessao(idUsuario, usuarioRepositorio);
 	}
 
 	public boolean validarLogin(UsuarioDto usuarioDto, Usuario usuarioDB, IdiomaImplementacao idiomaImplementacao)

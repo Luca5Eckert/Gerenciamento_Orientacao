@@ -632,4 +632,9 @@ public class InglesImplementacao implements IdiomaImplementacao {
 		return " Insufficient access level";
 	}
 
+	@Override
+	public String pegarMensagemTituloNaoDisponivel() {
+		return " Unable to create: Title already in use";
+	}
+
 }

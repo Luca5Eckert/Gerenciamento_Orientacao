@@ -15,6 +15,7 @@ import service.commandos.Comando;
 import service.commandos.ComandoAdicionarOrientacao;
 import service.commandos.ExecutadorComando;
 import service.exceptions.NivelDeAcessoInsuficienteException;
+import service.exceptions.orientacao.TituloNaoDisponivelException;
 
 public class MenuAdicaoOrientacao extends Menu implements Executor {
 
@@ -44,9 +45,14 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 			criarOrientacoes(listaOrientacaoCriada);
 			proximoMenu = devolverOpcaoEscolhida(TipoMenu.CERTO, idiomaImplementacao, menuHistorico);
 			menuHistorico.definirProximoMenu(proximoMenu);
+			
 		} catch (NivelDeAcessoInsuficienteException naie) {
-			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, proximoMenu,
-					naie.getMessage(), idiomaImplementacao));
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+					idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente(), idiomaImplementacao));
+
+		} catch (TituloNaoDisponivelException tnde) {
+			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+					idiomaImplementacao.pegarMensagemTituloNaoDisponivel(), idiomaImplementacao));
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -92,8 +98,7 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 
 	@Override
 	public void criarExecutadorComando() {
-		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(),
-				new RegistroComandoDAO());
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(), new RegistroComandoDAO());
 	}
 
 }

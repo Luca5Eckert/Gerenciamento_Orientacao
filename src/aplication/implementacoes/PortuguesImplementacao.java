@@ -174,6 +174,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("------------------------------------------------------------");
 		System.out.println(mensagemAcerto);
 		System.out.println(" 1 - Continuar ");
+		System.out.println(" 2 - Cancelar operação");
 		System.out.println("------------------------------------------------------------");
 		return input.nextLine();
 	}
@@ -634,6 +635,11 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarMensagemNivelDeAcessoInsuficiente() {
 		return " Nível de acesso insuficiente";
+	}
+
+	@Override
+	public String pegarMensagemTituloNaoDisponivel() {
+		return " Impossível de criar: Título já em uso";
 	}
 
 }

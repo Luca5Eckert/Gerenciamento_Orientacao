@@ -144,4 +144,22 @@ public class UsuarioDAO {
 		return 0;
 		
 	}
+
+	public NivelAcesso pegarNivelPeloId(int idUsuario) throws SQLException {
+		String consulta = "SELECT nivelAcesso FROM usuario WHERE id = ?";
+		
+		try(Connection conexao = ConexaoFactory.getConnection();
+				PreparedStatement statement = conexao.prepareStatement(consulta)){
+			
+			statement.setInt(1, idUsuario);
+			
+			ResultSet resultado = statement.executeQuery();
+			
+			if(resultado.next()) {
+				return NivelAcesso.valueOf(resultado.getString(1));
+			}
+			
+		}
+		return null;		
+	}
 }
