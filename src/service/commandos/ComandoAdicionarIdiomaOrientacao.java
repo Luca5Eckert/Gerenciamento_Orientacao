@@ -1,7 +1,6 @@
 package service.commandos;
 
 import Dominio.IdiomaOrientacao;
-import aplication.implementacoes.IdiomaImplementacao;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
 import service.SessaoUsuario;
@@ -13,23 +12,21 @@ public class ComandoAdicionarIdiomaOrientacao extends Comando {
 	private OrientacaoService service;
 	private String idOrientacao;
 	
-	private IdiomaImplementacao idiomaImplementacao;
 	private IdiomaOrientacao idiomaAntigo;
 
 	public ComandoAdicionarIdiomaOrientacao(SessaoUsuario usuarioEfetor, OrientacaoDto orientacaoDto,
-			OrientacaoService service, String idOrientacao, IdiomaImplementacao idiomaImplementacao, IdiomaOrientacao idiomaAntigo) {
+			OrientacaoService service, String idOrientacao, IdiomaOrientacao idiomaAntigo) {
 		super(usuarioEfetor);
 		this.orientacaoDto = orientacaoDto;
 		this.service = service;
 		this.idOrientacao = idOrientacao;
-		this.idiomaImplementacao = idiomaImplementacao;
 		this.idiomaAntigo = idiomaAntigo;
 	}
 
 	@Override
 	public void executarComando() {
 		if (verificarSeOrientacaoExiste()) {
-			service.atualizarOrientacao(orientacaoDto, orientacaoDto, idiomaImplementacao, NIVEL_DE_ACESSO_MINIMO);
+			service.atualizarOrientacao(orientacaoDto, idOrientacao, usuarioEfetor.pegarIdUsuario());
 			return;
 		}
 		service.criarOrientacao(orientacaoDto, idOrientacao, usuarioEfetor.pegarIdUsuario());
@@ -66,7 +63,7 @@ public class ComandoAdicionarIdiomaOrientacao extends Comando {
 	}
 
 	public boolean verificarSeOrientacaoExiste() {
-		return service.verificarOrientacaoExiste(idiomaAntigo, idOrientacao);
+		return service.verificarOrientacaoExiste(orientacaoDto.idiomaOrientacao(), idOrientacao);
 	}
 
 }

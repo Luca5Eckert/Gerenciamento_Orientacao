@@ -33,8 +33,8 @@ public class OrientacaoService {
 		Orientacao orientacaoModelo = transformarDtoModelo(orientacaoDto, idOrientacao, idUsuario);
 		repositorioOrientacao.adicionarOrientacao(orientacaoModelo);
 	}
-	
-	public void desfazerRemocaoOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao){
+
+	public void desfazerRemocaoOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
 		repositorioOrientacao.desfazerRemocaoOrientacao(idOrientacao, idiomaOrientacao);
 	}
 
@@ -131,6 +131,12 @@ public class OrientacaoService {
 
 	public void setRepositorioOrientacao(OrientacaoRepositorio repositorioOrientacao) {
 		this.repositorioOrientacao = repositorioOrientacao;
+	}
+
+	public void atualizarOrientacao(OrientacaoDto orientacaoAlterada, String idOrientacao, int idUsuario) {
+ 		var orientacaoId = new OrientacaoId(idOrientacao, orientacaoAlterada.idiomaOrientacao());
+		var orientacaoModelo = transformarDtoModelo(orientacaoAlterada, idOrientacao, idUsuario);
+		repositorioOrientacao.atualizarOrientacao(orientacaoId, orientacaoModelo);
 	}
 
 	public Orientacao transformarDtoModelo(OrientacaoDto orientacaoDto) {

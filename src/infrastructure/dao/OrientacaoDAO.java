@@ -61,6 +61,33 @@ public class OrientacaoDAO {
 		return orientacao;
 	}
 
+	public Orientacao buscarPorIdDesativado(String id, String idiomaOrientacao) throws SQLException {
+		String sql = "SELECT * FROM orientacao WHERE id = ? AND idioma_orientacao = ? AND ativo = FALSE";
+		Orientacao orientacao = null;
+
+		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, id);
+			stmt.setString(2, idiomaOrientacao);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					orientacao = new Orientacao();
+					OrientacaoId orientacaoId = new OrientacaoId();
+
+					orientacaoId.setIdOrientacao(rs.getString("id"));
+					orientacaoId.setIdiomaOrientacao(IdiomaOrientacao.valueOf(rs.getString("idioma_orientacao")));
+					orientacao.setIdOrientacao(orientacaoId);
+					orientacao.setTitulo(rs.getString("titulo"));
+					orientacao.setConteudo(rs.getString("conteudo"));
+					orientacao.setTipoOrientacao(TipoOrientacao.valueOf(rs.getString("tipo_orientacao")));
+					orientacao.setUsuarioCriador(rs.getInt("id_fk_usuario_criou"));
+				}
+			}
+		}
+		return orientacao;
+	}
+
 	public List<Orientacao> buscarPorIdUsuarioCriador(int idUsuarioCriador) throws SQLException {
 		List<Orientacao> orientacoes = new ArrayList<>();
 		String sql = "SELECT * FROM orientacao WHERE id_fk_usuario_criou = ? AND ativo = 1";
@@ -241,5 +268,24 @@ public class OrientacaoDAO {
 			stmt.setString(2, idiomaOrientacao.name());
 			stmt.executeUpdate();
 		}
+	}
+
+	public void atualizar(OrientacaoId orientacaoId, Orientacao orientacaoAlterada) throws SQLException {
+		String sql = "UPDATE orientacao SET ativo = TRUE, titulo = ?, tipo_orientacao = ?, conteudo = ? "
+				+ "WHERE id = ? AND idioma_orientacao = ?";
+
+		try (Connection connection = ConexaoFactory.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+			stmt.setString(1, orientacaoAlterada.getTitulo());
+			stmt.setString(2, orientacaoAlterada.getTipoOrientacao().name());
+			stmt.setString(3, orientacaoAlterada.getConteudo());
+
+			stmt.setString(4, orientacaoAlterada.getIdOrientacao().getIdOrientacao());
+			stmt.setString(5, orientacaoAlterada.getIdOrientacao().getIdiomaOrientacao().name());
+
+			stmt.executeUpdate();
+		}
+
 	}
 }

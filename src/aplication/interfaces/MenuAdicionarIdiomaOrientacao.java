@@ -38,13 +38,12 @@ public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 	@Override
 	public void chamarMenu(Scanner input, MenuHistorico menuHistorico) {
 		final TipoOrientacao tipoOrientacao = orientacaoDto.tipoOrientacao();
-		String idOrientacao = orientacaoService.pegarIdOrientacao(orientacaoDto);
 		orientacaoCriada = null;
 
 		try {
 			orientacaoCriada = idiomaImplementacao.mostrarMenuAdicionarNovoIdiomaOrientacao(input, idiomaOrientacao,
 					tipoOrientacao);
-			tratarOpcao(orientacaoCriada, idOrientacao, menuHistorico);
+			tratarOpcao(orientacaoCriada, menuHistorico);
 		} catch (SairMenuException sme) {
 			menuHistorico.voltarPonteiro(1);
 
@@ -55,7 +54,7 @@ public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 
 	}
 
-	private void tratarOpcao(OrientacaoDto orientacaoCriada, String idOrientacao, MenuHistorico menuHistorico) {
+	private void tratarOpcao(OrientacaoDto orientacaoCriada, MenuHistorico menuHistorico) {
 		executar();
 		menuHistorico.voltarMenu(MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoCriada, idiomaImplementacao, sessaoUsuario));
 	}
@@ -72,7 +71,7 @@ public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoAdicionarIdiomaOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService, orientacaoService.pegarIdOrientacao(orientacaoDto), idiomaImplementacao, orientacaoDto.idiomaOrientacao());
+		return new ComandoAdicionarIdiomaOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService, orientacaoService.pegarIdOrientacao(orientacaoDto), orientacaoDto.idiomaOrientacao());
 	}
 
 	@Override

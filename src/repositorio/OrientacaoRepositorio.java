@@ -6,7 +6,7 @@ import java.util.List;
 import Dominio.IdiomaOrientacao;
 import Dominio.Orientacao;
 import Dominio.OrientacaoId;
-import Dominio.TipoOrientacao;
+import Dominio.TipoOrientacao; 
 import infrastructure.dao.OrientacaoDAO;
 
 public class OrientacaoRepositorio {
@@ -105,7 +105,7 @@ public class OrientacaoRepositorio {
 
 	public boolean verificarIdiomaOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) {
 		try {
-			return orientacaoDAO.buscarPorId(idOrientacao, idiomaOrientacao.name()) == null;
+			return orientacaoDAO.buscarPorIdDesativado(idOrientacao, idiomaOrientacao.name()) == null;
 		} catch (SQLException se) {
 			System.out.println("Erro ao pegar orientacao por id e idioma: " + se.getMessage());
 		}
@@ -154,5 +154,14 @@ public class OrientacaoRepositorio {
 		} catch (SQLException se) {
 			System.out.println(" Erro ao desfazer remoção da orientação: " + se.getMessage());
 		}
+	}
+
+	public void atualizarOrientacao(OrientacaoId orientacaoId, Orientacao orientacaoAlterada) {
+		try {
+			orientacaoDAO.atualizar(orientacaoId, orientacaoAlterada);
+		} catch (SQLException se) {
+			System.out.println("Erro ao atualizar orientação: " + se.getMessage());
+		}
+
 	}
 }
