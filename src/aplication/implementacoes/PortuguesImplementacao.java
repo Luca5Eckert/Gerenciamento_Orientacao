@@ -174,7 +174,6 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println("------------------------------------------------------------");
 		System.out.println(mensagemAcerto);
 		System.out.println(" 1 - Continuar ");
-		System.out.println(" 2 - Cancelar operação");
 		System.out.println("------------------------------------------------------------");
 		return input.nextLine();
 	}

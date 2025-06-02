@@ -580,7 +580,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 	}
 
 	public String pegarMensagemEmailInvalidoJaUsado() {
-	    return " Die eingegebene E-Mail-Adresse wird bereits verwendet";
+		return " Die eingegebene E-Mail-Adresse wird bereits verwendet";
 	}
 
 	@Override
@@ -602,21 +602,21 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemFiltroJaCriado() {
 		return " Filter ist bereits vorhanden";
 	}
-	
+
 	@Override
 	public String mostrarMenuOpcaoApagarOrientacao(Scanner input) throws SairMenuException {
-	    System.out.println("============================================================");
-	    System.out.println("               LÖSCHOPTION AUSWÄHLEN                        ");
-	    System.out.println("============================================================");
-	    System.out.println("A- Nur auf Portugiesisch löschen");
-	    System.out.println("T- In allen Sprachen löschen");
-	    System.out.println("C- Abbrechen");
-	    String opcao = input.nextLine().trim().toUpperCase();
+		System.out.println("============================================================");
+		System.out.println("               LÖSCHOPTION AUSWÄHLEN                        ");
+		System.out.println("============================================================");
+		System.out.println("A- Nur auf Portugiesisch löschen");
+		System.out.println("T- In allen Sprachen löschen");
+		System.out.println("C- Abbrechen");
+		String opcao = input.nextLine().trim().toUpperCase();
 
-	    if (opcao.equals("C")) {
-	        throw new SairMenuException();
-	    }
-	    return opcao;
+		if (opcao.equals("C")) {
+			throw new SairMenuException();
+		}
+		return opcao;
 	}
 
 	@Override
@@ -633,6 +633,5 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemTituloNaoDisponivel() {
 		return " Kann nicht erstellt werden: Titel wird bereits verwendet";
 	}
-
 
 }
