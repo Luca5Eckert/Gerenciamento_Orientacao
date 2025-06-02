@@ -111,11 +111,14 @@ public class OrientacaoService {
 
 			boolean idiomaDisponivel = repositorioOrientacao.verificarIdiomaOrientacao(idOrientacao,
 					orientacaoAlterada.idiomaOrientacao());
-			
-			if (!tituloEhUnico(orientacaoAlterada.titulo())) {
-				throw new TituloNaoDisponivelException();
+
+			if (!orientacaoAntiga.conteudo().equals(orientacaoAlterada.conteudo())) {
+				if (!tituloEhUnico(orientacaoAlterada.titulo())) {
+					throw new TituloNaoDisponivelException();
+				}
+
 			}
-			
+
 			if (!idiomaDisponivel) {
 				throw new OrientacaoNaoDisponivelIdiomaException(
 						idiomaImplementacao.pegarMensagemIdiomaNaoDisponivel());
