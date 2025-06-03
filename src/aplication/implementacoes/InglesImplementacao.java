@@ -14,22 +14,22 @@ import infrastructure.utilitarios.FormatacaoUtil;
 
 public class InglesImplementacao implements IdiomaImplementacao {
 
-    @Override
-    public IdiomaOrientacao obterIdiomaOrientacao() {
-        return IdiomaOrientacao.INGLES;
-    }
+	@Override
+	public IdiomaOrientacao obterIdiomaOrientacao() {
+		return IdiomaOrientacao.INGLES;
+	}
 
-    @Override
-    public String mostrarMenuInicial(Scanner input) {
-        System.out.println("============================================================");
-        System.out.println("                        WELCOME                             ");
-        System.out.println("============================================================");
-        System.out.println(" Welcome to the Orientation Management System:              ");
-        System.out.println(" 1- Login");
-        System.out.println(" 2- Register");
-        System.out.println(" 3- Change Language");
-        System.out.println(" 4- Exit system");
-        System.out.println("------------------------------------------------------------");
+	@Override
+	public String mostrarMenuInicial(Scanner input) {
+		System.out.println("============================================================");
+		System.out.println("                        WELCOME                             ");
+		System.out.println("============================================================");
+		System.out.println(" Welcome to the Orientation Management System:              ");
+		System.out.println(" 1- Login");
+		System.out.println(" 2- Register");
+		System.out.println(" 3- Change Language");
+		System.out.println(" 4- Exit system");
+		System.out.println("------------------------------------------------------------");
 
 		return input.nextLine();
 	}
@@ -633,6 +633,67 @@ public class InglesImplementacao implements IdiomaImplementacao {
 	@Override
 	public String pegarMensagemTituloNaoDisponivel() {
 		return " Unable to create: Title already in use";
+	}
+
+	@Override
+	public String pegarMensagemSemComandoDisponivel() {
+		return " No command has been executed for the user yet.";
+	}
+
+	@Override
+	public String pegarMensagemCanceladoAcao() {
+		return "============================================================\n"
+				+ "                       Action cancelled                     \n"
+				+ "============================================================";
+	}
+
+	@Override
+	public String pegarMensagemHistoricoApagado() {
+		return "============================================================\n"
+				+ "                      History deleted                       \n"
+				+ "============================================================";
+	}
+
+	@Override
+	public String pegarMensagemErroAoMexerNoHistorico() {
+		return "============================================================\n"
+				+ "                Error while modifying history               \n"
+				+ "============================================================\n";
+	}
+
+	@Override
+	public String pegarMensagemErroComando() {
+		return "============================================================\n"
+				+ "               Cannot undo command                          \n"
+				+ "               Guidance has already been changed            \n"
+				+ "============================================================";
+	}
+
+	@Override
+	public String mostrarMenuHistorico(Scanner input, String historicoComandosUsuario) {
+		System.out.println("============================================================");
+		System.out.println("                    COMMAND HISTORY                         ");
+		System.out.println("============================================================");
+		System.out.println(" S - Exit Menu                       A - Delete History \n");
+		System.out.println(" -----------------------------------------------------------");
+		System.out.println(" V - Undo Command     F - Redo Command");
+		System.out.println(" Commands:");
+		System.out.println(historicoComandosUsuario);
+		System.out.println("------------------------------------------------------------");
+		return input.nextLine();
+	}
+
+	@Override
+	public String confirmarApagarHistorico(Scanner input) {
+		System.out.println("============================================================");
+		System.out.println("                     ARE YOU SURE?                          ");
+		System.out.println("============================================================");
+		System.out.println(" Once deleted, the history cannot be accessed again.");
+		System.out.println(" * All commands will remain in the system.");
+		System.out.println(" M - Confirm deletion");
+		System.out.println(" C - Cancel");
+		System.out.println(" -----------------------------------------------------------");
+		return input.nextLine();
 	}
 
 }

@@ -634,4 +634,65 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		return " Kann nicht erstellt werden: Titel wird bereits verwendet";
 	}
 
+	@Override
+	public String pegarMensagemSemComandoDisponivel() {
+	    return " Für den Benutzer wurde noch kein Befehl ausgeführt.";
+	}
+
+	@Override
+	public String pegarMensagemCanceladoAcao() {
+	    return "============================================================\n"
+	         + "                     Aktion abgebrochen                     \n"
+	         + "============================================================";
+	}
+
+	@Override
+	public String pegarMensagemHistoricoApagado() {
+	    return "============================================================\n"
+	         + "                     Verlauf gelöscht                       \n"
+	         + "============================================================";
+	}
+
+	@Override
+	public String pegarMensagemErroAoMexerNoHistorico() {
+	    return "============================================================\n"
+	         + "              Fehler beim Ändern des Verlaufs              \n"
+	         + "============================================================\n";
+	}
+
+	@Override
+	public String pegarMensagemErroComando() {
+	    return "============================================================\n"
+	         + "              Befehl kann nicht rückgängig gemacht werden  \n"
+	         + "               Anleitung wurde bereits geändert            \n"
+	         + "============================================================";
+	}
+
+	@Override
+	public String mostrarMenuHistorico(Scanner input, String historicoComandosUsuario) {
+	    System.out.println("============================================================");
+	    System.out.println("                    BEFEHLSVERLAUF                         ");
+	    System.out.println("============================================================");
+	    System.out.println(" S - Menü verlassen                  A - Verlauf löschen \n");
+	    System.out.println(" -----------------------------------------------------------");
+	    System.out.println(" V - Befehl zurück   F - Befehl vorwärts");
+	    System.out.println(" Befehle:");
+	    System.out.println(historicoComandosUsuario);
+	    System.out.println("------------------------------------------------------------");
+	    return input.nextLine();
+	}
+
+	@Override
+	public String confirmarApagarHistorico(Scanner input) {
+	    System.out.println("============================================================");
+	    System.out.println("                    SIND SIE SICHER?                        ");
+	    System.out.println("============================================================");
+	    System.out.println(" Wenn Sie den Verlauf löschen, kann er nicht mehr aufgerufen werden.");
+	    System.out.println(" * Alle Befehle bleiben im System.");
+	    System.out.println(" M - Löschen bestätigen");
+	    System.out.println(" C - Abbrechen");
+	    System.out.println(" -----------------------------------------------------------");
+	    return input.nextLine();
+	}
+
 }

@@ -636,6 +636,68 @@ public class EspanholImplementacao implements IdiomaImplementacao {
 	public String pegarMensagemTituloNaoDisponivel() {
 		return " No se puede crear: el título ya está en uso";
 	}
+	
+	@Override
+	public String pegarMensagemSemComandoDisponivel() {
+	    return " Aún no se ha ejecutado ningún comando para el usuario.";
+	}
+
+	@Override
+	public String pegarMensagemCanceladoAcao() {
+	    return "============================================================\n"
+	         + "                     Acción cancelada                      \n"
+	         + "============================================================";
+	}
+
+	@Override
+	public String pegarMensagemHistoricoApagado() {
+	    return "============================================================\n"
+	         + "                    Historial borrado                       \n"
+	         + "============================================================";
+	}
+
+	@Override
+	public String pegarMensagemErroAoMexerNoHistorico() {
+	    return "============================================================\n"
+	         + "              Error al modificar el historial              \n"
+	         + "============================================================\n";
+	}
+
+	@Override
+	public String pegarMensagemErroComando() {
+	    return "============================================================\n"
+	         + "              No se puede deshacer el comando              \n"
+	         + "              La orientación ya fue modificada             \n"
+	         + "============================================================";
+	}
+
+	@Override
+	public String mostrarMenuHistorico(Scanner input, String historicoComandosUsuario) {
+	    System.out.println("============================================================");
+	    System.out.println("                  HISTORIAL DE COMANDOS                     ");
+	    System.out.println("============================================================");
+	    System.out.println(" S - Salir del Menú                 A - Borrar Historial \n");
+	    System.out.println(" -----------------------------------------------------------");
+	    System.out.println(" V - Comando Anterior   F - Comando Siguiente");
+	    System.out.println(" Comandos:");
+	    System.out.println(historicoComandosUsuario);
+	    System.out.println("------------------------------------------------------------");
+	    return input.nextLine();
+	}
+
+	@Override
+	public String confirmarApagarHistorico(Scanner input) {
+	    System.out.println("============================================================");
+	    System.out.println("                    ¿ESTÁS SEGURO?                          ");
+	    System.out.println("============================================================");
+	    System.out.println(" Al borrar el historial, no se podrá acceder nuevamente.");
+	    System.out.println(" * Todos los comandos permanecerán en el sistema.");
+	    System.out.println(" M - Confirmar borrado");
+	    System.out.println(" C - Cancelar");
+	    System.out.println(" -----------------------------------------------------------");
+	    return input.nextLine();
+	}
+
 
 
 }
