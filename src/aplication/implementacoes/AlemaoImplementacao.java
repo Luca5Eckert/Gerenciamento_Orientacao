@@ -82,6 +82,7 @@ public class AlemaoImplementacao implements IdiomaImplementacao {
 		System.out.println(" 2- Abmelden");
 		System.out.println(" 3- System beenden");
 		System.out.println(" 4- Sprache ändern");
+		System.out.println(" 5- Benutzeraktionsverlauf");
 
 		System.out.println("------------------------------------------------------------");
 

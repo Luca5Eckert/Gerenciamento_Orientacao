@@ -82,6 +82,7 @@ public class EspanholImplementacao implements IdiomaImplementacao {
         System.out.println(" 2- Cerrar sesión");
         System.out.println(" 3- Salir del sistema");
         System.out.println(" 4- Cambiar idioma");
+        System.out.println("5- Historial de acciones del usuario");
 
         System.out.println("------------------------------------------------------------");
 

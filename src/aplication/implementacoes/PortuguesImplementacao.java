@@ -83,6 +83,7 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		System.out.println(" 2- Sair da conta");
 		System.out.println(" 3- Sair sistema");
 		System.out.println(" 4- Mudar de idioma");
+		System.out.println(" 5- Historico Ações Usuário");
 
 		System.out.println("------------------------------------------------------------");
 

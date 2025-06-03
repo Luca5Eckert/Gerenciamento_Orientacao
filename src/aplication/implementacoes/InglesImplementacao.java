@@ -82,6 +82,7 @@ public class InglesImplementacao implements IdiomaImplementacao {
 		System.out.println(" 2- Logout");
 		System.out.println(" 3- Exit system");
 		System.out.println(" 4- Change language");
+		System.out.println(" 5- User Action History");
 
 		System.out.println("------------------------------------------------------------");
 

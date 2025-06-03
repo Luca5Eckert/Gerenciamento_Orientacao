@@ -56,7 +56,8 @@ public class MenuFactory {
 		case EXIBIR_ORIENTACOES -> new MenuExibirOrientacoes(criarOrientacaoService(), criarGerenciadorFiltro(idioma),
 				new FormatacaoNumerarLista(), idioma, sessaoUsuario);
 		case FILTRO_GERAL -> new MenuFiltroGeral(idioma, criarGerenciadorFiltro(idioma), sessaoUsuario);
-		default -> new MenuInicial(idioma);
+		case HISTORICO_COMANDOS -> new MenuHistoricoComando(idioma, sessaoUsuario);
+		default -> new MenuGeral(idioma, sessaoUsuario);
 		};
 	}
 
