@@ -14,6 +14,7 @@ import service.SessaoUsuario;
 import service.commandos.Comando;
 import service.commandos.ComandoAdicionarOrientacao;
 import service.commandos.ExecutadorComando;
+import service.exceptions.ComandoHistoricoException;
 import service.exceptions.NivelDeAcessoInsuficienteException;
 import service.exceptions.orientacao.TituloNaoDisponivelException;
 
@@ -54,6 +55,8 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 			menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
 					idiomaImplementacao.pegarMensagemTituloNaoDisponivel(), idiomaImplementacao));
 
+		} catch(ComandoHistoricoException che) {
+			System.out.println(idiomaImplementacao.pegarMensagemErroAoMexerNoHistorico());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			menuHistorico.voltarMenu();

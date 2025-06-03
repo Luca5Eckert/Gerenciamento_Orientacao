@@ -14,6 +14,7 @@ import service.SessaoUsuario;
 import service.commandos.Comando;
 import service.commandos.ComandoRemoverOrientacao;
 import service.commandos.ExecutadorComando;
+import service.exceptions.ComandoHistoricoException;
 import service.exceptions.NivelDeAcessoInsuficienteException;
 
 public class MenuApagarOrientacao extends Menu implements Executor {
@@ -47,6 +48,8 @@ public class MenuApagarOrientacao extends Menu implements Executor {
 
 		} catch (SairMenuException sme) {
 			System.out.println(idiomaImplementacao.pegarMensagemVoltandoMenu());
+		} catch (ComandoHistoricoException che) {
+			System.out.println(idiomaImplementacao.pegarMensagemErroAoMexerNoHistorico());
 		} catch (Exception le) {
 			le.printStackTrace();
 			System.out.println(le.getMessage());

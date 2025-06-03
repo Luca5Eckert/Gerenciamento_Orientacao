@@ -17,6 +17,7 @@ import service.SessaoUsuario;
 import service.commandos.Comando;
 import service.commandos.ComandoEditarOrientacao;
 import service.commandos.ExecutadorComando;
+import service.exceptions.ComandoHistoricoException;
 import service.exceptions.NivelDeAcessoInsuficienteException;
 import service.exceptions.orientacao.TituloNaoDisponivelException;
 
@@ -57,16 +58,20 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 			orientacaoAlterada = criarOrientacaoAlterada(tituloOrientacao, conteudoOrientacao, tipoOrientacao,
 					idiomaOrientacao);
 			try {
-				confirmarSaida(input, menuHistorico, orientacaoAlterada);				
+				confirmarSaida(input, menuHistorico, orientacaoAlterada);
 			} catch (NivelDeAcessoInsuficienteException naie) {
-				menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
-						idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente(), idiomaImplementacao));
+				menuHistorico
+						.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+								idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente(), idiomaImplementacao));
 
+			} catch (ComandoHistoricoException che) {
+				System.out.println(idiomaImplementacao.pegarMensagemErroAoMexerNoHistorico());
 			} catch (TituloNaoDisponivelException tnde) {
-				menuHistorico.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
-						idiomaImplementacao.pegarMensagemTituloNaoDisponivel(), idiomaImplementacao));
+				menuHistorico
+						.definirProximoMenu(MenuFactory.criarMenuResultado(TipoMenu.FALHA, menuHistorico.voltarMenu(),
+								idiomaImplementacao.pegarMensagemTituloNaoDisponivel(), idiomaImplementacao));
 
-			} 
+			}
 			break;
 		case "1":
 			editarTitulo(input);
@@ -223,8 +228,8 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoEditarOrientacao(sessaoUsuario.pegarIdUsuario(), orientacaoService, orientacaoDto, orientacaoAlterada,
-				idiomaImplementacao);
+		return new ComandoEditarOrientacao(sessaoUsuario.pegarIdUsuario(), orientacaoService, orientacaoDto,
+				orientacaoAlterada, idiomaImplementacao);
 	}
 
 	@Override

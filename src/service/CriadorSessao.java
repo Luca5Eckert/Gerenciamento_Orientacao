@@ -22,7 +22,7 @@ public class CriadorSessao {
 	public SessaoUsuario criarSessao(int idUsuario, UsuarioRepositorio repositorio) {
 		NivelAcesso nivelAcesso = repositorio.pegarNivelPeloId(idUsuario);
 		List<Comando> historico = new ArrayList<>();
-		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario, nivelAcesso, new ComandoHistorico(historico, idUsuario));
+		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario, nivelAcesso, new ComandoHistorico(historico));
 		registrarSessaoLogin(sessaoUsuario);
 
 		return sessaoUsuario;
