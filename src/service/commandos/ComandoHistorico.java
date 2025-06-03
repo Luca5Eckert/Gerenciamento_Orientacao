@@ -92,9 +92,9 @@ public class ComandoHistorico {
 			Comando comando = listaDeComandos.get(i);
 			String tipo = comando.pegarTipo().pegarIdioma(idiomaImplementacao.obterIdiomaOrientacao());
 
-			String indicadorAtual = (i == ponteiroComando) ? " <-- " : "";
+			String indicadorAtual = (i == ponteiroComando) ? " <--- " :  "";
 
-			sb.append(String.format(" %d. : %s%s\n", i + 1, tipo, indicadorAtual));
+			sb.append(String.format(" %d -  %s%s\n", i + 1, tipo, indicadorAtual));
 		}
 
 		sb.append("----------------------------");
