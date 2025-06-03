@@ -1,9 +1,9 @@
 package service.commandos;
 
 import Dominio.IdiomaOrientacao;
+import Dominio.NivelAcesso;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
-import service.SessaoUsuario;
 
 public class ComandoAdicionarIdiomaOrientacao extends Comando {
 	private final int NIVEL_DE_ACESSO_MINIMO = 2;
@@ -14,9 +14,9 @@ public class ComandoAdicionarIdiomaOrientacao extends Comando {
 	
 	private IdiomaOrientacao idiomaAntigo;
 
-	public ComandoAdicionarIdiomaOrientacao(SessaoUsuario usuarioEfetor, OrientacaoDto orientacaoDto,
+	public ComandoAdicionarIdiomaOrientacao(int idUsuario, OrientacaoDto orientacaoDto,
 			OrientacaoService service, String idOrientacao, IdiomaOrientacao idiomaAntigo) {
-		super(usuarioEfetor);
+		super(idUsuario);
 		this.orientacaoDto = orientacaoDto;
 		this.service = service;
 		this.idOrientacao = idOrientacao;
@@ -26,15 +26,15 @@ public class ComandoAdicionarIdiomaOrientacao extends Comando {
 	@Override
 	public void executarComando() {
 		if (verificarSeOrientacaoExiste()) {
-			service.atualizarOrientacao(orientacaoDto, idOrientacao, usuarioEfetor.pegarIdUsuario());
+			service.atualizarOrientacao(orientacaoDto, idOrientacao, idUsuario);
 			return;
 		}
-		service.criarOrientacao(orientacaoDto, idOrientacao, usuarioEfetor.pegarIdUsuario());
+		service.criarOrientacao(orientacaoDto, idOrientacao, idUsuario);
 	}
 
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoDto.idiomaOrientacao(),
+		return new RegistroComando(idUsuario, idOrientacao, orientacaoDto.idiomaOrientacao(),
 				pegarTipo());
 	}
 
@@ -46,17 +46,17 @@ public class ComandoAdicionarIdiomaOrientacao extends Comando {
 	@Override
 	public RegistroComando voltarAcao() {
 		service.removerOrientacao(orientacaoDto);
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoDto.idiomaOrientacao(),
+		return new RegistroComando(idUsuario, idOrientacao, orientacaoDto.idiomaOrientacao(),
 				TiposComando.DESFAZER_ADICAO_ORIENTACAO);
 
 	}
 
 	@Override
-	public boolean validarNivelDeAcesso() {
+	public boolean validarNivelDeAcesso(NivelAcesso nivelAcesso) {
 		int idAutorOrientacao = service.pegarIdCriadorOrientacao(idOrientacao, idiomaAntigo);
 
-		if (usuarioEfetor.pegarNivelAcesso() > NIVEL_DE_ACESSO_MINIMO
-				|| usuarioEfetor.pegarIdUsuario() == idAutorOrientacao) {
+		if (nivelAcesso.getNivelAcesso() > NIVEL_DE_ACESSO_MINIMO
+				|| idUsuario == idAutorOrientacao) {
 			return true;
 		}
 		return false;

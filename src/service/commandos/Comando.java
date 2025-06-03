@@ -1,26 +1,26 @@
 package service.commandos;
 
-import service.SessaoUsuario;
+import Dominio.NivelAcesso;
 
 public abstract class Comando {
-	protected SessaoUsuario usuarioEfetor;
-	
-	public Comando(SessaoUsuario usuarioEfetor) {
-		this.usuarioEfetor = usuarioEfetor;
+	protected int idUsuario;
+
+	public Comando(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
-	
-	public SessaoUsuario pegarSessao() {
-		return usuarioEfetor;
+
+	public int pegarIdUsuario() {
+		return idUsuario;
 	}
-	
+
 	public abstract void executarComando();
-	
+
 	public abstract RegistroComando devolverRegistroComando();
-	
+
 	public abstract TiposComando pegarTipo();
-	
+
 	public abstract RegistroComando voltarAcao();
-	
-	public abstract boolean validarNivelDeAcesso();
-	
+
+	public abstract boolean validarNivelDeAcesso(NivelAcesso nivelAcesso);
+
 }

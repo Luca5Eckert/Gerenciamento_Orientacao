@@ -223,13 +223,13 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoEditarOrientacao(sessaoUsuario, orientacaoService, orientacaoDto, orientacaoAlterada,
+		return new ComandoEditarOrientacao(sessaoUsuario.pegarIdUsuario(), orientacaoService, orientacaoDto, orientacaoAlterada,
 				idiomaImplementacao);
 	}
 
 	@Override
 	public void criarExecutadorComando() {
-		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(),
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(sessaoUsuario, pegarComando(),
 				new RegistroComandoDAO());
 	}
 

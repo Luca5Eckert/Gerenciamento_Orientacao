@@ -1,8 +1,8 @@
 package service.commandos;
 
+import Dominio.NivelAcesso;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
-import service.SessaoUsuario;
 
 public class ComandoAdicionarOrientacao extends Comando {
 	private final int NIVEL_DE_ACESSO_MINIMO = 2;
@@ -11,9 +11,9 @@ public class ComandoAdicionarOrientacao extends Comando {
 	private OrientacaoService service;
 	private String idOrientacao;
 
-	public ComandoAdicionarOrientacao(SessaoUsuario usuarioEfetor, OrientacaoDto orientacaoDto,
+	public ComandoAdicionarOrientacao(int idUsuario, OrientacaoDto orientacaoDto,
 			OrientacaoService service, String idOrientacao) {
-		super(usuarioEfetor);
+		super(idUsuario);
 		this.orientacaoDto = orientacaoDto;
 		this.service = service;
 		this.idOrientacao = idOrientacao;
@@ -21,12 +21,12 @@ public class ComandoAdicionarOrientacao extends Comando {
 
 	@Override
 	public void executarComando() {
-		service.criarOrientacao(orientacaoDto, idOrientacao, usuarioEfetor.pegarIdUsuario());
+		service.criarOrientacao(orientacaoDto, idOrientacao, idUsuario);
 	}
 
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoDto.idiomaOrientacao(),
+		return new RegistroComando(idUsuario, idOrientacao, orientacaoDto.idiomaOrientacao(),
 				pegarTipo());
 	}
 
@@ -38,14 +38,14 @@ public class ComandoAdicionarOrientacao extends Comando {
 	@Override
 	public RegistroComando voltarAcao() {
 		service.removerOrientacao(orientacaoDto);
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoDto.idiomaOrientacao(),
+		return new RegistroComando(idUsuario, idOrientacao, orientacaoDto.idiomaOrientacao(),
 				TiposComando.DESFAZER_ADICAO_ORIENTACAO);
 
 	}
 
 	@Override
-	public boolean validarNivelDeAcesso() {
-		if (usuarioEfetor.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO) {
+	public boolean validarNivelDeAcesso(NivelAcesso nivelAcesso) {
+		if (nivelAcesso.getNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO) {
 			return true;
 		}
 		return false;

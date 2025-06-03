@@ -1,8 +1,8 @@
 package service.commandos;
 
+import Dominio.NivelAcesso;
 import dtos.OrientacaoDto;
 import service.OrientacaoService;
-import service.SessaoUsuario;
 
 public class ComandoRemoverOrientacao extends Comando {
 	private final int NIVEL_DE_ACESSO_MINIMO = 2;
@@ -12,9 +12,8 @@ public class ComandoRemoverOrientacao extends Comando {
 
 	private String idOrientacao;
 
-	public ComandoRemoverOrientacao(SessaoUsuario usuarioEfetor, OrientacaoService service,
-			OrientacaoDto orientacaoRemover) {
-		super(usuarioEfetor);
+	public ComandoRemoverOrientacao(int idUsuario, OrientacaoService service, OrientacaoDto orientacaoRemover) {
+		super(idUsuario);
 		this.service = service;
 		this.orientacaoRemover = orientacaoRemover;
 	}
@@ -31,8 +30,7 @@ public class ComandoRemoverOrientacao extends Comando {
 
 	@Override
 	public RegistroComando devolverRegistroComando() {
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoRemover.idiomaOrientacao(),
-				pegarTipo());
+		return new RegistroComando(idUsuario, idOrientacao, orientacaoRemover.idiomaOrientacao(), pegarTipo());
 	}
 
 	@Override
@@ -43,16 +41,15 @@ public class ComandoRemoverOrientacao extends Comando {
 	@Override
 	public RegistroComando voltarAcao() {
 		service.desfazerRemocaoOrientacao(idOrientacao, orientacaoRemover.idiomaOrientacao());
-		return new RegistroComando(usuarioEfetor.pegarIdUsuario(), idOrientacao, orientacaoRemover.idiomaOrientacao(),
+		return new RegistroComando(idUsuario, idOrientacao, orientacaoRemover.idiomaOrientacao(),
 				TiposComando.DESFAZER_REMOCAO_ORIENTACAO);
 	}
 
 	@Override
-	public boolean validarNivelDeAcesso() {
+	public boolean validarNivelDeAcesso(NivelAcesso nivelAcesso) {
 		int idAutorOrientacao = service.pegarIdCriadorOrientacao(idOrientacao, orientacaoRemover.idiomaOrientacao());
 
-		if (usuarioEfetor.pegarNivelAcesso() >= NIVEL_DE_ACESSO_MINIMO
-				|| usuarioEfetor.pegarIdUsuario() == idAutorOrientacao) {
+		if (nivelAcesso.getNivelAcesso() > NIVEL_DE_ACESSO_MINIMO || idUsuario == idAutorOrientacao) {
 			return true;
 		}
 		return false;

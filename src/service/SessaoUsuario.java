@@ -19,18 +19,17 @@ public class SessaoUsuario {
 	public int pegarIdUsuario() {
 		return idUsuario;
 	}
-	
-	public int pegarNivelAcesso() {
-		return nivelDeAcesso.getNivelAcesso();
+
+	public NivelAcesso pegarNivelAcesso() {
+		return nivelDeAcesso;
 	}
 
-	public void salvarComando(Comando comando){
+	public void salvarComando(Comando comando) {
 		this.comandoHistorico.adicionarComando(comando);
 	}
 
-	public ComandoHistorico pegarHistoricoComandos(){
+	public ComandoHistorico pegarHistoricoComandos() {
 		return this.comandoHistorico;
 	}
-	
 
 }

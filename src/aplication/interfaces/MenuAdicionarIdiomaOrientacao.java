@@ -81,12 +81,12 @@ public class MenuAdicionarIdiomaOrientacao extends Menu implements Executor {
 
 	@Override
 	public Comando pegarComando() {
-		return new ComandoAdicionarIdiomaOrientacao(sessaoUsuario, orientacaoCriada, orientacaoService, orientacaoService.pegarIdOrientacao(orientacaoDto), orientacaoDto.idiomaOrientacao());
+		return new ComandoAdicionarIdiomaOrientacao(sessaoUsuario.pegarIdUsuario(), orientacaoCriada, orientacaoService, orientacaoService.pegarIdOrientacao(orientacaoDto), orientacaoDto.idiomaOrientacao());
 	}
 
 	@Override
 	public void criarExecutadorComando() {
-		this.executadorComando = ExecutadorComando.criarExecutadorComando(pegarComando(),
+		this.executadorComando = ExecutadorComando.criarExecutadorComando(sessaoUsuario, pegarComando(),
 				new RegistroComandoDAO());
 	}
 
