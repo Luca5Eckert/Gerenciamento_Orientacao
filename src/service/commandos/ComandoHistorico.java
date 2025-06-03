@@ -22,7 +22,7 @@ public class ComandoHistorico {
 			}
 
 			listaDeComandos.add(comando);
-			ponteiroComando = listaDeComandos.size() + 1;
+			ponteiroComando = listaDeComandos.size() - 1;
 			return;
 		}
 
