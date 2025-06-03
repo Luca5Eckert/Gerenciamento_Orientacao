@@ -6,6 +6,7 @@ import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.SessaoUsuario;
 import service.commandos.ComandoHistorico;
+import service.exceptions.ComandoException;
 import service.exceptions.ComandoHistoricoException;
 
 public class MenuHistoricoComando extends Menu{
