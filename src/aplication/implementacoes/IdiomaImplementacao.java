@@ -139,4 +139,18 @@ public interface IdiomaImplementacao {
 	
 	String pegarMensagemNivelDeAcessoInsuficiente();
 	
+	public String pegarMensagemSemComandoDisponivel();
+
+	public String pegarMensagemCanceladoAcao();
+
+	public String pegarMensagemHistoricoApagado();
+
+	public String pegarMensagemErroAoMexerNoHistorico();
+
+	public String pegarMensagemErroComando();
+
+	public String mostrarMenuHistorico(Scanner input, String historicoComandosUsuario);
+
+	public String confirmarApagarHistorico(Scanner input);
+	
 }

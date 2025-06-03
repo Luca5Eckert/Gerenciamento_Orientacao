@@ -641,4 +641,58 @@ public class PortuguesImplementacao implements IdiomaImplementacao {
 		return " Impossível de criar: Título já em uso";
 	}
 
+	public String pegarMensagemSemComandoDisponivel(){
+	    return " Nenhum comando realizado para o usuário ainda.";
+	}
+
+	public String pegarMensagemCanceladoAcao(){
+	    return "============================================================\n"
+	         + "                      Ação cancelada                        \n"
+	         + "============================================================";
+	}
+
+	public String pegarMensagemHistoricoApagado() {
+	    return "============================================================\n"
+	         + "                    Histórico apagado                        \n"
+	         + "============================================================";
+	}
+
+	public String pegarMensagemErroAoMexerNoHistorico(){
+	    return "============================================================\n"
+	         + "                Erro ao alterar histórico                   \n"
+	         + "============================================================\n";
+	}
+
+	public String pegarMensagemErroComando(){
+	    return "============================================================\n"
+	         + "               Impossível voltar comando                    \n"
+	         + "                Orientação já alterada                      \n"
+	         + "============================================================";
+	}
+
+	public String mostrarMenuHistorico(Scanner input, String historicoComandosUsuario){
+	    System.out.println("============================================================");
+	    System.out.println("                   HISTÓRICO DE COMANDOS                     ");
+	    System.out.println("============================================================");
+	    System.out.println(" S - Sair do Menu                     A - Apagar Histórico \n");
+	    System.out.println(" -----------------------------------------------------------");
+	    System.out.println(" V - Voltar Comando   F - Ir Para Frente Comando"); 
+	    System.out.println(" Comandos:");
+	    System.out.println(historicoComandosUsuario);
+	    System.out.println("------------------------------------------------------------");
+	    return input.nextLine();
+	}
+
+	public String confirmarApagarHistorico(Scanner input){
+	    System.out.println("============================================================");
+	    System.out.println("                      TEM CERTEZA?                          ");
+	    System.out.println("============================================================");
+	    System.out.println(" Ao apagar o histórico, ele não poderá mais ser acessado.");
+	    System.out.println(" * Todos os comandos permanecerão no sistema.");
+	    System.out.println(" M - Confirmar apagar");
+	    System.out.println(" C - Cancelar");
+	    System.out.println(" -----------------------------------------------------------");
+	    return input.nextLine();
+	}
+
 }

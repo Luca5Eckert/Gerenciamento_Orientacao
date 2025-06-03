@@ -1,10 +1,14 @@
 package service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.NivelAcesso;
 import infrastructure.dao.RegistroLoginDAO;
 import repositorio.UsuarioRepositorio;
+import service.commandos.Comando;
+import service.commandos.ComandoHistorico;
 import service.exceptions.usuario.LoginException;
 
 public class CriadorSessao {
@@ -17,7 +21,8 @@ public class CriadorSessao {
 
 	public SessaoUsuario criarSessao(int idUsuario, UsuarioRepositorio repositorio) {
 		NivelAcesso nivelAcesso = repositorio.pegarNivelPeloId(idUsuario);
-		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario, nivelAcesso);
+		List<Comando> historico = new ArrayList<>();
+		SessaoUsuario sessaoUsuario = new SessaoUsuario(idUsuario, nivelAcesso, new ComandoHistorico(historico, idUsuario));
 		registrarSessaoLogin(sessaoUsuario);
 
 		return sessaoUsuario;

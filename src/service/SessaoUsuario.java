@@ -1,6 +1,8 @@
 package service;
 
 import Dominio.NivelAcesso;
+import service.commandos.Comando;
+import service.commandos.ComandoHistorico;
 
 public class SessaoUsuario {
 
