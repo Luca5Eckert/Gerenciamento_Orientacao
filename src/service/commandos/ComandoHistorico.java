@@ -3,6 +3,7 @@ package service.commandos;
 import java.util.ArrayList;
 import java.util.List;
 
+import Dominio.IdiomaOrientacao;
 import aplication.implementacoes.IdiomaImplementacao;
 import service.exceptions.ComandoHistoricoException;
 
@@ -89,7 +90,7 @@ public class ComandoHistorico {
 
 		for (int i = listaDeComandos.size() - 1; i >= 0; i--) {
 			Comando comando = listaDeComandos.get(i);
-			String tipo = comando.pegarTipo().toString();
+			String tipo = comando.pegarTipo().pegarIdioma(idiomaImplementacao.obterIdiomaOrientacao());
 
 			String indicadorAtual = (i == ponteiroComando) ? " <-- " : "";
 
