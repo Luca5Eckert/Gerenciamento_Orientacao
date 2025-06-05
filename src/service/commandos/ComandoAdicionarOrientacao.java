@@ -42,6 +42,8 @@ public class ComandoAdicionarOrientacao extends Comando {
 				TiposComando.DESFAZER_ADICAO_ORIENTACAO);
 
 	}
+	
+	
 
 	@Override
 	public boolean validarNivelDeAcesso(NivelAcesso nivelAcesso) {
