@@ -110,7 +110,7 @@ public class MenuApagarOrientacao extends Menu implements Executor {
 
 	@Override
 	public void criarExecutadorComando() {
-		executadorComando = new ExecutadorComando(new RegistroComandoDAO());
+		executadorComando = new ExecutadorComando(sessaoUsuario, new RegistroComandoDAO());
 
 	}
 

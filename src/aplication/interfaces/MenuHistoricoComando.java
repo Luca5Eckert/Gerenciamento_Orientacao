@@ -4,10 +4,13 @@ import java.util.Scanner;
 
 import aplication.MenuHistorico;
 import aplication.implementacoes.IdiomaImplementacao;
+import infrastructure.dao.RegistroComandoDAO;
 import service.SessaoUsuario;
 import service.commandos.ComandoHistorico;
+import service.commandos.ExecutadorComando;
 import service.exceptions.ComandoException;
 import service.exceptions.ComandoHistoricoException;
+import service.exceptions.NivelDeAcessoInsuficienteException;
 
 public class MenuHistoricoComando extends Menu{
     public static final String SAIR_MENU = "S";
@@ -18,10 +21,12 @@ public class MenuHistoricoComando extends Menu{
     public static final String CANCELAR_ACAO = "C";
 
     private SessaoUsuario sessaoUsuario;
+    private ExecutadorComando executadorComando;
 
     public MenuHistoricoComando(IdiomaImplementacao idiomaImplementacao, SessaoUsuario sessaoUsuario){
     	super(idiomaImplementacao);
     	this.sessaoUsuario = sessaoUsuario;
+    	executadorComando = ExecutadorComando.criarExecutadorComando(this.sessaoUsuario, new RegistroComandoDAO());	    	
     }
     
     @Override 
@@ -30,13 +35,14 @@ public class MenuHistoricoComando extends Menu{
     	
     	String historicoComandosUsuario = comandoHistorico.gerarHistorico(idiomaImplementacao);
     	String inputUsuario = idiomaImplementacao.mostrarMenuHistorico(input, historicoComandosUsuario);
-    	String comando = inputUsuario.trim().toUpperCase();
+    	String acao = inputUsuario.trim().toUpperCase();
     	
+    
     	try {
-    		switch(comando){
+    		switch(acao){
     		case SAIR_MENU -> menuHistorico.voltarMenu();
-    		case VOLTAR_COMANDO -> comandoHistorico.voltarComando();
-    		case IR_PARA_FRENTE_COMANDO -> comandoHistorico.irParaFrenteComando();
+    		case VOLTAR_COMANDO -> voltarComando(comandoHistorico);
+    		case IR_PARA_FRENTE_COMANDO -> irParaFrenteComando(comandoHistorico);
     		case APAGAR_HISTORICO -> apagarHistorico(input, comandoHistorico);
     		default -> imprimirMensagemErro(idiomaImplementacao.pegarMensagemEntradaInvalida());
     		}
@@ -47,6 +53,26 @@ public class MenuHistoricoComando extends Menu{
     	}
     	
     }
+    
+    public void voltarComando(ComandoHistorico historicoComando){
+			   try{
+					   executadorComando.desfazerComando(historicoComando.pegarComandoAtual());
+					   historicoComando.voltarComando();
+			   } catch ( NivelDeAcessoInsuficienteException ndaie){
+					   imprimirMensagemErro(idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente());
+			   }
+			   
+	  }
+	  
+    public void irParaFrenteComando(ComandoHistorico historicoComando){
+			   try{
+					   historicoComando.irParaFrenteComando();
+					   executadorComando.refazerComando(historicoComando.pegarComandoAtual());
+			   } catch ( NivelDeAcessoInsuficienteException ndaie){
+					   imprimirMensagemErro(idiomaImplementacao.pegarMensagemNivelDeAcessoInsuficiente());
+			   }
+			   
+	  }
     
     public void apagarHistorico(Scanner input, ComandoHistorico comandoHistorico){
     	String inputUsuario = idiomaImplementacao.confirmarApagarHistorico(input);

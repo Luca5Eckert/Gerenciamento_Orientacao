@@ -8,14 +8,11 @@ import service.exceptions.ComandoHistoricoException;
 
 public class ComandoHistorico {
 
-    private ExecutadorComando executadorComando;
-
     private List<Comando> listaDeComandos = new ArrayList<>();
     private int ponteiroComando = -1;
 
-    public ComandoHistorico(List<Comando> listaDeComandos, ExecutadorComando executadorComando) {
+    public ComandoHistorico(List<Comando> listaDeComandos) {
         this.listaDeComandos = listaDeComandos;
-        this.executadorComando = executadorComando;
     }
 
     public void adicionarComando(Comando comando) {
@@ -34,19 +31,16 @@ public class ComandoHistorico {
         if (!validarPonteiro()) {
             throw new ComandoHistoricoException();
         }
-        Comando comando = listaDeComandos.get(ponteiroComando);
-        executadorComando.desfazerComando(comando);
         voltarPonteiro();
+        return;
     }
 
     public void irParaFrenteComando() {
-        irParaFrentePonteiro();
         if (!validarPonteiro()) {
             throw new ComandoHistoricoException();
         }
-        Comando comandoAtual = listaDeComandos.get(ponteiroComando);
-        // Corrigido: passar comandoAtual para o método
-        executadorComando.refazerComando(comandoAtual);
+        irParaFrentePonteiro();
+        return;
     }
 
     public boolean validarPonteiro() {
@@ -102,4 +96,8 @@ public class ComandoHistorico {
 
         return sb.toString();
     }
+
+	public Comando pegarComandoAtual() {
+		return listaDeComandos.get(ponteiroComando);
+	}
 }
