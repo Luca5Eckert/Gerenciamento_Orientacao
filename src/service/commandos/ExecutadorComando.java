@@ -3,6 +3,7 @@ package service.commandos;
 import java.sql.SQLException;
 
 import service.SessaoUsuario;
+import service.exceptions.ComandoHistoricoException;
 import service.exceptions.NivelDeAcessoInsuficienteException;
 import infrastructure.dao.RegistroComandoDAO;
 
@@ -32,21 +33,33 @@ public class ExecutadorComando {
     }
 
     public void desfazerComando(Comando comando) {
+        if (comando == null) {
+            throw new ComandoHistoricoException("Nenhum comando válido para desfazer.");
+        }
+
         if (comando.validarNivelDeAcesso(sessaoUsuario.pegarNivelAcesso())) {
             RegistroComando registro = comando.voltarAcao();
             salvarRegistroComando(registro);
             return;
         }
+
         throw new NivelDeAcessoInsuficienteException();
     }
 
     public void refazerComando(Comando comando) {
+        if (comando == null) {
+            throw new ComandoHistoricoException("Nenhum comando válido para refazer.");
+        }
+
         if (comando.validarNivelDeAcesso(sessaoUsuario.pegarNivelAcesso())) {
             comando.refazerAcao();
             salvarRegistroComando(comando.devolverRegistroComando());
+            return;
         }
+
         throw new NivelDeAcessoInsuficienteException();
     }
+
 
     private void salvarRegistroComando(RegistroComando registroComando) {
         try {

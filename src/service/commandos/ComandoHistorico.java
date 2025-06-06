@@ -13,9 +13,18 @@ public class ComandoHistorico {
 
 	public ComandoHistorico(List<Comando> listaDeComandos) {
 		this.listaDeComandos = listaDeComandos;
+		iniciarHistorico();
 	}
 
+	public void iniciarHistorico() {
+		if(ponteiroComando==-1) {
+			listaDeComandos.add(null);
+			ponteiroComando++;
+		}
+	}
+	
 	public void adicionarComando(Comando comando) {
+		
 		if (validarPonteiroAdicionar()) {
 			if (ponteiroComando < listaDeComandos.size() - 1) {
 				listaDeComandos.subList(ponteiroComando + 1, listaDeComandos.size()).clear();
@@ -74,6 +83,7 @@ public class ComandoHistorico {
 	public void apagarHistorico() {
 		listaDeComandos.clear();
 		this.ponteiroComando = -1;
+		iniciarHistorico();
 	}
 
 	public String gerarHistorico(IdiomaImplementacao idiomaImplementacao) {
@@ -84,11 +94,17 @@ public class ComandoHistorico {
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = listaDeComandos.size() - 1; i >= 0; i--) {
-			Comando comando = listaDeComandos.get(i);
-			String tipo = comando.pegarTipo().pegarIdioma(idiomaImplementacao.obterIdiomaOrientacao());
-
-			String indicadorAtual = (i == ponteiroComando) ? " <--- " : "";
-
+			String tipo = "";
+			String indicadorAtual ="";
+			try {
+				Comando comando = listaDeComandos.get(i);
+				tipo = comando.pegarTipo().pegarIdioma(idiomaImplementacao.obterIdiomaOrientacao());
+				
+				indicadorAtual = (i == ponteiroComando) ? " <--- " : "";
+				
+			} catch(Exception e) {
+				tipo = "";
+			}
 			sb.append(String.format(" %d -  %s%s\n", i + 1, tipo, indicadorAtual));
 		}
 
