@@ -180,7 +180,7 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 		Menu proximoMenu = null;
 
 		try {
-			if (verificarAlterouTipo()) {
+ 			if (verificarAlterouTipo()) {
 				executar();
 
 				menuHistorico.voltarPonteiro(2);

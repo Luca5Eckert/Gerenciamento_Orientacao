@@ -53,6 +53,7 @@ public class ComandoAdicionarIdiomaOrientacao extends Comando {
 
 	@Override
 	public boolean validarNivelDeAcesso(NivelAcesso nivelAcesso) {
+		idOrientacao = service.pegarIdOrientacao(orientacaoDto);
 		int idAutorOrientacao = service.pegarIdCriadorOrientacao(idOrientacao, idiomaAntigo);
 
 		if (nivelAcesso.getNivelAcesso() > NIVEL_DE_ACESSO_MINIMO

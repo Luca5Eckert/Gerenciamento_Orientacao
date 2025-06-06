@@ -47,6 +47,7 @@ public class ComandoRemoverOrientacao extends Comando {
 
 	@Override
 	public boolean validarNivelDeAcesso(NivelAcesso nivelAcesso) {
+		idOrientacao = service.pegarIdOrientacao(orientacaoRemover);
 		int idAutorOrientacao = service.pegarIdCriadorOrientacao(idOrientacao, orientacaoRemover.idiomaOrientacao());
 
 		if (nivelAcesso.getNivelAcesso() > NIVEL_DE_ACESSO_MINIMO || idUsuario == idAutorOrientacao) {
