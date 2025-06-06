@@ -42,7 +42,7 @@ public class ComandoEditarOrientacao extends Comando {
 
 	@Override
 	public RegistroComando voltarAcao() {
-		service.atualizarOrientacao(orientacaoNova, orientacaoAntiga, idiomaImplementacao, idUsuario);
+		service.atualizarOrientacao(orientacaoAntiga, orientacaoNova, idiomaImplementacao, idUsuario);
 		return new RegistroComando(idUsuario, idOrientacao, orientacaoNova.idiomaOrientacao(),
 				TiposComando.DESFAZER_EDICAO_REMOCAO);
 	}
