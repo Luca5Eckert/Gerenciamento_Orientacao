@@ -58,7 +58,7 @@ public class MenuAdicaoOrientacao extends Menu implements Executor {
 		} catch(ComandoHistoricoException che) {
 			System.out.println(idiomaImplementacao.pegarMensagemErroAoMexerNoHistorico());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(idiomaImplementacao.pegarMensagemEntradaInvalida());
 			menuHistorico.voltarMenu();
 		}
 
