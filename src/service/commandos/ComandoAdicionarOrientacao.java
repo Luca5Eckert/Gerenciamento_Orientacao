@@ -43,6 +43,11 @@ public class ComandoAdicionarOrientacao extends Comando {
 
 	}
 	
+	@Override
+	public RegistroComando refazerAcao() {
+		service.atualizarOrientacao(orientacaoDto, idOrientacao, idUsuario);
+		return devolverRegistroComando();
+	}
 	
 
 	@Override

@@ -62,6 +62,12 @@ public class ComandoAdicionarIdiomaOrientacao extends Comando {
 		}
 		return false;
 	}
+	
+	@Override
+	public RegistroComando refazerAcao() {
+		service.atualizarOrientacao(orientacaoDto, idOrientacao, idUsuario);
+		return devolverRegistroComando();
+	}
 
 	public boolean verificarSeOrientacaoExiste() {
 		return service.verificarOrientacaoExiste(orientacaoDto.idiomaOrientacao(), idOrientacao);

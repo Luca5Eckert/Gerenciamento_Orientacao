@@ -95,12 +95,10 @@ public class ComandoHistorico {
 
 		for (int i = listaDeComandos.size() - 1; i >= 0; i--) {
 			String tipo = "";
-			String indicadorAtual ="";
+			String indicadorAtual = (i == ponteiroComando) ? " <--- " : "";
 			try {
 				Comando comando = listaDeComandos.get(i);
 				tipo = comando.pegarTipo().pegarIdioma(idiomaImplementacao.obterIdiomaOrientacao());
-				
-				indicadorAtual = (i == ponteiroComando) ? " <--- " : "";
 				
 			} catch(Exception e) {
 				tipo = "";

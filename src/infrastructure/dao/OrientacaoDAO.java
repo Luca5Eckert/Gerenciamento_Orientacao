@@ -245,7 +245,7 @@ public class OrientacaoDAO {
 	}
 
 	public int pegarIdCriadorOrientacao(String idOrientacao, IdiomaOrientacao idiomaOrientacao) throws SQLException {
-		String sql = "SELECT id_fk_usuario_criou FROM orientacao WHERE id = ? AND idioma_orientacao = ? AND ativo = TRUE";
+		String sql = "SELECT id_fk_usuario_criou FROM orientacao WHERE id = ? AND idioma_orientacao = ?";
 
 		try (Connection conn = ConexaoFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, idOrientacao);
