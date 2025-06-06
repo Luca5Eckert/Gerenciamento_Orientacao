@@ -189,6 +189,7 @@ public class MenuEditarOrientacao extends Menu implements Executor {
 				var listaOrientacoesId = orientacaoService.pegarOrientacoesPorId(orientacaoDto);
 
 				alterarOrientações(listaOrientacoesId);
+				menuHistorico.voltarPonteiro(2);
 			}
 
 			var menuCorreto = MenuFactory.criarMenuPesquisa(TipoMenu.MOSTRAR_ORIENTACAO, orientacaoAlterada,
