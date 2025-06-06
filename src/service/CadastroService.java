@@ -37,7 +37,7 @@ public class CadastroService {
 				.runAsync(() -> validarNomeUsuario(usuario.getNome(), idiomaImplementacao));
 
 		CompletableFuture<Void> validarEmail = CompletableFuture
-				.runAsync(() -> validarEmailUsuario(usuario.getEmail(), idiomaImplementacao, usuarioRepositorio));
+				.runAsync(() -> validarEmailUsuario(usuario.getEmail().trim().toLowerCase(), idiomaImplementacao, usuarioRepositorio));
 
 		CompletableFuture<Void> validarSenha = CompletableFuture
 				.runAsync(() -> validarSenhaUsuario(usuario.getSenha(), idiomaImplementacao));

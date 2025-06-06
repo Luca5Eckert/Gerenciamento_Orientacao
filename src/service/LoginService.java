@@ -20,7 +20,7 @@ public class LoginService {
 
 	public SessaoUsuario realizarLogin(UsuarioDto usuarioDto, UsuarioRepositorio usuarioRepositorio,
 			IdiomaImplementacao idiomaImplementacao) {
-		Usuario usuario = usuarioRepositorio.pegarUsuarioEmail(usuarioDto.email());
+		Usuario usuario = usuarioRepositorio.pegarUsuarioEmail(usuarioDto.email().trim().toLowerCase());
 		validarLogin(usuarioDto, usuario, idiomaImplementacao);
 
 		return criarSessaoUsuario(usuarioRepositorio.pegarIdPeloEmail(usuario.getEmail()), usuarioRepositorio);

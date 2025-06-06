@@ -82,7 +82,7 @@ public class UsuarioDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, usuario.getNome());
-            stmt.setString(2, usuario.getEmail());  
+            stmt.setString(2, usuario.getEmail().toLowerCase().trim());  
             stmt.setString(3, usuario.getSenha());
             stmt.setString(4, usuario.getNivelAcesso().name());
             stmt.executeUpdate();
